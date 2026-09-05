@@ -1,8 +1,8 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
-import CarouselButtons from '../../components/CarouselButtons.jsx';
+import Carousel from '../../components/Carousel.jsx';
 import ViewToggle from '../../components/ViewToggle.jsx';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { menuSections } from './data.js';
@@ -11,11 +11,6 @@ import './Menu.css';
 export default function Menu() {
   const { t } = useLanguage();
   const [view, setView] = useState('List');
-  const trackRefs = useRef({});
-  const getTrackRef = (id) => {
-    if (!trackRefs.current[id]) trackRefs.current[id] = { current: null };
-    return trackRefs.current[id];
-  };
 
   return (
     <div className="container menu-page">
@@ -37,20 +32,10 @@ export default function Menu() {
               <h2>{sectionInfo.name}</h2>
               <span className="menu-section-rule" />
               <span className="menu-section-time">{sectionInfo.time}</span>
-              {view === 'Cards' && (
-                <CarouselButtons
-                  trackRef={getTrackRef(section.id)}
-                  prevLabel={t.menu.prevDishes}
-                  nextLabel={t.menu.nextDishes}
-                />
-              )}
             </div>
 
             {view === 'Cards' ? (
-              <div
-                ref={(el) => { getTrackRef(section.id).current = el; }}
-                className="carousel-track"
-              >
+              <Carousel prevLabel={t.menu.prevDishes} nextLabel={t.menu.nextDishes}>
                 {section.items.map((item) => {
                   const m = sectionInfo.items[item.id];
                   return (
@@ -69,7 +54,7 @@ export default function Menu() {
                     </div>
                   );
                 })}
-              </div>
+              </Carousel>
             ) : (
               <div className="menu-list">
                 {section.items.map((item) => {

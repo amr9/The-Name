@@ -11,19 +11,10 @@ export default {
   },
 
   footer: {
-    blurb: 'Restaurant, showroom Vertex, traiteur hors-site et événements organisés dans le café.',
     address: ['12 Rowan Street', 'Centre-ville'],
     contactHeading: 'Contactez-nous',
     note: 'WhatsApp uniquement — tables, allergènes, devis et pièces. Réponse dans l\'heure pendant le service.',
     message: 'Envoyer un message',
-    hoursHeading: 'Horaires d\'ouverture',
-    hours: [
-      { day: 'Lun – Jeu', time: '08h00 – 16h00' },
-      { day: 'Vendredi', time: '08h00 – 16h00 · souper 18h00' },
-      { day: 'Sam – Dim', time: '09h00 – 16h00' },
-    ],
-    pagesHeading: 'Pages',
-    vertexShopLink: 'Boutique Vertex ↗',
     rights: 'Tous droits réservés.',
   },
 

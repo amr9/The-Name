@@ -1,0 +1,50 @@
+.carousel {
+  position: relative;
+}
+
+/* Fully self-contained rather than building on .btn: theme.css loads after
+   this file, so shared .btn rules (padding/background/border) would win on
+   equal specificity and squash the arrow. */
+.carousel-arrow {
+  position: absolute;
+  top: calc(50% - 8px); /* offsets the track's 16px bottom padding */
+  transform: translateY(-50%);
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--color-black);
+  border: 1px solid var(--color-divider);
+  box-shadow: var(--shadow-md);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.carousel-arrow:hover {
+  background: var(--color-accent);
+}
+.carousel-arrow svg {
+  display: block;
+}
+
+/* Logical insets so the arrows swap sides automatically in RTL.
+   Narrow screens have no gutter to spare, so they overlay the cards there. */
+.carousel-arrow-prev { inset-inline-start: 4px; }
+.carousel-arrow-next { inset-inline-end: 4px; }
+
+/* From 1025px up the container's side padding is at least 51px, so the
+   arrows clear the cards entirely without causing horizontal overflow. */
+@media (min-width: 1025px) {
+  .carousel-arrow-prev { inset-inline-start: -48px; }
+  .carousel-arrow-next { inset-inline-end: -48px; }
+}
+
+/* One chevron asset: rotate it for "next", and mirror both in RTL. */
+.carousel-arrow-next svg { transform: rotate(180deg); }
+[dir='rtl'] .carousel-arrow-prev svg { transform: rotate(180deg); }
+[dir='rtl'] .carousel-arrow-next svg { transform: none; }

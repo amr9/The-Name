@@ -9,6 +9,14 @@ export const site = {
 
 export const waLink = 'https://wa.me/' + site.phone.replace(/[^0-9]/g, '');
 
+// Social profiles, shown as icon links in the footer.
+// TODO: swap these placeholder URLs for the real handles.
+export const socials = [
+  { key: 'instagram', label: 'Instagram', url: 'https://instagram.com/' },
+  { key: 'facebook', label: 'Facebook', url: 'https://facebook.com/' },
+  { key: 'tiktok', label: 'TikTok', url: 'https://tiktok.com/' },
+];
+
 // `key` looks up the label in each translation's `nav` section.
 export const navLinks = [
   { to: '/', key: 'home' },

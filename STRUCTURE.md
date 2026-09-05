@@ -35,11 +35,14 @@ src/
     <Name>.jsx + <Name>.css       — simple components stay as flat files
     <Name>/<Name>.jsx + .css      — a component gets its own folder once it
                                     has real internal complexity (currently:
-                                    Navbar/, Footer/)
+                                    Navbar/, Footer/). Parts used by only
+                                    that component live in its folder too
+                                    (e.g. Footer/SocialLinks.jsx).
 
   data/
     site.js            — cross-page structural facts (phone, shop URL,
-                          nav link routes+keys). No display text.
+                          nav link routes+keys, social profile URLs).
+                          No display text.
     catalogue.js        — the Vertex pieces catalogue: code/category-key/
                           coordinates only (shared by Home's hotspots and
                           the VertexPieces page). Display text lives in
@@ -63,8 +66,8 @@ src/
   hooks/useCarouselAutoplay.js — global effect that auto-advances every
                           `.carousel-track` on screen every 4.2s.
   utils/carousel.js      — stepCarousel(el, dir): the one-card-per-step
-                          scroll math, used by CarouselButtons and the
-                          autoplay hook. Wraps in both directions (a closed
+                          scroll math, used by the Carousel component and
+                          the autoplay hook. Wraps in both directions (a closed
                           loop) and is RTL-aware — card positions are
                           measured in the same coordinate space as
                           scrollLeft, so track padding can't skew the step.
@@ -103,6 +106,10 @@ src/
    - The List/Cards segmented toggle (markup + CSS) was duplicated between
      Menu and VertexPieces → extracted to `components/ViewToggle.jsx` and
      the shared `.view-toggle-opt` rule moved into `theme.css`.
+   - The scrolling card track, its ref plumbing and its prev/next arrows
+     were assembled separately on both pages → folded into one
+     `components/Carousel.jsx` that owns the track and its side arrows, so
+     pages just pass the cards as children.
    Grep for similar class names / JSX shapes before adding a second copy of
    anything; if 2+ places need the same thing, extract it into
    `components/`, `utils/`, or a shared token in `theme.css` instead of

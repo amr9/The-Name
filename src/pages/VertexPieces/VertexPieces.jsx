@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
-import CarouselButtons from '../../components/CarouselButtons.jsx';
+import Carousel from '../../components/Carousel.jsx';
 import ViewToggle from '../../components/ViewToggle.jsx';
 import { catalogue, filterKeys } from '../../data/catalogue.js';
 import { site } from '../../data/site.js';
@@ -12,7 +12,6 @@ export default function VertexPieces() {
   const { t } = useLanguage();
   const [filter, setFilter] = useState('all');
   const [view, setView] = useState('Cards');
-  const trackRef = useRef(null);
 
   const shown = filter === 'all' ? catalogue : catalogue.filter((p) => p.catKey === filter);
   const resultCount = shown.length === 1 ? t.vertex.resultPiece(shown.length) : t.vertex.resultPieces(shown.length);
@@ -51,9 +50,6 @@ export default function VertexPieces() {
           </div>
           <span className="vertex-result-count">{resultCount}</span>
           <ViewToggle view={view} onChange={setView} listLabel={t.vertex.viewList} cardsLabel={t.vertex.viewCards} />
-          {view === 'Cards' && (
-            <CarouselButtons trackRef={trackRef} prevLabel={t.vertex.prevPieces} nextLabel={t.vertex.nextPieces} />
-          )}
         </div>
 
         {view === 'List' ? (
@@ -83,7 +79,7 @@ export default function VertexPieces() {
             })}
           </div>
         ) : (
-          <div ref={trackRef} className="carousel-track">
+          <Carousel prevLabel={t.vertex.prevPieces} nextLabel={t.vertex.nextPieces}>
             {shown.map((p) => {
               const info = t.vertex.items[p.code];
               return (
@@ -111,7 +107,7 @@ export default function VertexPieces() {
                 </div>
               );
             })}
-          </div>
+          </Carousel>
         )}
       </section>
     </div>
