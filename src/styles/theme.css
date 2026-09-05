@@ -27,6 +27,13 @@
   --color-accent-800: #4d3900;
 
   /* Named brand gradients — reuse these rather than writing ad-hoc ones. */
+  /* The yellow panel gradient from the guideline artwork (cover / p.2).
+     Decoded from the PDF's own shading functions rather than eyeballed:
+     deep orange -> yellow -> light gold, running left to right. Note these
+     sit a shade off the documented FFBD14/F7C25C swatches — this is what the
+     artwork actually uses. */
+  --gradient-panel: linear-gradient(to right, #f7941d 0%, #febd19 55%, #f6c25c 100%);
+
   --gradient-dark: linear-gradient(135deg, var(--color-gray), var(--color-black));
   --gradient-light: linear-gradient(135deg, var(--color-white), var(--color-surface));
   --gradient-accent: linear-gradient(135deg, var(--color-accent), var(--color-accent-400));

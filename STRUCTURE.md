@@ -77,7 +77,7 @@ src/
                           scrollLeft, so track padding can't skew the step.
 
   styles/theme.css       — ALL design tokens (--color-*, --font-*, --space-*,
-                          --radius-*, --shadow-*, the 3 named gradients) plus
+                          --radius-*, --shadow-*, the named gradients) plus
                           shared component classes (.btn*, .card, .tag,
                           .seg*, .table, .dialog, .carousel-*). A page/
                           component CSS file should only ever add layout

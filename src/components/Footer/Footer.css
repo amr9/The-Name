@@ -3,10 +3,10 @@
    a seamlessly tiling SVG in public/media/brand/ — swap that file to retune
    the line weight, spacing or waviness. */
 .footer {
-  background-color: var(--color-accent);
+  background-color: #febd19;
   background-image:
     url('/media/brand/footer-pattern.svg'),
-    var(--gradient-accent);
+    var(--gradient-panel);
   background-repeat: repeat, no-repeat;
   background-size: 600px 56px, cover;
   color: var(--color-black);
