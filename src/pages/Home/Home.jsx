@@ -149,7 +149,7 @@ export default function Home() {
               next week's catalogue before anyone else sees it.
             </p>
           </div>
-          <WhatsAppButton>Ask about Friday</WhatsAppButton>
+          <WhatsAppButton className="btn btn-dark">Ask about Friday</WhatsAppButton>
         </div>
       </section>
 

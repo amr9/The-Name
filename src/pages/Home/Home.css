@@ -97,7 +97,7 @@
   font-family: var(--font-heading);
   font-weight: var(--font-heading-weight);
   font-size: 15px;
-  color: var(--color-accent);
+  color: var(--color-accent-700);
   font-variant-numeric: tabular-nums;
 }
 .home-service-rule {
@@ -211,7 +211,7 @@
   border-radius: 50%;
   border: 2px solid #fff;
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-black);
   cursor: pointer;
   font-family: var(--font-heading);
   font-size: 14px;
@@ -280,14 +280,14 @@
   padding-block: clamp(48px, 5vw, 80px);
 }
 .home-friday-inner {
-  border: 1px solid var(--color-accent-300);
+  border: 1px solid color-mix(in srgb, #000 15%, transparent);
   border-radius: calc(2 * var(--radius-lg));
   padding: clamp(28px, 4vw, 56px);
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 32px;
   align-items: center;
-  background: linear-gradient(115deg, #fff, var(--color-accent-100));
+  background: var(--gradient-accent);
 }
 .home-friday-kicker {
   font-size: 11px;

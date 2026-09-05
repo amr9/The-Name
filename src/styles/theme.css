@@ -1,50 +1,39 @@
-/* Design tokens + shared component classes, ported from the original
-   "Organic" design-system stylesheet
-   (legacy-design-canvas/_ds/.../styles.css). Every color/font/spacing/
+/* Design tokens + shared component classes — brand palette: primary
+   yellow #FFBD14 on black / gray / white, with Book Antiqua for display
+   headings and Montserrat for body text. Every color/font/spacing/
    radius/shadow used across pages reads from the variables here — change
    the look by editing this file. */
 
 :root {
-  --color-bg: #f5ead8;
-  --color-surface: #ebddc5;
-  --color-text: #201e1d;
-  --color-accent: #c67139;
-  --color-accent-2: #7a8a5e;
-  --color-divider: color-mix(in srgb, #201e1d 16%, transparent);
+  --color-bg: #ffffff;
+  --color-surface: #dedfe3;
+  --color-text: #000000;
 
-  --color-neutral-100: #f9f4ed;
-  --color-neutral-200: #eee7db;
-  --color-neutral-300: #dcd3c4;
-  --color-neutral-400: #c0b6a5;
-  --color-neutral-500: #a19786;
-  --color-neutral-600: #82796a;
-  --color-neutral-700: #645c50;
-  --color-neutral-800: #474238;
-  --color-neutral-900: #2e2b25;
+  --color-black: #000000;
+  --color-gray: #4c4c4c;
+  --color-white: #ffffff;
 
-  --color-accent-100: #fff2eb;
-  --color-accent-200: #ffe1d0;
-  --color-accent-300: #ffc6a5;
-  --color-accent-400: #f6a06b;
-  --color-accent-500: #d67f48;
-  --color-accent-600: #b2622d;
-  --color-accent-700: #8c491a;
-  --color-accent-800: #643312;
-  --color-accent-900: #402310;
+  --color-accent: #ffbd14;
+  --color-divider: color-mix(in srgb, #000000 16%, transparent);
 
-  --color-accent-2-100: #f0fae1;
-  --color-accent-2-200: #e1eecc;
-  --color-accent-2-300: #ccdbb2;
-  --color-accent-2-400: #aebf92;
-  --color-accent-2-500: #8fa073;
-  --color-accent-2-600: #728157;
-  --color-accent-2-700: #56633f;
-  --color-accent-2-800: #3d472b;
-  --color-accent-2-900: #272e1b;
+  /* Accent ramp derived from the primary yellow — 400 is the brand's own
+     lighter gold (F7C25C, also the light end of --gradient-accent). */
+  --color-accent-100: #fff6e0;
+  --color-accent-200: #ffe9b3;
+  --color-accent-300: #ffdb85;
+  --color-accent-400: #f7c25c;
+  --color-accent-600: #e6a800;
+  --color-accent-700: #7a5900;
+  --color-accent-800: #4d3900;
 
-  --font-heading: "Caprasimo", system-ui, sans-serif;
-  --font-heading-weight: 400;
-  --font-body: "Figtree", system-ui, sans-serif;
+  /* Named brand gradients — reuse these rather than writing ad-hoc ones. */
+  --gradient-dark: linear-gradient(135deg, var(--color-gray), var(--color-black));
+  --gradient-light: linear-gradient(135deg, var(--color-white), var(--color-surface));
+  --gradient-accent: linear-gradient(135deg, var(--color-accent), var(--color-accent-400));
+
+  --font-heading: "Book Antiqua", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-heading-weight: 700;
+  --font-body: "Montserrat", system-ui, sans-serif;
 
   --space-1: 4.4px;
   --space-2: 8.8px;
@@ -57,9 +46,9 @@
   --radius-md: 16px;
   --radius-lg: 28px;
 
-  --shadow-sm: 0 1px 2px color-mix(in srgb, #2e2b25 14%, transparent);
-  --shadow-md: 0 3px 10px color-mix(in srgb, #2e2b25 16%, transparent);
-  --shadow-lg: 0 12px 32px color-mix(in srgb, #2e2b25 22%, transparent);
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #000000 14%, transparent);
+  --shadow-md: 0 3px 10px color-mix(in srgb, #000000 16%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #000000 22%, transparent);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -89,7 +78,7 @@ h5 { font-size: 16px; }
 h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
 p { margin: 0 0 var(--space-3); }
 a { color: var(--color-accent-700); text-decoration: none; text-underline-offset: 3px; }
-a:hover { color: var(--color-accent); }
+a:hover { color: var(--color-accent-800); }
 img { display: block; max-width: 100%; }
 figure { margin: 0; }
 button { font: inherit; }
@@ -119,13 +108,16 @@ button { font: inherit; }
 }
 .btn svg { display: block; }
 .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-.btn-primary { background: var(--color-accent); color: #fff; }
+.btn-primary { background: var(--color-accent); color: var(--color-black); }
 .btn-primary:hover { background: var(--color-accent-600); }
-.btn-primary:active { background: var(--color-accent-700); }
+.btn-primary:active { background: var(--color-accent-700); color: #fff; }
 .btn-secondary { border-color: var(--color-divider); }
 .btn-secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
 .btn-secondary:active { background: color-mix(in srgb, var(--color-text) 14%, transparent); }
-.btn-ghost { color: var(--color-accent); padding-inline: var(--space-1); }
+.btn-dark { background: var(--color-black); color: #fff; }
+.btn-dark:hover { background: #262626; }
+.btn-dark:active { background: #000; }
+.btn-ghost { color: var(--color-accent-700); padding-inline: var(--space-1); }
 .btn-ghost:hover { background: color-mix(in srgb, var(--color-accent) 10%, transparent); }
 .btn-ghost:active { background: color-mix(in srgb, var(--color-accent) 18%, transparent); }
 .btn-icon { width: 36px; height: 36px; padding: 0; }
@@ -136,7 +128,7 @@ button { font: inherit; }
   display: flex; flex-direction: column; gap: var(--space-2);
   padding: var(--space-3); border-radius: calc(var(--radius-lg) * 1.15); background: var(--color-surface);
 }
-.card-kicker { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
+.card-kicker { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent-700); }
 .card-title {
   font-family: var(--font-heading); font-weight: var(--font-heading-weight);
   font-size: 17px; line-height: 1.2; margin: 0;
@@ -160,7 +152,7 @@ button { font: inherit; }
   white-space: nowrap;
 }
 .seg-opt:first-child { border-left: 0; }
-.seg-opt[data-active="true"] { background: var(--color-accent); color: #fff; }
+.seg-opt[data-active="true"] { background: var(--color-accent); color: var(--color-black); }
 .seg-opt[data-active="false"]:hover { background: var(--color-accent-100); }
 
 /* — table — */
@@ -190,7 +182,7 @@ button { font: inherit; }
   font-size: 18px; margin-right: auto;
 }
 .nav a { color: inherit; text-decoration: none; font-size: 14px; }
-.nav a:hover, .nav a[aria-current='page'] { color: var(--color-accent); }
+.nav a:hover, .nav a[aria-current='page'] { color: var(--color-accent-700); }
 
 /* — horizontal card carousels (Menu sections, Vertex pieces cards view) — */
 .carousel-track {

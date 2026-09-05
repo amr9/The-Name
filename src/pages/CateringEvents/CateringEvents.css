@@ -60,8 +60,8 @@
 }
 
 .catering-direct-line {
-  background: linear-gradient(160deg, #fff, var(--color-accent-100));
-  border: 1px solid var(--color-accent-300);
+  background: var(--gradient-light);
+  border: 1px solid var(--color-divider);
   border-radius: calc(2 * var(--radius-lg));
   padding: clamp(26px, 3vw, 36px);
 }

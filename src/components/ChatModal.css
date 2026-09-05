@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   z-index: 70;
-  background: color-mix(in srgb, var(--color-neutral-900) 40%, transparent);
+  background: color-mix(in srgb, var(--color-black) 40%, transparent);
   display: grid;
   place-items: center;
   padding: 24px;

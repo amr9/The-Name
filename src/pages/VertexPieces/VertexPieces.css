@@ -1,5 +1,5 @@
 .vertex-hero {
-  background: linear-gradient(160deg, #fff, var(--color-accent-100));
+  background: var(--gradient-light);
 }
 .vertex-hero .container {
   padding-block: clamp(36px, 4.5vw, 76px);

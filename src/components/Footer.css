@@ -1,6 +1,7 @@
 .footer {
-  border-top: 1px solid var(--color-accent-200);
-  background: linear-gradient(180deg, #fff, var(--color-accent-100));
+  border-top: 1px solid color-mix(in srgb, #fff 12%, transparent);
+  background: var(--gradient-dark);
+  color: #fff;
 }
 
 .footer-grid {
@@ -19,18 +20,18 @@
   font-size: 14.5px;
   line-height: 26px;
   max-width: 34ch;
-  opacity: 0.8;
+  color: color-mix(in srgb, #fff 78%, transparent);
 }
 
 .footer-address {
   margin: 18px 0 0;
   font-size: 14px;
   line-height: 26px;
-  opacity: 0.8;
+  color: color-mix(in srgb, #fff 78%, transparent);
 }
 
 .footer-heading {
-  color: var(--color-accent-700);
+  color: var(--color-accent);
   margin: 0 0 16px;
 }
 
@@ -41,13 +42,14 @@
   font-size: 16px;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+  color: #fff;
 }
 
 .footer-note {
   margin: 10px 0 0;
   font-size: 13px;
   line-height: 24px;
-  opacity: 0.75;
+  color: color-mix(in srgb, #fff 70%, transparent);
 }
 
 .footer-message-btn {
@@ -61,13 +63,14 @@
   gap: 8px;
   font-size: 14px;
   line-height: 24px;
+  color: color-mix(in srgb, #fff 85%, transparent);
 }
 
 .footer-hours-row {
   display: flex;
   flex-direction: column;
 }
-.footer-hours-day { opacity: 0.75; white-space: nowrap; }
+.footer-hours-day { color: color-mix(in srgb, #fff 70%, transparent); white-space: nowrap; }
 
 .footer-links {
   display: flex;
@@ -76,10 +79,12 @@
   font-size: 14.5px;
   align-items: flex-start;
 }
+.footer-links a { color: color-mix(in srgb, #fff 85%, transparent); }
+.footer-links a:hover { color: var(--color-accent); }
 
 .footer-bottom {
   padding-block: 28px 32px;
-  border-top: 1px solid var(--color-accent-200);
+  border-top: 1px solid color-mix(in srgb, #fff 12%, transparent);
   margin-top: 22px;
   display: flex;
   gap: 24px;
@@ -87,5 +92,5 @@
   justify-content: space-between;
   font-size: 13px;
   line-height: 24px;
-  color: color-mix(in srgb, var(--color-text) 65%, transparent);
+  color: color-mix(in srgb, #fff 60%, transparent);
 }
