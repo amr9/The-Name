@@ -154,6 +154,7 @@ button { font: inherit; }
 .seg-opt:first-child { border-left: 0; }
 .seg-opt[data-active="true"] { background: var(--color-accent); color: var(--color-black); }
 .seg-opt[data-active="false"]:hover { background: var(--color-accent-100); }
+.view-toggle-opt { display: flex; align-items: center; gap: 8px; padding: 9px 16px; font-size: 14px; }
 
 /* — table — */
 .table { width: 100%; border-collapse: collapse; font-size: 14px; }

@@ -1,5 +1,5 @@
 export default {
-  nav: { home: 'Home', menu: 'Menu', vertex: 'Vertex pieces', catering: 'Catering & events' },
+  nav: { home: 'Home', menu: 'Menu', vertex: 'Vertex Shop', catering: 'Catering & Events' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chat on WhatsApp' },
 

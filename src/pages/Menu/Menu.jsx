@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import CarouselButtons from '../../components/CarouselButtons.jsx';
+import ViewToggle from '../../components/ViewToggle.jsx';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { menuSections } from './data.js';
 import './Menu.css';
@@ -16,31 +17,13 @@ export default function Menu() {
     return trackRefs.current[id];
   };
 
-  const views = [
-    { key: 'List', icon: '☰', label: t.menu.viewList },
-    { key: 'Cards', icon: '▦', label: t.menu.viewCards },
-  ];
-
   return (
     <div className="container menu-page">
       <span className="card-kicker">{t.menu.kicker}</span>
       <h1 className="menu-title">{t.menu.title}</h1>
 
       <div className="menu-controls">
-        <div className="seg">
-          {views.map((v) => (
-            <button
-              key={v.key}
-              type="button"
-              className="seg-opt menu-view-opt"
-              data-active={view === v.key}
-              onClick={() => setView(v.key)}
-            >
-              <span>{v.icon}</span>
-              {v.label}
-            </button>
-          ))}
-        </div>
+        <ViewToggle view={view} onChange={setView} listLabel={t.menu.viewList} cardsLabel={t.menu.viewCards} />
         <span className="menu-updated">{t.menu.updated}</span>
         <WhatsAppButton className="btn btn-secondary">{t.menu.askAllergens}</WhatsAppButton>
         <Link to="/shop" className="btn btn-ghost">{t.menu.tableware}</Link>

@@ -60,13 +60,6 @@
   opacity: 0.6;
   font-variant-numeric: tabular-nums;
 }
-.menu-view-opt {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 16px;
-  font-size: 14px;
-}
 
 .vertex-row,
 .vertex-list-row {

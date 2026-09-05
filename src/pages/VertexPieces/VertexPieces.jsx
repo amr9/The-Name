@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import CarouselButtons from '../../components/CarouselButtons.jsx';
+import ViewToggle from '../../components/ViewToggle.jsx';
 import { catalogue, filterKeys } from '../../data/catalogue.js';
 import { site } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
@@ -12,11 +13,6 @@ export default function VertexPieces() {
   const [filter, setFilter] = useState('all');
   const [view, setView] = useState('Cards');
   const trackRef = useRef(null);
-
-  const views = [
-    { key: 'List', icon: '☰', label: t.vertex.viewList },
-    { key: 'Cards', icon: '▦', label: t.vertex.viewCards },
-  ];
 
   const shown = filter === 'all' ? catalogue : catalogue.filter((p) => p.catKey === filter);
   const resultCount = shown.length === 1 ? t.vertex.resultPiece(shown.length) : t.vertex.resultPieces(shown.length);
@@ -54,20 +50,7 @@ export default function VertexPieces() {
             ))}
           </div>
           <span className="vertex-result-count">{resultCount}</span>
-          <div className="seg">
-            {views.map((v) => (
-              <button
-                key={v.key}
-                type="button"
-                className="seg-opt menu-view-opt"
-                data-active={view === v.key}
-                onClick={() => setView(v.key)}
-              >
-                <span>{v.icon}</span>
-                {v.label}
-              </button>
-            ))}
-          </div>
+          <ViewToggle view={view} onChange={setView} listLabel={t.vertex.viewList} cardsLabel={t.vertex.viewCards} />
           {view === 'Cards' && (
             <CarouselButtons trackRef={trackRef} prevLabel={t.vertex.prevPieces} nextLabel={t.vertex.nextPieces} />
           )}

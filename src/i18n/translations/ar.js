@@ -1,5 +1,5 @@
 export default {
-  nav: { home: 'الرئيسية', menu: 'القائمة', vertex: 'قطع فيرتكس', catering: 'الضيافة والفعاليات' },
+  nav: { home: 'الرئيسية', menu: 'القائمة', vertex: 'متجر فيرتكس', catering: 'الضيافة والفعاليات' },
 
   common: { whatsapp: 'واتساب', chatOnWhatsapp: 'الدردشة عبر واتساب' },
 
