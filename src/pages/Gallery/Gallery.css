@@ -1,0 +1,36 @@
+.gallery-page {
+  padding-block: clamp(32px, 5vw, 64px) 80px;
+}
+
+.gallery-intro {
+  max-width: 56ch;
+}
+
+.gallery-filters {
+  margin: var(--space-4) 0 var(--space-6);
+  flex-wrap: wrap;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-4);
+}
+
+.gallery-item figcaption {
+  margin-top: 8px;
+  font-size: 13.5px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.gallery-item-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent-700);
+  white-space: nowrap;
+}

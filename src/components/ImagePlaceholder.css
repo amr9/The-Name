@@ -1,0 +1,31 @@
+.img-slot {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface-2);
+}
+
+.img-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.img-slot-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--color-gray);
+  border: 1px dashed color-mix(in srgb, var(--color-gray) 45%, transparent);
+  text-align: center;
+  padding: 12px;
+}
+
+.img-slot-label {
+  font-size: 11px;
+  max-width: 90%;
+  opacity: 0.85;
+}

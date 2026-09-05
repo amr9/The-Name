@@ -1,0 +1,15 @@
+.whatsapp-fab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 60;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--color-accent);
+  color: var(--color-black);
+  box-shadow: var(--shadow-lg);
+}
+.whatsapp-fab:hover { background: var(--color-accent-600); }

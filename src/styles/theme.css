@@ -1,0 +1,146 @@
+/* Design tokens + shared component classes, based on the brand guideline
+   (TheNAMEsocialhub_Brand Guideline.pdf): primary yellow #FFBD14 on
+   black/white/gray, Montserrat body, serif display headings, script accent.
+   Change the look by editing the variables here. */
+
+:root {
+  --color-bg: #ffffff;
+  --color-surface: #f7f7f5;
+  --color-surface-2: #dedfe3;
+  --color-text: #1a1a1a;
+  --color-black: #000000;
+  --color-gray: #4c4c4c;
+
+  --color-accent: #ffbd14;
+  --color-accent-600: #e6a800;
+  --color-accent-700: #c98f00;
+  --color-accent-100: #fff6df;
+  --color-accent-200: #ffedbd;
+
+  --color-divider: color-mix(in srgb, #000000 12%, transparent);
+
+  --font-heading: "Lora", Georgia, serif; /* stand-in for Book Antiqua */
+  --font-body: "Montserrat", system-ui, sans-serif;
+  --font-script: "Yellowtail", cursive; /* stand-in for Artisoul Signature */
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 14px;
+  --space-4: 20px;
+  --space-6: 28px;
+  --space-8: 40px;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.18);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 400;
+  overflow-x: clip;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--space-2);
+  color: var(--color-black);
+}
+h1 { font-size: 44px; }
+h2 { font-size: 32px; }
+h3 { font-size: 24px; }
+h4 { font-size: 19px; }
+h5 { font-size: 16px; }
+h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+p { margin: 0 0 var(--space-3); }
+a { color: var(--color-black); text-decoration: none; text-underline-offset: 3px; }
+a:hover { color: var(--color-accent-700); }
+img { display: block; max-width: 100%; }
+figure { margin: 0; }
+button { font: inherit; }
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+::selection { background: color-mix(in srgb, var(--color-accent) 45%, transparent); }
+
+.script { font-family: var(--font-script); font-weight: 400; }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: clamp(20px, 5vw, 64px);
+}
+
+/* — buttons — */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  cursor: pointer; text-decoration: none;
+  font-family: var(--font-body); font-weight: 600;
+  font-size: 14px; line-height: 1.2; color: var(--color-black);
+  background: transparent; border: 1.5px solid transparent;
+  padding: 12px 22px;
+  border-radius: 999px;
+  min-height: 44px;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.btn svg { display: block; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-primary { background: var(--color-accent); color: var(--color-black); }
+.btn-primary:hover { background: var(--color-accent-600); }
+.btn-primary:active { background: var(--color-accent-700); }
+.btn-dark { background: var(--color-black); color: #fff; }
+.btn-dark:hover { background: #262626; }
+.btn-secondary { border-color: var(--color-black); color: var(--color-black); }
+.btn-secondary:hover { background: var(--color-black); color: #fff; }
+.btn-ghost { color: var(--color-black); padding-inline: 6px; }
+.btn-ghost:hover { color: var(--color-accent-700); }
+.btn-block { width: 100%; }
+
+/* — tags — */
+.tag {
+  display: inline-flex; align-items: center; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase; padding: 4px 12px;
+  border-radius: 999px; background: var(--color-accent-100); color: var(--color-accent-700);
+}
+
+/* — segmented control — */
+.seg { display: inline-flex; overflow: hidden; border-radius: 999px; border: 1.5px solid var(--color-black); }
+.seg-opt {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 18px; font-size: 13px; font-weight: 600; cursor: pointer;
+  background: transparent; color: var(--color-black); border: 0; border-left: 1.5px solid var(--color-black);
+  white-space: nowrap;
+}
+.seg-opt:first-child { border-left: 0; }
+.seg-opt[data-active="true"] { background: var(--color-black); color: #fff; }
+.seg-opt[data-active="false"]:hover { background: var(--color-accent-100); }
+
+/* — cards — */
+.card {
+  display: flex; flex-direction: column; gap: var(--space-2);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+.card-kicker { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent-700); }
+.card-title { font-family: var(--font-heading); font-weight: 600; font-size: 19px; line-height: 1.25; margin: 0; }
+.card-body { margin: 0; font-size: 14px; opacity: 0.75; flex: 1; }
+.elev-sm { box-shadow: var(--shadow-sm); }
+.elev-lg { box-shadow: var(--shadow-lg); }
+
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.35; transform: scale(0.82); } }
