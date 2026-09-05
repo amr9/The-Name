@@ -96,7 +96,7 @@ export default {
 
   menu: {
     kicker: 'The menu',
-    title: 'Taste the Tradition, Feel the Flavor',
+    title: 'Fresh Flavours Every Day',
     viewList: 'List',
     viewCards: 'Cards',
     updated: 'Updated Wed 02 Sep',

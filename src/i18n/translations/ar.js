@@ -96,7 +96,7 @@ export default {
 
   menu: {
     kicker: 'القائمة',
-    title: 'تذوّق التقاليد، اشعر بالنكهة',
+    title: 'نكهات طازجة كل يوم',
     viewList: 'قائمة',
     viewCards: 'بطاقات',
     updated: 'آخر تحديث الأربعاء 02 سبتمبر',

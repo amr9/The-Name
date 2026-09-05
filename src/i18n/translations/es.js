@@ -96,7 +96,7 @@ export default {
 
   menu: {
     kicker: 'El menú',
-    title: 'Prueba la tradición, siente el sabor',
+    title: 'Sabores frescos cada día',
     viewList: 'Lista',
     viewCards: 'Tarjetas',
     updated: 'Actualizado mié. 02 sept.',

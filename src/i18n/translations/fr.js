@@ -96,7 +96,7 @@ export default {
 
   menu: {
     kicker: 'Le menu',
-    title: 'Goûtez la tradition, ressentez la saveur',
+    title: 'Des saveurs fraîches chaque jour',
     viewList: 'Liste',
     viewCards: 'Cartes',
     updated: 'Mis à jour mer. 02 sept.',
