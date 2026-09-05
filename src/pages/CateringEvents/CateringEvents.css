@@ -85,7 +85,7 @@
 .catering-ask-for-row {
   display: flex;
   gap: 10px;
-  align-items: baseline;
+  align-items: center;
   font-size: 14.5px;
   line-height: 24px;
 }
@@ -95,7 +95,6 @@
   border-radius: 50%;
   background: var(--color-accent);
   flex: none;
-  transform: translateY(8px);
 }
 
 .catering-reply-note {

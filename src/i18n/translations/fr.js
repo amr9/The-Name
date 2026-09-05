@@ -1,0 +1,235 @@
+export default {
+  nav: { home: 'Accueil', menu: 'Menu', vertex: 'Pièces Vertex', catering: 'Traiteur & événements' },
+
+  common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Discuter sur WhatsApp' },
+
+  chat: {
+    kicker: 'WhatsApp',
+    title: 'Ouvre une discussion avec le comptoir',
+    body: "Sur le site en ligne, ce bouton ouvre directement WhatsApp avec le numéro du restaurant déjà rempli. Renseignez le vrai numéro et tout fonctionnera.",
+    gotIt: 'Compris',
+  },
+
+  footer: {
+    blurb: 'Restaurant, showroom Vertex, traiteur hors-site et événements organisés dans le café.',
+    address: ['12 Rowan Street', 'Centre-ville'],
+    contactHeading: 'Contactez-nous',
+    note: 'WhatsApp uniquement — tables, allergènes, devis et pièces. Réponse dans l\'heure pendant le service.',
+    message: 'Envoyer un message',
+    hoursHeading: 'Horaires d\'ouverture',
+    hours: [
+      { day: 'Lun – Jeu', time: '08h00 – 16h00' },
+      { day: 'Vendredi', time: '08h00 – 16h00 · souper 18h00' },
+      { day: 'Sam – Dim', time: '09h00 – 16h00' },
+    ],
+    pagesHeading: 'Pages',
+    vertexShopLink: 'Boutique Vertex ↗',
+    rights: 'Tous droits réservés.',
+  },
+
+  home: {
+    hero: {
+      title: 'Un restaurant que vous pouvez ramener chez vous.',
+      body: 'Chaque chaise, lampe, assiette et panneau de cette salle est une pièce Vertex — et chacune d\'elles est à vendre. Mangez d\'abord. Touchez ce qui vous plaît et nous vous montrerons ce que c\'est et combien ça coûte.',
+      mediaLabel: 'Vidéo ou photo du restaurant en boucle — déposez-la ici',
+      ctaMenu: 'Voir le menu',
+      ctaShop: 'Explorer la salle',
+    },
+    whatWeDo: {
+      kicker: 'Ce que nous faisons',
+      heading: 'Quatre services, une seule salle',
+      body: 'La cuisine nourrit la salle, la salle présente la gamme Vertex, et la même équipe cuisine hors-site et organise des soirées privées ici. Découvrez-les.',
+    },
+    services: {
+      dineIn: {
+        kicker: 'Sur place', title: 'Le restaurant',
+        placeholder: 'Table en plein service, plats et verrerie',
+        body: 'Du petit-déjeuner au déjeuner tardif sept jours sur sept, et un souper à quatre plats le vendredi soir. La carte est courte car elle suit les arrivages, et chaque plat est photographié sur la page du menu.',
+        points: ['08h00 – 16h00 tous les jours, souper du vendredi à 18h00', 'Quarante couverts, douze tables et un long banc', 'Sans réservation — uniquement sur place'],
+        cta: 'Voir le menu',
+      },
+      vertexShowroom: {
+        kicker: 'Showroom Vertex', title: 'Tout ici est à vendre',
+        placeholder: 'Éclairage et sièges Vertex dans la salle',
+        body: 'Vertex est une boutique d\'intérieur en ligne, et cette salle en est le showroom. Chaises, suspensions, tables, arts de la table et systèmes muraux sont tous des produits disponibles. Touchez une pièce pour voir la fiche et le prix ; le paiement se fait sur le site Vertex.',
+        points: ['Six pièces repérées sur la photo de la salle ci-dessous', 'Prix, finitions et délais sur chaque pièce', 'Nouveautés en salle tous les vendredis'],
+        cta: 'Explorer la salle',
+      },
+      catering: {
+        kicker: 'Hors-site', title: 'Traiteur, à votre adresse',
+        placeholder: 'Caisses chargées, installation hors-site',
+        body: 'Tout ce que nous cuisinons pour vous en dehors du café : déjeuners individuels, buffets avec personnel et événements complets hors-site. Même cuisine, livré dans des caisses réutilisables, facturé mensuellement à un contact désigné.',
+        points: ['De dix à deux cents couverts', "Dès 48 heures de préavis pour les déjeuners", 'Commandes récurrentes hebdomadaires avec 10 % de remise'],
+        cta: 'Offres traiteur',
+      },
+      events: {
+        kicker: 'Dans le café', title: 'Événements, organisés ici',
+        placeholder: 'Salle installée pour une soirée privée',
+        body: 'Les soirées privées se déroulent dans cette salle et nulle part ailleurs — après le service, ou avant l\'ouverture. Soupers-clubs, soirées de lancement pour les nouvelles pièces Vertex, dégustations et petits-déjeuners privés.',
+        points: ['Quarante assis, soixante debout', 'La salle peut être redécorée à l\'image de votre marque', "Préavis de trois à cinq semaines"],
+        cta: 'Formules événements',
+      },
+    },
+    shopRoom: {
+      kicker: 'Explorer la salle',
+      heading: 'Touchez une pièce. Découvrez ce que c\'est.',
+      lede: 'Six pièces numérotées sur cette photo. Chacune a une fiche sur la boutique Vertex avec les caractéristiques complètes et le prix.',
+      roomPhoto: 'Vue large de la salle du restaurant',
+      pieceOf: (n, total) => `pièce ${n} sur ${total}`,
+      category: 'Catégorie',
+      finish: 'Finition',
+      leadTime: 'Délai',
+      openShop: 'Voir sur la boutique Vertex ↗',
+      checkoutNote: 'Le paiement se fait sur le site Vertex',
+    },
+    friday: {
+      kicker: 'CHAQUE VENDREDI',
+      title: 'La salle est redécorée',
+      body: 'De nouvelles pièces Vertex arrivent en salle chaque vendredi et la cuisine compose un souper à quatre plats autour d\'elles. Vous découvrez le catalogue de la semaine suivante avant tout le monde.',
+      cta: 'Se renseigner sur le vendredi',
+    },
+    closing: {
+      title: 'Nous avons hâte de vous rencontrer.',
+      body: 'Une table, une pièce que vous avez vue, un devis traiteur, des allergènes — un seul fil WhatsApp avec quelqu\'un sur place.',
+    },
+  },
+
+  menu: {
+    kicker: 'Le menu',
+    title: 'Goûtez la tradition, ressentez la saveur',
+    viewList: 'Liste',
+    viewCards: 'Cartes',
+    updated: 'Mis à jour mer. 02 sept.',
+    askAllergens: 'Question sur les allergènes',
+    tableware: 'Les arts de la table →',
+    prevDishes: 'Plats précédents',
+    nextDishes: 'Plus de plats',
+    sections: {
+      counter: {
+        name: 'Comptoir', time: '08h00 – 16h00',
+        items: {
+          breadConservaOil: { dish: 'Pain, conserva, huile', note: 'La miche du vendredi, deuxième jour, sur l\'assiette Orbit.', tag: 'Toute la journée', price: '£6' },
+          anchovyToast: { dish: 'Toast à l\'anchois', note: 'Deux tranches, beurre, piment.', tag: 'Toute la journée', price: '£7' },
+          oliveOilCake: { dish: 'Gâteau à l\'huile d\'olive', note: 'Gâteaux entiers sur commande — demandez-nous.', tag: 'Pâtisserie', price: '£5' },
+        },
+      },
+      kitchen: {
+        name: 'Cuisine', time: '11h30 – 15h00',
+        items: {
+          whiteBeans: { dish: 'Haricots blancs, légumes verts, huile pimentée', note: 'Mijotés longuement, finis à la minute.', tag: 'Végane', price: '£11' },
+          roastCarrot: { dish: 'Carotte rôtie, yaourt, dukkah', note: 'Carottes entières, bien grillées.', tag: 'Végétarien', price: '£10' },
+          porkSandwich: { dish: 'Sandwich à l\'épaule de porc', note: 'Jusqu\'à épuisement, généralement vers 14h.', tag: 'Déjeuner', price: '£13' },
+        },
+      },
+      drinks: {
+        name: 'Boissons', time: 'Toute la journée',
+        items: {
+          houseFilter: { dish: 'Filtre maison', note: 'Infusé par litre, recharge à moitié prix.', tag: 'Café', price: '£3,20' },
+          flatWhite: { dish: 'Flat white', note: 'Aussi espresso, macchiato, cortado.', tag: 'Café', price: '£3,40' },
+          citrusSoda: { dish: 'Soda aux agrumes', note: 'Fait maison, change chaque semaine.', tag: 'Frais', price: '£4' },
+        },
+      },
+    },
+  },
+
+  vertex: {
+    badge: 'Vertex · les pièces de cette salle',
+    title: 'Tout ce qu\'il vous faut, ici même',
+    body: 'Vertex est une boutique d\'intérieur en ligne — éclairage, sièges, arts de la table et systèmes muraux. Ce restaurant en est le showroom : tout ce sur quoi vous êtes assis, ce dans quoi vous mangez et ce que vous regardez est en vente.',
+    openShop: 'Voir la boutique Vertex ↗',
+    askFloor: 'Demander ce qui est exposé →',
+    filters: { all: 'Tout', lighting: 'Éclairage', seating: 'Sièges', tables: 'Tables', tabletop: 'Arts de la table', systems: 'Systèmes' },
+    viewList: 'Liste',
+    viewCards: 'Cartes',
+    resultPiece: (n) => `${n} pièce`,
+    resultPieces: (n) => `${n} pièces`,
+    prevPieces: 'Pièces précédentes',
+    nextPieces: 'Plus de pièces',
+    viewLink: 'Voir ↗',
+    viewOnVertex: 'Voir sur Vertex ↗',
+    inTheRoom: 'Dans la salle',
+    items: {
+      'VX-101': {
+        name: 'Suspension Halo, 600mm', finish: 'Laiton brossé, verre opale', lead: '2 semaines', where: 'Au-dessus de chaque table',
+        note: 'Un simple anneau de lumière sur un fil fin — ce qui donne à la salle son éclat.',
+        placeholder: 'Suspension Halo au-dessus d\'une table', price: '£420',
+      },
+      'VX-204': {
+        name: 'Chaise de salle à manger Arc', finish: 'Frêne cintré, laine terracotta', lead: 'En stock', where: 'Les 40 couverts',
+        note: 'Une courbe continue pour le dossier et les accoudoirs. Empilable sur quatre niveaux.',
+        placeholder: 'Chaise de salle à manger Arc', price: '£240',
+      },
+      'VX-318': {
+        name: 'Table Monolith, 2,4m', finish: 'Pierre coulée, socle laqué', lead: '4 semaines', where: 'Le long banc',
+        note: 'Une dalle, un socle. La table sur laquelle est servi le souper du vendredi.',
+        placeholder: 'Table à manger Monolith', price: '£1 850',
+      },
+      'VX-422': {
+        name: 'Service de table Orbit', finish: 'Grès mat, six pièces', lead: 'En stock', where: 'Chaque assiette que vous utilisez',
+        note: 'Les assiettes, bols et accompagnements sur lesquels la cuisine dresse ses plats.',
+        placeholder: 'Service de table en grès Orbit', price: '£96',
+      },
+      'VX-530': {
+        name: 'Système mural Grid, module de 1,2m', finish: 'Aluminium anodisé', lead: '3 semaines', where: 'Le mur du fond',
+        note: 'Des modules qui accueillent étagères, plantes ou luminaires. Ajoutez des modules au fil du temps.',
+        placeholder: 'Système d\'étagères murales Grid', price: '£310',
+      },
+      'VX-611': {
+        name: 'Lampadaire Signal', finish: 'Acier, abat-jour en lin', lead: '2 semaines', where: 'Près des places en fenêtre',
+        note: 'Haut, fin, variable jusqu\'à presque rien. Celui dont les clients parlent le plus.',
+        placeholder: 'Lampadaire Signal près d\'une fenêtre', price: '£380',
+      },
+    },
+  },
+
+  catering: {
+    kicker: 'Traiteur',
+    title: 'Traiteur et événements',
+    intro: 'Les événements se déroulent ici, dans le café. Tout ce qui a lieu à votre adresse relève du traiteur. Les devis se discutent par message, pas par formulaire — envoyez la date et le nombre de couverts, et nous revenons avec un prix le jour même.',
+    tabs: { Events: 'Événements (au café)', Catering: 'Traiteur (hors-site)' },
+    coversHeader: 'Couverts',
+    noticeHeader: 'Préavis',
+    fromHeader: 'À partir de',
+    footnote: 'Prix par personne, hors TVA et livraison. Les commandes récurrentes de quatre semaines ou plus bénéficient de 10 % de remise.',
+    directLineKicker: 'Ligne directe',
+    directLineTitle: 'Envoyez-nous la date et le nombre de couverts',
+    openWhatsapp: 'Ouvrir WhatsApp',
+    replyNote: 'Réponse sous un jour ouvré · Lun–Ven 08h00–18h00',
+    Events: {
+      title: 'Événements, au café',
+      colOne: 'Formule',
+      intro: 'Chaque événement se déroule dans le café lui-même — la salle après le service, ou avant l\'ouverture. Même cuisine et même équipe que pour le souper du vendredi, et la salle peut être redécorée avec les pièces Vertex adaptées à la soirée. Tout ce qui a lieu à votre adresse relève du traiteur.',
+      placeholder: 'La salle installée pour une soirée privée',
+      askFor: [
+        'La date et l\'heure de fin',
+        'Le nombre de personnes et si c\'est assis — la salle accueille 40 personnes',
+        'La formule — souper-club, soirée de lancement, dégustation, salle seule',
+        'Ce que la salle doit accueillir : AV, un discours, un gâteau',
+      ],
+      packages: {
+        roomHire: { name: 'Location de la salle, soirée', note: 'Toute la salle à partir de six personnes, bar avec personnel.', covers: '40 assis', notice: '3 semaines', from: '£900 la salle' },
+        supperClub: { name: 'Souper-club', note: 'Quatre plats fixes, un seul service, notre menu.', covers: '28 assis', notice: '4 semaines', from: '£46' },
+        launchNight: { name: 'Soirée de lancement', note: 'La salle redécorée avec les pièces que vous lancez.', covers: '20–60 debout', notice: '5 semaines', from: '£38' },
+        privateBreakfast: { name: 'Petit-déjeuner privé', note: 'La salle avant l\'ouverture, portes closes jusqu\'à dix heures.', covers: '20–30 assis', notice: '2 semaines', from: '£24' },
+      },
+    },
+    Catering: {
+      title: 'Traiteur, hors-site',
+      colOne: 'Formule',
+      intro: 'Tout ce que nous cuisinons pour vous en dehors du café : déjeuners, buffets et événements complets hors-site, cuisinés dans la cuisine du café et livrés dans des caisses réutilisables. Le menu tourne avec les arrivages, il change donc au fil de l\'année.',
+      placeholder: 'Installation hors-site chez un client',
+      askFor: [
+        'L\'adresse et l\'heure de livraison',
+        'Le nombre de couverts et comment ils mangent — boîtes individuelles ou plateaux',
+        'Les régimes alimentaires à prévoir',
+        'Si cela se répète chaque semaine',
+      ],
+      packages: {
+        deskLunch: { name: 'Déjeuner au bureau', note: 'En boîtes individuelles, livré à votre accueil.', covers: '10–60', notice: '48 heures', from: '£11' },
+        standingBuffet: { name: 'Buffet debout', note: 'Plateaux installés avec personnel sur place pendant quatre-vingt-dix minutes.', covers: '25–120', notice: '5 jours', from: '£19' },
+        offSiteCatering: { name: 'Traiteur événementiel hors-site', note: 'Nous amenons la cuisine et l\'équipe à votre adresse.', covers: '50–200', notice: '6 semaines', from: '£54' },
+        breakfastTrolley: { name: 'Chariot petit-déjeuner', note: 'Viennoiseries, fruits, urnes de filtre maison, livrés.', covers: '10–80', notice: '48 heures', from: '£8' },
+      },
+    },
+  },
+};

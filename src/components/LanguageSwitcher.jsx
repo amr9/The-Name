@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { languages } from '../data/site.js';
+import { languages } from '../i18n/languages.js';
+import { useLanguage } from '../i18n/LanguageContext.jsx';
 import './LanguageSwitcher.css';
 
 export default function LanguageSwitcher() {
   const [open, setOpen] = useState(false);
-  const [lang, setLang] = useState('EN');
+  const { lang, setLang } = useLanguage();
 
   return (
     <div className="lang-switcher">

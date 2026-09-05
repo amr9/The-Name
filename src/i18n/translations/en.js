@@ -1,0 +1,235 @@
+export default {
+  nav: { home: 'Home', menu: 'Menu', vertex: 'Vertex pieces', catering: 'Catering & events' },
+
+  common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chat on WhatsApp' },
+
+  chat: {
+    kicker: 'WhatsApp',
+    title: 'Opens a chat with the counter',
+    body: "In the live site this jumps straight to WhatsApp with the restaurant's number pre-filled. Send the real number and it wires up.",
+    gotIt: 'Got it',
+  },
+
+  footer: {
+    blurb: 'Restaurant, Vertex showroom, off-site catering and events held in the café.',
+    address: ['12 Rowan Street', 'City centre'],
+    contactHeading: 'Contact us',
+    note: 'WhatsApp only — tables, allergens, quotes and pieces. Replies within the hour during service.',
+    message: 'Message us',
+    hoursHeading: 'Opening hours',
+    hours: [
+      { day: 'Mon – Thu', time: '08:00 – 16:00' },
+      { day: 'Friday', time: '08:00 – 16:00 · supper 18:00' },
+      { day: 'Sat – Sun', time: '09:00 – 16:00' },
+    ],
+    pagesHeading: 'Pages',
+    vertexShopLink: 'Vertex shop ↗',
+    rights: 'All rights reserved.',
+  },
+
+  home: {
+    hero: {
+      title: 'A restaurant you can take home.',
+      body: 'Every chair, lamp, plate and panel in this room is a Vertex piece — and every one of them is for sale. Eat first. Tap anything you like and we will show you what it is and what it costs.',
+      mediaLabel: 'Restaurant video loop or still — drop it here',
+      ctaMenu: 'See the menu',
+      ctaShop: 'Shop the room',
+    },
+    whatWeDo: {
+      kicker: 'What we do',
+      heading: 'Four services, one room',
+      body: 'The kitchen feeds the room, the room shows the Vertex range, and the same team cooks off-site and hosts private nights here. Scroll through them.',
+    },
+    services: {
+      dineIn: {
+        kicker: 'Dine in', title: 'The restaurant',
+        placeholder: 'Table mid-service, food and glassware',
+        body: 'Breakfast to late lunch seven days, and a four-course supper on Friday nights. The list is short because it moves with the delivery, and every plate is photographed on the menu page.',
+        points: ['08:00 – 16:00 daily, Friday supper 18:00', 'Forty covers, twelve tables and a long bench', 'Walk-ins only — no online booking'],
+        cta: 'See the menu',
+      },
+      vertexShowroom: {
+        kicker: 'Vertex showroom', title: 'Everything here is for sale',
+        placeholder: 'Vertex lighting and seating in the room',
+        body: 'Vertex is an online interiors shop, and this room is its showroom. Chairs, pendants, tables, tableware and wall systems are all live products. Tap a piece and you get the spec and the price; checkout happens on the Vertex site.',
+        points: ['Six pieces tagged in the room shot below', 'Prices, finishes and lead times on every piece', 'New arrivals on the floor every Friday'],
+        cta: 'Shop the room',
+      },
+      catering: {
+        kicker: 'Off-site', title: 'Catering, at your address',
+        placeholder: 'Crates being loaded, off-site setup',
+        body: 'Everything we cook for you away from the café: boxed desk lunches, staffed buffets and full off-site events. Same kitchen, delivered in reusable crates, invoiced monthly with a named contact.',
+        points: ['Ten to two hundred covers', "From 48 hours' notice on lunches", 'Weekly standing orders discounted 10%'],
+        cta: 'Catering packages',
+      },
+      events: {
+        kicker: 'In the café', title: 'Events, held here',
+        placeholder: 'Room set for a private evening',
+        body: 'Private nights happen in this room and nowhere else — the floor after service, or before we open. Supper clubs, launch nights for new Vertex pieces, tastings and private breakfasts.',
+        points: ['Forty seated, sixty standing', 'The floor can be re-dressed for your brand', "Three to five weeks' notice"],
+        cta: 'Event formats',
+      },
+    },
+    shopRoom: {
+      kicker: 'Shop the room',
+      heading: 'Tap a piece. See what it is.',
+      lede: 'Six numbered pieces in this shot. Every one has a page on the Vertex shop with the full spec and the price.',
+      roomPhoto: 'Wide shot of the dining room',
+      pieceOf: (n, total) => `piece ${n} of ${total}`,
+      category: 'Category',
+      finish: 'Finish',
+      leadTime: 'Lead time',
+      openShop: 'Open on the Vertex shop ↗',
+      checkoutNote: 'Checkout happens on the Vertex site',
+    },
+    friday: {
+      kicker: 'EVERY FRIDAY',
+      title: 'The room is re-dressed',
+      body: "New Vertex pieces come onto the floor every Friday and the kitchen builds a four-course supper around them. You eat in next week's catalogue before anyone else sees it.",
+      cta: 'Ask about Friday',
+    },
+    closing: {
+      title: "We can't wait to meet you.",
+      body: 'Tables, a piece you saw, a catering quote, allergens — one WhatsApp thread with someone in the building.',
+    },
+  },
+
+  menu: {
+    kicker: 'The menu',
+    title: 'Taste the Tradition, Feel the Flavor',
+    viewList: 'List',
+    viewCards: 'Cards',
+    updated: 'Updated Wed 02 Sep',
+    askAllergens: 'Ask about allergens',
+    tableware: 'The tableware →',
+    prevDishes: 'Previous dishes',
+    nextDishes: 'More dishes',
+    sections: {
+      counter: {
+        name: 'Counter', time: '08:00 – 16:00',
+        items: {
+          breadConservaOil: { dish: 'Bread, conserva, oil', note: "Friday's loaf, day two, on the Orbit side plate.", tag: 'All day', price: '£6' },
+          anchovyToast: { dish: 'Anchovy toast', note: 'Two slices, butter, chilli.', tag: 'All day', price: '£7' },
+          oliveOilCake: { dish: 'Olive oil cake', note: 'Whole cakes to order — ask us.', tag: 'Bakes', price: '£5' },
+        },
+      },
+      kitchen: {
+        name: 'Kitchen', time: '11:30 – 15:00',
+        items: {
+          whiteBeans: { dish: 'White beans, greens, chilli oil', note: 'Slow-cooked, finished at the pass.', tag: 'Vegan', price: '£11' },
+          roastCarrot: { dish: 'Roast carrot, yoghurt, dukkah', note: 'Whole carrots, charred hard.', tag: 'Vegetarian', price: '£10' },
+          porkSandwich: { dish: 'Pork shoulder sandwich', note: 'Until it runs out, usually by two.', tag: 'Lunch', price: '£13' },
+        },
+      },
+      drinks: {
+        name: 'Drinks', time: 'All day',
+        items: {
+          houseFilter: { dish: 'House filter', note: 'Brewed by the litre, refills half price.', tag: 'Coffee', price: '£3.20' },
+          flatWhite: { dish: 'Flat white', note: 'Also espresso, macchiato, cortado.', tag: 'Coffee', price: '£3.40' },
+          citrusSoda: { dish: 'Citrus soda', note: 'Made here, changes weekly.', tag: 'Cold', price: '£4' },
+        },
+      },
+    },
+  },
+
+  vertex: {
+    badge: 'Vertex · the pieces in this room',
+    title: 'All You Need, Right Here',
+    body: 'Vertex is an online shop for interiors — lighting, seating, tabletop and wall systems. This restaurant is its showroom: everything you sit on, eat off and look at is on the shelf.',
+    openShop: 'Open the Vertex shop ↗',
+    askFloor: 'Ask what is on the floor →',
+    filters: { all: 'All', lighting: 'Lighting', seating: 'Seating', tables: 'Tables', tabletop: 'Tabletop', systems: 'Systems' },
+    viewList: 'List',
+    viewCards: 'Cards',
+    resultPiece: (n) => `${n} piece`,
+    resultPieces: (n) => `${n} pieces`,
+    prevPieces: 'Previous pieces',
+    nextPieces: 'More pieces',
+    viewLink: 'View ↗',
+    viewOnVertex: 'View on Vertex ↗',
+    inTheRoom: 'In the room',
+    items: {
+      'VX-101': {
+        name: 'Halo pendant, 600mm', finish: 'Brushed brass, opal glass', lead: '2 weeks', where: 'Over every table',
+        note: 'A single ring of light on a slim drop — what gives the room its glow.',
+        placeholder: 'Halo pendant light over a table', price: '£420',
+      },
+      'VX-204': {
+        name: 'Arc dining chair', finish: 'Bent ash, terracotta wool', lead: 'In stock', where: 'All 40 covers',
+        note: 'One continuous curve for the back and arms. Stacks four high.',
+        placeholder: 'Arc dining chair', price: '£240',
+      },
+      'VX-318': {
+        name: 'Monolith table, 2.4m', finish: 'Cast stone, powder-coat base', lead: '4 weeks', where: 'The long bench',
+        note: 'One slab, one plinth. The table the Friday supper is served on.',
+        placeholder: 'Monolith dining table', price: '£1,850',
+      },
+      'VX-422': {
+        name: 'Orbit tableware set', finish: 'Matte stoneware, six pieces', lead: 'In stock', where: 'Every plate you eat off',
+        note: 'The plates, bowls and side dishes the kitchen plates on.',
+        placeholder: 'Orbit stoneware tableware set', price: '£96',
+      },
+      'VX-530': {
+        name: 'Grid wall system, 1.2m bay', finish: 'Anodised aluminium', lead: '3 weeks', where: 'The back wall',
+        note: 'Modular bays that carry shelves, planters or lights. Add bays as you go.',
+        placeholder: 'Grid wall shelving system', price: '£310',
+      },
+      'VX-611': {
+        name: 'Signal floor lamp', finish: 'Steel, linen shade', lead: '2 weeks', where: 'By the window seats',
+        note: 'Tall, thin, dimmable to almost nothing. The one guests ask about most.',
+        placeholder: 'Signal floor lamp by a window', price: '£380',
+      },
+    },
+  },
+
+  catering: {
+    kicker: 'Catering',
+    title: 'Catering and events',
+    intro: 'Events happen here, in the café. Anything at your address is catering. Quotes are agreed in a message thread, not a form — send the date and the covers and we come back with a price the same day.',
+    tabs: { Events: 'Events (in the café)', Catering: 'Catering (off-site)' },
+    coversHeader: 'Covers',
+    noticeHeader: 'Notice',
+    fromHeader: 'From',
+    footnote: 'Prices per head, excluding VAT and delivery. Standing orders of four weeks or more are discounted 10%.',
+    directLineKicker: 'Direct line',
+    directLineTitle: 'Send us the date and the covers',
+    openWhatsapp: 'Open WhatsApp',
+    replyNote: 'Replies within one working day · Mon–Fri 08:00–18:00',
+    Events: {
+      title: 'Events, in the café',
+      colOne: 'Format',
+      intro: 'Every event happens in the café itself — the room after service, or before we open. Same kitchen and same team that cooks the Friday supper, and the floor can be re-dressed with the Vertex pieces that suit the night. Anything at your address is catering.',
+      placeholder: 'The room set for a private evening',
+      askFor: [
+        'The date and the finish time',
+        'Headcount and whether it is seated — the room holds 40',
+        'Format — supper club, launch night, tasting, room only',
+        'Anything the room has to hold: AV, a speech, a cake',
+      ],
+      packages: {
+        roomHire: { name: 'Room hire, evening', note: 'The whole room from six, bar staffed.', covers: '40 seated', notice: '3 weeks', from: '£900 room' },
+        supperClub: { name: 'Supper club', note: 'Set four courses, one sitting, our menu.', covers: '28 seated', notice: '4 weeks', from: '£46' },
+        launchNight: { name: 'Launch night', note: 'The floor re-dressed with the pieces you are launching.', covers: '20–60 standing', notice: '5 weeks', from: '£38' },
+        privateBreakfast: { name: 'Private breakfast', note: 'The room before opening, doors closed until ten.', covers: '20–30 seated', notice: '2 weeks', from: '£24' },
+      },
+    },
+    Catering: {
+      title: 'Catering, off-site',
+      colOne: 'Package',
+      intro: 'Everything we cook for you away from the café: lunches, buffets and full off-site events, cooked in the café kitchen and delivered in reusable crates. The menu rotates with the delivery, so it changes through the year.',
+      placeholder: 'Off-site setup at a client venue',
+      askFor: [
+        'The address and the delivery time',
+        'Covers and how they eat — boxed or platters',
+        'Dietary lines you need covered',
+        'Whether this repeats weekly',
+      ],
+      packages: {
+        deskLunch: { name: 'Desk lunch', note: 'Boxed individually, delivered to your reception.', covers: '10–60', notice: '48 hours', from: '£11' },
+        standingBuffet: { name: 'Standing buffet', note: 'Platters set up and staffed at your venue for ninety minutes.', covers: '25–120', notice: '5 days', from: '£19' },
+        offSiteCatering: { name: 'Off-site event catering', note: 'We bring the kitchen and the team to your address.', covers: '50–200', notice: '6 weeks', from: '£54' },
+        breakfastTrolley: { name: 'Breakfast trolley', note: 'Pastry, fruit, urns of house filter, delivered.', covers: '10–80', notice: '48 hours', from: '£8' },
+      },
+    },
+  },
+};
