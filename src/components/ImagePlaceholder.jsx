@@ -1,18 +1,26 @@
+import { useEffect, useState } from 'react';
 import './ImagePlaceholder.css';
 
 /**
- * Stand-in for a real photograph. Swap the `src` prop in for an actual
- * image URL/import once you have photography — the component then just
- * renders that image instead of the placeholder box.
+ * An image slot. Pass `src` (usually from src/data/media.js) and the real
+ * picture is shown; while that file doesn't exist yet — or fails to load —
+ * it falls back to the dashed placeholder, so paths can be wired up before
+ * the artwork lands.
  */
 export default function ImagePlaceholder({ label, src, ratio = '4 / 3', className = '' }) {
-  if (src) {
+  const [failed, setFailed] = useState(false);
+
+  // A new src deserves a fresh attempt (e.g. the selected hotspot changes).
+  useEffect(() => { setFailed(false); }, [src]);
+
+  if (src && !failed) {
     return (
       <div className={`img-slot ${className}`} style={{ aspectRatio: ratio }}>
-        <img src={src} alt={label || ''} />
+        <img src={src} alt={label || ''} onError={() => setFailed(true)} />
       </div>
     );
   }
+
   return (
     <div className={`img-slot img-slot-empty ${className}`} style={{ aspectRatio: ratio }}>
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">

@@ -4,6 +4,7 @@ import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import Carousel from '../../components/Carousel.jsx';
 import ViewToggle from '../../components/ViewToggle.jsx';
+import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { menuSections } from './data.js';
 import './Menu.css';
@@ -41,7 +42,7 @@ export default function Menu() {
                   return (
                     <div key={item.id} className="card elev-sm carousel-card menu-card">
                       <div className="washed menu-card-image">
-                        <ImagePlaceholder label={m.dish} ratio="4 / 3" />
+                        <ImagePlaceholder src={media.menu[item.id]} label={m.dish} ratio="4 / 3" />
                       </div>
                       <div className="menu-card-body">
                         <div className="menu-card-row">
@@ -62,7 +63,7 @@ export default function Menu() {
                   return (
                     <div key={item.id} className="menu-list-row">
                       <div className="washed menu-list-thumb">
-                        <ImagePlaceholder label={m.dish} ratio="1 / 1" />
+                        <ImagePlaceholder src={media.menu[item.id]} label={m.dish} ratio="1 / 1" />
                       </div>
                       <div className="menu-list-info">
                         <div className="menu-list-title-row">

@@ -43,6 +43,10 @@ src/
     site.js            — cross-page structural facts (phone, shop URL,
                           nav link routes+keys, social profile URLs).
                           No display text.
+    media.js            — maps every image slot to a file under
+                          `public/media/`, keyed by the same ids the page
+                          data + i18n use. Also serves as the shot list of
+                          photography still needed.
     catalogue.js        — the Vertex pieces catalogue: code/category-key/
                           coordinates only (shared by Home's hotspots and
                           the VertexPieces page). Display text lives in
@@ -80,6 +84,25 @@ src/
                           rules that are specific to it — a rule used by
                           2+ files belongs here instead (see DRY below).
 ```
+
+## Media files
+
+Artwork lives in `public/media/` (served as-is by Vite, so no import step):
+
+```
+public/media/
+  hero/       — home hero + the wide room shot the hotspots sit on
+  services/   — the four Home service rows
+  menu/       — menu dishes
+  vertex/     — the Vertex pieces, named by product code
+  catering/   — the Events / Catering tab images
+  brand/      — logo exports and other brand assets
+```
+
+`src/data/media.js` already points at the expected filename for every slot.
+Saving a file under that name is all that's needed — no code change. Until it
+exists the request simply fails and `<ImagePlaceholder>` shows its dashed
+placeholder instead, so partially-supplied media degrades cleanly.
 
 ## Current pages
 

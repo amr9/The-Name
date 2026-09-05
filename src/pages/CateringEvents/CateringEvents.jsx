@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
+import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { tabPackageIds } from './data.js';
 import './CateringEvents.css';
@@ -39,7 +40,7 @@ export default function CateringEvents() {
       <div className="split catering-grid">
         <div>
           <div className="washed catering-image-wrap">
-            <ImagePlaceholder label={content.placeholder} ratio="16 / 9" />
+            <ImagePlaceholder src={media.catering[tab]} label={content.placeholder} ratio="16 / 9" />
           </div>
           <h2 className="catering-section-title">{content.title}</h2>
           <p className="catering-section-intro">{content.intro}</p>

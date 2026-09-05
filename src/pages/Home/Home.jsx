@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import { catalogue } from '../../data/catalogue.js';
+import { media } from '../../data/media.js';
 import { site } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { services } from './data.js';
@@ -19,7 +20,7 @@ export default function Home() {
       {/* hero: video loop / still, full width */}
       <section className="home-hero">
         <div className="home-hero-media">
-          <ImagePlaceholder label={t.home.hero.mediaLabel} ratio="auto" className="home-hero-media-slot" />
+          <ImagePlaceholder src={media.hero} label={t.home.hero.mediaLabel} ratio="auto" className="home-hero-media-slot" />
         </div>
         <div className="home-hero-scrim" />
         <div className="container home-hero-content">
@@ -71,7 +72,7 @@ export default function Home() {
               <figure className="row-img home-service-figure" style={{ order: s.imgOrder }}>
                 <div className="home-service-ring" />
                 <div className="washed home-service-image-wrap">
-                  <ImagePlaceholder label={info.placeholder} ratio="5 / 4" />
+                  <ImagePlaceholder src={media.services[s.id]} label={info.placeholder} ratio="5 / 4" />
                 </div>
               </figure>
             </div>
@@ -93,7 +94,7 @@ export default function Home() {
           <div className="split home-shop-room-grid">
             <div className="home-shop-room-photo">
               <div className="washed">
-                <ImagePlaceholder label={t.home.shopRoom.roomPhoto} ratio="16 / 10" />
+                <ImagePlaceholder src={media.roomWide} label={t.home.shopRoom.roomPhoto} ratio="16 / 10" />
               </div>
               {catalogue.map((p, i) => (
                 <button
@@ -113,7 +114,7 @@ export default function Home() {
             <div className="home-shop-room-panel">
               <span className="home-shop-room-panel-meta">{piece.code} · {t.home.shopRoom.pieceOf(pin + 1, catalogue.length)}</span>
               <div className="washed home-shop-room-panel-image">
-                <ImagePlaceholder label={sel.name} ratio="4 / 3" />
+                <ImagePlaceholder src={media.vertex[piece.code]} label={sel.name} ratio="4 / 3" />
               </div>
               <h3 className="home-shop-room-panel-title">{sel.name}</h3>
               <p className="home-shop-room-panel-note">{sel.note}</p>

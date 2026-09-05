@@ -4,6 +4,7 @@ import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import Carousel from '../../components/Carousel.jsx';
 import ViewToggle from '../../components/ViewToggle.jsx';
 import { catalogue, filterKeys } from '../../data/catalogue.js';
+import { media } from '../../data/media.js';
 import { site } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import './VertexPieces.css';
@@ -59,7 +60,7 @@ export default function VertexPieces() {
               return (
                 <div key={p.code} className="vertex-row">
                   <div className="washed vertex-list-thumb">
-                    <ImagePlaceholder label={info.name} ratio="1 / 1" />
+                    <ImagePlaceholder src={media.vertex[p.code]} label={info.name} ratio="1 / 1" />
                   </div>
                   <div className="vertex-list-info">
                     <div className="vertex-list-title-row">
@@ -85,7 +86,7 @@ export default function VertexPieces() {
               return (
                 <div key={p.code} className="card elev-sm carousel-card vertex-card">
                   <div className="washed vertex-card-image">
-                    <ImagePlaceholder label={info.name} ratio="4 / 3" />
+                    <ImagePlaceholder src={media.vertex[p.code]} label={info.name} ratio="4 / 3" />
                   </div>
                   <div className="vertex-card-body">
                     <div className="vertex-card-top-row">
