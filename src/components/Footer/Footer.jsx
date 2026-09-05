@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import Logo from './Logo.jsx';
-import { site, waLink, navLinks } from '../data/site.js';
-import { useLanguage } from '../i18n/LanguageContext.jsx';
+import Logo from '../Logo.jsx';
+import { site, waLink, navLinks } from '../../data/site.js';
+import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import './Footer.css';
 
 function WhatsAppGlyph() {

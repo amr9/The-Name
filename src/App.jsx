@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar.jsx';
-import Footer from './components/Footer.jsx';
+import Navbar from './components/Navbar/Navbar.jsx';
+import Footer from './components/Footer/Footer.jsx';
 import ChatModal from './components/ChatModal.jsx';
 import { WhatsAppFab } from './components/WhatsAppButton.jsx';
 import { ChatProvider } from './context/ChatContext.jsx';
