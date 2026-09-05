@@ -1,10 +1,10 @@
-.shop-hero {
+.vertex-hero {
   background: linear-gradient(160deg, #fff, var(--color-accent-100));
 }
-.shop-hero .container {
+.vertex-hero .container {
   padding-block: clamp(36px, 4.5vw, 76px);
 }
-.shop-hero-badge {
+.vertex-hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -17,45 +17,45 @@
   border-radius: 999px;
   padding: 6px 14px;
 }
-.shop-hero-badge-dot {
+.vertex-hero-badge-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: var(--color-accent);
   animation: pulse 2.6s ease-in-out infinite;
 }
-.shop-hero-title {
+.vertex-hero-title {
   font-size: clamp(38px, 4.6vw, 62px);
   line-height: 1.03;
   margin: 20px 0 0;
   margin-left: -0.028em;
   max-width: 24ch;
 }
-.shop-hero-body {
+.vertex-hero-body {
   font-size: 17px;
   line-height: 28px;
   max-width: 58ch;
   margin: 20px 0 0;
 }
-.shop-hero-actions {
+.vertex-hero-actions {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
   margin-top: 26px;
 }
 
-.shop-catalogue {
+.vertex-catalogue {
   padding-block: clamp(32px, 4vw, 56px) 80px;
 }
 
-.shop-controls {
+.vertex-controls {
   display: flex;
   gap: 16px;
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 28px;
 }
-.shop-result-count {
+.vertex-result-count {
   font-size: 12px;
   opacity: 0.6;
   font-variant-numeric: tabular-nums;
@@ -68,74 +68,74 @@
   font-size: 14px;
 }
 
-.shop-row,
-.shop-list-row {
+.vertex-row,
+.vertex-list-row {
   display: flex;
   gap: 20px;
   align-items: center;
   padding: 16px 0;
   border-bottom: 1px solid var(--color-accent-200);
 }
-.shop-list-thumb {
+.vertex-list-thumb {
   width: 96px;
   height: 96px;
   flex: none;
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
-.shop-list-info { flex: 1; min-width: 0; }
-.shop-list-title-row {
+.vertex-list-info { flex: 1; min-width: 0; }
+.vertex-list-title-row {
   display: flex;
   align-items: baseline;
   gap: 12px;
   flex-wrap: wrap;
 }
-.shop-list-title-row h3 { font-size: 20px; margin: 0; }
-.shop-list-code {
+.vertex-list-title-row h3 { font-size: 20px; margin: 0; }
+.vertex-list-code {
   font-size: 11px;
   letter-spacing: 0.14em;
   opacity: 0.5;
   font-variant-numeric: tabular-nums;
 }
-.shop-list-note { margin: 6px 0 0; font-size: 14.5px; line-height: 24px; opacity: 0.8; }
-.shop-list-meta { margin: 6px 0 0; font-size: 12.5px; line-height: 22px; opacity: 0.7; }
-.shop-list-price-col {
+.vertex-list-note { margin: 6px 0 0; font-size: 14.5px; line-height: 24px; opacity: 0.8; }
+.vertex-list-meta { margin: 6px 0 0; font-size: 12.5px; line-height: 22px; opacity: 0.7; }
+.vertex-list-price-col {
   display: flex;
   flex-direction: column;
   gap: 10px;
   align-items: flex-end;
   flex: none;
 }
-.shop-price {
+.vertex-price {
   font-size: 22px;
   font-variant-numeric: tabular-nums;
 }
-.shop-view-btn {
+.vertex-view-btn {
   min-height: 34px;
   font-size: 13px;
 }
 
-.shop-card {
+.vertex-card {
   padding: 0;
   overflow: hidden;
   background: #fff;
   flex: 0 0 calc((100% - 48px) / 3);
 }
-.shop-card-image { aspect-ratio: 4 / 3; }
-.shop-card-body {
+.vertex-card-image { aspect-ratio: 4 / 3; }
+.vertex-card-body {
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   flex: 1;
 }
-.shop-card-top-row {
+.vertex-card-top-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
 }
-.shop-card-specs {
+.vertex-card-specs {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -144,18 +144,18 @@
   font-size: 12.5px;
   opacity: 0.78;
 }
-.shop-card-bottom-row {
+.vertex-card-bottom-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   margin-top: 10px;
 }
-.shop-card .shop-price { font-size: 20px; }
+.vertex-card .vertex-price { font-size: 20px; }
 
 @media (max-width: 700px) {
-  .shop-row, .shop-list-row { flex-wrap: wrap; }
-  .shop-list-price-col {
+  .vertex-row, .vertex-list-row { flex-wrap: wrap; }
+  .vertex-list-price-col {
     flex-direction: row !important;
     align-items: center !important;
     width: 100%;

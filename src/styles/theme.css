@@ -231,6 +231,5 @@ button { font: inherit; }
 @media (max-width: 700px) {
   .nav { flex-wrap: wrap; row-gap: 10px; padding-block: 12px; }
   .nav-brand { width: 100%; }
-  .shop-row, .menu-row { flex-wrap: wrap; }
   .seg { flex-wrap: wrap; }
 }
