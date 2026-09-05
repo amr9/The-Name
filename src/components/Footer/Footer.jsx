@@ -19,8 +19,6 @@ export default function Footer() {
 
   return (
     <footer className="footer">
-      <div className="brand-strip" aria-hidden="true" />
-
       <div className="container footer-inner">
         <div className="footer-brand-block">
           <Logo size="lg" tone="dark" />

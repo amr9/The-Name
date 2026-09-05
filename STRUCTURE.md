@@ -96,7 +96,10 @@ public/media/
   menu/       — menu dishes
   vertex/     — the Vertex pieces, named by product code
   catering/   — the Events / Catering tab images
-  brand/      — logo exports and other brand assets
+  brand/      — logo exports and other brand assets. Contains
+                `footer-pattern.svg`: the guideline's hand-drawn wavy line
+                texture, a seamlessly tiling tile used as the footer
+                background. Replace that file to retune the pattern.
 ```
 
 `src/data/media.js` already points at the expected filename for every slot.

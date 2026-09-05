@@ -1,5 +1,14 @@
+/* The guideline's ruled yellow pattern (cover / p.2) across the whole footer:
+   hand-drawn style wavy white lines over the accent gradient. The texture is
+   a seamlessly tiling SVG in public/media/brand/ — swap that file to retune
+   the line weight, spacing or waviness. */
 .footer {
-  background: var(--gradient-accent);
+  background-color: var(--color-accent);
+  background-image:
+    url('/media/brand/footer-pattern.svg'),
+    var(--gradient-accent);
+  background-repeat: repeat, no-repeat;
+  background-size: 600px 56px, cover;
   color: var(--color-black);
 }
 
