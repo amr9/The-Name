@@ -1,79 +1,105 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
-import { menuSections } from './data.js';
+import WhatsAppButton from '../../components/WhatsAppButton.jsx';
+import CarouselButtons from '../../components/CarouselButtons.jsx';
+import { menuSections, updated } from './data.js';
 import './Menu.css';
 
+const VIEWS = [
+  { label: 'List', icon: '☰' },
+  { label: 'Cards', icon: '▦' },
+];
+
 export default function Menu() {
-  const [view, setView] = useState('cards');
+  const [view, setView] = useState('List');
+  const trackRefs = useRef({});
+  const getTrackRef = (name) => {
+    if (!trackRefs.current[name]) trackRefs.current[name] = { current: null };
+    return trackRefs.current[name];
+  };
 
   return (
     <div className="container menu-page">
       <span className="card-kicker">The menu</span>
-      <h1>Fresh flavors, every day</h1>
-      <p className="menu-intro">The list changes with what came in that morning — this is a snapshot of what's usually on it.</p>
+      <h1 className="menu-title">Taste the Tradition, Feel the Flavor</h1>
 
       <div className="menu-controls">
         <div className="seg">
-          <button
-            type="button"
-            className="seg-opt"
-            data-active={view === 'list'}
-            onClick={() => setView('list')}
-          >
-            List
-          </button>
-          <button
-            type="button"
-            className="seg-opt"
-            data-active={view === 'cards'}
-            onClick={() => setView('cards')}
-          >
-            Cards
-          </button>
+          {VIEWS.map((v) => (
+            <button
+              key={v.label}
+              type="button"
+              className="seg-opt menu-view-opt"
+              data-active={view === v.label}
+              onClick={() => setView(v.label)}
+            >
+              <span>{v.icon}</span>
+              {v.label}
+            </button>
+          ))}
         </div>
+        <span className="menu-updated">Updated {updated}</span>
+        <WhatsAppButton className="btn btn-secondary">Ask about allergens</WhatsAppButton>
+        <Link to="/shop" className="btn btn-ghost">The tableware →</Link>
       </div>
 
       {menuSections.map((section) => (
-        <section key={section.name} className="menu-section">
+        <div key={section.name} className="menu-section">
           <div className="menu-section-heading">
             <h2>{section.name}</h2>
+            <span className="menu-section-rule" />
             <span className="menu-section-time">{section.time}</span>
+            {view === 'Cards' && (
+              <CarouselButtons
+                trackRef={getTrackRef(section.name)}
+                prevLabel="Previous dishes"
+                nextLabel="More dishes"
+              />
+            )}
           </div>
 
-          {view === 'cards' ? (
-            <div className="menu-cards">
-              {section.items.map((item) => (
-                <article key={item.dish} className="card elev-sm menu-card">
-                  <ImagePlaceholder label={item.dish} ratio="4 / 3" />
+          {view === 'Cards' ? (
+            <div
+              ref={(el) => { getTrackRef(section.name).current = el; }}
+              className="carousel-track"
+            >
+              {section.items.map((m) => (
+                <div key={m.dish} className="card elev-sm carousel-card menu-card">
+                  <div className="washed menu-card-image">
+                    <ImagePlaceholder label={m.dish} ratio="4 / 3" />
+                  </div>
                   <div className="menu-card-body">
                     <div className="menu-card-row">
-                      <h3 className="card-title">{item.dish}</h3>
-                      <span className="menu-price">{item.price}</span>
+                      <h3 className="card-title">{m.dish}</h3>
+                      <span className="menu-price">{m.price}</span>
                     </div>
-                    <p className="card-body">{item.note}</p>
-                    <span className="tag">{item.tag}</span>
+                    <p className="card-body">{m.note}</p>
+                    <span className="tag tag-accent menu-card-tag">{m.tag}</span>
                   </div>
-                </article>
+                </div>
               ))}
             </div>
           ) : (
             <div className="menu-list">
-              {section.items.map((item) => (
-                <div key={item.dish} className="menu-list-row">
-                  <ImagePlaceholder label={item.dish} ratio="1 / 1" className="menu-list-thumb" />
+              {section.items.map((m) => (
+                <div key={m.dish} className="menu-list-row">
+                  <div className="washed menu-list-thumb">
+                    <ImagePlaceholder label={m.dish} ratio="1 / 1" />
+                  </div>
                   <div className="menu-list-info">
                     <div className="menu-list-title-row">
-                      <h3>{item.dish}</h3>
-                      <span className="tag">{item.tag}</span>
+                      <h3>{m.dish}</h3>
+                      <span className="tag tag-accent">{m.tag}</span>
                     </div>
-                    <p>{item.note}</p>
+                    <p>{m.note}</p>
                   </div>
-                  <span className="menu-price">{item.price}</span>
+                  <span className="menu-price">{m.price}</span>
                 </div>
               ))}
             </div>
           )}
-        </section>
+        </div>
       ))}
     </div>
   );

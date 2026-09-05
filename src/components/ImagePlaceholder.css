@@ -3,7 +3,7 @@
   width: 100%;
   border-radius: var(--radius-md);
   overflow: hidden;
-  background: var(--color-surface-2);
+  background: var(--color-accent-100);
 }
 
 .img-slot img {
@@ -18,8 +18,8 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  color: var(--color-gray);
-  border: 1px dashed color-mix(in srgb, var(--color-gray) 45%, transparent);
+  color: var(--color-accent-700);
+  border: 1px dashed var(--color-accent-300);
   text-align: center;
   padding: 12px;
 }

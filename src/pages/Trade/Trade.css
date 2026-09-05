@@ -1,0 +1,110 @@
+.trade-page {
+  padding-block: clamp(32px, 4vw, 64px) 80px;
+}
+
+.trade-title {
+  font-size: clamp(36px, 4.2vw, 52px);
+  line-height: 1.04;
+  margin: 0;
+  margin-left: -0.028em;
+}
+
+.trade-intro-copy {
+  font-size: 17px;
+  line-height: 28px;
+  max-width: 58ch;
+  margin: 20px 0 32px;
+}
+
+.trade-tabs {
+  margin-bottom: 36px;
+}
+.trade-tab-opt {
+  padding: 9px 18px;
+  font-size: 14px;
+}
+
+.trade-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+}
+
+.trade-image-wrap {
+  border-radius: calc(2 * var(--radius-lg));
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 28px;
+}
+
+.trade-section-title {
+  font-size: 26px;
+  margin: 0 0 8px;
+}
+.trade-section-intro {
+  font-size: 15.5px;
+  line-height: 28px;
+  max-width: 56ch;
+  margin: 0 0 28px;
+}
+
+.trade-package-name { font-size: 15px; }
+.trade-package-note { font-size: 13px; opacity: 0.7; }
+
+.trade-footnote {
+  font-size: 13px;
+  opacity: 0.7;
+  line-height: 24px;
+  margin: 16px 0 0;
+}
+
+.trade-direct-line {
+  background: linear-gradient(160deg, #fff, var(--color-accent-100));
+  border: 1px solid var(--color-accent-300);
+  border-radius: calc(2 * var(--radius-lg));
+  padding: clamp(26px, 3vw, 36px);
+}
+.trade-direct-line-kicker {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent-700);
+}
+.trade-direct-line-title {
+  font-size: 24px;
+  margin: 14px 0 14px;
+}
+
+.trade-ask-for {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.trade-ask-for-row {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 14.5px;
+  line-height: 24px;
+}
+.trade-ask-for-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  flex: none;
+  transform: translateY(8px);
+}
+
+.trade-reply-note {
+  margin: 14px 0 0;
+  font-size: 12px;
+  opacity: 0.65;
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .trade-grid { grid-template-columns: minmax(0, 1fr); }
+}

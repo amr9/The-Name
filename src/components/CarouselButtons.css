@@ -1,0 +1,11 @@
+.carousel-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.carousel-btn {
+  min-height: 36px;
+  width: 36px;
+  padding: 0;
+  border-radius: 50%;
+}

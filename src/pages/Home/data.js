@@ -1,27 +1,30 @@
-export const features = [
+export const services = [
   {
-    kicker: 'Every day',
-    title: 'Fresh flavors, every day',
-    body: 'Dishes built around what came in that morning — the counter changes with the season, not a laminated menu.',
-    placeholder: 'Chef presenting a fresh plate',
+    num: '01', kicker: 'Dine in', title: 'The restaurant',
+    placeholder: 'Table mid-service, food and glassware',
+    body: 'Breakfast to late lunch seven days, and a four-course supper on Friday nights. The list is short because it moves with the delivery, and every plate is photographed on the menu page.',
+    points: ['08:00 – 16:00 daily, Friday supper 18:00', 'Forty covers, twelve tables and a long bench', 'Walk-ins only — no online booking'],
+    cta: 'See the menu', to: '/menu', textOrder: 1, imgOrder: 2,
   },
   {
-    kicker: 'Together',
-    title: 'Make your memories',
-    body: 'Long tables, good light and a room that wants you to stay for a second coffee. Come for the food, stay for the people.',
-    placeholder: 'Friends sharing a table over coffee',
+    num: '02', kicker: 'Vertex showroom', title: 'Everything here is for sale',
+    placeholder: 'Vertex lighting and seating in the room',
+    body: 'Vertex is an online interiors shop, and this room is its showroom. Chairs, pendants, tables, tableware and wall systems are all live products. Tap a piece and you get the spec and the price; checkout happens on the Vertex site.',
+    points: ['Six pieces tagged in the room shot below', 'Prices, finishes and lead times on every piece', 'New arrivals on the floor every Friday'],
+    cta: 'Shop the room', to: '/shop', textOrder: 2, imgOrder: 1,
   },
   {
-    kicker: 'Mood',
-    title: 'Good food, good mood',
-    body: 'From the playlist to the plating, everything here is tuned to send you out lighter than you came in.',
-    placeholder: 'Guest enjoying a drink, relaxed mood',
+    num: '03', kicker: 'Off-site', title: 'Catering, at your address',
+    placeholder: 'Crates being loaded, off-site setup',
+    body: 'Everything we cook for you away from the café: boxed desk lunches, staffed buffets and full off-site events. Same kitchen, delivered in reusable crates, invoiced monthly with a named contact.',
+    points: ['Ten to two hundred covers', "From 48 hours' notice on lunches", 'Weekly standing orders discounted 10%'],
+    cta: 'Catering packages', to: '/catering', tab: 'Catering', textOrder: 1, imgOrder: 2,
   },
-];
-
-export const moments = [
-  { label: 'Modern', placeholder: 'Coffee on a marble counter' },
-  { label: 'Classy', placeholder: 'Wine shared between two guests' },
-  { label: 'Community', placeholder: 'A group laughing over the table' },
-  { label: 'Lifestyle', placeholder: 'Guest relaxed with a warm drink' },
+  {
+    num: '04', kicker: 'In the café', title: 'Events, held here',
+    placeholder: 'Room set for a private evening',
+    body: 'Private nights happen in this room and nowhere else — the floor after service, or before we open. Supper clubs, launch nights for new Vertex pieces, tastings and private breakfasts.',
+    points: ['Forty seated, sixty standing', 'The floor can be re-dressed for your brand', "Three to five weeks' notice"],
+    cta: 'Event formats', to: '/catering', tab: 'Events', textOrder: 2, imgOrder: 1,
+  },
 ];

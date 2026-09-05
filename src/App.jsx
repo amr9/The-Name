@@ -1,27 +1,33 @@
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
-import WhatsAppButton from './components/WhatsAppButton.jsx';
+import ChatModal from './components/ChatModal.jsx';
+import { WhatsAppFab } from './components/WhatsAppButton.jsx';
+import { ChatProvider } from './context/ChatContext.jsx';
+import useCarouselAutoplay from './hooks/useCarouselAutoplay.js';
 import Home from './pages/Home/Home.jsx';
 import Menu from './pages/Menu/Menu.jsx';
-import Gallery from './pages/Gallery/Gallery.jsx';
-import Contact from './pages/Contact/Contact.jsx';
+import Shop from './pages/Shop/Shop.jsx';
+import Trade from './pages/Trade/Trade.jsx';
 import './components/WhatsAppButton.css';
 
 export default function App() {
+  useCarouselAutoplay();
+
   return (
-    <>
+    <ChatProvider>
       <Navbar />
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/catering" element={<Trade />} />
         </Routes>
       </main>
       <Footer />
-      <WhatsAppButton floating />
-    </>
+      <WhatsAppFab />
+      <ChatModal />
+    </ChatProvider>
   );
 }

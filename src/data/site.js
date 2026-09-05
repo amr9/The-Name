@@ -1,16 +1,13 @@
-// Shared brand/contact data used across pages — edit here to update it
-// everywhere (navbar, footer, contact page, WhatsApp links).
+// Shared site data used across pages — edit here to update it everywhere
+// (navbar, footer, contact links).
 export const site = {
   name: 'The Name',
-  tagline: 'Your Social Hub',
-  phone: '+971 50 000 0000',
-  address: 'D3 Dubai, Building 9',
-  website: 'www.thename.me',
-  instagram: '@thenamesocialhub',
+  phone: '+44 7700 900123',
+  shopUrl: 'https://example.com/vertex',
   hours: [
-    { day: 'Mon – Thu', time: '08:00 – 23:00' },
-    { day: 'Fri – Sat', time: '08:00 – 01:00' },
-    { day: 'Sunday', time: '09:00 – 22:00' },
+    { day: 'Mon – Thu', time: '08:00 – 16:00' },
+    { day: 'Friday', time: '08:00 – 16:00 · supper 18:00' },
+    { day: 'Sat – Sun', time: '09:00 – 16:00' },
   ],
 };
 
@@ -19,6 +16,13 @@ export const waLink = 'https://wa.me/' + site.phone.replace(/[^0-9]/g, '');
 export const navLinks = [
   { to: '/', label: 'Home' },
   { to: '/menu', label: 'Menu' },
-  { to: '/gallery', label: 'Gallery' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/shop', label: 'Vertex pieces' },
+  { to: '/catering', label: 'Catering & events' },
+];
+
+export const languages = [
+  { code: 'EN', name: 'English' },
+  { code: 'AR', name: 'العربية' },
+  { code: 'FR', name: 'Français' },
+  { code: 'ES', name: 'Español' },
 ];
