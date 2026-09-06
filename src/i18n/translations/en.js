@@ -26,6 +26,17 @@ export default {
       ctaMenu: 'See the menu',
       ctaShop: 'Shop the room',
     },
+    partners: {
+      kicker: 'Order in',
+      heading: 'Also on your favourite apps',
+      lede: 'The full menu is live on both, delivered hot across the city.',
+      prev: 'Previous partner',
+      next: 'Next partner',
+      items: {
+        talabat: { name: 'talabat', note: 'Daily delivery, 08:00 – 16:00.', cta: 'Order on talabat' },
+        noon: { name: 'noon', note: 'Same kitchen, same menu, noon minutes fast.', cta: 'Order on noon' },
+      },
+    },
     whatWeDo: {
       kicker: 'What we do',
       heading: 'Four services, one room',

@@ -26,6 +26,17 @@ export default {
       ctaMenu: 'Ver el menú',
       ctaShop: 'Explorar la sala',
     },
+    partners: {
+      kicker: 'Pide a domicilio',
+      heading: 'También en tus apps favoritas',
+      lede: 'La carta completa está en ambas, entregada caliente en toda la ciudad.',
+      prev: 'Socio anterior',
+      next: 'Socio siguiente',
+      items: {
+        talabat: { name: 'talabat', note: 'Entrega diaria, 08:00 – 16:00.', cta: 'Pedir en talabat' },
+        noon: { name: 'noon', note: 'La misma cocina, la misma carta, en minutos.', cta: 'Pedir en noon' },
+      },
+    },
     whatWeDo: {
       kicker: 'Qué hacemos',
       heading: 'Cuatro servicios, una sola sala',

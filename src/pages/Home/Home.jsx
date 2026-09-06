@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Carousel from '../../components/Carousel.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import { catalogue } from '../../data/catalogue.js';
 import { media } from '../../data/media.js';
 import { site } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import { services } from './data.js';
+import { partners, services } from './data.js';
 import './Home.css';
 
 export default function Home() {
@@ -31,6 +32,37 @@ export default function Home() {
             <Link to="/shop" className="btn btn-secondary home-hero-secondary">{t.home.hero.ctaShop}</Link>
           </div>
         </div>
+      </section>
+
+      {/* delivery partners — scrolls in under the hero video */}
+      <section className="container home-partners">
+        <div className="home-partners-heading">
+          <div>
+            <span className="card-kicker">{t.home.partners.kicker}</span>
+            <h2 className="home-partners-title">{t.home.partners.heading}</h2>
+          </div>
+          <p className="home-partners-lede">{t.home.partners.lede}</p>
+        </div>
+
+        <Carousel prevLabel={t.home.partners.prev} nextLabel={t.home.partners.next}>
+          {partners.map((p) => {
+            const info = t.home.partners.items[p.id];
+            return (
+              <div key={p.id} className="card elev-sm carousel-card home-partner-card">
+                <div className="home-partner-logo">
+                  <ImagePlaceholder src={media.partners[p.id]} label={info.name} ratio="16 / 9" />
+                </div>
+                <div className="home-partner-body">
+                  <h3 className="card-title">{info.name}</h3>
+                  <p className="card-body">{info.note}</p>
+                  <a className="btn btn-secondary" href={p.url} target="_blank" rel="noopener noreferrer">
+                    {info.cta}
+                  </a>
+                </div>
+              </div>
+            );
+          })}
+        </Carousel>
       </section>
 
       {/* what we do — services, one image each */}

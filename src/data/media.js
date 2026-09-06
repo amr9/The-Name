@@ -48,6 +48,12 @@ export const media = {
     'VX-611': `${BASE}/vertex/vx-611.jpg`,
   },
 
+  // Delivery partner logos — keys match pages/Home/data.js `partners` id.
+  partners: {
+    talabat: `${BASE}/partners/talabat.png`,
+    noon: `${BASE}/partners/noon.png`,
+  },
+
   // Catering & events — keys match the tab keys ('Events' | 'Catering').
   catering: {
     Events: `${BASE}/catering/events.jpg`,

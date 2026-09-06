@@ -26,6 +26,17 @@ export default {
       ctaMenu: 'Voir le menu',
       ctaShop: 'Explorer la salle',
     },
+    partners: {
+      kicker: 'Commander',
+      heading: 'Aussi sur vos applis préférées',
+      lede: 'La carte complète est disponible sur les deux, livrée chaude dans toute la ville.',
+      prev: 'Partenaire précédent',
+      next: 'Partenaire suivant',
+      items: {
+        talabat: { name: 'talabat', note: 'Livraison tous les jours, 08:00 – 16:00.', cta: 'Commander sur talabat' },
+        noon: { name: 'noon', note: 'Même cuisine, même carte, livrée en minutes.', cta: 'Commander sur noon' },
+      },
+    },
     whatWeDo: {
       kicker: 'Ce que nous faisons',
       heading: 'Quatre services, une seule salle',
