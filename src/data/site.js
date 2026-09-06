@@ -3,11 +3,15 @@
 // not here — this file only holds structural/non-linguistic facts.
 export const site = {
   name: 'The Name',
-  phone: '+44 7700 900123',
+  phone: '+971 54 344 4565',
+  // Where the contact form's submissions are meant to land.
+  email: 'operations@thename.me',
   shopUrl: 'https://example.com/vertex',
 };
 
-export const waLink = 'https://wa.me/' + site.phone.replace(/[^0-9]/g, '');
+// Every WhatsApp trigger on the site links here, and the footer prints
+// `site.phone` itself — so the number above is the single place to change it.
+export const waLink = `https://wa.me/${site.phone.replace(/[^0-9]/g, '')}`;
 
 // Social profiles, shown as icon links in the footer.
 // TODO: swap these placeholder URLs for the real handles.
@@ -23,4 +27,5 @@ export const navLinks = [
   { to: '/menu', key: 'menu' },
   { to: '/shop', key: 'vertex' },
   { to: '/catering', key: 'catering' },
+  { to: '/contact', key: 'contact' },
 ];

@@ -1,13 +1,31 @@
 export default {
-  nav: { home: 'Accueil', menu: 'Menu', vertex: 'Boutique Vertex', catering: 'Traiteur & événements' },
+  nav: { home: 'Accueil', menu: 'Menu', vertex: 'Boutique Vertex', catering: 'Traiteur & événements', contact: 'Contact' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Discuter sur WhatsApp' },
 
-  chat: {
-    kicker: 'WhatsApp',
-    title: 'Ouvre une discussion avec le comptoir',
-    body: "Sur le site en ligne, ce bouton ouvre directement WhatsApp avec le numéro du restaurant déjà rempli. Renseignez le vrai numéro et tout fonctionnera.",
-    gotIt: 'Compris',
+  contact: {
+    kicker: 'Contact',
+    title: 'Dites-nous ce qu’il vous faut.',
+    body: 'Réservations à partir de huit personnes, devis traiteur, soirées privées, presse et demandes professionnelles Vertex — écrivez-nous ici et le bureau des opérations s’en occupe.',
+    emailHeading: 'E-mail',
+    phoneHeading: 'Téléphone et WhatsApp',
+    optional: 'facultatif',
+    send: 'Envoyer le message',
+    sending: 'Envoi…',
+    privacy: 'Vos coordonnées servent uniquement à répondre à cette demande.',
+    sentTitle: 'Merci — c’est bien reçu.',
+    sentBody: 'Le bureau des opérations répond sous un jour ouvré. Pour une urgence pendant le service, WhatsApp est plus rapide.',
+    sendAnother: 'Envoyer un autre message',
+    fields: {
+      name: { label: 'Nom', placeholder: 'Votre nom' },
+      email: { label: 'E-mail', placeholder: 'vous@exemple.com' },
+      phone: { label: 'Téléphone', placeholder: '+971 …' },
+      message: { label: 'Message', placeholder: 'Dates, nombre de personnes, et tout ce qu’il faut savoir.' },
+    },
+    errors: {
+      required: 'Ce champ est requis.',
+      email: 'Cette adresse e-mail semble incorrecte.',
+    },
   },
 
   footer: {

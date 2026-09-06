@@ -1,13 +1,31 @@
 export default {
-  nav: { home: 'Inicio', menu: 'Menú', vertex: 'Tienda Vertex', catering: 'Catering y eventos' },
+  nav: { home: 'Inicio', menu: 'Menú', vertex: 'Tienda Vertex', catering: 'Catering y eventos', contact: 'Contacto' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chatear por WhatsApp' },
 
-  chat: {
-    kicker: 'WhatsApp',
-    title: 'Abre un chat con el mostrador',
-    body: 'En el sitio en vivo, esto abre WhatsApp directamente con el número del restaurante ya escrito. Añade el número real y quedará listo.',
-    gotIt: 'Entendido',
+  contact: {
+    kicker: 'Contacto',
+    title: 'Cuéntanos qué necesitas.',
+    body: 'Reservas de ocho personas o más, presupuestos de catering, noches privadas, prensa y consultas profesionales de Vertex — escríbenos aquí y el equipo de operaciones lo atiende.',
+    emailHeading: 'Correo',
+    phoneHeading: 'Teléfono y WhatsApp',
+    optional: 'opcional',
+    send: 'Enviar mensaje',
+    sending: 'Enviando…',
+    privacy: 'Usamos tus datos solo para responder a esta consulta.',
+    sentTitle: 'Gracias — ya lo tenemos.',
+    sentBody: 'El equipo de operaciones responde en un día laborable. Si es urgente durante el servicio, WhatsApp es más rápido.',
+    sendAnother: 'Enviar otro mensaje',
+    fields: {
+      name: { label: 'Nombre', placeholder: 'Tu nombre' },
+      email: { label: 'Correo', placeholder: 'tu@ejemplo.com' },
+      phone: { label: 'Teléfono', placeholder: '+971 …' },
+      message: { label: 'Mensaje', placeholder: 'Fechas, número de personas y todo lo que debamos saber.' },
+    },
+    errors: {
+      required: 'Este campo es necesario.',
+      email: 'Esa dirección de correo no parece correcta.',
+    },
   },
 
   footer: {

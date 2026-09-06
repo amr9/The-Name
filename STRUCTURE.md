@@ -21,7 +21,7 @@ docs, so keep this in sync rather than letting it drift.
 src/
   main.jsx            — ReactDOM root; wraps App in BrowserRouter + LanguageProvider
   App.jsx             — route table (/, /menu, /shop, /catering) + global chrome
-                         (Navbar, Footer, floating WhatsApp button, chat modal)
+                         (Navbar, Footer, floating WhatsApp button)
 
   pages/<PageName>/   — one folder per route
     <PageName>.jsx     — the page component
@@ -40,9 +40,14 @@ src/
                                     (e.g. Footer/SocialLinks.jsx).
 
   data/
-    site.js            — cross-page structural facts (phone, shop URL,
+    site.js            — cross-page structural facts (phone, contact email,
+                          shop URL,
                           nav link routes+keys, social profile URLs).
-                          No display text.
+                          No display text. `waLink` is derived from
+                          `site.phone` here and is the ONLY WhatsApp URL in
+                          the codebase — every trigger goes through
+                          components/WhatsAppButton.jsx, so changing the
+                          number is a one-line edit.
     media.js            — maps every image slot to a file under
                           `public/media/`, keyed by the same ids the page
                           data + i18n use. Also serves as the shot list of
@@ -62,10 +67,6 @@ src/
                         — ALL display copy for the whole site, nested to
                           mirror each page's structural data.js so lookups
                           are `t.<page>.<section>[id]`.
-
-  context/ChatContext.jsx — ChatProvider/useChat(): open/close state for the
-                          "WhatsApp" placeholder modal, shared by every
-                          WhatsApp trigger button across the site.
 
   hooks/useCarouselAutoplay.js — global effect that auto-advances every
                           `.carousel-track` on screen every 4.2s.
@@ -120,6 +121,7 @@ placeholder instead, so partially-supplied media degrades cleanly.
 | `/menu` | `pages/Menu/` | List/Cards toggle (shared `ViewToggle`), 3 sections, autoplaying carousels |
 | `/shop` | `pages/VertexPieces/` | Catalogue filters, List/Cards toggle, autoplaying carousel |
 | `/catering` | `pages/CateringEvents/` | Events/Catering tabs, packages table, direct-line panel |
+| `/contact` | `pages/Contact/` | Enquiry form (name/email/phone/message) with client-side validation and a sent state. **Nothing is transmitted yet** — the submit handler in `Contact.jsx` is a marked stub; wire it to a form relay or backend and submissions go to `site.email`. |
 
 ## Conventions (read before adding code)
 

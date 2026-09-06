@@ -1,13 +1,31 @@
 export default {
-  nav: { home: 'Home', menu: 'Menu', vertex: 'Vertex Shop', catering: 'Catering & Events' },
+  nav: { home: 'Home', menu: 'Menu', vertex: 'Vertex Shop', catering: 'Catering & Events', contact: 'Contact' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chat on WhatsApp' },
 
-  chat: {
-    kicker: 'WhatsApp',
-    title: 'Opens a chat with the counter',
-    body: "In the live site this jumps straight to WhatsApp with the restaurant's number pre-filled. Send the real number and it wires up.",
-    gotIt: 'Got it',
+  contact: {
+    kicker: 'Contact',
+    title: 'Tell us what you need.',
+    body: 'Bookings for eight or more, catering quotes, private nights, press and Vertex trade enquiries — send it here and the operations desk picks it up.',
+    emailHeading: 'Email',
+    phoneHeading: 'Phone & WhatsApp',
+    optional: 'optional',
+    send: 'Send message',
+    sending: 'Sending…',
+    privacy: 'We use your details to answer this enquiry and nothing else.',
+    sentTitle: 'Thank you — that is with us.',
+    sentBody: 'The operations desk replies within one working day. For anything urgent during service, WhatsApp is faster.',
+    sendAnother: 'Send another message',
+    fields: {
+      name: { label: 'Name', placeholder: 'Your name' },
+      email: { label: 'Email', placeholder: 'you@example.com' },
+      phone: { label: 'Phone', placeholder: '+971 …' },
+      message: { label: 'Message', placeholder: 'Dates, numbers, and anything we should know.' },
+    },
+    errors: {
+      required: 'This one is needed.',
+      email: 'That email address does not look right.',
+    },
   },
 
   footer: {
