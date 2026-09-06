@@ -49,9 +49,15 @@ export const media = {
   },
 
   // Delivery partner logos — keys match pages/Home/data.js `partners` id.
+  // These two are hot-linked from each brand's own CDN rather than copied
+  // into public/media/, so a rebrand on their side shows up here with no
+  // change. If either URL ever moves, <ImagePlaceholder> falls back to its
+  // dashed slot — drop a local file in public/media/partners/ and point the
+  // path below at it to pin the asset instead.
   partners: {
-    talabat: `${BASE}/partners/talabat.png`,
-    noon: `${BASE}/partners/noon.png`,
+    talabat: 'https://www.talabat.com/assets/images/remix-logo.svg',
+    // noon also publishes an Arabic lockup at .../noon-logo-ar.svg.
+    noon: 'https://f.nooncdn.com/s/app/com/noon/design-system/logos/noon-logo-en.svg',
   },
 
   // Catering & events — keys match the tab keys ('Events' | 'Catering').

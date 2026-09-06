@@ -96,8 +96,11 @@ public/media/
   menu/       — menu dishes
   vertex/     — the Vertex pieces, named by product code
   catering/   — the Events / Catering tab images
-  partners/   — delivery-partner logos (talabat, noon) for the Home
-                rolling logo strip
+  partners/   — reserved for delivery-partner logos. Currently empty: the
+                Home logo strip hot-links talabat's and noon's own CDN URLs
+                (see data/media.js `partners`) so a rebrand on their side
+                appears automatically. Drop a file here and repoint that
+                entry to pin an asset locally instead.
   brand/      — logo exports and other brand assets. Contains
                 `footer-pattern.svg`: the guideline's hand-drawn wavy line
                 texture, a seamlessly tiling tile used as the footer

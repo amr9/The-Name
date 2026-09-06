@@ -55,7 +55,7 @@ export default function Home() {
                       <ImagePlaceholder
                         src={media.partners[p.id]}
                         label={t.home.partners.items[p.id].name}
-                        ratio="16 / 9"
+                        ratio="3 / 1"
                         className="home-partners-logo"
                       />
                     </a>
