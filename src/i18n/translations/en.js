@@ -28,13 +28,10 @@ export default {
     },
     partners: {
       kicker: 'Order in',
-      heading: 'Also on your favourite apps',
-      lede: 'The full menu is live on both, delivered hot across the city.',
-      prev: 'Previous partner',
-      next: 'Next partner',
+      lede: 'The full menu is live on our delivery partners, hot across the city.',
       items: {
-        talabat: { name: 'talabat', note: 'Daily delivery, 08:00 – 16:00.', cta: 'Order on talabat' },
-        noon: { name: 'noon', note: 'Same kitchen, same menu, noon minutes fast.', cta: 'Order on noon' },
+        talabat: { name: 'talabat' },
+        noon: { name: 'noon' },
       },
     },
     whatWeDo: {

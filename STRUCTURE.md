@@ -97,7 +97,7 @@ public/media/
   vertex/     — the Vertex pieces, named by product code
   catering/   — the Events / Catering tab images
   partners/   — delivery-partner logos (talabat, noon) for the Home
-                partners carousel
+                rolling logo strip
   brand/      — logo exports and other brand assets. Contains
                 `footer-pattern.svg`: the guideline's hand-drawn wavy line
                 texture, a seamlessly tiling tile used as the footer
@@ -113,7 +113,7 @@ placeholder instead, so partially-supplied media degrades cleanly.
 
 | Route | Folder | Notes |
 |---|---|---|
-| `/` | `pages/Home/` | Hero, delivery-partners carousel (shared `Carousel`, one partner per slide), 4 services, "shop the room" hotspot panel (reads `data/catalogue.js` + `i18n` vertex.items), Friday promo, closing CTA |
+| `/` | `pages/Home/` | Hero, rolling delivery-partner logo strip (CSS marquee, duplicated row), 4 services, "shop the room" hotspot panel (reads `data/catalogue.js` + `i18n` vertex.items), Friday promo, closing CTA |
 | `/menu` | `pages/Menu/` | List/Cards toggle (shared `ViewToggle`), 3 sections, autoplaying carousels |
 | `/shop` | `pages/VertexPieces/` | Catalogue filters, List/Cards toggle, autoplaying carousel |
 | `/catering` | `pages/CateringEvents/` | Events/Catering tabs, packages table, direct-line panel |

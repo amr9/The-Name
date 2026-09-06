@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Carousel from '../../components/Carousel.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import { catalogue } from '../../data/catalogue.js';
@@ -15,6 +14,9 @@ export default function Home() {
   const [pin, setPin] = useState(0);
   const piece = catalogue[pin];
   const sel = t.vertex.items[piece.code];
+  // Only two partners, so the row is padded out to fill a wide screen before
+  // the track duplicates it for the loop.
+  const partnerStrip = [partners, partners, partners, partners].flat();
 
   return (
     <div className="home">
@@ -34,35 +36,35 @@ export default function Home() {
         </div>
       </section>
 
-      {/* delivery partners — scrolls in under the hero video */}
-      <section className="container home-partners">
-        <div className="home-partners-heading">
-          <div>
-            <span className="card-kicker">{t.home.partners.kicker}</span>
-            <h2 className="home-partners-title">{t.home.partners.heading}</h2>
-          </div>
+      {/* delivery partners — a slow, continuously rolling logo strip */}
+      <section className="home-partners">
+        <div className="container home-partners-heading">
+          <span className="card-kicker">{t.home.partners.kicker}</span>
           <p className="home-partners-lede">{t.home.partners.lede}</p>
         </div>
 
-        <Carousel prevLabel={t.home.partners.prev} nextLabel={t.home.partners.next}>
-          {partners.map((p) => {
-            const info = t.home.partners.items[p.id];
-            return (
-              <div key={p.id} className="card elev-sm carousel-card home-partner-card">
-                <div className="home-partner-logo">
-                  <ImagePlaceholder src={media.partners[p.id]} label={info.name} ratio="16 / 9" />
-                </div>
-                <div className="home-partner-body">
-                  <h3 className="card-title">{info.name}</h3>
-                  <p className="card-body">{info.note}</p>
-                  <a className="btn btn-secondary" href={p.url} target="_blank" rel="noopener noreferrer">
-                    {info.cta}
-                  </a>
-                </div>
-              </div>
-            );
-          })}
-        </Carousel>
+        {/* the list is rendered twice back to back so the -50% translation
+            lands exactly on the start of the copy — a seamless loop */}
+        <div className="home-partners-marquee">
+          <div className="home-partners-track">
+            {[0, 1].map((copy) => (
+              <ul key={copy} className="home-partners-row" aria-hidden={copy === 1}>
+                {partnerStrip.map((p, i) => (
+                  <li key={`${p.id}-${i}`} className="home-partners-item">
+                    <a href={p.url} target="_blank" rel="noopener noreferrer" className="home-partners-link">
+                      <ImagePlaceholder
+                        src={media.partners[p.id]}
+                        label={t.home.partners.items[p.id].name}
+                        ratio="16 / 9"
+                        className="home-partners-logo"
+                      />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* what we do — services, one image each */}
