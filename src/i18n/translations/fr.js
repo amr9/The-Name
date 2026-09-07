@@ -45,8 +45,7 @@ export default {
       ctaShop: 'Explorer la salle',
     },
     partners: {
-      kicker: 'Commander',
-      lede: 'La carte complète est disponible chez nos partenaires de livraison, servie chaude dans toute la ville.',
+      heading: 'Nos partenaires',
       items: {
         talabat: { name: 'talabat' },
         noon: { name: 'noon' },

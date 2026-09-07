@@ -1,6 +1,9 @@
 .navbar {
   position: sticky;
   top: 0;
+  /* Below the desktop breakpoint the bar wraps to two or three rows, so it
+     may only be pinned to the token height where it genuinely fits one. */
+  min-height: var(--navbar-h);
   z-index: 40;
   background: color-mix(in srgb, #fff 86%, transparent);
   backdrop-filter: blur(12px);
@@ -10,4 +13,8 @@
 
 .navbar-link {
   font-size: 14px;
+}
+
+@media (min-width: 861px) {
+  .navbar { height: var(--navbar-h); }
 }

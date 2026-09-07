@@ -38,10 +38,7 @@ export default function Home() {
 
       {/* delivery partners — a slow, continuously rolling logo strip */}
       <section className="home-partners">
-        <div className="container home-partners-heading">
-          <span className="card-kicker">{t.home.partners.kicker}</span>
-          <p className="home-partners-lede">{t.home.partners.lede}</p>
-        </div>
+        <h2 className="container home-partners-heading">{t.home.partners.heading}</h2>
 
         {/* the list is rendered twice back to back so the -50% translation
             lands exactly on the start of the copy — a seamless loop */}

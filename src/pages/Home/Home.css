@@ -1,7 +1,10 @@
 /* — hero — */
 .home-hero {
   position: relative;
-  height: min(calc(100vh - 66px), 820px);
+  /* Fills exactly the space under the sticky navbar, so the opening view is
+     the video and its heading and nothing else. dvh keeps that true on
+     mobile, where the browser chrome shrinks the visible viewport. */
+  height: calc(100dvh - var(--navbar-h));
   min-height: 480px;
   overflow: hidden;
   background: var(--color-accent-100);
@@ -70,17 +73,9 @@
 /* Scoped so it outranks `.container`'s `margin: 0 auto`, which theme.css
    defines after this file. */
 .home-partners .home-partners-heading {
-  display: flex;
-  align-items: baseline;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 28px;
-}
-.home-partners-lede {
-  margin: 0;
-  font-size: 14px;
-  line-height: 24px;
-  opacity: 0.75;
+  margin: 0 auto 28px;
+  font-size: clamp(26px, 3vw, 38px);
+  line-height: 1.1;
 }
 
 /* The strip runs edge to edge; the mask fades it out at both ends so logos
@@ -98,8 +93,12 @@
 [dir='rtl'] .home-partners-track {
   animation-direction: reverse;
 }
-.home-partners-marquee:hover .home-partners-track {
-  animation-play-state: paused;
+/* Guarded: on a touchscreen the tapped element keeps :hover after you come
+   back from the partner's site, which would leave the strip frozen. */
+@media (hover: hover) and (pointer: fine) {
+  .home-partners-marquee:hover .home-partners-track {
+    animation-play-state: paused;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .home-partners-track { animation: none; }

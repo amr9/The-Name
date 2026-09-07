@@ -45,8 +45,7 @@ export default {
       ctaShop: 'Shop the room',
     },
     partners: {
-      kicker: 'Order in',
-      lede: 'The full menu is live on our delivery partners, hot across the city.',
+      heading: 'Our partners',
       items: {
         talabat: { name: 'talabat' },
         noon: { name: 'noon' },

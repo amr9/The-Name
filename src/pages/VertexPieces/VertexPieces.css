@@ -147,6 +147,26 @@
 .vertex-card .vertex-price { font-size: 20px; }
 
 @media (max-width: 700px) {
+  /* The six filters don't fit one pill row on a phone, and wrapping mid-pill
+     looks broken — so they become full-width blocks, two per row. */
+  .vertex-controls { align-items: stretch; }
+  .vertex-controls .seg {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+  }
+  .vertex-controls .seg-opt {
+    justify-content: center;
+    text-align: center;
+    border: 1px solid var(--color-divider);
+    border-radius: 999px;
+    white-space: normal;
+  }
+
   .vertex-row, .vertex-list-row { flex-wrap: wrap; }
   .vertex-list-price-col {
     flex-direction: row !important;

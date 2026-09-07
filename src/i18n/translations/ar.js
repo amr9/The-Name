@@ -45,8 +45,7 @@ export default {
       ctaShop: 'تسوّق الصالة',
     },
     partners: {
-      kicker: 'اطلب للتوصيل',
-      lede: 'القائمة كاملة متاحة لدى شركاء التوصيل، وتصل ساخنة إلى كل أنحاء المدينة.',
+      heading: 'شركاؤنا',
       items: {
         talabat: { name: 'طلبات' },
         noon: { name: 'نون' },

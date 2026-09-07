@@ -45,8 +45,7 @@ export default {
       ctaShop: 'Explorar la sala',
     },
     partners: {
-      kicker: 'Pide a domicilio',
-      lede: 'La carta completa está en nuestros socios de reparto, caliente en toda la ciudad.',
+      heading: 'Nuestros socios',
       items: {
         talabat: { name: 'talabat' },
         noon: { name: 'noon' },
