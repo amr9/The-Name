@@ -31,7 +31,7 @@ export default {
   footer: {
     address: ['12 Rowan Street', 'City centre'],
     contactHeading: 'Contact us',
-    note: 'WhatsApp only — tables, allergens, quotes and pieces. Replies within the hour during service.',
+    note: 'WhatsApp — tables, allergens, quotes and pieces. Replies within the hour during service.',
     message: 'Message us',
     rights: 'All rights reserved.',
   },
@@ -97,12 +97,6 @@ export default {
       leadTime: 'Lead time',
       openShop: 'Open on the Vertex shop ↗',
       checkoutNote: 'Checkout happens on the Vertex site',
-    },
-    friday: {
-      kicker: 'EVERY FRIDAY',
-      title: 'The room is re-dressed',
-      body: "New Vertex pieces come onto the floor every Friday and the kitchen builds a four-course supper around them. You eat in next week's catalogue before anyone else sees it.",
-      cta: 'Ask about Friday',
     },
     closing: {
       title: "We can't wait to meet you.",

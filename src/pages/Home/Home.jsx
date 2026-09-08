@@ -164,18 +164,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* friday */}
-      <section className="container home-friday">
-        <div className="home-friday-inner">
-          <div>
-            <span className="home-friday-kicker">{t.home.friday.kicker}</span>
-            <h2 className="home-friday-title">{t.home.friday.title}</h2>
-            <p className="home-friday-body">{t.home.friday.body}</p>
-          </div>
-          <WhatsAppButton className="btn btn-dark">{t.home.friday.cta}</WhatsAppButton>
-        </div>
-      </section>
-
       <section className="container home-closing">
         <div className="home-closing-inner">
           <div>

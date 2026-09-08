@@ -118,7 +118,7 @@ placeholder instead, so partially-supplied media degrades cleanly.
 
 | Route | Folder | Notes |
 |---|---|---|
-| `/` | `pages/Home/` | Hero, rolling delivery-partner logo strip (CSS marquee, duplicated row), 4 services, "shop the room" hotspot panel (reads `data/catalogue.js` + `i18n` vertex.items), Friday promo, closing CTA |
+| `/` | `pages/Home/` | Hero, rolling delivery-partner logo strip (CSS marquee, duplicated row), 4 services, "shop the room" hotspot panel (reads `data/catalogue.js` + `i18n` vertex.items), closing CTA |
 | `/menu` | `pages/Menu/` | List/Cards toggle (shared `ViewToggle`), 3 sections, autoplaying carousels |
 | `/shop` | `pages/VertexPieces/` | Catalogue filters, List/Cards toggle, autoplaying carousel |
 | `/catering` | `pages/CateringEvents/` | Events/Catering tabs, packages table, direct-line panel |
