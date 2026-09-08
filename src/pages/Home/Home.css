@@ -44,7 +44,7 @@
 }
 
 .home-hero-body {
-  font-size: 17px;
+  font-size: var(--text-lg);
   line-height: 28px;
   max-width: 52ch;
   margin: 20px 0 0;
@@ -150,7 +150,7 @@
   max-width: 26ch;
 }
 .home-services-body {
-  font-size: 16.5px;
+  font-size: var(--text-lg);
   line-height: 28px;
   max-width: 56ch;
   margin: 18px 0 0;
@@ -174,7 +174,7 @@
 .home-service-num {
   font-family: var(--font-heading);
   font-weight: var(--font-heading-weight);
-  font-size: 15px;
+  font-size: var(--text-sm);
   color: var(--color-accent-700);
   font-variant-numeric: tabular-nums;
 }
@@ -184,7 +184,7 @@
   background: var(--color-accent-300);
 }
 .home-service-kicker {
-  font-size: 11px;
+  font-size: var(--text-xs);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-accent-700);
@@ -196,7 +196,7 @@
   margin-left: -0.028em;
 }
 .home-service-body {
-  font-size: 16px;
+  font-size: var(--text-body);
   line-height: 28px;
   max-width: 48ch;
   margin: 16px 0 0;
@@ -211,7 +211,7 @@
   display: flex;
   gap: 10px;
   align-items: center;
-  font-size: 14.5px;
+  font-size: var(--text-body);
   line-height: 24px;
 }
 .home-service-dot {
@@ -263,7 +263,7 @@
 }
 .home-shop-room-lede {
   margin: 0;
-  font-size: 15.5px;
+  font-size: var(--text-body);
   line-height: 28px;
   max-width: 36ch;
 }
@@ -291,7 +291,7 @@
   color: var(--color-black);
   cursor: pointer;
   font-family: var(--font-heading);
-  font-size: 14px;
+  font-size: var(--text-sm);
   box-shadow: var(--shadow-md);
   display: grid;
   place-content: center;
@@ -311,7 +311,7 @@
   box-shadow: var(--shadow-sm);
 }
 .home-shop-room-panel-meta {
-  font-size: 11px;
+  font-size: var(--text-xs);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--color-accent-700);
@@ -328,7 +328,7 @@
 }
 .home-shop-room-panel-note {
   margin: 10px 0 0;
-  font-size: 14.5px;
+  font-size: var(--text-body);
   line-height: 24px;
   opacity: 0.8;
 }
@@ -339,7 +339,7 @@
   margin: 16px 0;
   padding-top: 14px;
   border-top: 1px solid var(--color-accent-200);
-  font-size: 13px;
+  font-size: var(--text-sm);
   opacity: 0.8;
 }
 .home-shop-room-panel-price {
@@ -367,7 +367,7 @@
   background: var(--gradient-accent);
 }
 .home-friday-kicker {
-  font-size: 11px;
+  font-size: var(--text-xs);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-accent-700);
@@ -379,7 +379,7 @@
   margin-left: -0.028em;
 }
 .home-friday-body {
-  font-size: 15.5px;
+  font-size: var(--text-body);
   line-height: 28px;
   max-width: 56ch;
   margin: 12px 0 0;
@@ -405,7 +405,7 @@
 }
 .home-closing-body {
   margin: 0;
-  font-size: 15.5px;
+  font-size: var(--text-body);
   line-height: 28px;
   max-width: 54ch;
 }

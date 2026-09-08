@@ -12,7 +12,7 @@
 }
 
 .navbar-link {
-  font-size: 14px;
+  font-size: var(--text-sm);
 }
 
 @media (min-width: 861px) {

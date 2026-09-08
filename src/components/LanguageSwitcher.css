@@ -45,13 +45,13 @@
   cursor: pointer;
   padding: 10px 12px;
   border-radius: calc(var(--radius-lg) - 6px);
-  font-size: 14.5px;
+  font-size: var(--text-sm);
 }
 .lang-switcher-option:hover { background: var(--color-accent-100); }
 .lang-switcher-option[data-active="true"] { background: var(--color-accent-100); }
 
 .lang-switcher-code {
-  font-size: 11px;
+  font-size: var(--text-xs);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-accent-700);

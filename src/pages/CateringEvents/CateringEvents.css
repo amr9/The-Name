@@ -10,7 +10,7 @@
 }
 
 .catering-intro-copy {
-  font-size: 17px;
+  font-size: var(--text-lg);
   line-height: 28px;
   max-width: 58ch;
   margin: 20px 0 32px;
@@ -21,7 +21,7 @@
 }
 .catering-tab-opt {
   padding: 9px 18px;
-  font-size: 14px;
+  font-size: var(--text-sm);
 }
 
 .catering-grid {
@@ -43,17 +43,17 @@
   margin: 0 0 8px;
 }
 .catering-section-intro {
-  font-size: 15.5px;
+  font-size: var(--text-body);
   line-height: 28px;
   max-width: 56ch;
   margin: 0 0 28px;
 }
 
-.catering-package-name { font-size: 15px; }
-.catering-package-note { font-size: 13px; opacity: 0.7; }
+.catering-package-name { font-size: var(--text-body); }
+.catering-package-note { font-size: var(--text-sm); opacity: 0.7; }
 
 .catering-footnote {
-  font-size: 13px;
+  font-size: var(--text-sm);
   opacity: 0.7;
   line-height: 24px;
   margin: 16px 0 0;
@@ -66,7 +66,7 @@
   padding: clamp(26px, 3vw, 36px);
 }
 .catering-direct-line-kicker {
-  font-size: 11px;
+  font-size: var(--text-xs);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-accent-700);
@@ -86,7 +86,7 @@
   display: flex;
   gap: 10px;
   align-items: center;
-  font-size: 14.5px;
+  font-size: var(--text-body);
   line-height: 24px;
 }
 .catering-ask-for-dot {
@@ -99,7 +99,7 @@
 
 .catering-reply-note {
   margin: 14px 0 0;
-  font-size: 12px;
+  font-size: var(--text-sm);
   opacity: 0.65;
   text-align: center;
 }

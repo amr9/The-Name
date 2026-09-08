@@ -77,8 +77,9 @@ src/
                           measured in the same coordinate space as
                           scrollLeft, so track padding can't skew the step.
 
-  styles/theme.css       — ALL design tokens (--color-*, --font-*, --space-*,
-                          --radius-*, --shadow-*, the named gradients) plus
+  styles/theme.css       — ALL design tokens (--color-*, --font-*, --text-*,
+                          --space-*, --radius-*, --shadow-*, the named
+                          gradients) plus
                           shared component classes (.btn*, .card, .tag,
                           .seg*, .table, .dialog, .carousel-*). A page/
                           component CSS file should only ever add layout
@@ -132,6 +133,15 @@ placeholder instead, so partially-supplied media degrades cleanly.
 2. **Every hardcoded color/font/spacing value is a bug.** Use the CSS custom
    properties in `theme.css`. If a new value is genuinely needed, add it as
    a token there, don't inline a hex code in a page CSS file.
+   In particular, **body copy uses the `--text-*` scale, never a raw px
+   size**: `--text-xs` (uppercase micro-labels, kickers, badges, table
+   heads), `--text-sm` (meta lines, footnotes, secondary notes),
+   `--text-body` (the default — descriptions, card bodies, list notes,
+   inputs, tables) and `--text-lg` (ledes / intro paragraphs under a page
+   title). Retuning the site's reading size is then a four-line edit in
+   `theme.css`. Only headings (the `h1`–`h6` rules and the per-page
+   `clamp()` display titles), prices and the logo still carry their own px
+   sizes.
 3. **DRY — before writing new JSX/CSS, search for an existing match.** This
    codebase has already hit and fixed real duplication twice:
    - The WhatsApp SVG icon existed in two places → extracted to

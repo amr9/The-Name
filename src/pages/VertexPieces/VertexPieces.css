@@ -8,7 +8,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 11px;
+  font-size: var(--text-xs);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   font-weight: 600;
@@ -32,7 +32,7 @@
   max-width: 24ch;
 }
 .vertex-hero-body {
-  font-size: 17px;
+  font-size: var(--text-lg);
   line-height: 28px;
   max-width: 58ch;
   margin: 20px 0 0;
@@ -56,7 +56,7 @@
   margin-bottom: 28px;
 }
 .vertex-result-count {
-  font-size: 12px;
+  font-size: var(--text-sm);
   opacity: 0.6;
   font-variant-numeric: tabular-nums;
 }
@@ -85,13 +85,13 @@
 }
 .vertex-list-title-row h3 { font-size: 20px; margin: 0; }
 .vertex-list-code {
-  font-size: 11px;
+  font-size: var(--text-xs);
   letter-spacing: 0.14em;
   opacity: 0.5;
   font-variant-numeric: tabular-nums;
 }
-.vertex-list-note { margin: 6px 0 0; font-size: 14.5px; line-height: 24px; opacity: 0.8; }
-.vertex-list-meta { margin: 6px 0 0; font-size: 12.5px; line-height: 22px; opacity: 0.7; }
+.vertex-list-note { margin: 6px 0 0; font-size: var(--text-body); line-height: 1.6; opacity: 0.8; }
+.vertex-list-meta { margin: 6px 0 0; font-size: var(--text-sm); line-height: 1.6; opacity: 0.7; }
 .vertex-list-price-col {
   display: flex;
   flex-direction: column;
@@ -105,7 +105,7 @@
 }
 .vertex-view-btn {
   min-height: 34px;
-  font-size: 13px;
+  font-size: var(--text-sm);
 }
 
 .vertex-card {
@@ -134,7 +134,7 @@
   gap: 6px;
   padding-top: 10px;
   border-top: 1px solid var(--color-accent-200);
-  font-size: 12.5px;
+  font-size: var(--text-sm);
   opacity: 0.78;
 }
 .vertex-card-bottom-row {

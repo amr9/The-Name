@@ -19,7 +19,7 @@
 }
 .contact-body {
   margin: var(--space-4) 0 0;
-  font-size: 16px;
+  font-size: var(--text-lg);
   line-height: 28px;
   max-width: 44ch;
 }
@@ -29,14 +29,14 @@
   margin: var(--space-8) 0;
 }
 .contact-detail dt {
-  font-size: 11px;
+  font-size: var(--text-xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-accent-700);
 }
 .contact-detail dd {
   margin: var(--space-1) 0 0;
-  font-size: 16px;
+  font-size: var(--text-body);
 }
 .contact-detail a {
   color: inherit;
@@ -61,12 +61,12 @@
   display: flex;
   align-items: baseline;
   gap: 8px;
-  font-size: 12px;
+  font-size: var(--text-xs);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 .contact-optional {
-  font-size: 11px;
+  font-size: var(--text-xs);
   letter-spacing: 0;
   text-transform: none;
   opacity: 0.55;
@@ -75,7 +75,7 @@
   width: 100%;
   padding: 12px 14px;
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: var(--text-body);
   color: var(--color-text);
   background: var(--color-white);
   border: 1px solid var(--color-divider);
@@ -98,7 +98,7 @@ textarea.contact-input {
   border-color: #b3261e;
 }
 .contact-error {
-  font-size: 12.5px;
+  font-size: var(--text-sm);
   color: #b3261e;
 }
 .contact-privacy {
@@ -123,7 +123,7 @@ textarea.contact-input {
 }
 .contact-sent-body {
   margin: 0;
-  font-size: 16px;
+  font-size: var(--text-lg);
   line-height: 28px;
 }
 
