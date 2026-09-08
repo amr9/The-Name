@@ -10,6 +10,9 @@ docs, so keep this in sync rather than letting it drift.
 - **Vite** + **React 18** (`src/main.jsx` is the entry, `index.html` is the
   required Vite HTML shell — it cannot be deleted, only its `<head>` content
   edited).
+- One backend: **`server/`**, a standalone Express service that receives the
+  contact form and emails it over SMTP. It has its own `package.json` and
+  its own `npm install` — the frontend stays dependency-light.
 - **react-router-dom** for routing (`src/App.jsx` defines the routes).
 - No CSS framework — plain CSS files, one per component/page, reading from
   design tokens in `src/styles/theme.css`.
@@ -17,7 +20,29 @@ docs, so keep this in sync rather than letting it drift.
 
 ## Folder layout
 
+The repo root holds three code trees: `src/` (the site), `server/` (the
+contact-form service) and `shared/` (the handful of modules both need).
+
 ```
+shared/
+  contactForm.js      — the contact form's field list, length caps, honeypot
+                        field name and `validateContact()`. Imported by BOTH
+                        the React form (via pages/Contact/data.js, which just
+                        re-exports it) and server/index.js, so the browser and
+                        the server can never validate by different rules.
+                        Structural only — it returns error KEYS, and each side
+                        turns them into its own copy.
+
+server/               — the contact-form service (its own package.json, run
+                        with `npm start` in that folder; Node 20.6+)
+  index.js            — the whole service: POST /api/contact + GET /api/health,
+                        CORS allowlist, in-memory rate limit, honeypot check,
+                        shared validation, nodemailer SMTP send.
+  .env                — every var it needs (SMTP creds, ALLOWED_ORIGINS,
+                        MAIL_TO). Gitignored, so it stays on the machine that
+                        runs the service and never reaches the repo.
+  README.md           — API table, abuse handling, deployment shapes.
+
 src/
   main.jsx            — ReactDOM root; wraps App in BrowserRouter + LanguageProvider
   App.jsx             — route table (/, /menu, /shop, /catering) + global chrome
@@ -30,6 +55,9 @@ src/
     data.js            — STRUCTURAL data only for that page: ids, ordering,
                          numeric prices, x/y coordinates, route targets.
                          Never display copy — see i18n/ below.
+                         (Contact's is the one exception to "owns its data":
+                         it re-exports `shared/contactForm.js`, because the
+                         server validates against the same rules.)
 
   components/         — shared UI building blocks used by 2+ pages
     <Name>.jsx + <Name>.css       — simple components stay as flat files
@@ -122,7 +150,7 @@ placeholder instead, so partially-supplied media degrades cleanly.
 | `/menu` | `pages/Menu/` | List/Cards toggle (shared `ViewToggle`), 3 sections, autoplaying carousels |
 | `/shop` | `pages/VertexPieces/` | Catalogue filters, List/Cards toggle, autoplaying carousel |
 | `/catering` | `pages/CateringEvents/` | Events/Catering tabs, packages table, direct-line panel |
-| `/contact` | `pages/Contact/` | Enquiry form (name/email/phone/message) with client-side validation and a sent state. **Nothing is transmitted yet** — the submit handler in `Contact.jsx` is a marked stub; wire it to a form relay or backend and submissions go to `site.email`. |
+| `/contact` | `pages/Contact/` | Enquiry form (name/email/phone/message) + hidden honeypot. POSTs to `VITE_CONTACT_ENDPOINT` or same-origin `/api/contact`, which `server/` answers and emails to `site.email`. Validation rules come from `shared/contactForm.js`; states are idle / sending / sent / failed. |
 
 ## Conventions (read before adding code)
 
@@ -161,7 +189,13 @@ placeholder instead, so partially-supplied media degrades cleanly.
    `<PageName>/<PageName>.jsx` + `.css` (+ `data.js` if it has structured
    content) shape. Add the route in `App.jsx`, the nav entry (`to`/`key`) in
    `data/site.js`, and the `nav.<key>` label in all 4 translation files.
-5. **`index.html` is the Vite entry shell, not a page.** It only holds
+5. **A rule the server also enforces lives in `shared/`.** Anything the
+   browser checks that the backend must re-check (today: the contact form's
+   fields and validation) belongs in `shared/`, imported by both — never
+   written out twice. That is the only reason `server/` reaches outside its
+   own folder, so deploy it from the repo root rather than copying the
+   folder alone.
+6. **`index.html` is the Vite entry shell, not a page.** It only holds
    `<head>` metadata (fonts, title) and the `#root` div + script tag — it
    cannot be removed while this is a Vite SPA. Page content changes never
    touch this file; only global `<head>` changes (fonts, meta tags) do.

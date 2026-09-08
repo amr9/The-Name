@@ -25,6 +25,8 @@ export default {
     errors: {
       required: 'Este campo es necesario.',
       email: 'Esa dirección de correo no parece correcta.',
+      tooLong: 'Es más largo de lo que podemos aceptar.',
+      send: 'No se pudo enviar. Inténtalo de nuevo o escríbenos por WhatsApp.',
     },
   },
 

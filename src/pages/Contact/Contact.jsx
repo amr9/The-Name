@@ -2,16 +2,24 @@ import { useState } from 'react';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import { site } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import { contactFields, emailPattern } from './data.js';
+import { contactFields, honeypotField, validateContact } from './data.js';
 import './Contact.css';
 
 const EMPTY = Object.fromEntries(contactFields.map((f) => [f.id, '']));
+
+// Where the form posts. Same-origin '/api/contact' by default, which the
+// dev server proxies to the Node service in /server (see vite.config.js);
+// set VITE_CONTACT_ENDPOINT to the deployed service's full URL in the build
+// environment when the two are on different hosts.
+const ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT || '/api/contact';
 
 export default function Contact() {
   const { t } = useLanguage();
   const [values, setValues] = useState(EMPTY);
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState('idle'); // idle | sending | sent
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | failed
+  // Bots fill in every field they find; humans never see this one.
+  const [honeypot, setHoneypot] = useState('');
 
   const set = (id) => (e) => {
     setValues((v) => ({ ...v, [id]: e.target.value }));
@@ -19,14 +27,13 @@ export default function Contact() {
     setErrors((prev) => (prev[id] ? { ...prev, [id]: undefined } : prev));
   };
 
+  // The rules themselves live in /shared/contactForm.js so the server can
+  // apply the identical ones; here we only turn its keys into copy.
   const validate = () => {
-    const found = {};
-    contactFields.forEach((f) => {
-      const value = values[f.id].trim();
-      if (f.required && !value) found[f.id] = t.contact.errors.required;
-      else if (f.id === 'email' && value && !emailPattern.test(value)) found[f.id] = t.contact.errors.email;
-    });
-    return found;
+    const keys = validateContact(values);
+    return Object.fromEntries(
+      Object.entries(keys).map(([id, key]) => [id, t.contact.errors[key]])
+    );
   };
 
   const submit = async (e) => {
@@ -36,13 +43,28 @@ export default function Contact() {
     if (Object.keys(found).length > 0) return;
 
     setStatus('sending');
-    // TODO: nothing sends yet — no endpoint is wired up. Replace this block
-    // with the POST to the form relay / backend and the address in
-    // `site.email` becomes the delivery target. Everything around it (the
-    // validation above, the sending + sent states below) is already in place.
-    console.warn('[contact] submission not sent — no endpoint configured yet:', values);
-    await new Promise((r) => setTimeout(r, 400));
-    setStatus('sent');
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...values, [honeypotField]: honeypot }),
+      });
+
+      // 400 means the server's copy of the rules caught something ours did
+      // not — show those against the fields rather than a generic failure.
+      if (res.status === 400) {
+        const data = await res.json().catch(() => ({}));
+        setErrors(data.fields ?? {});
+        setStatus('idle');
+        return;
+      }
+      if (!res.ok) throw new Error(`contact endpoint returned ${res.status}`);
+
+      setStatus('sent');
+    } catch (err) {
+      console.error('[contact] submission failed:', err);
+      setStatus('failed');
+    }
   };
 
   if (status === 'sent') {
@@ -55,7 +77,7 @@ export default function Contact() {
           <button
             type="button"
             className="btn btn-secondary"
-            onClick={() => { setValues(EMPTY); setStatus('idle'); }}
+            onClick={() => { setValues(EMPTY); setHoneypot(''); setStatus('idle'); }}
           >
             {t.contact.sendAnother}
           </button>
@@ -118,6 +140,25 @@ export default function Contact() {
               </div>
             );
           })}
+
+          {/* Hidden from sight, from screen readers and from the tab order —
+              only an automated submitter ever puts anything in it. */}
+          <div className="contact-honeypot" aria-hidden="true">
+            <label htmlFor={`contact-${honeypotField}`}>{honeypotField}</label>
+            <input
+              id={`contact-${honeypotField}`}
+              name={honeypotField}
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+            />
+          </div>
+
+          {status === 'failed' && (
+            <p className="contact-failed" role="alert">{t.contact.errors.send}</p>
+          )}
 
           <button type="submit" className="btn btn-primary btn-block" disabled={status === 'sending'}>
             {status === 'sending' ? t.contact.sending : t.contact.send}

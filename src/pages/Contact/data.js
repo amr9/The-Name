@@ -1,13 +1,6 @@
-// Structural field definitions only — every label, placeholder and error
-// message lives in src/i18n/translations/*.js under contact.fields[id] and
-// contact.errors, keyed by the same `id`.
-export const contactFields = [
-  { id: 'name', type: 'text', autoComplete: 'name', required: true },
-  { id: 'email', type: 'email', autoComplete: 'email', required: true },
-  { id: 'phone', type: 'tel', autoComplete: 'tel', required: false },
-  { id: 'message', type: 'textarea', rows: 5, required: true },
-];
-
-// Deliberately loose: the real check is the server's, this only catches the
-// obvious typo before the visitor hits send.
-export const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// The field definitions live in /shared/contactForm.js, not here: the Node
+// server in /server re-validates every submission against the exact same
+// rules, so they cannot live inside src/. This file keeps the page-folder
+// convention (a page imports its structural data from its own data.js)
+// while there is only ever one definition.
+export { contactFields, emailPattern, honeypotField, validateContact } from '../../../shared/contactForm.js';

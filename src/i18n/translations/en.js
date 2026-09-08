@@ -25,6 +25,8 @@ export default {
     errors: {
       required: 'This one is needed.',
       email: 'That email address does not look right.',
+      tooLong: 'That is longer than we can accept.',
+      send: 'That did not send. Try again, or reach us on WhatsApp.',
     },
   },
 

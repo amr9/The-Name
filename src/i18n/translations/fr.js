@@ -25,6 +25,8 @@ export default {
     errors: {
       required: 'Ce champ est requis.',
       email: 'Cette adresse e-mail semble incorrecte.',
+      tooLong: 'C’est plus long que ce que nous pouvons accepter.',
+      send: 'L’envoi a échoué. Réessayez, ou écrivez-nous sur WhatsApp.',
     },
   },
 

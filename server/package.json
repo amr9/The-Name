@@ -1,0 +1,17 @@
+{
+  "name": "the-name-contact-server",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Standalone Node service that receives the contact form and emails it on over SMTP.",
+  "scripts": {
+    "start": "node --env-file=.env index.js",
+    "dev": "node --env-file=.env --watch index.js"
+  },
+  "engines": { "node": ">=20.6" },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "nodemailer": "^6.9.16"
+  }
+}

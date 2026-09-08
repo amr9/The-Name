@@ -95,14 +95,35 @@ textarea.contact-input {
   min-height: 120px;
 }
 .contact-input[aria-invalid='true'] {
-  border-color: #b3261e;
+  border-color: var(--color-danger);
 }
 .contact-error {
   font-size: var(--text-sm);
-  color: #b3261e;
+  color: var(--color-danger);
 }
 .contact-privacy {
   margin: 0;
+}
+/* Whole-form failure (the endpoint was unreachable or errored), as opposed
+   to .contact-error which sits under a single field. */
+.contact-failed {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-danger);
+  background: color-mix(in srgb, var(--color-danger) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-danger) 35%, transparent);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+}
+/* The bot trap: removed from layout without display:none, which some
+   submitters treat as a signal to skip the field. */
+.contact-honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* — the post-submit panel — */
