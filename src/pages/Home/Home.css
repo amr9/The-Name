@@ -359,7 +359,7 @@
 /* Dark card so the closing CTA reads as its own block rather than merging
    into the accent-100 band of `.home-shop-room` directly above it. */
 .home-closing-inner {
-  background: var(--gradient-dark);
+  background: var(--color-accent-600);
   color: var(--color-white);
   border-radius: calc(2 * var(--radius-lg));
   padding: clamp(24px, 3vw, 40px);
