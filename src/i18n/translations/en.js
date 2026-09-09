@@ -100,10 +100,6 @@ export default {
       openShop: 'Open on the Vertex shop ↗',
       checkoutNote: 'Checkout happens on the Vertex site',
     },
-    closing: {
-      title: "We can't wait to meet you.",
-      body: 'Tables, a piece you saw, a catering quote, allergens — one WhatsApp thread with someone in the building.',
-    },
   },
 
   menu: {

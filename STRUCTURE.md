@@ -54,9 +54,9 @@ src/
                          hardcodes a color/font)
     <Part>.jsx         — a piece used by that page only stays in its folder
                          (currently: Home/FoodBubbles.jsx, the decorative
-                         burger/drink bubbles drifting up the gutters beside
-                         the service rows). Anything a second page needs
-                         moves to components/ instead.
+                         burger/drink bubbles beside — or, on narrow screens,
+                         between — the service rows). Anything a second page
+                         needs moves to components/ instead.
     data.js            — STRUCTURAL data only for that page: ids, ordering,
                          numeric prices, x/y coordinates, route targets.
                          Never display copy — see i18n/ below.
@@ -151,7 +151,7 @@ placeholder instead, so partially-supplied media degrades cleanly.
 
 | Route | Folder | Notes |
 |---|---|---|
-| `/` | `pages/Home/` | Hero, rolling delivery-partner logo strip (CSS marquee, duplicated row), 4 services (with `FoodBubbles` ornament in the gutters — CSS-only, hidden under 1280px and under `prefers-reduced-motion`), "shop the room" hotspot panel (reads `data/catalogue.js` + `i18n` vertex.items), closing CTA |
+| `/` | `pages/Home/` | Hero, rolling delivery-partner logo strip (CSS marquee, duplicated row), 4 services (with the `FoodBubbles` ornament: gutter fields above 1280px, left-to-right bands between the rows below it, both rendered and swapped by media query; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), "shop the room" hotspot panel (reads `data/catalogue.js` + `i18n` vertex.items), closing CTA |
 | `/menu` | `pages/Menu/` | List/Cards toggle (shared `ViewToggle`), 3 sections, autoplaying carousels |
 | `/shop` | `pages/VertexPieces/` | Catalogue filters, List/Cards toggle, autoplaying carousel |
 | `/catering` | `pages/CateringEvents/` | Events/Catering tabs, packages table, direct-line panel |

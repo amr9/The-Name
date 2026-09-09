@@ -1,10 +1,21 @@
 // Decorative bubble field for the services section — burger / drink marks
-// that drift up through the page gutters and fade out. Purely ornamental, so
-// the whole thing is aria-hidden and never takes pointer events; it is also
-// hidden entirely on narrow screens (no gutter to fill) and under
-// prefers-reduced-motion. Positions/timing come from `serviceBubbles` in
-// this page's data.js.
-import { serviceBubbles } from './data.js';
+// that drift past and fade out. Two layouts, both rendered and switched by
+// media query in Home.css so the choice follows the viewport, not a JS
+// breakpoint: `side="left" | "right"` fills the white gutters beside the
+// copy on wide screens, `side="row"` is a horizontal band that drifts left
+// to right between the service rows, for narrow screens with no gutter.
+//
+// Ornament, so it stays out of the accessibility tree and off the tab order
+// — but a bubble can be tapped to pop it (a small burst plus a synthesized
+// blip), after which it comes back on the next pass. Positions and timing
+// come from `serviceBubbles` / `rowBubbles` in this page's data.js; `phase`
+// shifts a whole band along its path (a percentage), so two bands on screen
+// at once are never in the same place.
+import { useEffect, useRef, useState } from 'react';
+import { rowBubbles, serviceBubbles } from './data.js';
+
+// How long a popped bubble stays gone before it drifts back in.
+const REFILL_MS = 5000;
 
 // Simple single-color marks — they read as silhouettes at bubble size, so
 // they are drawn flat and take their color from the CSS `color` property.
@@ -52,29 +63,99 @@ const icons = {
   ),
 };
 
-export default function FoodBubbles({ side }) {
+// The pop: a short blip synthesized with Web Audio rather than shipping an
+// audio file. A quick downward pitch sweep under a fast decay envelope is
+// what reads as "bubble", and it is a few lines instead of a request.
+// The context is created on the first tap, which is the user gesture
+// browsers require before audio may start.
+let audioCtx = null;
+
+function playPop() {
+  try {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+    if (!audioCtx) audioCtx = new Ctx();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+
+    const now = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(760, now);
+    osc.frequency.exponentialRampToValueAtTime(180, now + 0.11);
+
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.16, now + 0.008);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.13);
+
+    osc.connect(gain).connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.14);
+  } catch {
+    // Audio is a nicety — a blocked or unavailable context must never stop
+    // the bubble from popping visually.
+  }
+}
+
+export default function FoodBubbles({ side, phase = 0 }) {
+  // Ids currently mid-pop (burst playing) and ids hidden until they refill.
+  const [popped, setPopped] = useState({});
+  const timers = useRef([]);
+
+  useEffect(() => () => timers.current.forEach(clearTimeout), []);
+
+  const isRow = side === 'row';
+  const bubbles = isRow ? rowBubbles : serviceBubbles.filter((b) => b.side === side);
+
+  // In the band, `x` is a head start along the crossing rather than a
+  // position: winding the delay back by that fraction of one pass drops the
+  // bubble in mid-flight, so the six are spread across the width from the
+  // first frame instead of queueing at the left edge. `phase` (also a
+  // percentage) offsets a whole band, so the three bands do not march in
+  // step with each other.
+  const delayOf = (b) =>
+    (isRow ? -(((b.x + phase) % 100) / 100) * b.duration : b.delay).toFixed(2);
+
+  function pop(id) {
+    if (popped[id]) return;
+    playPop();
+    setPopped((p) => ({ ...p, [id]: true }));
+    timers.current.push(
+      setTimeout(() => setPopped((p) => {
+        const next = { ...p };
+        delete next[id];
+        return next;
+      }), REFILL_MS),
+    );
+  }
+
   return (
     <div className={`home-bubbles home-bubbles-${side}`} aria-hidden="true">
-      {serviceBubbles
-        .filter((b) => b.side === side)
-        .map((b) => (
-          <span
-            key={b.id}
-            className="home-bubble"
-            style={{
-              '--bubble-x': `${b.x}%`,
-              '--bubble-y': `${b.y}%`,
-              '--bubble-size': `${b.size}px`,
-              '--bubble-delay': `${b.delay}s`,
-              '--bubble-duration': `${b.duration}s`,
-              '--bubble-drift': `${b.drift}px`,
-            }}
-          >
+      {bubbles.map((b) => (
+        <button
+          key={b.id}
+          type="button"
+          tabIndex={-1}
+          className="home-bubble"
+          data-popped={popped[b.id] ? 'true' : undefined}
+          onClick={() => pop(b.id)}
+          style={{
+            '--bubble-x': `${b.x}%`,
+            '--bubble-y': `${b.y}%`,
+            '--bubble-size': `${b.size}px`,
+            '--bubble-delay': `${delayOf(b)}s`,
+            '--bubble-duration': `${b.duration}s`,
+            '--bubble-drift': `${b.drift}px`,
+          }}
+        >
+          <span className="home-bubble-skin">
             <svg className="home-bubble-icon" viewBox="0 0 24 24" fill="currentColor">
               {icons[b.icon]}
             </svg>
           </span>
-        ))}
+        </button>
+      ))}
     </div>
   );
 }

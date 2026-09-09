@@ -38,3 +38,19 @@ export const serviceBubbles = [
   { id: 'r7', side: 'right', icon: 'cup', y: 86, x: 60, size: 46, delay: 14.5, duration: 9.8, drift: -22 },
   { id: 'r8', side: 'right', icon: 'burger', y: 96, x: 30, size: 66, delay: 16.6, duration: 12.8, drift: 20 },
 ];
+
+// The same ornament for narrow screens, where there is no gutter to fill:
+// a horizontal band dropped between the service rows, bubbles drifting left
+// to right. `y` is the vertical position across the band, `drift` the up/down
+// sway in px, and `x` is how far along the crossing the bubble already is
+// when the band starts — it becomes a negative animation delay, so the six
+// are spread across the width instead of queuing at the left edge. (No
+// `delay` here: `x` and the band's own `phase` set the timing.)
+export const rowBubbles = [
+  { id: 'b1', icon: 'burger', y: 52, x: 4, size: 44, duration: 9, drift: -14 },
+  { id: 'b2', icon: 'cup', y: 24, x: 22, size: 34, duration: 11, drift: 16 },
+  { id: 'b3', icon: 'fries', y: 68, x: 40, size: 38, duration: 8, drift: -18 },
+  { id: 'b4', icon: 'coffee', y: 38, x: 58, size: 30, duration: 12, drift: 12 },
+  { id: 'b5', icon: 'shake', y: 60, x: 74, size: 40, duration: 10, drift: -12 },
+  { id: 'b6', icon: 'can', y: 30, x: 90, size: 28, duration: 9.5, drift: 18 },
+];

@@ -100,10 +100,6 @@ export default {
       openShop: 'Ver en la tienda Vertex ↗',
       checkoutNote: 'El pago se realiza en el sitio de Vertex',
     },
-    closing: {
-      title: 'Estamos deseando conocerte.',
-      body: 'Mesas, una pieza que viste, un presupuesto de catering, alérgenos — un solo hilo de WhatsApp con alguien del local.',
-    },
   },
 
   menu: {

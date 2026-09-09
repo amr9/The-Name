@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
-import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import { catalogue } from '../../data/catalogue.js';
 import { media } from '../../data/media.js';
 import { site } from '../../data/site.js';
@@ -66,7 +65,8 @@ export default function Home() {
       </section>
 
       {/* what we do — services, one image each. The wrapper is only here to
-          anchor the decorative bubbles drifting up the gutters either side. */}
+          anchor the decorative bubbles — up the gutters on wide screens, in
+          bands between the rows on narrow ones. */}
       <div className="home-services">
         <FoodBubbles side="left" />
         <FoodBubbles side="right" />
@@ -77,43 +77,48 @@ export default function Home() {
           <p className="home-services-body">{t.home.whatWeDo.body}</p>
         </section>
 
-        {services.map((s) => {
+        {services.map((s, i) => {
           const info = t.home.services[s.id];
           return (
-            <section key={s.id} className="container home-service-row">
-              <div className="row-flip home-service-grid">
-                <div className="row-text home-service-text" style={{ order: s.textOrder }}>
-                  <div className="home-service-kicker-row">
-                    <span className="home-service-num">{s.num}</span>
-                    <span className="home-service-rule" />
-                    <span className="home-service-kicker">{info.kicker}</span>
+            <Fragment key={s.id}>
+            {/* on narrow screens the bubbles run between the rows instead of
+                beside them — see FoodBubbles / Home.css */}
+            {i > 0 && <FoodBubbles side="row" phase={i * 29} />}
+              <section className="container home-service-row">
+                <div className="row-flip home-service-grid">
+                  <div className="row-text home-service-text" style={{ order: s.textOrder }}>
+                    <div className="home-service-kicker-row">
+                      <span className="home-service-num">{s.num}</span>
+                      <span className="home-service-rule" />
+                      <span className="home-service-kicker">{info.kicker}</span>
+                    </div>
+                    <h3 className="home-service-title">{info.title}</h3>
+                    <p className="home-service-body">{info.body}</p>
+                    <div className="home-service-points">
+                      {info.points.map((pt) => (
+                        <div key={pt} className="home-service-point">
+                          <span className="home-service-dot" />
+                          <span>{pt}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <Link
+                      to={s.to}
+                      state={s.tab ? { tab: s.tab } : undefined}
+                      className="btn btn-secondary home-service-cta"
+                    >
+                      {info.cta}
+                    </Link>
                   </div>
-                  <h3 className="home-service-title">{info.title}</h3>
-                  <p className="home-service-body">{info.body}</p>
-                  <div className="home-service-points">
-                    {info.points.map((pt) => (
-                      <div key={pt} className="home-service-point">
-                        <span className="home-service-dot" />
-                        <span>{pt}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <Link
-                    to={s.to}
-                    state={s.tab ? { tab: s.tab } : undefined}
-                    className="btn btn-secondary home-service-cta"
-                  >
-                    {info.cta}
-                  </Link>
+                  <figure className="row-img home-service-figure" style={{ order: s.imgOrder }}>
+                    <div className="home-service-ring" />
+                    <div className="washed home-service-image-wrap">
+                      <ImagePlaceholder src={media.services[s.id]} label={info.placeholder} ratio="5 / 4" />
+                    </div>
+                  </figure>
                 </div>
-                <figure className="row-img home-service-figure" style={{ order: s.imgOrder }}>
-                  <div className="home-service-ring" />
-                  <div className="washed home-service-image-wrap">
-                    <ImagePlaceholder src={media.services[s.id]} label={info.placeholder} ratio="5 / 4" />
-                  </div>
-                </figure>
-              </div>
-            </section>
+              </section>
+            </Fragment>
           );
         })}
       </div>
@@ -168,16 +173,6 @@ export default function Home() {
               <p className="card-meta home-shop-room-panel-footnote">{t.home.shopRoom.checkoutNote}</p>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="container home-closing">
-        <div className="home-closing-inner">
-          <div>
-            <h2 className="home-closing-title">{t.home.closing.title}</h2>
-            <p className="home-closing-body">{t.home.closing.body}</p>
-          </div>
-          <WhatsAppButton style={{ gap: 8 }}>{t.common.chatOnWhatsapp}</WhatsAppButton>
         </div>
       </section>
     </div>
