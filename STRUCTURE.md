@@ -137,9 +137,9 @@ public/media/
                 appears automatically. Drop a file here and repoint that
                 entry to pin an asset locally instead.
   brand/      — logo exports and other brand assets. Contains
-                `footer-pattern.svg`: the guideline's hand-drawn wavy line
-                texture, a seamlessly tiling tile used as the footer
-                background. Replace that file to retune the pattern.
+                `footer-pattern.svg`, the guideline's hand-drawn wavy line
+                texture — kept, but no longer applied: the footer is now the
+                flat accent gradient with no line overlay.
 ```
 
 `src/data/media.js` already points at the expected filename for every slot.

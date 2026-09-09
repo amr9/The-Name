@@ -12,12 +12,12 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  color: var(--color-black);
-  border: 1.5px solid var(--color-black);
+  color: var(--color-accent-800);
+  border: 1.5px solid color-mix(in srgb, var(--color-accent-800) 55%, transparent);
   transition: background 0.15s ease, color 0.15s ease;
 }
 
 .social-link:hover {
-  background: var(--color-black);
+  background: var(--color-accent-800);
   color: var(--color-accent);
 }
