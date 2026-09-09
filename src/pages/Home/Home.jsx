@@ -6,6 +6,7 @@ import { catalogue } from '../../data/catalogue.js';
 import { media } from '../../data/media.js';
 import { site } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
+import FoodBubbles from './FoodBubbles.jsx';
 import { partners, services } from './data.js';
 import './Home.css';
 
@@ -64,52 +65,58 @@ export default function Home() {
         </div>
       </section>
 
-      {/* what we do — services, one image each */}
-      <section className="container home-services-intro">
-        <span className="card-kicker">{t.home.whatWeDo.kicker}</span>
-        <h2 className="home-services-heading">{t.home.whatWeDo.heading}</h2>
-        <p className="home-services-body">{t.home.whatWeDo.body}</p>
-      </section>
+      {/* what we do — services, one image each. The wrapper is only here to
+          anchor the decorative bubbles drifting up the gutters either side. */}
+      <div className="home-services">
+        <FoodBubbles side="left" />
+        <FoodBubbles side="right" />
 
-      {services.map((s) => {
-        const info = t.home.services[s.id];
-        return (
-          <section key={s.id} className="container home-service-row">
-            <div className="row-flip home-service-grid">
-              <div className="row-text home-service-text" style={{ order: s.textOrder }}>
-                <div className="home-service-kicker-row">
-                  <span className="home-service-num">{s.num}</span>
-                  <span className="home-service-rule" />
-                  <span className="home-service-kicker">{info.kicker}</span>
+        <section className="container home-services-intro">
+          <span className="card-kicker">{t.home.whatWeDo.kicker}</span>
+          <h2 className="home-services-heading">{t.home.whatWeDo.heading}</h2>
+          <p className="home-services-body">{t.home.whatWeDo.body}</p>
+        </section>
+
+        {services.map((s) => {
+          const info = t.home.services[s.id];
+          return (
+            <section key={s.id} className="container home-service-row">
+              <div className="row-flip home-service-grid">
+                <div className="row-text home-service-text" style={{ order: s.textOrder }}>
+                  <div className="home-service-kicker-row">
+                    <span className="home-service-num">{s.num}</span>
+                    <span className="home-service-rule" />
+                    <span className="home-service-kicker">{info.kicker}</span>
+                  </div>
+                  <h3 className="home-service-title">{info.title}</h3>
+                  <p className="home-service-body">{info.body}</p>
+                  <div className="home-service-points">
+                    {info.points.map((pt) => (
+                      <div key={pt} className="home-service-point">
+                        <span className="home-service-dot" />
+                        <span>{pt}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <Link
+                    to={s.to}
+                    state={s.tab ? { tab: s.tab } : undefined}
+                    className="btn btn-secondary home-service-cta"
+                  >
+                    {info.cta}
+                  </Link>
                 </div>
-                <h3 className="home-service-title">{info.title}</h3>
-                <p className="home-service-body">{info.body}</p>
-                <div className="home-service-points">
-                  {info.points.map((pt) => (
-                    <div key={pt} className="home-service-point">
-                      <span className="home-service-dot" />
-                      <span>{pt}</span>
-                    </div>
-                  ))}
-                </div>
-                <Link
-                  to={s.to}
-                  state={s.tab ? { tab: s.tab } : undefined}
-                  className="btn btn-secondary home-service-cta"
-                >
-                  {info.cta}
-                </Link>
+                <figure className="row-img home-service-figure" style={{ order: s.imgOrder }}>
+                  <div className="home-service-ring" />
+                  <div className="washed home-service-image-wrap">
+                    <ImagePlaceholder src={media.services[s.id]} label={info.placeholder} ratio="5 / 4" />
+                  </div>
+                </figure>
               </div>
-              <figure className="row-img home-service-figure" style={{ order: s.imgOrder }}>
-                <div className="home-service-ring" />
-                <div className="washed home-service-image-wrap">
-                  <ImagePlaceholder src={media.services[s.id]} label={info.placeholder} ratio="5 / 4" />
-                </div>
-              </figure>
-            </div>
-          </section>
-        );
-      })}
+            </section>
+          );
+        })}
+      </div>
 
       {/* shop the room: hotspots on a photograph */}
       <section className="home-shop-room">

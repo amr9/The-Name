@@ -138,6 +138,71 @@
   to { transform: translateX(-50%); }
 }
 
+/* — services: drifting burger / drink bubbles in the side gutters — */
+.home-services {
+  position: relative;
+  /* the bubbles are clipped to this block, so they can never add scroll */
+  overflow: hidden;
+}
+.home-bubbles {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* the white space left over beside .container (max-width 1240px) — a bit
+     narrower than the true gutter so a bubble never touches the copy */
+  width: calc((100vw - 1180px) / 2);
+  pointer-events: none;
+  color: var(--color-accent-700);
+}
+.home-bubbles-left { left: 0; }
+.home-bubbles-right { right: 0; }
+
+.home-bubble {
+  position: absolute;
+  bottom: var(--bubble-y);
+  left: var(--bubble-x);
+  width: var(--bubble-size);
+  height: var(--bubble-size);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%,
+    var(--color-white) 0%,
+    var(--color-accent-200) 45%,
+    var(--color-accent-300) 100%);
+  border: 1px solid var(--color-accent-300);
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  animation: bubble-rise var(--bubble-duration) linear var(--bubble-delay) infinite;
+}
+.home-bubble-icon {
+  width: 50%;
+  height: 50%;
+  opacity: 0.75;
+  animation: bubble-sway calc(var(--bubble-duration) / 3) ease-in-out var(--bubble-delay) infinite alternate;
+}
+
+/* each bubble drifts up from where it sits, swelling slightly, then
+   dissolves — a fade-out rather than a hard cut, so the loop never snaps */
+@keyframes bubble-rise {
+  0%   { transform: translate(0, 40px) scale(0.6); opacity: 0; }
+  18%  { opacity: 0.9; }
+  55%  { transform: translate(var(--bubble-drift), -110px) scale(1); opacity: 0.9; }
+  100% { transform: translate(calc(var(--bubble-drift) * 0.4), -260px) scale(1.12); opacity: 0; }
+}
+@keyframes bubble-sway {
+  from { transform: rotate(-9deg); }
+  to   { transform: rotate(9deg); }
+}
+
+/* no gutter to fill on narrower screens — drop the ornament entirely */
+@media (max-width: 1280px) {
+  .home-bubbles { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-bubbles { display: none; }
+}
+
 /* — services intro — */
 .home-services-intro {
   padding-block: clamp(48px, 6vw, 96px) 24px;
