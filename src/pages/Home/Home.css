@@ -486,11 +486,6 @@
   font-size: var(--text-sm);
   opacity: 0.8;
 }
-.home-shop-room-panel-price {
-  font-size: 28px;
-  margin: 0 0 18px;
-  font-variant-numeric: tabular-nums;
-}
 .home-shop-room-panel-footnote {
   justify-content: center;
   margin-top: 12px;

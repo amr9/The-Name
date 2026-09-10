@@ -92,16 +92,11 @@
 }
 .vertex-list-note { margin: 6px 0 0; font-size: var(--text-body); line-height: 1.6; opacity: 0.8; }
 .vertex-list-meta { margin: 6px 0 0; font-size: var(--text-sm); line-height: 1.6; opacity: 0.7; }
-.vertex-list-price-col {
+/* Only the "view" link sits here now — prices live on the shop itself. */
+.vertex-list-action-col {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: flex-end;
+  align-items: center;
   flex: none;
-}
-.vertex-price {
-  font-size: 22px;
-  font-variant-numeric: tabular-nums;
 }
 .vertex-view-btn {
   min-height: 34px;
@@ -140,11 +135,9 @@
 .vertex-card-bottom-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
   margin-top: 10px;
 }
-.vertex-card .vertex-price { font-size: 20px; }
 
 @media (max-width: 700px) {
   /* The six filters don't fit one pill row on a phone, and wrapping mid-pill
@@ -168,10 +161,6 @@
   }
 
   .vertex-row, .vertex-list-row { flex-wrap: wrap; }
-  .vertex-list-price-col {
-    flex-direction: row !important;
-    align-items: center !important;
-    width: 100%;
-    justify-content: space-between;
-  }
+  .vertex-list-action-col { width: 100%; }
+  .vertex-list-action-col .vertex-view-btn { width: 100%; }
 }

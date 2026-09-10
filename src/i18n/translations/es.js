@@ -1,5 +1,5 @@
 export default {
-  nav: { home: 'Inicio', menu: 'Menú', vertex: 'Tienda Vertex', catering: 'Catering y eventos', contact: 'Contacto' },
+  nav: { home: 'Inicio', menu: 'Menú', vertex: 'Tienda', catering: 'Catering y eventos', contact: 'Contacto' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chatear por WhatsApp' },
 
@@ -69,7 +69,7 @@ export default {
       vertexShowroom: {
         kicker: 'Showroom Vertex', title: 'Todo aquí está a la venta',
         placeholder: 'Iluminación y asientos Vertex en la sala',
-        body: 'Vertex es una tienda de interiores en línea, y esta sala es su showroom. Sillas, lámparas colgantes, mesas, vajilla y sistemas de pared son todos productos disponibles. Toca una pieza y verás la ficha y el precio; el pago se hace en el sitio de Vertex.',
+        body: 'Vertex es una tienda de interiores en línea, y esta sala es su showroom. Sillas, lámparas colgantes, mesas, vajilla y sistemas de pared son todos productos disponibles. Toca una pieza y verás la ficha; el precio y el pago están en el sitio de Vertex.',
         points: ['Seis piezas marcadas en la foto de la sala', 'Precios, acabados y plazos de entrega en cada pieza', 'Novedades en sala cada viernes'],
         cta: 'Explorar la sala',
       },
@@ -91,13 +91,13 @@ export default {
     shopRoom: {
       kicker: 'Explorar la sala',
       heading: 'Toca una pieza. Descubre qué es.',
-      lede: 'Seis piezas numeradas en esta foto. Cada una tiene una ficha en la tienda Vertex con todos los detalles y el precio.',
+      lede: 'Seis piezas numeradas en esta foto. Cada una tiene una ficha en la tienda con todos los detalles y el precio.',
       roomPhoto: 'Vista amplia del comedor',
       pieceOf: (n, total) => `pieza ${n} de ${total}`,
       category: 'Categoría',
       finish: 'Acabado',
       leadTime: 'Plazo de entrega',
-      openShop: 'Ver en la tienda Vertex ↗',
+      openShop: 'Ver en la tienda ↗',
       checkoutNote: 'El pago se realiza en el sitio de Vertex',
     },
   },
@@ -144,7 +144,7 @@ export default {
     badge: 'Vertex · las piezas de esta sala',
     title: 'Todo lo que necesitas, aquí mismo',
     body: 'Vertex es una tienda de interiores en línea — iluminación, asientos, vajilla y sistemas de pared. Este restaurante es su showroom: todo en lo que te sientas, comes y miras está a la venta.',
-    openShop: 'Ver la tienda Vertex ↗',
+    openShop: 'Ver la tienda ↗',
     askFloor: 'Preguntar qué hay en la sala →',
     filters: { all: 'Todo', lighting: 'Iluminación', seating: 'Asientos', tables: 'Mesas', tabletop: 'Vajilla', systems: 'Sistemas' },
     viewList: 'Lista',
@@ -160,32 +160,32 @@ export default {
       'VX-101': {
         name: 'Lámpara colgante Halo, 600mm', finish: 'Latón cepillado, vidrio ópalo', lead: '2 semanas', where: 'Sobre cada mesa',
         note: 'Un único anillo de luz en un cable fino — lo que da a la sala su brillo.',
-        placeholder: 'Lámpara colgante Halo sobre una mesa', price: '£420',
+        placeholder: 'Lámpara colgante Halo sobre una mesa',
       },
       'VX-204': {
         name: 'Silla de comedor Arc', finish: 'Fresno curvado, lana terracota', lead: 'En stock', where: 'Los 40 cubiertos',
         note: 'Una curva continua para el respaldo y los brazos. Apilable hasta cuatro.',
-        placeholder: 'Silla de comedor Arc', price: '£240',
+        placeholder: 'Silla de comedor Arc',
       },
       'VX-318': {
         name: 'Mesa Monolith, 2,4m', finish: 'Piedra fundida, base lacada', lead: '4 semanas', where: 'El banco largo',
         note: 'Una losa, una base. La mesa donde se sirve la cena del viernes.',
-        placeholder: 'Mesa de comedor Monolith', price: '£1.850',
+        placeholder: 'Mesa de comedor Monolith',
       },
       'VX-422': {
         name: 'Vajilla Orbit', finish: 'Gres mate, seis piezas', lead: 'En stock', where: 'Cada plato en el que comes',
         note: 'Los platos, cuencos y guarniciones sobre los que la cocina emplata.',
-        placeholder: 'Vajilla de gres Orbit', price: '£96',
+        placeholder: 'Vajilla de gres Orbit',
       },
       'VX-530': {
         name: 'Sistema de pared Grid, módulo de 1,2m', finish: 'Aluminio anodizado', lead: '3 semanas', where: 'La pared del fondo',
         note: 'Módulos que sostienen estantes, plantas o luces. Añade módulos según lo necesites.',
-        placeholder: 'Sistema de estanterías de pared Grid', price: '£310',
+        placeholder: 'Sistema de estanterías de pared Grid',
       },
       'VX-611': {
         name: 'Lámpara de pie Signal', finish: 'Acero, pantalla de lino', lead: '2 semanas', where: 'Junto a los asientos de ventana',
         note: 'Alta, fina, regulable hasta casi apagarse. La que más preguntan los clientes.',
-        placeholder: 'Lámpara de pie Signal junto a una ventana', price: '£380',
+        placeholder: 'Lámpara de pie Signal junto a una ventana',
       },
     },
   },

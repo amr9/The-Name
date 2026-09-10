@@ -1,15 +1,14 @@
 /* The guideline's accent panel (cover / p.2) across the whole footer. The
    ruled line texture no longer runs edge to edge in white — it survives only
    as a masked, brand-toned texture down the left and right margins (below).
-   Type on it is the darkest step of the accent ramp rather than pure black:
-   on a warm yellow ground that stays legible while reading as part of the
-   brand palette instead of punching a hole in it. */
+   Type on it is black: on this yellow ground it is the highest-contrast
+   option, and the softer steps of the ramp stay for the texture. */
 .footer {
   background-color: var(--color-accent);
   background-image: var(--gradient-panel);
   background-repeat: no-repeat;
   background-size: cover;
-  color: var(--color-accent-800);
+  color: var(--color-black);
   position: relative;
   overflow: hidden;
   /* keeps the texture layers below inside the footer's own stack */
@@ -70,11 +69,11 @@
   margin: var(--space-3) 0 0;
   font-size: var(--text-body);
   line-height: 1.6;
-  color: var(--color-accent-800);
+  color: var(--color-black);
 }
 
 .footer-heading {
-  color: var(--color-accent-800);
+  color: var(--color-black);
   margin: 0 0 var(--space-2);
 }
 
@@ -85,16 +84,16 @@
   font-size: var(--text-lg);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  color: var(--color-accent-800);
+  color: var(--color-black);
 }
-.footer-phone:hover { color: var(--color-accent-800); text-decoration: underline; }
+.footer-phone:hover { color: var(--color-black); text-decoration: underline; }
 
 .footer-note {
   margin: 8px 0 0;
   font-size: var(--text-body);
   line-height: 1.6;
   max-width: 42ch;
-  color: color-mix(in srgb, var(--color-accent-800) 88%, transparent);
+  color: color-mix(in srgb, var(--color-black) 88%, transparent);
 }
 
 .footer-message-btn {
@@ -103,10 +102,10 @@
 }
 
 .footer-bottom {
-  border-top: 1px solid color-mix(in srgb, var(--color-accent-800) 24%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--color-black) 20%, transparent);
   padding-block: var(--space-3);
   font-size: var(--text-sm);
-  color: color-mix(in srgb, var(--color-accent-800) 85%, transparent);
+  color: color-mix(in srgb, var(--color-black) 85%, transparent);
 }
 
 /* On a phone the copy runs nearly edge to edge, so the texture pulls back to

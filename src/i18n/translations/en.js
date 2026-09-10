@@ -1,5 +1,5 @@
 export default {
-  nav: { home: 'Home', menu: 'Menu', vertex: 'Vertex Shop', catering: 'Catering & Events', contact: 'Contact' },
+  nav: { home: 'Home', menu: 'Menu', vertex: 'Shop', catering: 'Catering & Events', contact: 'Contact' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chat on WhatsApp' },
 
@@ -69,7 +69,7 @@ export default {
       vertexShowroom: {
         kicker: 'Vertex showroom', title: 'Everything here is for sale',
         placeholder: 'Vertex lighting and seating in the room',
-        body: 'Vertex is an online interiors shop, and this room is its showroom. Chairs, pendants, tables, tableware and wall systems are all live products. Tap a piece and you get the spec and the price; checkout happens on the Vertex site.',
+        body: 'Vertex is an online interiors shop, and this room is its showroom. Chairs, pendants, tables, tableware and wall systems are all live products. Tap a piece and you get the spec; the price and checkout are on the Vertex site.',
         points: ['Six pieces tagged in the room shot below', 'Prices, finishes and lead times on every piece', 'New arrivals on the floor every Friday'],
         cta: 'Shop the room',
       },
@@ -91,13 +91,13 @@ export default {
     shopRoom: {
       kicker: 'Shop the room',
       heading: 'Tap a piece. See what it is.',
-      lede: 'Six numbered pieces in this shot. Every one has a page on the Vertex shop with the full spec and the price.',
+      lede: 'Six numbered pieces in this shot. Every one has a page on the shop with the full spec and the price.',
       roomPhoto: 'Wide shot of the dining room',
       pieceOf: (n, total) => `piece ${n} of ${total}`,
       category: 'Category',
       finish: 'Finish',
       leadTime: 'Lead time',
-      openShop: 'Open on the Vertex shop ↗',
+      openShop: 'Open in the shop ↗',
       checkoutNote: 'Checkout happens on the Vertex site',
     },
   },
@@ -144,7 +144,7 @@ export default {
     badge: 'Vertex · the pieces in this room',
     title: 'All You Need, Right Here',
     body: 'Vertex is an online shop for interiors — lighting, seating, tabletop and wall systems. This restaurant is its showroom: everything you sit on, eat off and look at is on the shelf.',
-    openShop: 'Open the Vertex shop ↗',
+    openShop: 'Open the shop ↗',
     askFloor: 'Ask what is on the floor →',
     filters: { all: 'All', lighting: 'Lighting', seating: 'Seating', tables: 'Tables', tabletop: 'Tabletop', systems: 'Systems' },
     viewList: 'List',
@@ -160,32 +160,32 @@ export default {
       'VX-101': {
         name: 'Halo pendant, 600mm', finish: 'Brushed brass, opal glass', lead: '2 weeks', where: 'Over every table',
         note: 'A single ring of light on a slim drop — what gives the room its glow.',
-        placeholder: 'Halo pendant light over a table', price: '£420',
+        placeholder: 'Halo pendant light over a table',
       },
       'VX-204': {
         name: 'Arc dining chair', finish: 'Bent ash, terracotta wool', lead: 'In stock', where: 'All 40 covers',
         note: 'One continuous curve for the back and arms. Stacks four high.',
-        placeholder: 'Arc dining chair', price: '£240',
+        placeholder: 'Arc dining chair',
       },
       'VX-318': {
         name: 'Monolith table, 2.4m', finish: 'Cast stone, powder-coat base', lead: '4 weeks', where: 'The long bench',
         note: 'One slab, one plinth. The table the Friday supper is served on.',
-        placeholder: 'Monolith dining table', price: '£1,850',
+        placeholder: 'Monolith dining table',
       },
       'VX-422': {
         name: 'Orbit tableware set', finish: 'Matte stoneware, six pieces', lead: 'In stock', where: 'Every plate you eat off',
         note: 'The plates, bowls and side dishes the kitchen plates on.',
-        placeholder: 'Orbit stoneware tableware set', price: '£96',
+        placeholder: 'Orbit stoneware tableware set',
       },
       'VX-530': {
         name: 'Grid wall system, 1.2m bay', finish: 'Anodised aluminium', lead: '3 weeks', where: 'The back wall',
         note: 'Modular bays that carry shelves, planters or lights. Add bays as you go.',
-        placeholder: 'Grid wall shelving system', price: '£310',
+        placeholder: 'Grid wall shelving system',
       },
       'VX-611': {
         name: 'Signal floor lamp', finish: 'Steel, linen shade', lead: '2 weeks', where: 'By the window seats',
         note: 'Tall, thin, dimmable to almost nothing. The one guests ask about most.',
-        placeholder: 'Signal floor lamp by a window', price: '£380',
+        placeholder: 'Signal floor lamp by a window',
       },
     },
   },

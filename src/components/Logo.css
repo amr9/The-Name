@@ -33,7 +33,7 @@
 }
 .logo-lg .logo-dot { width: 12px; height: 12px; }
 
-/* On the yellow footer the accent mark would vanish — draw it in the ramp's
-   darkest step, the same color the footer sets its type in. */
-.logo-tone-dark .logo-ring { border-color: var(--color-accent-800); }
-.logo-tone-dark .logo-dot { background: var(--color-accent-800); }
+/* On the yellow footer the accent mark would vanish — draw it in black, the
+   same color the footer sets its type in. */
+.logo-tone-dark .logo-ring { border-color: var(--color-black); }
+.logo-tone-dark .logo-dot { background: var(--color-black); }

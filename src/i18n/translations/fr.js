@@ -1,5 +1,5 @@
 export default {
-  nav: { home: 'Accueil', menu: 'Menu', vertex: 'Boutique Vertex', catering: 'Traiteur & événements', contact: 'Contact' },
+  nav: { home: 'Accueil', menu: 'Menu', vertex: 'Boutique', catering: 'Traiteur & événements', contact: 'Contact' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Discuter sur WhatsApp' },
 
@@ -69,7 +69,7 @@ export default {
       vertexShowroom: {
         kicker: 'Showroom Vertex', title: 'Tout ici est à vendre',
         placeholder: 'Éclairage et sièges Vertex dans la salle',
-        body: 'Vertex est une boutique d\'intérieur en ligne, et cette salle en est le showroom. Chaises, suspensions, tables, arts de la table et systèmes muraux sont tous des produits disponibles. Touchez une pièce pour voir la fiche et le prix ; le paiement se fait sur le site Vertex.',
+        body: 'Vertex est une boutique d\'intérieur en ligne, et cette salle en est le showroom. Chaises, suspensions, tables, arts de la table et systèmes muraux sont tous des produits disponibles. Touchez une pièce pour voir la fiche ; le prix et le paiement sont sur le site Vertex.',
         points: ['Six pièces repérées sur la photo de la salle ci-dessous', 'Prix, finitions et délais sur chaque pièce', 'Nouveautés en salle tous les vendredis'],
         cta: 'Explorer la salle',
       },
@@ -91,13 +91,13 @@ export default {
     shopRoom: {
       kicker: 'Explorer la salle',
       heading: 'Touchez une pièce. Découvrez ce que c\'est.',
-      lede: 'Six pièces numérotées sur cette photo. Chacune a une fiche sur la boutique Vertex avec les caractéristiques complètes et le prix.',
+      lede: 'Six pièces numérotées sur cette photo. Chacune a une fiche sur la boutique avec les caractéristiques complètes et le prix.',
       roomPhoto: 'Vue large de la salle du restaurant',
       pieceOf: (n, total) => `pièce ${n} sur ${total}`,
       category: 'Catégorie',
       finish: 'Finition',
       leadTime: 'Délai',
-      openShop: 'Voir sur la boutique Vertex ↗',
+      openShop: 'Voir sur la boutique ↗',
       checkoutNote: 'Le paiement se fait sur le site Vertex',
     },
   },
@@ -144,7 +144,7 @@ export default {
     badge: 'Vertex · les pièces de cette salle',
     title: 'Tout ce qu\'il vous faut, ici même',
     body: 'Vertex est une boutique d\'intérieur en ligne — éclairage, sièges, arts de la table et systèmes muraux. Ce restaurant en est le showroom : tout ce sur quoi vous êtes assis, ce dans quoi vous mangez et ce que vous regardez est en vente.',
-    openShop: 'Voir la boutique Vertex ↗',
+    openShop: 'Voir la boutique ↗',
     askFloor: 'Demander ce qui est exposé →',
     filters: { all: 'Tout', lighting: 'Éclairage', seating: 'Sièges', tables: 'Tables', tabletop: 'Arts de la table', systems: 'Systèmes' },
     viewList: 'Liste',
@@ -160,32 +160,32 @@ export default {
       'VX-101': {
         name: 'Suspension Halo, 600mm', finish: 'Laiton brossé, verre opale', lead: '2 semaines', where: 'Au-dessus de chaque table',
         note: 'Un simple anneau de lumière sur un fil fin — ce qui donne à la salle son éclat.',
-        placeholder: 'Suspension Halo au-dessus d\'une table', price: '£420',
+        placeholder: 'Suspension Halo au-dessus d\'une table',
       },
       'VX-204': {
         name: 'Chaise de salle à manger Arc', finish: 'Frêne cintré, laine terracotta', lead: 'En stock', where: 'Les 40 couverts',
         note: 'Une courbe continue pour le dossier et les accoudoirs. Empilable sur quatre niveaux.',
-        placeholder: 'Chaise de salle à manger Arc', price: '£240',
+        placeholder: 'Chaise de salle à manger Arc',
       },
       'VX-318': {
         name: 'Table Monolith, 2,4m', finish: 'Pierre coulée, socle laqué', lead: '4 semaines', where: 'Le long banc',
         note: 'Une dalle, un socle. La table sur laquelle est servi le souper du vendredi.',
-        placeholder: 'Table à manger Monolith', price: '£1 850',
+        placeholder: 'Table à manger Monolith',
       },
       'VX-422': {
         name: 'Service de table Orbit', finish: 'Grès mat, six pièces', lead: 'En stock', where: 'Chaque assiette que vous utilisez',
         note: 'Les assiettes, bols et accompagnements sur lesquels la cuisine dresse ses plats.',
-        placeholder: 'Service de table en grès Orbit', price: '£96',
+        placeholder: 'Service de table en grès Orbit',
       },
       'VX-530': {
         name: 'Système mural Grid, module de 1,2m', finish: 'Aluminium anodisé', lead: '3 semaines', where: 'Le mur du fond',
         note: 'Des modules qui accueillent étagères, plantes ou luminaires. Ajoutez des modules au fil du temps.',
-        placeholder: 'Système d\'étagères murales Grid', price: '£310',
+        placeholder: 'Système d\'étagères murales Grid',
       },
       'VX-611': {
         name: 'Lampadaire Signal', finish: 'Acier, abat-jour en lin', lead: '2 semaines', where: 'Près des places en fenêtre',
         note: 'Haut, fin, variable jusqu\'à presque rien. Celui dont les clients parlent le plus.',
-        placeholder: 'Lampadaire Signal près d\'une fenêtre', price: '£380',
+        placeholder: 'Lampadaire Signal près d\'une fenêtre',
       },
     },
   },

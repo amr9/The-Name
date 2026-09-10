@@ -71,8 +71,7 @@ export default function VertexPieces() {
                     <p className="vertex-list-note">{info.note}</p>
                     <p className="vertex-list-meta">{info.finish} · {info.lead} · {info.where}</p>
                   </div>
-                  <div className="vertex-list-price-col">
-                    <span className="vertex-price">{info.price}</span>
+                  <div className="vertex-list-action-col">
                     <a className="btn btn-secondary vertex-view-btn" href={site.shopUrl} target="_blank" rel="noopener noreferrer">{t.vertex.viewLink}</a>
                   </div>
                 </div>
@@ -101,7 +100,6 @@ export default function VertexPieces() {
                       <span>{t.vertex.inTheRoom} · {info.where}</span>
                     </div>
                     <div className="vertex-card-bottom-row">
-                      <span className="vertex-price">{info.price}</span>
                       <a className="btn btn-secondary vertex-view-btn" href={site.shopUrl} target="_blank" rel="noopener noreferrer">{t.vertex.viewOnVertex}</a>
                     </div>
                   </div>

@@ -166,7 +166,6 @@ export default function Home() {
                 <span>{t.home.shopRoom.finish} · {sel.finish}</span>
                 <span>{t.home.shopRoom.leadTime} · {sel.lead}</span>
               </div>
-              <p className="home-shop-room-panel-price">{sel.price}</p>
               <a className="btn btn-primary btn-block" href={site.shopUrl} target="_blank" rel="noopener noreferrer">
                 {t.home.shopRoom.openShop}
               </a>
