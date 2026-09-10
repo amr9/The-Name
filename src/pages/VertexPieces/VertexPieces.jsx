@@ -95,8 +95,8 @@ export default function VertexPieces() {
                     <h3 className="card-title">{info.name}</h3>
                     <p className="card-body">{info.note}</p>
                     <div className="vertex-card-specs">
-                      <span>{t.home.shopRoom.finish} · {info.finish}</span>
-                      <span>{t.home.shopRoom.leadTime} · {info.lead}</span>
+                      <span>{t.vertex.finish} · {info.finish}</span>
+                      <span>{t.vertex.leadTime} · {info.lead}</span>
                       <span>{t.vertex.inTheRoom} · {info.where}</span>
                     </div>
                     <div className="vertex-card-bottom-row">

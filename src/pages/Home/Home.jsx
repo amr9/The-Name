@@ -1,19 +1,17 @@
 import { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
-import { catalogue } from '../../data/catalogue.js';
 import { media } from '../../data/media.js';
-import { site } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import FoodBubbles from './FoodBubbles.jsx';
-import { partners, services } from './data.js';
+import { customMethods, howItWorksSteps, partners, services } from './data.js';
 import './Home.css';
 
 export default function Home() {
   const { t } = useLanguage();
-  const [pin, setPin] = useState(0);
-  const piece = catalogue[pin];
-  const sel = t.vertex.items[piece.code];
+  const [methodIdx, setMethodIdx] = useState(0);
+  const method = customMethods[methodIdx];
+  const methodCopy = t.home.howItWorks.methods[method.id];
   // Only two partners, so the row is padded out to fill a wide screen before
   // the track duplicates it for the loop.
   const partnerStrip = [partners, partners, partners, partners].flat();
@@ -30,8 +28,8 @@ export default function Home() {
           <h1 className="home-hero-title">{t.home.hero.title}</h1>
           <p className="home-hero-body">{t.home.hero.body}</p>
           <div className="home-hero-actions">
-            <Link to="/menu" className="btn btn-primary">{t.home.hero.ctaMenu}</Link>
-            <Link to="/shop" className="btn btn-secondary home-hero-secondary">{t.home.hero.ctaShop}</Link>
+            <Link to="/shop" className="btn btn-primary">{t.home.hero.ctaShop}</Link>
+            <Link to="/menu" className="btn btn-secondary home-hero-secondary">{t.home.hero.ctaMenu}</Link>
           </div>
         </div>
       </section>
@@ -123,53 +121,63 @@ export default function Home() {
         })}
       </div>
 
-      {/* shop the room: hotspots on a photograph */}
-      <section className="home-shop-room">
+      {/* how it works: the four steps of an order, then the ways we can put
+          your artwork onto a product */}
+      <section className="home-how">
         <div className="container">
-          <div className="home-shop-room-heading">
+          <div className="home-how-heading">
             <div>
-              <span className="card-kicker">{t.home.shopRoom.kicker}</span>
-              <h2>{t.home.shopRoom.heading}</h2>
+              <span className="card-kicker">{t.home.howItWorks.kicker}</span>
+              <h2>{t.home.howItWorks.heading}</h2>
             </div>
-            <p className="home-shop-room-lede">{t.home.shopRoom.lede}</p>
+            <p className="home-how-lede">{t.home.howItWorks.lede}</p>
           </div>
 
-          <div className="split home-shop-room-grid">
-            <div className="home-shop-room-photo">
-              <div className="washed">
-                <ImagePlaceholder src={media.roomWide} label={t.home.shopRoom.roomPhoto} ratio="16 / 10" />
-              </div>
-              {catalogue.map((p, i) => (
-                <button
-                  key={p.code}
-                  type="button"
-                  onClick={() => setPin(i)}
-                  aria-label={t.vertex.items[p.code].name}
-                  data-active={pin === i}
-                  className="home-shop-room-pin"
-                  style={{ left: p.x, top: p.y }}
-                >
-                  {i + 1}
-                </button>
-              ))}
+          {/* an ordered list, because the steps genuinely happen in sequence */}
+          <ol className="home-how-steps">
+            {howItWorksSteps.map((s) => {
+              const step = t.home.howItWorks.steps[s.id];
+              return (
+                <li key={s.id} className="home-how-step">
+                  <span className="home-how-step-num">{s.num}</span>
+                  <h3 className="home-how-step-title">{step.title}</h3>
+                  <p className="home-how-step-body">{step.body}</p>
+                </li>
+              );
+            })}
+          </ol>
+
+          <div className="split home-how-grid">
+            <div className="washed home-how-photo">
+              <ImagePlaceholder src={media.methods[method.id]} label={methodCopy.placeholder} ratio="16 / 10" />
             </div>
 
-            <div className="home-shop-room-panel">
-              <span className="home-shop-room-panel-meta">{piece.code} · {t.home.shopRoom.pieceOf(pin + 1, catalogue.length)}</span>
-              <div className="washed home-shop-room-panel-image">
-                <ImagePlaceholder src={media.vertex[piece.code]} label={sel.name} ratio="4 / 3" />
+            <div className="home-how-panel">
+              <span className="home-how-panel-meta">{t.home.howItWorks.methodsKicker}</span>
+
+              <div className="seg seg-grid home-how-methods">
+                {customMethods.map((m, i) => (
+                  <button
+                    key={m.id}
+                    type="button"
+                    className="seg-opt view-toggle-opt"
+                    data-active={methodIdx === i}
+                    aria-pressed={methodIdx === i}
+                    onClick={() => setMethodIdx(i)}
+                  >
+                    {t.home.howItWorks.methods[m.id].name}
+                  </button>
+                ))}
               </div>
-              <h3 className="home-shop-room-panel-title">{sel.name}</h3>
-              <p className="home-shop-room-panel-note">{sel.note}</p>
-              <div className="home-shop-room-panel-specs">
-                <span>{t.home.shopRoom.category} · {t.vertex.filters[piece.catKey]}</span>
-                <span>{t.home.shopRoom.finish} · {sel.finish}</span>
-                <span>{t.home.shopRoom.leadTime} · {sel.lead}</span>
+
+              <p className="home-how-panel-note">{methodCopy.note}</p>
+              <div className="home-how-panel-specs">
+                <span>{t.home.howItWorks.suits} · {methodCopy.suits}</span>
+                <span>{t.home.howItWorks.minimum} · {methodCopy.minimum}</span>
+                <span>{t.home.howItWorks.leadTime} · {methodCopy.lead}</span>
               </div>
-              <a className="btn btn-primary btn-block" href={site.shopUrl} target="_blank" rel="noopener noreferrer">
-                {t.home.shopRoom.openShop}
-              </a>
-              <p className="card-meta home-shop-room-panel-footnote">{t.home.shopRoom.checkoutNote}</p>
+              <Link className="btn btn-primary btn-block" to="/shop">{t.home.howItWorks.ctaShop}</Link>
+              <p className="card-meta home-how-panel-footnote">{t.home.howItWorks.footnote}</p>
             </div>
           </div>
         </div>

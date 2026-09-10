@@ -11,18 +11,26 @@
 const BASE = '/media';
 
 export const media = {
-  // Full-bleed hero on the Home page. A video loop can go here later.
+  // Full-bleed hero on the Home page — the customization reel: personalised
+  // products being made, not a restaurant service shot. A video loop goes here.
   hero: `${BASE}/hero/hero.jpg`,
 
-  // Home page "shop the room" — the wide room shot the hotspots sit on.
-  roomWide: `${BASE}/hero/room-wide.jpg`,
-
-  // Home page service rows — keys match pages/Home/data.js `id`.
+  // Home page service rows — keys match pages/Home/data.js `services` id.
   services: {
-    dineIn: `${BASE}/services/dine-in.jpg`,
-    vertexShowroom: `${BASE}/services/vertex-showroom.jpg`,
-    catering: `${BASE}/services/catering.jpg`,
-    events: `${BASE}/services/events.jpg`,
+    personalGifts: `${BASE}/services/personal-gifts.jpg`,
+    businessBranding: `${BASE}/services/business-branding.jpg`,
+    cafe: `${BASE}/services/cafe.jpg`,
+    cateringEvents: `${BASE}/services/catering-events.jpg`,
+  },
+
+  // Customization methods shown in the Home page "how it works" panel —
+  // keys match pages/Home/data.js `customMethods` id. Each wants a close-up
+  // of that technique on a finished product.
+  methods: {
+    engraving: `${BASE}/methods/engraving.jpg`,
+    print: `${BASE}/methods/print.jpg`,
+    embroidery: `${BASE}/methods/embroidery.jpg`,
+    emboss: `${BASE}/methods/emboss.jpg`,
   },
 
   // Menu dishes — keys match pages/Menu/data.js item ids.

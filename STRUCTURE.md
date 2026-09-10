@@ -55,8 +55,9 @@ src/
     <Part>.jsx         — a piece used by that page only stays in its folder
                          (currently: Home/FoodBubbles.jsx, the decorative
                          burger/drink bubbles beside — or, on narrow screens,
-                         between — the service rows). Anything a second page
-                         needs moves to components/ instead.
+                         between — the service rows; still cafe ornament,
+                         predating the customization pivot). Anything a
+                         second page needs moves to components/ instead.
     data.js            — STRUCTURAL data only for that page: ids, ordering,
                          numeric prices, x/y coordinates, route targets.
                          Never display copy — see i18n/ below.
@@ -85,10 +86,14 @@ src/
                           `public/media/`, keyed by the same ids the page
                           data + i18n use. Also serves as the shot list of
                           photography still needed.
-    catalogue.js        — the Vertex pieces catalogue: code/category-key/
-                          coordinates only (shared by Home's hotspots and
-                          the VertexPieces page). Display text lives in
-                          i18n under vertex.items[code].
+    catalogue.js        — the shop catalogue: code/category-key/
+                          coordinates only. Read by the VertexPieces (Shop)
+                          page alone — the Home page dropped its room
+                          hotspots for the "how it works" steps. Display
+                          text lives in i18n under vertex.items[code].
+                          PENDING: still holds the old interiors pieces,
+                          and needs rebuilding around the customization
+                          categories.
 
   i18n/
     LanguageContext.jsx — LanguageProvider + useLanguage() hook. Persists
@@ -114,7 +119,8 @@ src/
                           --space-*, --radius-*, --shadow-*, the named
                           gradients) plus
                           shared component classes (.btn*, .card, .tag,
-                          .seg*, .table, .dialog, .carousel-*). A page/
+                          .seg*, .seg-grid, .table, .dialog,
+                          .carousel-*). A page/
                           component CSS file should only ever add layout
                           rules that are specific to it — a rule used by
                           2+ files belongs here instead (see DRY below).
@@ -126,8 +132,11 @@ Artwork lives in `public/media/` (served as-is by Vite, so no import step):
 
 ```
 public/media/
-  hero/       — home hero + the wide room shot the hotspots sit on
+  hero/       — home hero: the customization reel (engraving, printing,
+                finished gifts), no longer a restaurant service shot
   services/   — the four Home service rows
+  methods/    — close-ups of each customization technique (engraving,
+                print, embroidery, emboss) for the Home "how it works" panel
   menu/       — menu dishes
   vertex/     — the Vertex pieces, named by product code
   catering/   — the Events / Catering tab images
@@ -151,7 +160,7 @@ placeholder instead, so partially-supplied media degrades cleanly.
 
 | Route | Folder | Notes |
 |---|---|---|
-| `/` | `pages/Home/` | Hero, rolling delivery-partner logo strip (CSS marquee, duplicated row), 4 services (with the `FoodBubbles` ornament: gutter fields above 1280px, left-to-right bands between the rows below it, both rendered and swapped by media query; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), "shop the room" hotspot panel (reads `data/catalogue.js` + `i18n` vertex.items), closing CTA |
+| `/` | `pages/Home/` | Customization-led. Hero, rolling delivery-partner logo strip (CSS marquee, duplicated row), 4 services in business order — B2C gifts, B2B branding, cafe, catering & events — (with the `FoodBubbles` ornament: gutter fields above 1280px, left-to-right bands between the rows below it, both rendered and swapped by media query; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": a 4-step `<ol>` plus a picker of customization methods (`howItWorksSteps` / `customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
 | `/menu` | `pages/Menu/` | List/Cards toggle (shared `ViewToggle`), 3 sections, autoplaying carousels |
 | `/shop` | `pages/VertexPieces/` | Catalogue filters, List/Cards toggle, autoplaying carousel |
 | `/catering` | `pages/CateringEvents/` | Events/Catering tabs, packages table, direct-line panel |

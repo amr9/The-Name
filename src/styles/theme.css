@@ -177,6 +177,20 @@ button { font: inherit; }
 .seg-opt[data-active="true"] { background: var(--color-accent); color: var(--color-black); }
 .seg-opt[data-active="false"]:hover { background: var(--color-accent-100); }
 .view-toggle-opt { display: flex; align-items: center; gap: 8px; padding: 9px 16px; font-size: var(--text-sm); }
+/* A .seg whose options can't fit one pill row — they become individually
+   rounded blocks, two per row, instead of wrapping mid-pill (which looks
+   broken, since .seg clips to a single 999px radius). Used by the Home
+   page's customization-method picker, which always sits in a narrow panel.
+   VertexPieces applies the same treatment inside its own <700px media
+   query — reach for this class instead of writing a third copy. */
+.seg-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;
+  width: 100%; border: 0; border-radius: 0; overflow: visible;
+}
+.seg-grid > .seg-opt {
+  justify-content: center; text-align: center; white-space: normal;
+  border: 1px solid var(--color-divider); border-radius: 999px;
+}
 
 /* — table — */
 .table { width: 100%; border-collapse: collapse; font-size: var(--text-body); }
@@ -236,7 +250,6 @@ button { font: inherit; }
 
 @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.35; transform: scale(0.82); } }
 @keyframes kenburns { 0% { transform: scale(1.04) translate3d(0,0,0); } 100% { transform: scale(1.14) translate3d(-1.5%,-1%,0); } }
-@keyframes ring { 0% { transform: scale(1); opacity: 0.55; } 70%, 100% { transform: scale(2.1); opacity: 0; } }
 
 /* — responsive: tablet / mobile (shared layout breakpoints) — */
 @media (max-width: 1024px) {
