@@ -99,11 +99,25 @@ function playPop() {
 }
 
 export default function FoodBubbles({ side, phase = 0 }) {
-  // Ids currently mid-pop (burst playing) and ids hidden until they refill.
+  // A popped bubble moves through three states before it is ordinary again:
+  //   popped    — the burst is playing, then it stays gone for REFILL_MS
+  //   refilling — one frame with the travel animation off, which is what
+  //               lets the browser restart it from its first keyframe
+  //   restarted — from now on it runs with no delay, so it comes back on
+  //               its own next pass instead of waiting out the original
+  //               stagger. Without that restart the bubble would blink back
+  //               mid-flight at full opacity; now it fades in from the top
+  //               of its path like every other pass.
   const [popped, setPopped] = useState({});
+  const [refilling, setRefilling] = useState({});
+  const [restarted, setRestarted] = useState({});
   const timers = useRef([]);
+  const frames = useRef([]);
 
-  useEffect(() => () => timers.current.forEach(clearTimeout), []);
+  useEffect(() => () => {
+    timers.current.forEach(clearTimeout);
+    frames.current.forEach(cancelAnimationFrame);
+  }, []);
 
   const isRow = side === 'row';
   const bubbles = isRow ? rowBubbles : serviceBubbles.filter((b) => b.side === side);
@@ -117,17 +131,39 @@ export default function FoodBubbles({ side, phase = 0 }) {
   const delayOf = (b) =>
     (isRow ? -(((b.x + phase) % 100) / 100) * b.duration : b.delay).toFixed(2);
 
+  const without = (map, id) => {
+    const next = { ...map };
+    delete next[id];
+    return next;
+  };
+
   function pop(id) {
     if (popped[id]) return;
     playPop();
     setPopped((p) => ({ ...p, [id]: true }));
-    timers.current.push(
-      setTimeout(() => setPopped((p) => {
-        const next = { ...p };
-        delete next[id];
-        return next;
-      }), REFILL_MS),
-    );
+
+    timers.current.push(setTimeout(() => {
+      // hand it to `refilling` in the same pass, so it never renders
+      // un-popped with the old animation still mid-cycle
+      setPopped((p) => without(p, id));
+      setRestarted((r) => ({ ...r, [id]: true }));
+      setRefilling((r) => ({ ...r, [id]: true }));
+
+      // one painted frame with `animation: none` is enough for the restart
+      // to take, so the class is dropped on the frame after next. A hidden
+      // tab paints no frames at all and would otherwise leave the bubble
+      // stuck invisible, so a timer releases it either way.
+      let released = false;
+      const release = () => {
+        if (released) return;
+        released = true;
+        setRefilling((r) => without(r, id));
+      };
+      frames.current.push(requestAnimationFrame(() => {
+        frames.current.push(requestAnimationFrame(release));
+      }));
+      timers.current.push(setTimeout(release, 250));
+    }, REFILL_MS));
   }
 
   return (
@@ -137,14 +173,14 @@ export default function FoodBubbles({ side, phase = 0 }) {
           key={b.id}
           type="button"
           tabIndex={-1}
-          className="home-bubble"
+          className={`home-bubble${refilling[b.id] ? ' is-refilling' : ''}`}
           data-popped={popped[b.id] ? 'true' : undefined}
           onClick={() => pop(b.id)}
           style={{
             '--bubble-x': `${b.x}%`,
             '--bubble-y': `${b.y}%`,
             '--bubble-size': `${b.size}px`,
-            '--bubble-delay': `${delayOf(b)}s`,
+            '--bubble-delay': restarted[b.id] ? '0s' : `${delayOf(b)}s`,
             '--bubble-duration': `${b.duration}s`,
             '--bubble-drift': `${b.drift}px`,
           }}

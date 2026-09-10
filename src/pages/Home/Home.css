@@ -223,6 +223,17 @@
 /* popped: the skin bursts outwards once, then the bubble stays gone until
    the component refills it (see REFILL_MS in FoodBubbles.jsx) */
 .home-bubble[data-popped] { cursor: default; }
+/* the single frame that restarts the travel — nothing drawn, no animation,
+   so the next frame begins the pass at its first keyframe and the bubble
+   fades back in instead of blinking on mid-flight */
+.home-bubble.is-refilling {
+  animation: none;
+  opacity: 0;
+}
+.home-bubble.is-refilling .home-bubble-skin,
+.home-bubble.is-refilling .home-bubble-icon {
+  animation: none;
+}
 .home-bubble[data-popped] .home-bubble-skin {
   animation: bubble-pop 260ms ease-out forwards;
 }

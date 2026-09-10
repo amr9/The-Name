@@ -1,5 +1,6 @@
-/* The guideline's accent panel (cover / p.2) across the whole footer, flat —
-   the ruled line texture that used to sit over it is gone.
+/* The guideline's accent panel (cover / p.2) across the whole footer. The
+   ruled line texture no longer runs edge to edge in white — it survives only
+   as a masked, brand-toned texture down the left and right margins (below).
    Type on it is the darkest step of the accent ramp rather than pure black:
    on a warm yellow ground that stays legible while reading as part of the
    brand palette instead of punching a hole in it. */
@@ -9,6 +10,48 @@
   background-repeat: no-repeat;
   background-size: cover;
   color: var(--color-accent-800);
+  position: relative;
+  overflow: hidden;
+  /* keeps the texture layers below inside the footer's own stack */
+  isolation: isolate;
+}
+
+/* Texture down the outer edges only, so the panel is not a flat empty band
+   while the middle stays clean behind the copy. It is the same guideline
+   tile as before, but used as a MASK rather than an image: the lines take
+   the ramp's dark tone instead of white, and a gradient fill fades them out
+   towards the centre. z-index -1 paints them over the gradient and under
+   the text. */
+.footer::before,
+.footer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  width: clamp(72px, 20vw, 320px);
+  pointer-events: none;
+  opacity: 0.38;
+  -webkit-mask-image: url('/media/brand/footer-pattern.svg');
+  mask-image: url('/media/brand/footer-pattern.svg');
+  -webkit-mask-size: 600px 56px;
+  mask-size: 600px 56px;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+}
+.footer::before {
+  left: 0;
+  background: linear-gradient(to right,
+    var(--color-accent-800) 0%,
+    color-mix(in srgb, var(--color-accent-800) 45%, transparent) 45%,
+    transparent 100%);
+}
+.footer::after {
+  right: 0;
+  background: linear-gradient(to left,
+    var(--color-accent-800) 0%,
+    color-mix(in srgb, var(--color-accent-800) 45%, transparent) 45%,
+    transparent 100%);
 }
 
 /* Slim: brand + socials on the left, contact on the right. */
@@ -64,4 +107,14 @@
   padding-block: var(--space-3);
   font-size: var(--text-sm);
   color: color-mix(in srgb, var(--color-accent-800) 85%, transparent);
+}
+
+/* On a phone the copy runs nearly edge to edge, so the texture pulls back to
+   a narrow, lighter band rather than sitting behind the first words. */
+@media (max-width: 700px) {
+  .footer::before,
+  .footer::after {
+    width: 56px;
+    opacity: 0.26;
+  }
 }
