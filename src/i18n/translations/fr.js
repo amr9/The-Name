@@ -1,12 +1,12 @@
 export default {
-  nav: { home: 'Accueil', menu: 'Menu', vertex: 'Boutique', catering: 'Traiteur & événements', contact: 'Contact' },
+  nav: { home: 'Accueil', cafe: 'Café', shop: 'Boutique', business: 'Entreprises', contact: 'Nous contacter' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Discuter sur WhatsApp' },
 
   contact: {
     kicker: 'Contact',
     title: 'Dites-nous ce qu’il vous faut.',
-    body: 'Réservations à partir de huit personnes, devis traiteur, soirées privées, presse et demandes professionnelles Vertex — écrivez-nous ici et le bureau des opérations s’en occupe.',
+    body: 'Réservations à partir de huit personnes, devis traiteur, soirées privées, presse et demandes professionnelles — écrivez-nous ici et le bureau des opérations s’en occupe.',
     emailHeading: 'E-mail',
     phoneHeading: 'Téléphone et WhatsApp',
     optional: 'facultatif',
@@ -33,7 +33,7 @@ export default {
   footer: {
     address: ['12 Rowan Street', 'Centre-ville'],
     contactHeading: 'Contactez-nous',
-    note: 'WhatsApp — tables, allergènes, devis et pièces. Réponse dans l\'heure pendant le service.',
+    note: 'WhatsApp — tables, allergènes, devis et commandes personnalisées. Réponse dans l\'heure pendant le service.',
     message: 'Envoyer un message',
     rights: 'Tous droits réservés.',
   },
@@ -77,15 +77,15 @@ export default {
         kicker: 'Le café', title: 'Et il y a un café',
         placeholder: 'Table en plein service, plats et café',
         body: 'L\'autre moitié de l\'adresse. Du petit-déjeuner au déjeuner tardif sept jours sur sept, un souper à quatre plats le vendredi soir, et une carte courte qui suit les arrivages. Récupérez votre commande autour d\'un café.',
-        points: ['08h00 – 16h00 tous les jours, souper du vendredi à 18h00', 'Quarante couverts, douze tables et un long banc', 'Sans réservation — uniquement sur place'],
+        points: ['08h00 – 16h00 tous les jours, souper du vendredi à 18h00', 'Quarante couverts, douze tables et un long banc', 'Sans réservation — uniquement sur place', 'La salle est disponible pour vos soirées privées'],
         cta: 'Voir le menu',
       },
-      cateringEvents: {
-        kicker: 'Hors-site & privatisation', title: 'Traiteur et événements',
+      catering: {
+        kicker: 'Hors-site', title: 'Traiteur, à votre adresse',
         placeholder: 'Caisses chargées pour un événement hors-site',
-        body: 'La cuisine loin du comptoir, et la salle après la fermeture. Déjeuners individuels et buffets avec personnel à votre adresse ; soupers-clubs, lancements et petits-déjeuners privés organisés ici. Les cadeaux personnalisés peuvent être assortis.',
-        points: ['De dix à deux cents couverts', 'Dès 48 heures de préavis pour les déjeuners', 'Quarante assis ici, soixante debout'],
-        cta: 'Traiteur & événements',
+        body: 'La cuisine loin du comptoir. Déjeuners individuels, buffets avec personnel et événements complets hors-site, cuisinés ici et livrés dans des caisses réutilisables. Les cadeaux personnalisés peuvent être assortis.',
+        points: ['De dix à deux cents couverts', 'Dès 48 heures de préavis pour les déjeuners', 'Commandes récurrentes hebdomadaires avec 10 % de remise'],
+        cta: 'Offres traiteur',
       },
     },
     howItWorks: {
@@ -129,14 +129,14 @@ export default {
     },
   },
 
-  menu: {
-    kicker: 'Le menu',
+  cafe: {
+    kicker: 'Le café',
     title: 'Des saveurs fraîches chaque jour',
     viewList: 'Liste',
     viewCards: 'Cartes',
     updated: 'Mis à jour mer. 02 sept.',
     askAllergens: 'Question sur les allergènes',
-    tableware: 'Les arts de la table →',
+    shopLink: 'Personnaliser un cadeau →',
     prevDishes: 'Plats précédents',
     nextDishes: 'Plus de plats',
     sections: {
@@ -165,9 +165,31 @@ export default {
         },
       },
     },
+    intro: 'Du petit-déjeuner au déjeuner tardif sept jours sur sept, un souper à quatre plats le vendredi soir, et la salle elle-même disponible pour vos soirées privées. Tout ce qui est cuisiné pour votre adresse relève du traiteur — c\'est sur la page entreprises.',
+    events: {
+      kicker: 'Événements',
+      heading: 'Soirées privées, organisées ici',
+      lede: 'Chaque événement se déroule dans le café lui-même — la salle après le service, ou avant l\'ouverture. Nous pouvons personnaliser les cadeaux pour qu\'ils s\'accordent à la soirée.',
+      title: 'Événements, au café',
+      colOne: 'Formule',
+      intro: 'Chaque événement se déroule dans le café lui-même — la salle après le service, ou avant l\'ouverture. Même cuisine et même équipe que pour le souper du vendredi, et la salle peut être redécorée pour s’accorder à la soirée. Tout ce qui a lieu à votre adresse relève du traiteur.',
+      placeholder: 'La salle installée pour une soirée privée',
+      askFor: [
+        'La date et l\'heure de fin',
+        'Le nombre de personnes et si c\'est assis — la salle accueille 40 personnes',
+        'La formule — souper-club, soirée de lancement, dégustation, salle seule',
+        'Ce que la salle doit accueillir : AV, un discours, un gâteau',
+      ],
+      packages: {
+        roomHire: { name: 'Location de la salle, soirée', note: 'Toute la salle à partir de six personnes, bar avec personnel.', covers: '40 assis', notice: '3 semaines', from: '£900 la salle' },
+        supperClub: { name: 'Souper-club', note: 'Quatre plats fixes, un seul service, notre menu.', covers: '28 assis', notice: '4 semaines', from: '£46' },
+        launchNight: { name: 'Soirée de lancement', note: 'La salle redécorée autour de ce que vous lancez.', covers: '20–60 debout', notice: '5 semaines', from: '£38' },
+        privateBreakfast: { name: 'Petit-déjeuner privé', note: 'La salle avant l\'ouverture, portes closes jusqu\'à dix heures.', covers: '20–30 assis', notice: '2 semaines', from: '£24' },
+      },
+    },
   },
 
-  vertex: {
+  shop: {
     badge: 'Vertex · les pièces de cette salle',
     title: 'Tout ce qu\'il vous faut, ici même',
     body: 'Vertex est une boutique d\'intérieur en ligne — éclairage, sièges, arts de la table et systèmes muraux. Ce restaurant en est le showroom : tout ce sur quoi vous êtes assis, ce dans quoi vous mangez et ce que vous regardez est en vente.',
@@ -183,7 +205,7 @@ export default {
     prevPieces: 'Pièces précédentes',
     nextPieces: 'Plus de pièces',
     viewLink: 'Voir ↗',
-    viewOnVertex: 'Voir sur Vertex ↗',
+    viewOnShop: 'Voir sur Vertex ↗',
     inTheRoom: 'Dans la salle',
     items: {
       'VX-101': {
@@ -219,38 +241,50 @@ export default {
     },
   },
 
-  catering: {
-    kicker: 'Traiteur',
-    title: 'Traiteur et événements',
-    intro: 'Les événements se déroulent ici, dans le café. Tout ce qui a lieu à votre adresse relève du traiteur. Les devis se discutent par message, pas par formulaire — envoyez la date et le nombre de couverts, et nous revenons avec un prix le jour même.',
-    tabs: { Events: 'Événements (au café)', Catering: 'Traiteur (hors-site)' },
-    coversHeader: 'Couverts',
-    noticeHeader: 'Préavis',
-    fromHeader: 'À partir de',
-    footnote: 'Prix par personne, hors TVA et livraison. Les commandes récurrentes de quatre semaines ou plus bénéficient de 10 % de remise.',
-    directLineKicker: 'Ligne directe',
-    directLineTitle: 'Envoyez-nous la date et le nombre de couverts',
-    openWhatsapp: 'Ouvrir WhatsApp',
-    replyNote: 'Réponse sous un jour ouvré · Lun–Ven 08h00–18h00',
-    Events: {
-      title: 'Événements, au café',
-      colOne: 'Formule',
-      intro: 'Chaque événement se déroule dans le café lui-même — la salle après le service, ou avant l\'ouverture. Même cuisine et même équipe que pour le souper du vendredi, et la salle peut être redécorée avec les pièces Vertex adaptées à la soirée. Tout ce qui a lieu à votre adresse relève du traiteur.',
-      placeholder: 'La salle installée pour une soirée privée',
-      askFor: [
-        'La date et l\'heure de fin',
-        'Le nombre de personnes et si c\'est assis — la salle accueille 40 personnes',
-        'La formule — souper-club, soirée de lancement, dégustation, salle seule',
-        'Ce que la salle doit accueillir : AV, un discours, un gâteau',
-      ],
-      packages: {
-        roomHire: { name: 'Location de la salle, soirée', note: 'Toute la salle à partir de six personnes, bar avec personnel.', covers: '40 assis', notice: '3 semaines', from: '£900 la salle' },
-        supperClub: { name: 'Souper-club', note: 'Quatre plats fixes, un seul service, notre menu.', covers: '28 assis', notice: '4 semaines', from: '£46' },
-        launchNight: { name: 'Soirée de lancement', note: 'La salle redécorée avec les pièces que vous lancez.', covers: '20–60 debout', notice: '5 semaines', from: '£38' },
-        privateBreakfast: { name: 'Petit-déjeuner privé', note: 'La salle avant l\'ouverture, portes closes jusqu\'à dix heures.', covers: '20–30 assis', notice: '2 semaines', from: '£24' },
+  business: {
+    kicker: 'Pour les entreprises',
+    title: 'Votre marque, fabriquée et livrée.',
+    intro: 'Des articles personnalisés pour les entreprises — cadeaux, kits d\'accueil, événements et tenues — ainsi que le traiteur à votre adresse. Un seul contact, une seule facture, et vos visuels conservés pour que chaque réassort soit identique au précédent.',
+    offer: {
+      heading: 'Ce que nous personnalisons',
+      lede: 'Envoyez le logo une fois. Nous conservons le visuel, l\'emplacement et les couleurs, pour qu\'un réassort dans six mois revienne identique.',
+      items: {
+        corporateGifts: {
+          name: 'Cadeaux d\'affaires', moq: 'Dès 25',
+          note: 'Remerciements clients, cadeaux d\'étape et envois saisonniers, emballés et prêts à offrir.',
+          placeholder: 'Coffrets cadeaux d\'entreprise personnalisés',
+        },
+        onboardingKits: {
+          name: 'Kits d\'accueil', moq: 'Dès 10 kits',
+          note: 'Tout ce qu\'un nouvel arrivant reçoit le premier jour, réuni en un kit et stocké pour vous.',
+          placeholder: 'Un kit d\'accueil pour nouvel arrivant',
+        },
+        eventGiveaways: {
+          name: 'Goodies événementiels', moq: 'Dès 50',
+          note: 'Objets pour conférences et lancements, la série calibrée sur votre liste d\'invités et livrée sur place.',
+          placeholder: 'Goodies personnalisés sur une table événementielle',
+        },
+        uniform: {
+          name: 'Tenues et vêtements de travail', moq: 'Dès 10',
+          note: 'Tabliers, casquettes, t-shirts et polos, brodés et recommandés par taille au fil des arrivées.',
+          placeholder: 'Tabliers et casquettes brodés',
+        },
       },
     },
-    Catering: {
+    terms: {
+      heading: 'Comment fonctionne un compte',
+      cta: 'Demander un devis sur WhatsApp',
+      items: [
+        { term: 'Sur devis', detail: 'Indiquez le produit, la quantité et la date limite. Un devis écrit revient le jour ouvré même.' },
+        { term: 'Visuels conservés', detail: 'Validés une fois, puis archivés sur votre compte. Les réassorts passent directement en production.' },
+        { term: 'Tarifs dégressifs', detail: 'Le prix unitaire baisse à 25, 100 et 500 pièces. Votre devis affiche chaque palier.' },
+        { term: 'Facturation mensuelle', detail: 'Un contact désigné, une facture, paiement à trente jours une fois le compte ouvert.' },
+      ],
+    },
+    catering: {
+      kicker: 'Traiteur',
+      heading: 'Traiteur, à votre adresse',
+      lede: 'La cuisine loin du comptoir. Tout ce qui se tient dans notre propre salle est un événement — c\'est sur la page du café.',
       title: 'Traiteur, hors-site',
       colOne: 'Formule',
       intro: 'Tout ce que nous cuisinons pour vous en dehors du café : déjeuners, buffets et événements complets hors-site, cuisinés dans la cuisine du café et livrés dans des caisses réutilisables. Le menu tourne avec les arrivages, il change donc au fil de l\'année.',
@@ -268,5 +302,16 @@ export default {
         breakfastTrolley: { name: 'Chariot petit-déjeuner', note: 'Viennoiseries, fruits, urnes de filtre maison, livrés.', covers: '10–80', notice: '48 heures', from: '£8' },
       },
     },
+  },
+
+  packages: {
+    coversHeader: 'Couverts',
+    noticeHeader: 'Préavis',
+    fromHeader: 'À partir de',
+    footnote: 'Prix par personne, hors TVA et livraison. Les commandes récurrentes de quatre semaines ou plus bénéficient de 10 % de remise.',
+    directLineKicker: 'Ligne directe',
+    directLineTitle: 'Envoyez-nous la date et le nombre de couverts',
+    openWhatsapp: 'Ouvrir WhatsApp',
+    replyNote: 'Réponse sous un jour ouvré · Lun–Ven 08h00–18h00',
   },
 };

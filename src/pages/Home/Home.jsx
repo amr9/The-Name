@@ -29,7 +29,7 @@ export default function Home() {
           <p className="home-hero-body">{t.home.hero.body}</p>
           <div className="home-hero-actions">
             <Link to="/shop" className="btn btn-primary">{t.home.hero.ctaShop}</Link>
-            <Link to="/menu" className="btn btn-secondary home-hero-secondary">{t.home.hero.ctaMenu}</Link>
+            <Link to="/cafe" className="btn btn-secondary home-hero-secondary">{t.home.hero.ctaMenu}</Link>
           </div>
         </div>
       </section>
@@ -100,11 +100,7 @@ export default function Home() {
                         </div>
                       ))}
                     </div>
-                    <Link
-                      to={s.to}
-                      state={s.tab ? { tab: s.tab } : undefined}
-                      className="btn btn-secondary home-service-cta"
-                    >
+                    <Link to={s.to} className="btn btn-secondary home-service-cta">
                       {info.cta}
                     </Link>
                   </div>

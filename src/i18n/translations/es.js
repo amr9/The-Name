@@ -1,12 +1,12 @@
 export default {
-  nav: { home: 'Inicio', menu: 'Menú', vertex: 'Tienda', catering: 'Catering y eventos', contact: 'Contacto' },
+  nav: { home: 'Inicio', cafe: 'Cafetería', shop: 'Tienda', business: 'Empresas', contact: 'Contáctanos' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chatear por WhatsApp' },
 
   contact: {
     kicker: 'Contacto',
     title: 'Cuéntanos qué necesitas.',
-    body: 'Reservas de ocho personas o más, presupuestos de catering, noches privadas, prensa y consultas profesionales de Vertex — escríbenos aquí y el equipo de operaciones lo atiende.',
+    body: 'Reservas de ocho personas o más, presupuestos de catering, noches privadas, prensa y consultas profesionales — escríbenos aquí y el equipo de operaciones lo atiende.',
     emailHeading: 'Correo',
     phoneHeading: 'Teléfono y WhatsApp',
     optional: 'opcional',
@@ -33,7 +33,7 @@ export default {
   footer: {
     address: ['12 Rowan Street', 'Centro de la ciudad'],
     contactHeading: 'Contáctanos',
-    note: 'WhatsApp — mesas, alérgenos, presupuestos y piezas. Respondemos en menos de una hora durante el servicio.',
+    note: 'WhatsApp — mesas, alérgenos, presupuestos y pedidos personalizados. Respondemos en menos de una hora durante el servicio.',
     message: 'Escríbenos',
     rights: 'Todos los derechos reservados.',
   },
@@ -77,15 +77,15 @@ export default {
         kicker: 'La cafetería', title: 'Y hay una cafetería',
         placeholder: 'Mesa en pleno servicio, comida y café',
         body: 'La otra mitad de la dirección. Desde el desayuno hasta el almuerzo tardío los siete días, una cena de cuatro platos los viernes por la noche, y una carta corta que sigue lo que llega. Recoge tu pedido con un café delante.',
-        points: ['08:00 – 16:00 a diario, cena del viernes a las 18:00', 'Cuarenta cubiertos, doce mesas y un banco largo', 'Solo sin reserva — no se reserva en línea'],
+        points: ['08:00 – 16:00 a diario, cena del viernes a las 18:00', 'Cuarenta cubiertos, doce mesas y un banco largo', 'Solo sin reserva — no se reserva en línea', 'La sala está disponible para noches privadas'],
         cta: 'Ver el menú',
       },
-      cateringEvents: {
-        kicker: 'Fuera y en privado', title: 'Catering y eventos',
+      catering: {
+        kicker: 'Fuera del local', title: 'Catering, en tu dirección',
         placeholder: 'Cajas cargándose para un evento externo',
-        body: 'La cocina lejos del mostrador, y la sala fuera de horario. Almuerzos individuales y bufés con personal en tu dirección; cenas club, lanzamientos y desayunos privados celebrados aquí. Los detalles personalizados pueden ir a juego.',
-        points: ['De diez a doscientos comensales', 'Desde 48 horas de aviso para almuerzos', 'Cuarenta sentados aquí, sesenta de pie'],
-        cta: 'Catering y eventos',
+        body: 'La cocina lejos del mostrador. Almuerzos individuales, bufés con personal y eventos externos completos, cocinados aquí y entregados en cajas reutilizables. Los detalles personalizados pueden ir a juego.',
+        points: ['De diez a doscientos comensales', 'Desde 48 horas de aviso para almuerzos', 'Pedidos semanales recurrentes con 10 % de descuento'],
+        cta: 'Paquetes de catering',
       },
     },
     howItWorks: {
@@ -129,14 +129,14 @@ export default {
     },
   },
 
-  menu: {
-    kicker: 'El menú',
+  cafe: {
+    kicker: 'La cafetería',
     title: 'Sabores frescos cada día',
     viewList: 'Lista',
     viewCards: 'Tarjetas',
     updated: 'Actualizado mié. 02 sept.',
     askAllergens: 'Preguntar por alérgenos',
-    tableware: 'La vajilla →',
+    shopLink: 'Personalizar un regalo →',
     prevDishes: 'Platos anteriores',
     nextDishes: 'Más platos',
     sections: {
@@ -165,9 +165,31 @@ export default {
         },
       },
     },
+    intro: 'Desde el desayuno hasta el almuerzo tardío los siete días, una cena de cuatro platos los viernes por la noche, y la sala libre para tus noches privadas. Todo lo que cocinamos para tu propia dirección es catering — eso está en la página de empresas.',
+    events: {
+      kicker: 'Eventos',
+      heading: 'Noches privadas, celebradas aquí',
+      lede: 'Cada evento ocurre en la propia cafetería — la sala después del servicio, o antes de abrir. Podemos personalizar los detalles para que peguen con la noche.',
+      title: 'Eventos, en el café',
+      colOne: 'Formato',
+      intro: 'Cada evento ocurre en el propio café — la sala después del servicio, o antes de abrir. El mismo equipo y la misma cocina que prepara la cena del viernes, y la sala puede redecorarse para que pegue con la noche. Todo lo que sea en tu dirección es catering.',
+      placeholder: 'La sala montada para una noche privada',
+      askFor: [
+        'La fecha y la hora de finalización',
+        'El número de personas y si es sentado — la sala tiene capacidad para 40',
+        'El formato — cena club, noche de lanzamiento, cata, solo la sala',
+        'Todo lo que la sala deba acoger: audiovisuales, un discurso, una tarta',
+      ],
+      packages: {
+        roomHire: { name: 'Alquiler de la sala, noche', note: 'Toda la sala desde seis personas, barra con personal.', covers: '40 sentados', notice: '3 semanas', from: '£900 la sala' },
+        supperClub: { name: 'Cena club', note: 'Cuatro platos fijos, un solo turno, nuestro menú.', covers: '28 sentados', notice: '4 semanas', from: '£46' },
+        launchNight: { name: 'Noche de lanzamiento', note: 'La sala redecorada en torno a lo que estés lanzando.', covers: '20–60 de pie', notice: '5 semanas', from: '£38' },
+        privateBreakfast: { name: 'Desayuno privado', note: 'La sala antes de abrir, puertas cerradas hasta las diez.', covers: '20–30 sentados', notice: '2 semanas', from: '£24' },
+      },
+    },
   },
 
-  vertex: {
+  shop: {
     badge: 'Vertex · las piezas de esta sala',
     title: 'Todo lo que necesitas, aquí mismo',
     body: 'Vertex es una tienda de interiores en línea — iluminación, asientos, vajilla y sistemas de pared. Este restaurante es su showroom: todo en lo que te sientas, comes y miras está a la venta.',
@@ -183,7 +205,7 @@ export default {
     prevPieces: 'Piezas anteriores',
     nextPieces: 'Más piezas',
     viewLink: 'Ver ↗',
-    viewOnVertex: 'Ver en Vertex ↗',
+    viewOnShop: 'Ver en Vertex ↗',
     inTheRoom: 'En la sala',
     items: {
       'VX-101': {
@@ -219,38 +241,50 @@ export default {
     },
   },
 
-  catering: {
-    kicker: 'Catering',
-    title: 'Catering y eventos',
-    intro: 'Los eventos ocurren aquí, en el café. Todo lo que sea en tu dirección es catering. Los presupuestos se acuerdan por mensaje, no con un formulario — envía la fecha y el número de comensales y te respondemos con un precio el mismo día.',
-    tabs: { Events: 'Eventos (en el café)', Catering: 'Catering (externo)' },
-    coversHeader: 'Comensales',
-    noticeHeader: 'Aviso',
-    fromHeader: 'Desde',
-    footnote: 'Precios por persona, sin IVA ni entrega. Los pedidos recurrentes de cuatro semanas o más tienen un 10 % de descuento.',
-    directLineKicker: 'Línea directa',
-    directLineTitle: 'Envíanos la fecha y el número de comensales',
-    openWhatsapp: 'Abrir WhatsApp',
-    replyNote: 'Respondemos en un día laborable · Lun–Vie 08:00–18:00',
-    Events: {
-      title: 'Eventos, en el café',
-      colOne: 'Formato',
-      intro: 'Cada evento ocurre en el propio café — la sala después del servicio, o antes de abrir. El mismo equipo y la misma cocina que prepara la cena del viernes, y la sala puede redecorarse con las piezas Vertex que convengan a la noche. Todo lo que sea en tu dirección es catering.',
-      placeholder: 'La sala montada para una noche privada',
-      askFor: [
-        'La fecha y la hora de finalización',
-        'El número de personas y si es sentado — la sala tiene capacidad para 40',
-        'El formato — cena club, noche de lanzamiento, cata, solo la sala',
-        'Todo lo que la sala deba acoger: audiovisuales, un discurso, una tarta',
-      ],
-      packages: {
-        roomHire: { name: 'Alquiler de la sala, noche', note: 'Toda la sala desde seis personas, barra con personal.', covers: '40 sentados', notice: '3 semanas', from: '£900 la sala' },
-        supperClub: { name: 'Cena club', note: 'Cuatro platos fijos, un solo turno, nuestro menú.', covers: '28 sentados', notice: '4 semanas', from: '£46' },
-        launchNight: { name: 'Noche de lanzamiento', note: 'La sala redecorada con las piezas que estás lanzando.', covers: '20–60 de pie', notice: '5 semanas', from: '£38' },
-        privateBreakfast: { name: 'Desayuno privado', note: 'La sala antes de abrir, puertas cerradas hasta las diez.', covers: '20–30 sentados', notice: '2 semanas', from: '£24' },
+  business: {
+    kicker: 'Para empresas',
+    title: 'Tu marca, fabricada y entregada.',
+    intro: 'Artículos personalizados para empresas — regalo, bienvenida, eventos y uniforme — además de catering en tu propia dirección. Un contacto, una factura, y tus archivos guardados para que cada reposición sea igual que la anterior.',
+    offer: {
+      heading: 'Qué personalizamos',
+      lede: 'Manda el logo una vez. Guardamos el diseño, la colocación y los colores, así una reposición dentro de seis meses vuelve idéntica.',
+      items: {
+        corporateGifts: {
+          name: 'Regalo corporativo', moq: 'Desde 25',
+          note: 'Detalles para clientes, regalos de aniversario y envíos de temporada, encajados y listos para entregar.',
+          placeholder: 'Cajas de regalo corporativas personalizadas',
+        },
+        onboardingKits: {
+          name: 'Kits de bienvenida', moq: 'Desde 10 kits',
+          note: 'Todo lo que recibe alguien nuevo el primer día, empaquetado como un kit y guardado en stock para ti.',
+          placeholder: 'Un kit de bienvenida montado',
+        },
+        eventGiveaways: {
+          name: 'Obsequios de evento', moq: 'Desde 50',
+          note: 'Detalles para congresos y lanzamientos, la tirada ajustada a tu lista de invitados y entregada en el sitio.',
+          placeholder: 'Obsequios personalizados en una mesa de evento',
+        },
+        uniform: {
+          name: 'Uniforme y ropa de trabajo', moq: 'Desde 10',
+          note: 'Delantales, gorras, camisetas y polos, bordados y repuestos por tallas según cambie tu equipo.',
+          placeholder: 'Delantales y gorras bordados',
+        },
       },
     },
-    Catering: {
+    terms: {
+      heading: 'Cómo funciona una cuenta',
+      cta: 'Pedir presupuesto por WhatsApp',
+      items: [
+        { term: 'Presupuestado, no tarifado', detail: 'Dinos el producto, la cantidad y la fecha límite. El presupuesto por escrito vuelve el mismo día laborable.' },
+        { term: 'Diseños guardados', detail: 'Aprobados una vez y archivados en tu cuenta. Las reposiciones pasan directas a producción.' },
+        { term: 'Precio por volumen', detail: 'El precio unitario baja a las 25, 100 y 500 piezas. Tu presupuesto muestra cada tramo.' },
+        { term: 'Facturación mensual', detail: 'Un contacto fijo, una factura, y pago a treinta días una vez abierta la cuenta.' },
+      ],
+    },
+    catering: {
+      kicker: 'Catering',
+      heading: 'Catering, en tu dirección',
+      lede: 'La cocina lejos del mostrador. Lo que se celebra en nuestra propia sala es un evento — eso está en la página de la cafetería.',
       title: 'Catering, externo',
       colOne: 'Paquete',
       intro: 'Todo lo que cocinamos para ti fuera del café: almuerzos, bufés y eventos externos completos, cocinados en la cocina del café y entregados en cajas reutilizables. El menú cambia con lo que llega, así que varía a lo largo del año.',
@@ -268,5 +302,16 @@ export default {
         breakfastTrolley: { name: 'Carrito de desayuno', note: 'Bollería, fruta, termos de café de filtro, entregado.', covers: '10–80', notice: '48 horas', from: '£8' },
       },
     },
+  },
+
+  packages: {
+    coversHeader: 'Comensales',
+    noticeHeader: 'Aviso',
+    fromHeader: 'Desde',
+    footnote: 'Precios por persona, sin IVA ni entrega. Los pedidos recurrentes de cuatro semanas o más tienen un 10 % de descuento.',
+    directLineKicker: 'Línea directa',
+    directLineTitle: 'Envíanos la fecha y el número de comensales',
+    openWhatsapp: 'Abrir WhatsApp',
+    replyNote: 'Respondemos en un día laborable · Lun–Vie 08:00–18:00',
   },
 };

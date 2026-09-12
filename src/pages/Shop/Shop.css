@@ -1,10 +1,10 @@
-.vertex-hero {
+.shop-hero {
   background: var(--gradient-light);
 }
-.vertex-hero .container {
+.shop-hero .container {
   padding-block: clamp(36px, 4.5vw, 76px);
 }
-.vertex-hero-badge {
+.shop-hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -17,113 +17,113 @@
   border-radius: 999px;
   padding: 6px 14px;
 }
-.vertex-hero-badge-dot {
+.shop-hero-badge-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: var(--color-accent);
   animation: pulse 2.6s ease-in-out infinite;
 }
-.vertex-hero-title {
+.shop-hero-title {
   font-size: clamp(38px, 4.6vw, 62px);
   line-height: 1.03;
   margin: 20px 0 0;
   margin-left: -0.028em;
   max-width: 24ch;
 }
-.vertex-hero-body {
+.shop-hero-body {
   font-size: var(--text-lg);
   line-height: 28px;
   max-width: 58ch;
   margin: 20px 0 0;
 }
-.vertex-hero-actions {
+.shop-hero-actions {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
   margin-top: 26px;
 }
 
-.vertex-catalogue {
+.shop-catalogue {
   padding-block: clamp(32px, 4vw, 56px) 80px;
 }
 
-.vertex-controls {
+.shop-controls {
   display: flex;
   gap: 16px;
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 28px;
 }
-.vertex-result-count {
+.shop-result-count {
   font-size: var(--text-sm);
   opacity: 0.6;
   font-variant-numeric: tabular-nums;
 }
 
-.vertex-row,
-.vertex-list-row {
+.shop-row,
+.shop-list-row {
   display: flex;
   gap: 20px;
   align-items: center;
   padding: 16px 0;
   border-bottom: 1px solid var(--color-accent-200);
 }
-.vertex-list-thumb {
+.shop-list-thumb {
   width: 96px;
   height: 96px;
   flex: none;
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
-.vertex-list-info { flex: 1; min-width: 0; }
-.vertex-list-title-row {
+.shop-list-info { flex: 1; min-width: 0; }
+.shop-list-title-row {
   display: flex;
   align-items: baseline;
   gap: 12px;
   flex-wrap: wrap;
 }
-.vertex-list-title-row h3 { font-size: 20px; margin: 0; }
-.vertex-list-code {
+.shop-list-title-row h3 { font-size: 20px; margin: 0; }
+.shop-list-code {
   font-size: var(--text-xs);
   letter-spacing: 0.14em;
   opacity: 0.5;
   font-variant-numeric: tabular-nums;
 }
-.vertex-list-note { margin: 6px 0 0; font-size: var(--text-body); line-height: 1.6; opacity: 0.8; }
-.vertex-list-meta { margin: 6px 0 0; font-size: var(--text-sm); line-height: 1.6; opacity: 0.7; }
+.shop-list-note { margin: 6px 0 0; font-size: var(--text-body); line-height: 1.6; opacity: 0.8; }
+.shop-list-meta { margin: 6px 0 0; font-size: var(--text-sm); line-height: 1.6; opacity: 0.7; }
 /* Only the "view" link sits here now — prices live on the shop itself. */
-.vertex-list-action-col {
+.shop-list-action-col {
   display: flex;
   align-items: center;
   flex: none;
 }
-.vertex-view-btn {
+.shop-view-btn {
   min-height: 34px;
   font-size: var(--text-sm);
 }
 
-.vertex-card {
+.shop-card {
   padding: 0;
   overflow: hidden;
   background: #fff;
   flex: 0 0 calc((100% - 48px) / 3);
 }
-.vertex-card-image { aspect-ratio: 4 / 3; }
-.vertex-card-body {
+.shop-card-image { aspect-ratio: 4 / 3; }
+.shop-card-body {
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   flex: 1;
 }
-.vertex-card-top-row {
+.shop-card-top-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
 }
-.vertex-card-specs {
+.shop-card-specs {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -132,7 +132,7 @@
   font-size: var(--text-sm);
   opacity: 0.78;
 }
-.vertex-card-bottom-row {
+.shop-card-bottom-row {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -142,8 +142,8 @@
 @media (max-width: 700px) {
   /* The six filters don't fit one pill row on a phone, and wrapping mid-pill
      looks broken — so they become full-width blocks, two per row. */
-  .vertex-controls { align-items: stretch; }
-  .vertex-controls .seg {
+  .shop-controls { align-items: stretch; }
+  .shop-controls .seg {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
@@ -152,7 +152,7 @@
     border-radius: 0;
     overflow: visible;
   }
-  .vertex-controls .seg-opt {
+  .shop-controls .seg-opt {
     justify-content: center;
     text-align: center;
     border: 1px solid var(--color-divider);
@@ -160,7 +160,7 @@
     white-space: normal;
   }
 
-  .vertex-row, .vertex-list-row { flex-wrap: wrap; }
-  .vertex-list-action-col { width: 100%; }
-  .vertex-list-action-col .vertex-view-btn { width: 100%; }
+  .shop-row, .shop-list-row { flex-wrap: wrap; }
+  .shop-list-action-col { width: 100%; }
+  .shop-list-action-col .shop-view-btn { width: 100%; }
 }

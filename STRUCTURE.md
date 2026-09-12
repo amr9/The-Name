@@ -45,7 +45,8 @@ server/               — the contact-form service (its own package.json, run
 
 src/
   main.jsx            — ReactDOM root; wraps App in BrowserRouter + LanguageProvider
-  App.jsx             — route table (/, /menu, /shop, /catering) + global chrome
+  App.jsx             — route table (/, /cafe, /shop, /business, /contact)
+                        + global chrome
                          (Navbar, Footer, floating WhatsApp button)
 
   pages/<PageName>/   — one folder per route
@@ -69,7 +70,10 @@ src/
     <Name>.jsx + <Name>.css       — simple components stay as flat files
     <Name>/<Name>.jsx + .css      — a component gets its own folder once it
                                     has real internal complexity (currently:
-                                    Navbar/, Footer/). Parts used by only
+                                    Navbar/, Footer/, PackagesPanel/ — the
+                                    packages table + direct-line panel shared
+                                    by the Cafe (events) and Business
+                                    (catering) pages). Parts used by only
                                     that component live in its folder too
                                     (e.g. Footer/SocialLinks.jsx).
 
@@ -105,6 +109,11 @@ src/
                         — ALL display copy for the whole site, nested to
                           mirror each page's structural data.js so lookups
                           are `t.<page>.<section>[id]`.
+                          Top-level keys are one per page (`home`, `cafe`,
+                          `shop`, `business`, `contact`) plus `nav`, `footer`,
+                          `common` and `packages` — the last being the shared
+                          table/direct-line labels PackagesPanel needs on both
+                          the pages that use it.
 
   hooks/useCarouselAutoplay.js — global effect that auto-advances every
                           `.carousel-track` on screen every 4.2s.
@@ -137,9 +146,10 @@ public/media/
   services/   — the four Home service rows
   methods/    — close-ups of each customization technique (engraving,
                 print, embroidery, emboss) for the Home "how it works" panel
-  menu/       — menu dishes
-  vertex/     — the Vertex pieces, named by product code
-  catering/   — the Events / Catering tab images
+  menu/       — cafe menu dishes
+  shop/       — the shop's products, named by product code
+  cafe/       — the events section on the Cafe page
+  business/   — the branded-goods offer cards + the catering section
   partners/   — reserved for delivery-partner logos. Currently empty: the
                 Home logo strip hot-links talabat's and noon's own CDN URLs
                 (see data/media.js `partners`) so a rebrand on their side
@@ -160,10 +170,10 @@ placeholder instead, so partially-supplied media degrades cleanly.
 
 | Route | Folder | Notes |
 |---|---|---|
-| `/` | `pages/Home/` | Customization-led. Hero, rolling delivery-partner logo strip (CSS marquee, duplicated row), 4 services in business order — B2C gifts, B2B branding, cafe, catering & events — (with the `FoodBubbles` ornament: gutter fields above 1280px, left-to-right bands between the rows below it, both rendered and swapped by media query; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": a 4-step `<ol>` plus a picker of customization methods (`howItWorksSteps` / `customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
-| `/menu` | `pages/Menu/` | List/Cards toggle (shared `ViewToggle`), 3 sections, autoplaying carousels |
-| `/shop` | `pages/VertexPieces/` | Catalogue filters, List/Cards toggle, autoplaying carousel |
-| `/catering` | `pages/CateringEvents/` | Events/Catering tabs, packages table, direct-line panel |
+| `/` | `pages/Home/` | Customization-led. Hero, rolling delivery-partner logo strip (CSS marquee, duplicated row), 4 services in business order — B2C gifts, B2B branding, cafe, catering — (with the `FoodBubbles` ornament: gutter fields above 1280px, left-to-right bands between the rows below it, both rendered and swapped by media query; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": a 4-step `<ol>` plus a picker of customization methods (`howItWorksSteps` / `customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
+| `/cafe` | `pages/Cafe/` | The menu (List/Cards toggle, autoplaying carousels, 3 sections) plus the **events** section at its foot — nights held in our own room, rendered by `PackagesPanel`. Was `pages/Menu/`. |
+| `/shop` | `pages/Shop/` | Catalogue filters, List/Cards toggle, autoplaying carousel. Was `pages/VertexPieces/`; classes and the i18n namespace renamed `vertex-*`/`t.vertex` → `shop-*`/`t.shop`. PENDING the customization rebuild (see `data/catalogue.js`). |
+| `/business` | `pages/Business/` | B2B: branded-goods offer cards, account terms, and the **catering** section (off-site work), rendered by `PackagesPanel`. |
 | `/contact` | `pages/Contact/` | Enquiry form (name/email/phone/message) + hidden honeypot. POSTs to `VITE_CONTACT_ENDPOINT` or same-origin `/api/contact`, which `server/` answers and emails to `site.email`. Validation rules come from `shared/contactForm.js`; states are idle / sending / sent / failed. |
 
 ## Conventions (read before adding code)
@@ -195,6 +205,10 @@ placeholder instead, so partially-supplied media degrades cleanly.
      were assembled separately on both pages → folded into one
      `components/Carousel.jsx` that owns the track and its side arrows, so
      pages just pass the cards as children.
+   - The packages table + "direct line" WhatsApp panel lived on the old
+     CateringEvents page. When that page was split — events onto Cafe,
+     catering onto Business — the shared markup went to
+     `components/PackagesPanel/` rather than being copied into both.
    Grep for similar class names / JSX shapes before adding a second copy of
    anything; if 2+ places need the same thing, extract it into
    `components/`, `utils/`, or a shared token in `theme.css` instead of

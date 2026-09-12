@@ -1,12 +1,12 @@
 export default {
-  nav: { home: 'Home', menu: 'Menu', vertex: 'Shop', catering: 'Catering & Events', contact: 'Contact' },
+  nav: { home: 'Home', cafe: 'Cafe', shop: 'Shop', business: 'Business', contact: 'Contact us' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chat on WhatsApp' },
 
   contact: {
     kicker: 'Contact',
     title: 'Tell us what you need.',
-    body: 'Bookings for eight or more, catering quotes, private nights, press and Vertex trade enquiries — send it here and the operations desk picks it up.',
+    body: 'Bookings for eight or more, catering quotes, private nights, press and trade enquiries — send it here and the operations desk picks it up.',
     emailHeading: 'Email',
     phoneHeading: 'Phone & WhatsApp',
     optional: 'optional',
@@ -33,7 +33,7 @@ export default {
   footer: {
     address: ['12 Rowan Street', 'City centre'],
     contactHeading: 'Contact us',
-    note: 'WhatsApp — tables, allergens, quotes and pieces. Replies within the hour during service.',
+    note: 'WhatsApp — tables, allergens, quotes and custom orders. Replies within the hour during service.',
     message: 'Message us',
     rights: 'All rights reserved.',
   },
@@ -77,15 +77,15 @@ export default {
         kicker: 'The cafe', title: 'And there is a cafe',
         placeholder: 'Table mid-service, food and coffee',
         body: 'The other half of the address. Breakfast to late lunch seven days, a four-course supper on Friday nights, and a short list that moves with the delivery. Collect an order over coffee.',
-        points: ['08:00 – 16:00 daily, Friday supper 18:00', 'Forty covers, twelve tables and a long bench', 'Walk-ins only — no online booking'],
+        points: ['08:00 – 16:00 daily, Friday supper 18:00', 'Forty covers, twelve tables and a long bench', 'Walk-ins only — no online booking', 'The room is available for private evenings'],
         cta: 'See the menu',
       },
-      cateringEvents: {
-        kicker: 'Off-site & private hire', title: 'Catering and events',
+      catering: {
+        kicker: 'Off-site', title: 'Catering, at your address',
         placeholder: 'Crates being loaded for an off-site event',
-        body: 'The kitchen away from the counter, and the room after hours. Boxed desk lunches and staffed buffets at your address; supper clubs, launches and private breakfasts held here. Branded favours can be made to match.',
-        points: ['Ten to two hundred covers', "From 48 hours' notice on lunches", 'Forty seated here, sixty standing'],
-        cta: 'Catering & events',
+        body: 'The kitchen away from the counter. Boxed desk lunches, staffed buffets and full off-site events, cooked here and delivered in reusable crates. Branded favours can be made to match.',
+        points: ['Ten to two hundred covers', "From 48 hours' notice on lunches", 'Weekly standing orders discounted 10%'],
+        cta: 'Catering packages',
       },
     },
     howItWorks: {
@@ -129,14 +129,14 @@ export default {
     },
   },
 
-  menu: {
-    kicker: 'The menu',
+  cafe: {
+    kicker: 'The cafe',
     title: 'Fresh Flavours Every Day',
     viewList: 'List',
     viewCards: 'Cards',
     updated: 'Updated Wed 02 Sep',
     askAllergens: 'Ask about allergens',
-    tableware: 'The tableware →',
+    shopLink: 'Customize a gift →',
     prevDishes: 'Previous dishes',
     nextDishes: 'More dishes',
     sections: {
@@ -165,9 +165,31 @@ export default {
         },
       },
     },
+    intro: 'Breakfast to late lunch seven days, a four-course supper on Friday nights, and the room itself free for private evenings. Anything cooked for your own address is catering — that is on the business page.',
+    events: {
+      kicker: 'Events',
+      heading: 'Private nights, held here',
+      lede: 'Every event happens in the cafe itself — the room after service, or before we open. We can brand the favours to match the night.',
+      title: 'Events, in the café',
+      colOne: 'Format',
+      intro: 'Every event happens in the café itself — the room after service, or before we open. Same kitchen and same team that cooks the Friday supper, and the floor can be re-dressed to suit the night. Anything at your address is catering.',
+      placeholder: 'The room set for a private evening',
+      askFor: [
+        'The date and the finish time',
+        'Headcount and whether it is seated — the room holds 40',
+        'Format — supper club, launch night, tasting, room only',
+        'Anything the room has to hold: AV, a speech, a cake',
+      ],
+      packages: {
+        roomHire: { name: 'Room hire, evening', note: 'The whole room from six, bar staffed.', covers: '40 seated', notice: '3 weeks', from: '£900 room' },
+        supperClub: { name: 'Supper club', note: 'Set four courses, one sitting, our menu.', covers: '28 seated', notice: '4 weeks', from: '£46' },
+        launchNight: { name: 'Launch night', note: 'The floor re-dressed around whatever you are launching.', covers: '20–60 standing', notice: '5 weeks', from: '£38' },
+        privateBreakfast: { name: 'Private breakfast', note: 'The room before opening, doors closed until ten.', covers: '20–30 seated', notice: '2 weeks', from: '£24' },
+      },
+    },
   },
 
-  vertex: {
+  shop: {
     badge: 'Vertex · the pieces in this room',
     title: 'All You Need, Right Here',
     body: 'Vertex is an online shop for interiors — lighting, seating, tabletop and wall systems. This restaurant is its showroom: everything you sit on, eat off and look at is on the shelf.',
@@ -183,7 +205,7 @@ export default {
     prevPieces: 'Previous pieces',
     nextPieces: 'More pieces',
     viewLink: 'View ↗',
-    viewOnVertex: 'View on Vertex ↗',
+    viewOnShop: 'View on Vertex ↗',
     inTheRoom: 'In the room',
     items: {
       'VX-101': {
@@ -219,38 +241,50 @@ export default {
     },
   },
 
-  catering: {
-    kicker: 'Catering',
-    title: 'Catering and events',
-    intro: 'Events happen here, in the café. Anything at your address is catering. Quotes are agreed in a message thread, not a form — send the date and the covers and we come back with a price the same day.',
-    tabs: { Events: 'Events (in the café)', Catering: 'Catering (off-site)' },
-    coversHeader: 'Covers',
-    noticeHeader: 'Notice',
-    fromHeader: 'From',
-    footnote: 'Prices per head, excluding VAT and delivery. Standing orders of four weeks or more are discounted 10%.',
-    directLineKicker: 'Direct line',
-    directLineTitle: 'Send us the date and the covers',
-    openWhatsapp: 'Open WhatsApp',
-    replyNote: 'Replies within one working day · Mon–Fri 08:00–18:00',
-    Events: {
-      title: 'Events, in the café',
-      colOne: 'Format',
-      intro: 'Every event happens in the café itself — the room after service, or before we open. Same kitchen and same team that cooks the Friday supper, and the floor can be re-dressed with the Vertex pieces that suit the night. Anything at your address is catering.',
-      placeholder: 'The room set for a private evening',
-      askFor: [
-        'The date and the finish time',
-        'Headcount and whether it is seated — the room holds 40',
-        'Format — supper club, launch night, tasting, room only',
-        'Anything the room has to hold: AV, a speech, a cake',
-      ],
-      packages: {
-        roomHire: { name: 'Room hire, evening', note: 'The whole room from six, bar staffed.', covers: '40 seated', notice: '3 weeks', from: '£900 room' },
-        supperClub: { name: 'Supper club', note: 'Set four courses, one sitting, our menu.', covers: '28 seated', notice: '4 weeks', from: '£46' },
-        launchNight: { name: 'Launch night', note: 'The floor re-dressed with the pieces you are launching.', covers: '20–60 standing', notice: '5 weeks', from: '£38' },
-        privateBreakfast: { name: 'Private breakfast', note: 'The room before opening, doors closed until ten.', covers: '20–30 seated', notice: '2 weeks', from: '£24' },
+  business: {
+    kicker: 'For business',
+    title: 'Your brand, made and delivered.',
+    intro: 'Branded goods for companies — gifting, onboarding, events and uniform — plus catering at your own address. One contact, one invoice, and your artwork kept on file so every reorder matches the last.',
+    offer: {
+      heading: 'What we brand',
+      lede: 'Send the logo once. We keep the artwork, the placement and the colours on file, so a reorder in six months comes back identical.',
+      items: {
+        corporateGifts: {
+          name: 'Corporate gifts', moq: 'From 25',
+          note: 'Client thank-yous, milestone gifts and seasonal sends, boxed and ready to hand over.',
+          placeholder: 'Branded corporate gift boxes',
+        },
+        onboardingKits: {
+          name: 'Onboarding kits', moq: 'From 10 kits',
+          note: 'Everything a new starter gets on day one, packed as one kit and held in stock for you.',
+          placeholder: 'A new-starter welcome kit, packed',
+        },
+        eventGiveaways: {
+          name: 'Event giveaways', moq: 'From 50',
+          note: 'Conference and launch handouts, the run sized to your guest list and delivered to the venue.',
+          placeholder: 'Branded giveaways on an event table',
+        },
+        uniform: {
+          name: 'Uniform and workwear', moq: 'From 10',
+          note: 'Aprons, caps, tees and polos, embroidered and re-ordered by size as your team changes.',
+          placeholder: 'Embroidered aprons and caps',
+        },
       },
     },
-    Catering: {
+    terms: {
+      heading: 'How an account works',
+      cta: 'Start a quote on WhatsApp',
+      items: [
+        { term: 'Quoted, not priced', detail: 'Send the product, the quantity and the deadline. A written quote comes back the same working day.' },
+        { term: 'Artwork kept on file', detail: 'Approved once, then stored against your account. Reorders skip straight to production.' },
+        { term: 'Bulk pricing', detail: 'The unit price steps down at 25, 100 and 500 pieces. Your quote shows every band.' },
+        { term: 'Invoiced monthly', detail: 'One named contact, one invoice, thirty-day terms once an account is open.' },
+      ],
+    },
+    catering: {
+      kicker: 'Catering',
+      heading: 'Catering, at your address',
+      lede: 'The kitchen away from the counter. Anything held in our own room is an event instead — that is on the cafe page.',
       title: 'Catering, off-site',
       colOne: 'Package',
       intro: 'Everything we cook for you away from the café: lunches, buffets and full off-site events, cooked in the café kitchen and delivered in reusable crates. The menu rotates with the delivery, so it changes through the year.',
@@ -268,5 +302,16 @@ export default {
         breakfastTrolley: { name: 'Breakfast trolley', note: 'Pastry, fruit, urns of house filter, delivered.', covers: '10–80', notice: '48 hours', from: '£8' },
       },
     },
+  },
+
+  packages: {
+    coversHeader: 'Covers',
+    noticeHeader: 'Notice',
+    fromHeader: 'From',
+    footnote: 'Prices per head, excluding VAT and delivery. Standing orders of four weeks or more are discounted 10%.',
+    directLineKicker: 'Direct line',
+    directLineTitle: 'Send us the date and the covers',
+    openWhatsapp: 'Open WhatsApp',
+    replyNote: 'Replies within one working day · Mon–Fri 08:00–18:00',
   },
 };

@@ -4,9 +4,9 @@ import Footer from './components/Footer/Footer.jsx';
 import { WhatsAppFab } from './components/WhatsAppButton.jsx';
 import useCarouselAutoplay from './hooks/useCarouselAutoplay.js';
 import Home from './pages/Home/Home.jsx';
-import Menu from './pages/Menu/Menu.jsx';
-import VertexPieces from './pages/VertexPieces/VertexPieces.jsx';
-import CateringEvents from './pages/CateringEvents/CateringEvents.jsx';
+import Cafe from './pages/Cafe/Cafe.jsx';
+import Shop from './pages/Shop/Shop.jsx';
+import Business from './pages/Business/Business.jsx';
 import Contact from './pages/Contact/Contact.jsx';
 import './components/WhatsAppButton.css';
 
@@ -19,9 +19,9 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/menu" element={<Menu />} />
-          <Route path="/shop" element={<VertexPieces />} />
-          <Route path="/catering" element={<CateringEvents />} />
+          <Route path="/cafe" element={<Cafe />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/business" element={<Business />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>

@@ -1,4 +1,4 @@
-// Shared List/Cards segmented toggle — used by Menu and VertexPieces.
+// Shared List/Cards segmented toggle — used by the Cafe and Shop pages.
 // Reuse this instead of re-writing the same seg-opt markup per page.
 const OPTIONS = [
   { key: 'List', icon: '☰' },

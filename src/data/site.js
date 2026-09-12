@@ -24,8 +24,8 @@ export const socials = [
 // `key` looks up the label in each translation's `nav` section.
 export const navLinks = [
   { to: '/', key: 'home' },
-  { to: '/menu', key: 'menu' },
-  { to: '/shop', key: 'vertex' },
-  { to: '/catering', key: 'catering' },
+  { to: '/cafe', key: 'cafe' },
+  { to: '/shop', key: 'shop' },
+  { to: '/business', key: 'business' },
   { to: '/contact', key: 'contact' },
 ];

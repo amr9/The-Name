@@ -20,7 +20,7 @@ export const media = {
     personalGifts: `${BASE}/services/personal-gifts.jpg`,
     businessBranding: `${BASE}/services/business-branding.jpg`,
     cafe: `${BASE}/services/cafe.jpg`,
-    cateringEvents: `${BASE}/services/catering-events.jpg`,
+    catering: `${BASE}/services/catering.jpg`,
   },
 
   // Customization methods shown in the Home page "how it works" panel —
@@ -46,14 +46,14 @@ export const media = {
     citrusSoda: `${BASE}/menu/citrus-soda.jpg`,
   },
 
-  // Vertex pieces — keys match the `code` in data/catalogue.js.
-  vertex: {
-    'VX-101': `${BASE}/vertex/vx-101.jpg`,
-    'VX-204': `${BASE}/vertex/vx-204.jpg`,
-    'VX-318': `${BASE}/vertex/vx-318.jpg`,
-    'VX-422': `${BASE}/vertex/vx-422.jpg`,
-    'VX-530': `${BASE}/vertex/vx-530.jpg`,
-    'VX-611': `${BASE}/vertex/vx-611.jpg`,
+  // Shop products — keys match the `code` in data/catalogue.js.
+  shop: {
+    'VX-101': `${BASE}/shop/vx-101.jpg`,
+    'VX-204': `${BASE}/shop/vx-204.jpg`,
+    'VX-318': `${BASE}/shop/vx-318.jpg`,
+    'VX-422': `${BASE}/shop/vx-422.jpg`,
+    'VX-530': `${BASE}/shop/vx-530.jpg`,
+    'VX-611': `${BASE}/shop/vx-611.jpg`,
   },
 
   // Delivery partner logos — keys match pages/Home/data.js `partners` id.
@@ -68,9 +68,20 @@ export const media = {
     noon: 'https://f.nooncdn.com/s/app/com/noon/design-system/logos/noon-logo-en.svg',
   },
 
-  // Catering & events — keys match the tab keys ('Events' | 'Catering').
-  catering: {
-    Events: `${BASE}/catering/events.jpg`,
-    Catering: `${BASE}/catering/catering.jpg`,
+  // Cafe page — the events section at its foot.
+  cafe: {
+    events: `${BASE}/cafe/events.jpg`,
+  },
+
+  // Business page — the branded-goods offer cards (keys match
+  // pages/Business/data.js `brandingOffers` id) and the catering section.
+  business: {
+    catering: `${BASE}/business/catering.jpg`,
+    offers: {
+      corporateGifts: `${BASE}/business/corporate-gifts.jpg`,
+      onboardingKits: `${BASE}/business/onboarding-kits.jpg`,
+      eventGiveaways: `${BASE}/business/event-giveaways.jpg`,
+      uniform: `${BASE}/business/uniform.jpg`,
+    },
   },
 };

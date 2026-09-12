@@ -1,95 +1,80 @@
-.catering-page {
-  padding-block: clamp(32px, 4vw, 64px) 80px;
-}
+/* Layout for the shared packages table + direct-line panel. Ported from the
+   old CateringEvents page when it was split between Cafe and Business — the
+   page-level heading styles stayed behind with each page. */
 
-.catering-title {
-  font-size: clamp(36px, 4.2vw, 52px);
-  line-height: 1.04;
-  margin: 0;
-  margin-left: -0.028em;
-}
-
-.catering-intro-copy {
-  font-size: var(--text-lg);
-  line-height: 28px;
-  max-width: 58ch;
-  margin: 20px 0 32px;
-}
-
-.catering-tabs {
-  margin-bottom: 36px;
-}
-.catering-tab-opt {
-  padding: 9px 18px;
-  font-size: var(--text-sm);
-}
-
-.catering-grid {
+.packages-grid {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   gap: clamp(28px, 4vw, 64px);
   align-items: start;
 }
 
-.catering-image-wrap {
+.packages-image-wrap {
   border-radius: calc(2 * var(--radius-lg));
   overflow: hidden;
   box-shadow: var(--shadow-sm);
   margin-bottom: 28px;
 }
 
-.catering-section-title {
+.packages-section-title {
   font-size: 26px;
   margin: 0 0 8px;
 }
-.catering-section-intro {
+.packages-section-intro {
   font-size: var(--text-body);
   line-height: 28px;
   max-width: 56ch;
   margin: 0 0 28px;
 }
 
-.catering-package-name { font-size: var(--text-body); }
-.catering-package-note { font-size: var(--text-sm); opacity: 0.7; }
+/* The four columns don't compress below ~520px — let the table scroll in its
+   own box rather than pushing the page sideways. */
+.packages-table-wrap { overflow-x: auto; }
+.packages-table-wrap .table { min-width: 460px; }
 
-.catering-footnote {
+.packages-name { font-size: var(--text-body); }
+.packages-note { font-size: var(--text-sm); opacity: 0.7; }
+.packages-num { font-variant-numeric: tabular-nums; }
+.packages-col-from { text-align: end; white-space: nowrap; }
+
+.packages-footnote {
   font-size: var(--text-sm);
   opacity: 0.7;
   line-height: 24px;
   margin: 16px 0 0;
 }
 
-.catering-direct-line {
+.packages-direct-line {
   background: var(--gradient-light);
   border: 1px solid var(--color-divider);
   border-radius: calc(2 * var(--radius-lg));
   padding: clamp(26px, 3vw, 36px);
 }
-.catering-direct-line-kicker {
+.packages-direct-line-kicker {
   font-size: var(--text-xs);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-accent-700);
 }
-.catering-direct-line-title {
+.packages-direct-line-title {
   font-size: 24px;
-  margin: 14px 0 14px;
+  margin: 14px 0;
 }
 
-.catering-ask-for {
+.packages-ask-for {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-bottom: 22px;
 }
-.catering-ask-for-row {
+.packages-ask-for-row {
   display: flex;
   gap: 10px;
   align-items: center;
   font-size: var(--text-body);
   line-height: 24px;
 }
-.catering-ask-for-dot {
+.packages-ask-for-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
@@ -97,7 +82,7 @@
   flex: none;
 }
 
-.catering-reply-note {
+.packages-reply-note {
   margin: 14px 0 0;
   font-size: var(--text-sm);
   opacity: 0.65;
@@ -105,5 +90,5 @@
 }
 
 @media (max-width: 1024px) {
-  .catering-grid { grid-template-columns: minmax(0, 1fr); }
+  .packages-grid { grid-template-columns: minmax(0, 1fr); }
 }
