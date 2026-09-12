@@ -1,105 +1,101 @@
 // The Name — contact form service.
 //
-// One endpoint: POST /api/contact. It re-validates the submission against
-// the same rules the browser used (/shared/contactForm.js — imported, not
-// copied), then emails it to MAIL_TO over SMTP.
+// One endpoint: POST /api/contact. What happens to a submission:
+//
+//   rate limit (IP) → honeypot → shared validation → email verification
+//   → rate limit (address) → spam scoring → WRITE TO DATABASE → respond
+//
+// The response is sent as soon as the row is on disk; a background worker
+// (queue.js) does the SMTP send and retries it with backoff. So a slow or
+// broken mail server costs the visitor nothing, and no enquiry is ever lost
+// to one — it is in the database either way.
 //
 // Run it with `npm start` in this folder; see .env for the config it
 // expects and README.md for deployment notes.
 
 import express from 'express';
 import cors from 'cors';
-import nodemailer from 'nodemailer';
 
-import { contactFields, honeypotField, validateContact } from '../shared/contactForm.js';
-import { site } from '../src/data/site.js';
+import { contactFields, honeypotField, timingField, validateContact } from '../shared/contactForm.js';
+import { config } from './config.js';
+import { insertSubmission, queueStats, closeDb } from './db.js';
+import { checkEmail } from './emailCheck.js';
+import { record, overLimit, tooManyAttempts, pruneOldData } from './rateLimit.js';
+import { scoreSubmission } from './spam.js';
+import { mailTo, verifyTransport, closeMailer } from './mailer.js';
+import { startWorker, wakeWorker, stopWorker } from './queue.js';
 
-const PORT = Number(process.env.PORT) || 8787;
-
-const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ?? '')
-  .split(',')
-  .map((o) => o.trim())
-  .filter(Boolean);
-
-// Fail at boot rather than silently accepting submissions we cannot deliver.
-for (const key of ['SMTP_HOST', 'SMTP_USER', 'SMTP_PASS', 'MAIL_FROM']) {
-  if (!process.env[key]) {
-    console.error(`[contact] missing required env var ${key} — see server/.env`);
-    process.exit(1);
-  }
-}
-
-const MAIL_TO = process.env.MAIL_TO || site.email;
-
-const transport = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT) || 465,
-  secure: process.env.SMTP_SECURE !== 'false',
-  auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-});
-
-// — rate limiting —
-// In-memory and per-process, which is all a single-instance contact form
-// needs. Run more than one instance and each gets its own budget; move to a
-// shared store (Redis) before that matters.
-const WINDOW_MS = 15 * 60 * 1000;
-const MAX_PER_WINDOW = 5;
-const hits = new Map(); // ip -> number[] of timestamps
-
-function rateLimited(ip) {
-  const now = Date.now();
-  const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
-  recent.push(now);
-  hits.set(ip, recent);
-  return recent.length > MAX_PER_WINDOW;
-}
-
-// Drop cold entries periodically so the map cannot grow without bound.
-// unref() so this timer never holds the process open on shutdown.
-setInterval(() => {
-  const now = Date.now();
-  for (const [ip, times] of hits) {
-    if (times.every((t) => now - t >= WINDOW_MS)) hits.delete(ip);
-  }
-}, WINDOW_MS).unref();
-
-// — messages for the error keys /shared/contactForm.js returns —
-// The browser shows its own translated copy; these are for anyone calling
-// the API directly.
+// — messages for the error keys the validators return —
+// The browser has its own translated copy of each (contact.errors.*, in all
+// four languages) and prefers it; these are for anyone calling the API
+// directly, and are the reason the response carries both.
 const ERROR_TEXT = {
   required: 'This field is required.',
   email: 'That email address does not look right.',
+  emailUndeliverable: 'That email domain cannot receive mail — check it for a typo.',
+  emailDisposable: 'Please use an address we can actually reply to.',
   tooLong: 'That value is too long.',
 };
 
 const app = express();
 app.set('trust proxy', 1); // behind a reverse proxy, so req.ip is the real client
+app.disable('x-powered-by');
 app.use(express.json({ limit: '32kb' }));
 app.use(
   cors({
     origin(origin, cb) {
       // No Origin header = a non-browser client (curl, uptime check). The
       // browser is the only thing CORS protects, so let those through.
-      if (!origin || ALLOWED_ORIGINS.includes(origin)) return cb(null, true);
+      if (!origin || config.allowedOrigins.includes(origin)) return cb(null, true);
       cb(new Error(`origin not allowed: ${origin}`));
     },
     methods: ['POST', 'OPTIONS'],
   })
 );
 
-app.get('/api/health', (req, res) => res.json({ ok: true }));
+// Both shapes of a field error in one place: keys for the site to
+// translate, English text for everyone else.
+function fieldErrors(keys) {
+  return {
+    fieldKeys: keys,
+    fields: Object.fromEntries(
+      Object.entries(keys).map(([id, key]) => [id, ERROR_TEXT[key] ?? key])
+    ),
+  };
+}
+
+app.get('/api/health', (req, res) => res.json({ ok: true, queue: queueStats() }));
 
 app.post('/api/contact', async (req, res) => {
-  if (rateLimited(req.ip)) {
-    return res.status(429).json({ ok: false, error: 'Too many messages from this address. Try again later.' });
+  const body = req.body ?? {};
+  const ip = req.ip ?? null;
+
+  // — 1. the abuse ceiling —
+  // Counted before anything else, so a flood of junk costs the sender their
+  // budget rather than costing us DNS lookups and database writes. This is
+  // the request limit, not the message limit; the stricter one is at step 5,
+  // where we know the submission is real.
+  if (tooManyAttempts(ip)) {
+    return res.status(429).json({ ok: false, key: 'rateLimited', error: 'Too many requests. Try again later.' });
   }
 
-  const body = req.body ?? {};
-
-  // Honeypot: a real visitor never sees this field, so a value here is a
-  // bot. Answer 200 so it has nothing to learn from the difference.
+  // — 2. honeypot —
+  // A real visitor never sees this field. Keep the submission (it is
+  // evidence, and the retention prune clears it), answer 200 so the bot has
+  // nothing to learn from the difference.
   if (typeof body[honeypotField] === 'string' && body[honeypotField].trim()) {
-    console.warn('[contact] honeypot tripped, dropping submission');
+    insertSubmission({
+      name: String(body.name ?? '').slice(0, 120),
+      email: String(body.email ?? '').slice(0, 200),
+      phone: String(body.phone ?? '').slice(0, 40) || null,
+      message: String(body.message ?? '').slice(0, 4000),
+      ip,
+      user_agent: req.get('user-agent')?.slice(0, 300) ?? null,
+      status: 'held',
+      spam_score: 99,
+      spam_reasons: 'honeypot',
+    });
+    console.warn('[contact] honeypot tripped, holding submission');
     return res.json({ ok: true });
   }
 
@@ -107,38 +103,63 @@ app.post('/api/contact', async (req, res) => {
     contactFields.map((f) => [f.id, typeof body[f.id] === 'string' ? body[f.id].trim() : ''])
   );
 
+  // — 3. the same rules the browser applied —
   const invalid = validateContact(values);
   if (Object.keys(invalid).length > 0) {
-    const fields = Object.fromEntries(
-      Object.entries(invalid).map(([id, key]) => [id, ERROR_TEXT[key] ?? key])
-    );
-    return res.status(400).json({ ok: false, error: 'Some fields need fixing.', fields });
+    return res.status(400).json({ ok: false, error: 'Some fields need fixing.', ...fieldErrors(invalid) });
   }
 
-  try {
-    await transport.sendMail({
-      from: process.env.MAIL_FROM,
-      to: MAIL_TO,
-      // So hitting reply in the mail client answers the visitor directly.
-      replyTo: `${values.name} <${values.email}>`,
-      subject: `Website enquiry — ${values.name}`,
-      text: [
-        `Name:    ${values.name}`,
-        `Email:   ${values.email}`,
-        `Phone:   ${values.phone || '—'}`,
-        '',
-        values.message,
-        '',
-        `— sent from the ${site.name} website contact form`,
-      ].join('\n'),
-    });
-  } catch (err) {
-    // The visitor gets a generic failure; the detail stays in the logs.
-    console.error('[contact] SMTP send failed:', err);
-    return res.status(502).json({ ok: false, error: 'Could not send the message right now.' });
+  // — 4. can that address actually receive a reply —
+  const email = await checkEmail(values.email);
+  if (!email.ok) {
+    return res
+      .status(400)
+      .json({ ok: false, error: 'Some fields need fixing.', ...fieldErrors({ email: email.key }) });
   }
 
-  console.log(`[contact] sent enquiry from ${values.email}`);
+  // — 5. the message limit —
+  // Read-only: the budget is spent below, when a submission is actually
+  // stored. So a rejected attempt never uses up a real visitor's allowance.
+  const emailKey = values.email.toLowerCase();
+  if (overLimit('ip', ip) || overLimit('email', emailKey)) {
+    return res
+      .status(429)
+      .json({ ok: false, key: 'rateLimited', error: 'Too many messages from this address. Try again later.' });
+  }
+
+  // — 6. content heuristics —
+  const fillMs = Number(body[timingField]);
+  const spam = scoreSubmission(values, { fillMs });
+
+  const id = insertSubmission({
+    name: values.name,
+    email: values.email,
+    phone: values.phone || null,
+    message: values.message,
+    ip,
+    user_agent: req.get('user-agent')?.slice(0, 300) ?? null,
+    // Held submissions are stored and flagged, never emailed. The sender
+    // gets the same 200 either way — a false positive is still readable in
+    // the database, and a bot learns nothing.
+    status: spam.held ? 'held' : 'queued',
+    spam_score: spam.score,
+    spam_reasons: spam.reasons.join(',') || null,
+    fill_ms: Number.isFinite(fillMs) ? fillMs : null,
+  });
+
+  // Spend the message budget now that one is actually stored. Held ones
+  // count too — a bot should not get an unlimited allowance just because
+  // its output is being caught.
+  record('ip', ip);
+  record('email', emailKey);
+
+  if (spam.held) {
+    console.warn(`[contact] #${id} held — score ${spam.score} (${spam.reasons.join(', ')})`);
+  } else {
+    console.log(`[contact] #${id} queued from ${values.email}`);
+    wakeWorker(); // don't wait for the next poll
+  }
+
   res.json({ ok: true });
 });
 
@@ -151,6 +172,30 @@ app.use((err, req, res, next) => {
   res.status(500).json({ ok: false, error: 'Something went wrong.' });
 });
 
-app.listen(PORT, () => {
-  console.log(`[contact] listening on :${PORT} — delivering to ${MAIL_TO}`);
+// — start up —
+startWorker();
+verifyTransport(); // logs the result; failures are not fatal, the queue holds
+
+const pruneTimer = setInterval(pruneOldData, 60 * 60 * 1000);
+pruneTimer.unref();
+pruneOldData();
+
+const server = app.listen(config.port, () => {
+  const stats = queueStats();
+  console.log(`[contact] listening on :${config.port} — delivering to ${mailTo}`);
+  console.log(`[contact] database ${config.dbPath} — ${stats.queued} queued, ${stats.sent} sent, ${stats.held} held`);
 });
+
+// Finish what is in flight before the process goes away, so a deploy never
+// leaves a row stuck mid-send.
+async function shutdown(signal) {
+  console.log(`[contact] ${signal} — shutting down`);
+  server.close();
+  await stopWorker();
+  closeMailer();
+  closeDb();
+  process.exit(0);
+}
+
+process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGINT', () => shutdown('SIGINT'));

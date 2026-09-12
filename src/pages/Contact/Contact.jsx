@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import { site } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import { contactFields, honeypotField, validateContact } from './data.js';
+import { contactFields, honeypotField, timingField, validateContact } from './data.js';
 import './Contact.css';
 
 const EMPTY = Object.fromEntries(contactFields.map((f) => [f.id, '']));
@@ -17,9 +17,14 @@ export default function Contact() {
   const { t } = useLanguage();
   const [values, setValues] = useState(EMPTY);
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState('idle'); // idle | sending | sent | failed
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | failed | rateLimited
   // Bots fill in every field they find; humans never see this one.
   const [honeypot, setHoneypot] = useState('');
+  // When the form appeared. The server reads the gap between this and the
+  // submission: nobody types a real enquiry in under a few seconds, so a
+  // near-instant one is a strong bot signal. A ref, not state — it must not
+  // be reset by a re-render, and nothing renders from it.
+  const openedAt = useRef(Date.now());
 
   const set = (id) => (e) => {
     setValues((v) => ({ ...v, [id]: e.target.value }));
@@ -47,17 +52,38 @@ export default function Contact() {
       const res = await fetch(ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...values, [honeypotField]: honeypot }),
+        body: JSON.stringify({
+          ...values,
+          [honeypotField]: honeypot,
+          [timingField]: Date.now() - openedAt.current,
+        }),
       });
 
-      // 400 means the server's copy of the rules caught something ours did
-      // not — show those against the fields rather than a generic failure.
+      // 400 means the server caught something we could not — a bad field,
+      // or an address whose domain cannot receive mail (only the server can
+      // check that). It answers with `fieldKeys` for us to translate and
+      // `fields` in English for anyone calling the API directly.
       if (res.status === 400) {
         const data = await res.json().catch(() => ({}));
-        setErrors(data.fields ?? {});
+        const keys = data.fieldKeys ?? {};
+        setErrors(
+          Object.keys(keys).length > 0
+            ? Object.fromEntries(
+                Object.entries(keys).map(([id, key]) => [id, t.contact.errors[key] ?? data.fields?.[id]])
+              )
+            : data.fields ?? {}
+        );
         setStatus('idle');
         return;
       }
+
+      // 429 is the rate limiter, not a broken form — say so specifically
+      // rather than telling them to try again immediately.
+      if (res.status === 429) {
+        setStatus('rateLimited');
+        return;
+      }
+
       if (!res.ok) throw new Error(`contact endpoint returned ${res.status}`);
 
       setStatus('sent');
@@ -77,7 +103,12 @@ export default function Contact() {
           <button
             type="button"
             className="btn btn-secondary"
-            onClick={() => { setValues(EMPTY); setHoneypot(''); setStatus('idle'); }}
+            onClick={() => {
+              setValues(EMPTY);
+              setHoneypot('');
+              setStatus('idle');
+              openedAt.current = Date.now(); // a fresh form, so a fresh timer
+            }}
           >
             {t.contact.sendAnother}
           </button>
@@ -156,8 +187,10 @@ export default function Contact() {
             />
           </div>
 
-          {status === 'failed' && (
-            <p className="contact-failed" role="alert">{t.contact.errors.send}</p>
+          {(status === 'failed' || status === 'rateLimited') && (
+            <p className="contact-failed" role="alert">
+              {status === 'rateLimited' ? t.contact.errors.rateLimited : t.contact.errors.send}
+            </p>
           )}
 
           <button type="submit" className="btn btn-primary btn-block" disabled={status === 'sending'}>

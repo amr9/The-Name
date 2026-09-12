@@ -3,4 +3,4 @@
 // rules, so they cannot live inside src/. This file keeps the page-folder
 // convention (a page imports its structural data from its own data.js)
 // while there is only ever one definition.
-export { contactFields, emailPattern, honeypotField, validateContact } from '../../../shared/contactForm.js';
+export { contactFields, emailPattern, honeypotField, timingField, validateContact } from '../../../shared/contactForm.js';

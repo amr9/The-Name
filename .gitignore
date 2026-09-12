@@ -4,4 +4,10 @@ dist
 *.local
 .env
 server/.env
+
+# The contact service’s local SQLite database
+server/data
+*.db
+*.db-wal
+*.db-shm
 TheNAMEsocialhub_Brand Guideline.pdf

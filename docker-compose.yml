@@ -1,0 +1,61 @@
+# The whole site in two containers: nginx serving the built bundle, and the
+# contact service behind it on the same origin at /api/.
+#
+#   cp .env.example .env    # fill in the SMTP credentials
+#   docker compose up --build
+#   → http://localhost:8080
+
+services:
+  contact:
+    build:
+      context: .                    # repo root: it imports ../shared and ../src/data
+      dockerfile: server/Dockerfile
+    restart: unless-stopped
+    environment:
+      PORT: 8787
+      # The SQLite file, on the named volume below. Submissions, the send
+      # queue and the rate-limit counters all live in it.
+      DB_PATH: /app/data/contact.db
+      SMTP_HOST: ${SMTP_HOST:?set SMTP_HOST in .env}
+      SMTP_PORT: ${SMTP_PORT:-465}
+      SMTP_SECURE: ${SMTP_SECURE:-true}
+      SMTP_USER: ${SMTP_USER:?set SMTP_USER in .env}
+      SMTP_PASS: ${SMTP_PASS:?set SMTP_PASS in .env}
+      MAIL_FROM: ${MAIL_FROM:?set MAIL_FROM in .env}
+      MAIL_TO: ${MAIL_TO:-}
+      # Browsers send an Origin header on POST even same-origin, and the
+      # service 403s anything not listed here — so the site's own origin has to
+      # be in it. Set ALLOWED_ORIGINS to the public origin when this is not
+      # running on localhost.
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:${WEB_PORT:-8080}}
+      # Optional tuning — the defaults in config.js are sensible; these
+      # are here so they can be changed without editing code.
+      RATE_PER_IP: ${RATE_PER_IP:-5}                 # stored messages per IP / 15 min
+      RATE_PER_EMAIL: ${RATE_PER_EMAIL:-3}           # stored messages per address / 15 min
+      RATE_ATTEMPTS_PER_IP: ${RATE_ATTEMPTS_PER_IP:-20}  # requests per IP / 15 min
+      SPAM_THRESHOLD: ${SPAM_THRESHOLD:-5}           # score at which a message is held
+      RETENTION_DAYS: ${RETENTION_DAYS:-365}         # then submissions are deleted
+    volumes:
+      # Named, not a bind mount: the database is the service's own state,
+      # and it must survive `docker compose down` and every rebuild.
+      - contact-data:/app/data
+    expose:
+      - '8787'
+
+  web:
+    build:
+      context: .
+      args:
+        # Empty = the form posts to /api/contact on this same origin.
+        VITE_CONTACT_ENDPOINT: ${VITE_CONTACT_ENDPOINT:-}
+    restart: unless-stopped
+    environment:
+      CONTACT_UPSTREAM: http://contact:8787
+    ports:
+      - '${WEB_PORT:-8080}:80'
+    depends_on:
+      contact:
+        condition: service_healthy
+
+volumes:
+  contact-data:
