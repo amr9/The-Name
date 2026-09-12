@@ -21,6 +21,13 @@ export const contactFields = [
 // proven by the reply, not by a regex.
 export const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// How long the form was on screen before it was submitted, in ms. The
+// browser measures it and sends it under this name; the server treats an
+// implausibly fast fill as a spam signal (a bot posts instantly, a person
+// cannot). Structural, like the honeypot — the threshold itself is the
+// server's business (MIN_FILL_MS).
+export const timingField = 'fillMs';
+
 // A field no human sees (hidden + aria-hidden + tabindex -1). Bots fill in
 // every input they find, so anything here means the submission is one.
 export const honeypotField = 'company';

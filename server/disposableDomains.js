@@ -1,0 +1,45 @@
+// Throwaway-mailbox providers. An address here is real and will accept the
+// mail, it just belongs to nobody an hour from now — so a reply to it can
+// never land. Not exhaustive (no such list is); it covers the services that
+// actually turn up on contact forms.
+//
+// Add to it by appending a domain, lowercase, no leading @.
+export const disposableDomains = new Set([
+  '0-mail.com', '027168.com', '10minutemail.com', '10minutemail.net',
+  '20minutemail.com', '33mail.com', '3d-painting.com', 'anonbox.net',
+  'anonymbox.com', 'armyspy.com', 'bccto.me', 'binkmail.com',
+  'bobmail.info', 'bugmenot.com', 'burnermail.io', 'byom.de',
+  'cock.li', 'cuvox.de', 'dayrep.com', 'deadaddress.com',
+  'discard.email', 'discardmail.com', 'dispostable.com', 'dodgeit.com',
+  'dropmail.me', 'e4ward.com', 'einrot.com', 'emailondeck.com',
+  'emailsensei.com', 'emailtemporanea.net', 'emailtemporario.com.br',
+  'emltmp.com', 'fakeinbox.com', 'fakemail.net', 'fakemailgenerator.com',
+  'fastmailbox.net', 'filzmail.com', 'fleckens.hu', 'flurred.com',
+  'forgetmail.com', 'fudgerub.com', 'getairmail.com', 'getnada.com',
+  'gishpuppy.com', 'grr.la', 'guerrillamail.biz', 'guerrillamail.com',
+  'guerrillamail.de', 'guerrillamail.info', 'guerrillamail.net',
+  'guerrillamail.org', 'guerrillamailblock.com', 'harakirimail.com',
+  'hidemail.de', 'hmamail.com', 'inboxalias.com', 'inboxbear.com',
+  'incognitomail.com', 'jetable.org', 'jourrapide.com', 'kasmail.com',
+  'koszmail.pl', 'mailbucket.org', 'mailcatch.com', 'maildrop.cc',
+  'maildu.de', 'mailexpire.com', 'mailforspam.com', 'mailinator.com',
+  'mailinator.net', 'mailinator2.com', 'mailmetrash.com', 'mailmoat.com',
+  'mailnesia.com', 'mailnull.com', 'mailsac.com', 'mailtemp.info',
+  'mailtothis.com', 'mintemail.com', 'mohmal.com', 'monumentmail.com',
+  'moakt.com', 'mt2015.com', 'mytemp.email', 'mytrashmail.com',
+  'nomail.xl.cx', 'no-spam.ws', 'nowmymail.com', 'objectmail.com',
+  'odaymail.com', 'onewaymail.com', 'owlpic.com', 'pokemail.net',
+  'proxymail.eu', 'rcpt.at', 'rhyta.com', 'rmqkr.net',
+  'sharklasers.com', 'shitmail.me', 'sneakemail.com', 'sogetthis.com',
+  'spam4.me', 'spamavert.com', 'spambog.com', 'spambox.us',
+  'spamdecoy.net', 'spamfree24.org', 'spamgourmet.com', 'spamhole.com',
+  'spaml.com', 'spamspot.com', 'superrito.com', 'suremail.info',
+  'teleworm.us', 'temp-mail.io', 'temp-mail.org', 'tempail.com',
+  'tempemail.com', 'tempinbox.com', 'tempmail.net', 'tempmail.plus',
+  'tempmailaddress.com', 'tempr.email', 'throwawaymail.com', 'tmail.ws',
+  'tmpeml.com', 'trash-mail.at', 'trash-mail.com', 'trashmail.com',
+  'trashmail.de', 'trashmail.me', 'trashmail.net', 'trbvm.com',
+  'twinmail.de', 'tyldd.com', 'wegwerfmail.de', 'wegwerfmail.net',
+  'wh4f.org', 'willhackforfood.biz', 'yopmail.com', 'yopmail.fr',
+  'yopmail.net', 'zetmail.com', 'zippymail.info',
+]);

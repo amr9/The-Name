@@ -26,22 +26,53 @@ contact-form service) and `shared/` (the handful of modules both need).
 ```
 shared/
   contactForm.js      — the contact form's field list, length caps, honeypot
-                        field name and `validateContact()`. Imported by BOTH
-                        the React form (via pages/Contact/data.js, which just
-                        re-exports it) and server/index.js, so the browser and
-                        the server can never validate by different rules.
-                        Structural only — it returns error KEYS, and each side
-                        turns them into its own copy.
+                        field name, timing field name and `validateContact()`.
+                        Imported by BOTH the React form (via pages/Contact/
+                        data.js, which just re-exports it) and server/index.js,
+                        so the browser and the server can never validate by
+                        different rules. Structural only — it returns error
+                        KEYS, and each side turns them into its own copy.
 
 server/               — the contact-form service (its own package.json, run
-                        with `npm start` in that folder; Node 20.6+)
-  index.js            — the whole service: POST /api/contact + GET /api/health,
-                        CORS allowlist, in-memory rate limit, honeypot check,
-                        shared validation, nodemailer SMTP send.
+                        with `npm start` in that folder; Node 20.12+). It is
+                        STATEFUL: submissions are stored in SQLite and emailed
+                        by a background worker, so the request never waits for
+                        SMTP and nothing is lost when SMTP is down.
+  index.js            — the HTTP layer: POST /api/contact + GET /api/health,
+                        CORS allowlist, and the order the checks run in
+                        (abuse ceiling → honeypot → shared validation → email
+                        verification → message limit → spam score → INSERT).
+  config.js           — every environment variable, read and validated once at
+                        boot. Nothing else reads process.env.
+  db.js               — the SQLite connection, the schema (migrations gated by
+                        PRAGMA user_version — append, never edit) and every
+                        prepared statement. The `submissions` table doubles as
+                        the send queue: `status` is the job state.
+  queue.js            — the send worker. Claims a due row atomically, sends it,
+                        retries with backoff (1m→6h), then marks it 'failed'.
+  mailer.js           — the SMTP transport and the message it builds. Strips
+                        CR/LF from anything reaching a mail header.
+  emailCheck.js       — syntax → disposable blocklist → MX lookup. Fails OPEN
+                        on DNS trouble, closed only on a definitive answer.
+  disposableDomains.js— the throwaway-mailbox blocklist; append to it.
+  spam.js             — content heuristics and the score. At/above the
+                        threshold a submission is HELD: stored, flagged, never
+                        emailed, and the sender still gets a 200.
+  rateLimit.js        — three budgets counted in the database (requests per IP,
+                        stored messages per IP, stored messages per address)
+                        plus the retention prune.
+  scripts/
+    submissions.js    — read the collected submissions from a shell
+                        (`npm run submissions`). Deliberately a CLI and not an
+                        admin route: the rows hold personal data and IPs.
+  data/contact.db     — the SQLite file (gitignored; in Docker it lives on the
+                        named volume `contact-data` instead).
   .env                — every var it needs (SMTP creds, ALLOWED_ORIGINS,
-                        MAIL_TO). Gitignored, so it stays on the machine that
-                        runs the service and never reaches the repo.
-  README.md           — API table, abuse handling, deployment shapes.
+                        MAIL_TO, the tunables). Gitignored, so it stays on the
+                        machine that runs the service and never reaches the
+                        repo. Optional — Docker passes the same vars directly.
+  README.md           — the flow, the database, the API table, abuse handling,
+                        every env var, deployment shapes.
 
 src/
   main.jsx            — ReactDOM root; wraps App in BrowserRouter + LanguageProvider
@@ -91,10 +122,10 @@ src/
                           data + i18n use. Also serves as the shot list of
                           photography still needed.
     catalogue.js        — the shop catalogue: code/category-key/
-                          coordinates only. Read by the VertexPieces (Shop)
+                          coordinates only. Read by the Shop
                           page alone — the Home page dropped its room
                           hotspots for the "how it works" steps. Display
-                          text lives in i18n under vertex.items[code].
+                          text lives in i18n under shop.items[code].
                           PENDING: still holds the old interiors pieces,
                           and needs rebuilding around the customization
                           categories.
@@ -135,6 +166,44 @@ src/
                           2+ files belongs here instead (see DRY below).
 ```
 
+## Docker
+
+The root also holds the container setup. Nothing in `src/` or `server/`
+knows about it — it only packages what `npm run build` and `node index.js`
+already produce.
+
+```
+Dockerfile            — the site: stage 1 runs `npm run build`, stage 2 serves
+                        dist/ with nginx. VITE_CONTACT_ENDPOINT is a build ARG
+                        (Vite bakes it in) — leave it empty for same-origin.
+nginx.conf            — served as a TEMPLATE (${CONTACT_UPSTREAM} is filled in
+                        at container start, so the API host can change without
+                        a rebuild). SPA fallback to index.html, /assets/ cached
+                        forever, /media/ a day, /api/ proxied to the service.
+server/Dockerfile     — the contact service. MUST be built from the repo root
+                        (`docker build -f server/Dockerfile .`): index.js
+                        imports ../shared/ and ../src/data/site.js. Runs
+                        `node index.js`, not `npm start` — there is no .env in
+                        the image, config comes from the environment.
+docker-compose.yml    — both services on one network: `web` (nginx, published
+                        on WEB_PORT) proxying /api/ to `contact`, which it
+                        waits on via its healthcheck. The contact service is
+                        STATEFUL — its SQLite database lives on the named
+                        volume `contact-data` at /app/data. That volume is the
+                        thing to back up; losing it loses every submission.
+.env.example          — every var compose needs; copy to `.env` (gitignored).
+.dockerignore         — keeps node_modules/, dist/, .git/ and .env out of the
+                        build context.
+```
+
+    cp .env.example .env      # fill in the SMTP credentials
+    docker compose up --build # → http://localhost:8080
+
+One gotcha worth knowing: a browser sends an `Origin` header on POST even
+same-origin, and the service 403s any origin missing from `ALLOWED_ORIGINS`.
+Compose defaults it to `http://localhost:<WEB_PORT>`; set it to the real
+origin in production.
+
 ## Media files
 
 Artwork lives in `public/media/` (served as-is by Vite, so no import step):
@@ -174,7 +243,7 @@ placeholder instead, so partially-supplied media degrades cleanly.
 | `/cafe` | `pages/Cafe/` | The menu (List/Cards toggle, autoplaying carousels, 3 sections) plus the **events** section at its foot — nights held in our own room, rendered by `PackagesPanel`. Was `pages/Menu/`. |
 | `/shop` | `pages/Shop/` | Catalogue filters, List/Cards toggle, autoplaying carousel. Was `pages/VertexPieces/`; classes and the i18n namespace renamed `vertex-*`/`t.vertex` → `shop-*`/`t.shop`. PENDING the customization rebuild (see `data/catalogue.js`). |
 | `/business` | `pages/Business/` | B2B: branded-goods offer cards, account terms, and the **catering** section (off-site work), rendered by `PackagesPanel`. |
-| `/contact` | `pages/Contact/` | Enquiry form (name/email/phone/message) + hidden honeypot. POSTs to `VITE_CONTACT_ENDPOINT` or same-origin `/api/contact`, which `server/` answers and emails to `site.email`. Validation rules come from `shared/contactForm.js`; states are idle / sending / sent / failed. |
+| `/contact` | `pages/Contact/` | Enquiry form (name/email/phone/message) + hidden honeypot + a fill timer (`timingField`, a ref set when the form renders — the server reads the gap as a bot signal). POSTs to `VITE_CONTACT_ENDPOINT` or same-origin `/api/contact`, which `server/` stores and a worker emails to `site.email`. Validation rules come from `shared/contactForm.js`; a 400 carries `fieldKeys` the page translates through `contact.errors.*`. States are idle / sending / sent / failed / rateLimited. |
 
 ## Conventions (read before adding code)
 
@@ -199,7 +268,8 @@ placeholder instead, so partially-supplied media degrades cleanly.
    - The WhatsApp SVG icon existed in two places → extracted to
      `components/WhatsAppIcon.jsx`.
    - The List/Cards segmented toggle (markup + CSS) was duplicated between
-     Menu and VertexPieces → extracted to `components/ViewToggle.jsx` and
+     the Menu and VertexPieces pages (now Cafe and Shop) → extracted to
+     `components/ViewToggle.jsx` and
      the shared `.view-toggle-opt` rule moved into `theme.css`.
    - The scrolling card track, its ref plumbing and its prev/next arrows
      were assembled separately on both pages → folded into one
