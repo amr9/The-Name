@@ -121,14 +121,16 @@ src/
                           `public/media/`, keyed by the same ids the page
                           data + i18n use. Also serves as the shot list of
                           photography still needed.
-    catalogue.js        — the shop catalogue: code/category-key/
-                          coordinates only. Read by the Shop
-                          page alone — the Home page dropped its room
-                          hotspots for the "how it works" steps. Display
-                          text lives in i18n under shop.items[code].
-                          PENDING: still holds the old interiors pieces,
-                          and needs rebuilding around the customization
-                          categories.
+    catalogue.js        — the shop catalogue: curated objects we
+                          personalise (partner brands Lexon, Lund London,
+                          Pantone, Korin, Kreafunk and Gingko, plus house
+                          pieces). Holds code,
+                          category key, brand name and `methods` — keys
+                          of Home's `customMethods`, so method names are
+                          read from i18n home.howItWorks.methods rather
+                          than repeated under shop. Read by the Shop page
+                          alone. Display text lives in i18n under
+                          shop.items[code].
 
   i18n/
     LanguageContext.jsx — LanguageProvider + useLanguage() hook. Persists
@@ -241,7 +243,7 @@ placeholder instead, so partially-supplied media degrades cleanly.
 |---|---|---|
 | `/` | `pages/Home/` | Customization-led. Hero, rolling delivery-partner logo strip (CSS marquee, duplicated row), 4 services in business order — B2C gifts, B2B branding, cafe, catering — (with the `FoodBubbles` ornament: gutter fields above 1280px, left-to-right bands between the rows below it, both rendered and swapped by media query; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": a 4-step `<ol>` plus a picker of customization methods (`howItWorksSteps` / `customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
 | `/cafe` | `pages/Cafe/` | The menu (List/Cards toggle, autoplaying carousels, 3 sections) plus the **events** section at its foot — nights held in our own room, rendered by `PackagesPanel`. Was `pages/Menu/`. |
-| `/shop` | `pages/Shop/` | Catalogue filters, List/Cards toggle, autoplaying carousel. Was `pages/VertexPieces/`; classes and the i18n namespace renamed `vertex-*`/`t.vertex` → `shop-*`/`t.shop`. PENDING the customization rebuild (see `data/catalogue.js`). |
+| `/shop` | `pages/Shop/` | "Make It Personal" — curated objects from partner brands and house pieces that take a name, initials or a logo. Category filters (drinkware / tech / desk / travel / gift sets), List/Cards toggle, autoplaying carousel. Cards use the frosted-overlay design: a full-bleed 3:4 photo, methods + code chips over its top, and brand/name/finish·lead on a glass panel with a round yellow arrow (mirrored in RTL). The list view keeps the longer note. Was `pages/VertexPieces/` (an interiors showroom) before the customization pivot. |
 | `/business` | `pages/Business/` | B2B: branded-goods offer cards, account terms, and the **catering** section (off-site work), rendered by `PackagesPanel`. |
 | `/contact` | `pages/Contact/` | Enquiry form (name/email/phone/message) + hidden honeypot + a fill timer (`timingField`, a ref set when the form renders — the server reads the gap as a bot signal). POSTs to `VITE_CONTACT_ENDPOINT` or same-origin `/api/contact`, which `server/` stores and a worker emails to `site.email`. Validation rules come from `shared/contactForm.js`; a 400 carries `fieldKeys` the page translates through `contact.errors.*`. States are idle / sending / sent / failed / rateLimited. |
 

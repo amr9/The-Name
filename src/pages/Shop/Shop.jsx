@@ -16,6 +16,8 @@ export default function Shop() {
 
   const shown = filter === 'all' ? catalogue : catalogue.filter((p) => p.catKey === filter);
   const resultCount = shown.length === 1 ? t.shop.resultPiece(shown.length) : t.shop.resultPieces(shown.length);
+  // Method names are shared with the Home "how it works" panel.
+  const methodNames = (p) => p.methods.map((m) => t.home.howItWorks.methods[m].name).join(', ');
 
   return (
     <div className="shop-page">
@@ -29,7 +31,7 @@ export default function Shop() {
           <p className="shop-hero-body">{t.shop.body}</p>
           <div className="shop-hero-actions">
             <a className="btn btn-primary" href={site.shopUrl} target="_blank" rel="noopener noreferrer">{t.shop.openShop}</a>
-            <WhatsAppButton className="btn btn-ghost">{t.shop.askFloor}</WhatsAppButton>
+            <WhatsAppButton className="btn btn-ghost">{t.shop.askPersonal}</WhatsAppButton>
           </div>
         </div>
       </section>
@@ -69,7 +71,7 @@ export default function Shop() {
                       <span className="tag tag-accent">{t.shop.filters[p.catKey]}</span>
                     </div>
                     <p className="shop-list-note">{info.note}</p>
-                    <p className="shop-list-meta">{info.finish} · {info.lead} · {info.where}</p>
+                    <p className="shop-list-meta">{p.brand} · {info.finish} · {methodNames(p)} · {info.lead}</p>
                   </div>
                   <div className="shop-list-action-col">
                     <a className="btn btn-secondary shop-view-btn" href={site.shopUrl} target="_blank" rel="noopener noreferrer">{t.shop.viewLink}</a>
@@ -83,25 +85,23 @@ export default function Shop() {
             {shown.map((p) => {
               const info = t.shop.items[p.code];
               return (
-                <div key={p.code} className="card elev-sm carousel-card shop-card">
-                  <div className="washed shop-card-image">
-                    <ImagePlaceholder src={media.shop[p.code]} label={info.name} ratio="4 / 3" />
+                // Frosted-overlay card: the photo fills the card, methods and
+                // code float over it, and name/brand sit on a glass panel.
+                <div key={p.code} className="carousel-card shop-card">
+                  <ImagePlaceholder className="washed shop-card-image" src={media.shop[p.code]} label={info.name} ratio="3 / 4" />
+                  <div className="shop-card-top">
+                    <span className="shop-card-chip">{methodNames(p)}</span>
+                    <span className="shop-card-chip shop-card-code">{p.code}</span>
                   </div>
-                  <div className="shop-card-body">
-                    <div className="shop-card-top-row">
-                      <span className="card-kicker">{t.shop.filters[p.catKey]}</span>
-                      <span className="shop-list-code">{p.code}</span>
-                    </div>
-                    <h3 className="card-title">{info.name}</h3>
-                    <p className="card-body">{info.note}</p>
-                    <div className="shop-card-specs">
-                      <span>{t.shop.finish} · {info.finish}</span>
-                      <span>{t.shop.leadTime} · {info.lead}</span>
-                      <span>{t.shop.inTheRoom} · {info.where}</span>
-                    </div>
-                    <div className="shop-card-bottom-row">
-                      <a className="btn btn-secondary shop-view-btn" href={site.shopUrl} target="_blank" rel="noopener noreferrer">{t.shop.viewOnShop}</a>
-                    </div>
+                  <div className="shop-card-panel">
+                    <span className="shop-card-brand">{p.brand}</span>
+                    <h3 className="card-title shop-card-name">{info.name}</h3>
+                    <span className="shop-card-meta">{info.finish} · {info.lead}</span>
+                    <a className="shop-card-go" href={site.shopUrl} target="_blank" rel="noopener noreferrer" aria-label={t.shop.personaliseItem(info.name)}>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M5 12h14M13 6l6 6-6 6" />
+                      </svg>
+                    </a>
                   </div>
                 </div>
               );

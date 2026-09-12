@@ -6,7 +6,8 @@ export const site = {
   phone: '+971 54 344 4565',
   // Where the contact form's submissions are meant to land.
   email: 'operations@thename.me',
-  shopUrl: 'https://example.com/vertex',
+  // TODO: placeholder — swap for the real online shop URL.
+  shopUrl: 'https://example.com/shop',
 };
 
 // Every WhatsApp trigger on the site links here, and the footer prints

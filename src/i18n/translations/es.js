@@ -43,7 +43,7 @@ export default {
 
   home: {
     hero: {
-      title: 'Todo lo de aquí, con tu nombre encima.',
+      title: 'Del Nombre. A tu nombre.',
       body: 'Somos un taller de personalización. Elige un producto, mándanos un nombre, un logo o toda una marca, y lo aplicamos — grabado, impreso, bordado o repujado. Un solo regalo o dos mil. Y además hay una cafetería al lado.',
       mediaLabel: 'Vídeo o foto de personalización — grabado, impresión, regalos terminados',
       ctaMenu: 'La carta de la cafetería',
@@ -193,14 +193,12 @@ export default {
   },
 
   shop: {
-    badge: 'Vertex · las piezas de esta sala',
-    title: 'Todo lo que necesitas, aquí mismo',
-    body: 'Vertex es una tienda de interiores en línea — iluminación, asientos, vajilla y sistemas de pared. Este restaurante es su showroom: todo en lo que te sientas, comes y miras está a la venta.',
+    badge: 'Marcas seleccionadas · personalizadas por nosotros',
+    title: 'Hazlo personal',
+    body: 'Seleccionamos objetos de diseño de marcas como Lexon, Lund London, Pantone, Korin, Kreafunk y Gingko y los hacemos tuyos — un nombre, unas iniciales, un mensaje o un logo, grabado, impreso o en relieve. Nada de estantería. Demasiado personal para regalárselo a otro.',
     openShop: 'Ver la tienda ↗',
-    askFloor: 'Preguntar qué hay en la sala →',
-    finish: 'Acabado',
-    leadTime: 'Plazo de entrega',
-    filters: { all: 'Todo', lighting: 'Iluminación', seating: 'Asientos', tables: 'Mesas', tabletop: 'Vajilla', systems: 'Sistemas' },
+    askPersonal: 'Preguntar por la personalización →',
+    filters: { all: 'Todo', drinkware: 'Botellas y tazas', tech: 'Tecnología', desk: 'Escritorio', travel: 'Viaje', giftSets: 'Sets de regalo' },
     viewList: 'Lista',
     viewCards: 'Tarjetas',
     resultPiece: (n) => `${n} pieza`,
@@ -208,38 +206,67 @@ export default {
     prevPieces: 'Piezas anteriores',
     nextPieces: 'Más piezas',
     viewLink: 'Ver ↗',
-    viewOnShop: 'Ver en Vertex ↗',
-    inTheRoom: 'En la sala',
+    personaliseItem: (name) => `Personalizar ${name}`,
     items: {
-      'VX-101': {
-        name: 'Lámpara colgante Halo, 600mm', finish: 'Latón cepillado, vidrio ópalo', lead: '2 semanas', where: 'Sobre cada mesa',
-        note: 'Un único anillo de luz en un cable fino — lo que da a la sala su brillo.',
-        placeholder: 'Lámpara colgante Halo sobre una mesa',
+      'TN-101': {
+        name: 'Botella Skittle, 500 ml', finish: 'Acero inoxidable de doble pared', lead: '3 – 5 días',
+        note: 'Mantiene las bebidas frías todo el día. Un nombre en el costado, o un logo en el hombro.',
+        placeholder: 'Botella Skittle de Lund London con un nombre grabado',
       },
-      'VX-204': {
-        name: 'Silla de comedor Arc', finish: 'Fresno curvado, lana terracota', lead: 'En stock', where: 'Los 40 cubiertos',
-        note: 'Una curva continua para el respaldo y los brazos. Apilable hasta cuatro.',
-        placeholder: 'Silla de comedor Arc',
+      'TN-102': {
+        name: 'Taza de café térmica', finish: 'Acero inoxidable, acabado mate', lead: '3 – 5 días',
+        note: 'El café de cada día, en algo que lleva sus iniciales.',
+        placeholder: 'Taza de Lund London con iniciales impresas',
       },
-      'VX-318': {
-        name: 'Mesa Monolith, 2,4m', finish: 'Piedra fundida, base lacada', lead: '4 semanas', where: 'El banco largo',
-        note: 'Una losa, una base. La mesa donde se sirve la cena del viernes.',
-        placeholder: 'Mesa de comedor Monolith',
+      'TN-201': {
+        name: 'Altavoz Fine', finish: 'Aluminio, inalámbrico', lead: '5 – 7 días',
+        note: 'Un altavoz de bolsillo que se graba con nitidez — un favorito para regalos de equipo y clientes.',
+        placeholder: 'Altavoz Lexon Fine con un logo grabado',
       },
-      'VX-422': {
-        name: 'Vajilla Orbit', finish: 'Gres mate, seis piezas', lead: 'En stock', where: 'Cada plato en el que comes',
-        note: 'Los platos, cuencos y guarniciones sobre los que la cocina emplata.',
-        placeholder: 'Vajilla de gres Orbit',
+      'TN-202': {
+        name: 'Cargador inalámbrico Oblio', finish: 'Estación de carga inalámbrica', lead: '5 – 7 días',
+        note: 'Pasa todo el día en el escritorio, y la marca impresa en él también.',
+        placeholder: 'Cargador Lexon Oblio con un logo impreso',
       },
-      'VX-530': {
-        name: 'Sistema de pared Grid, módulo de 1,2m', finish: 'Aluminio anodizado', lead: '3 semanas', where: 'La pared del fondo',
-        note: 'Módulos que sostienen estantes, plantas o luces. Añade módulos según lo necesites.',
-        placeholder: 'Sistema de estanterías de pared Grid',
+      'TN-301': {
+        name: 'Lámpara Mina', finish: 'LED recargable', lead: '3 – 5 días',
+        note: 'Una lámpara pequeña que va a todas partes. Grabada con sus iniciales, pasa a ser suya.',
+        placeholder: 'Lámpara Lexon Mina grabada con iniciales',
       },
-      'VX-611': {
-        name: 'Lámpara de pie Signal', finish: 'Acero, pantalla de lino', lead: '2 semanas', where: 'Junto a los asientos de ventana',
-        note: 'Alta, fina, regulable hasta casi apagarse. La que más preguntan los clientes.',
-        placeholder: 'Lámpara de pie Signal junto a una ventana',
+      'TN-302': {
+        name: 'Set de escritorio de piel', finish: 'Libreta, bolígrafo y tarjetero', lead: '7 – 10 días',
+        note: 'Un accesorio de escritorio con el nombre de cada miembro del equipo, en cada pieza.',
+        placeholder: 'Set de escritorio de piel con un nombre en relieve',
+      },
+      'TN-401': {
+        name: 'Funda de pasaporte de piel', finish: 'Piel plena flor', lead: '7 – 10 días',
+        note: 'Iniciales marcadas en la tapa. Discreta, táctil y demasiado personal para regalársela a otro.',
+        placeholder: 'Funda de pasaporte de piel con iniciales en relieve',
+      },
+      'TN-501': {
+        name: 'Caja de regalo signature', finish: 'Piezas seleccionadas, envoltorio completo', lead: '7 – 10 días',
+        note: 'Piezas de Lexon y Lund London, personalizadas y presentadas en un embalaje con tu nombre o tu marca.',
+        placeholder: 'Una caja de regalo personalizada, abierta',
+      },
+      'TN-103': {
+        name: 'Taza Pantone', finish: 'Porcelana, color a elegir', lead: '2 – 4 días',
+        note: 'Elige su color Pantone y añade el nombre. Una taza doblemente suya.',
+        placeholder: 'Taza Pantone con un nombre impreso',
+      },
+      'TN-203': {
+        name: 'Altavoz aGO', finish: 'Portátil, inalámbrico', lead: '5 – 7 días',
+        note: 'Sonido de diseño danés, lo bastante pequeño para un escritorio o una bolsa, con un logo delante.',
+        placeholder: 'Altavoz Kreafunk aGO con un logo impreso',
+      },
+      'TN-303': {
+        name: 'Despertador Click', finish: 'Madera natural, pantalla LED', lead: '3 – 5 días',
+        note: 'Tocas la parte de arriba y la hora se enciende a través de la madera. Grabado, les despierta con su nombre.',
+        placeholder: 'Despertador Gingko Click grabado con un nombre',
+      },
+      'TN-402': {
+        name: 'Mochila ClickPack', finish: 'Antirrobo, resistente al agua', lead: '7 – 10 días',
+        note: 'Cremalleras ocultas, funda fina para portátil y espacio delante para el logo del equipo.',
+        placeholder: 'Korin ClickPack con un logo bordado',
       },
     },
   },

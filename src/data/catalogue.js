@@ -1,14 +1,28 @@
-// The six Vertex pieces on the floor — shared between the Home page's
-// "shop the room" hotspots and the full Vertex pieces (Shop) page.
-// Only non-linguistic facts live here; names/notes/prices/etc. live in
-// src/i18n/translations/*.js under vertex.items[code], keyed by `code`.
+import { site } from './site.js';
+
+// The shop catalogue — curated objects we personalise. Read by the Shop page.
+// Only non-linguistic facts live here: the code, the category key, the brand
+// (a proper noun, the same in every language) and which customization methods
+// the piece takes — keys from pages/Home/data.js `customMethods`, so the method
+// names come from the same i18n entries as the Home "how it works" panel.
+// Names/notes/finishes/lead times live in src/i18n/translations/*.js under
+// shop.items[code], keyed by `code`.
+//
+// Partner brands: Lexon, Lund London, Pantone, Korin, Kreafunk, Gingko —
+// plus house pieces sold under our own name.
 export const catalogue = [
-  { code: 'VX-101', catKey: 'lighting', x: '26%', y: '22%' },
-  { code: 'VX-204', catKey: 'seating', x: '58%', y: '62%' },
-  { code: 'VX-318', catKey: 'tables', x: '44%', y: '48%' },
-  { code: 'VX-422', catKey: 'tabletop', x: '72%', y: '40%' },
-  { code: 'VX-530', catKey: 'systems', x: '86%', y: '24%' },
-  { code: 'VX-611', catKey: 'lighting', x: '12%', y: '58%' },
+  { code: 'TN-101', catKey: 'drinkware', brand: 'Lund London', methods: ['engraving', 'print'] },
+  { code: 'TN-102', catKey: 'drinkware', brand: 'Lund London', methods: ['engraving', 'print'] },
+  { code: 'TN-103', catKey: 'drinkware', brand: 'Pantone', methods: ['print'] },
+  { code: 'TN-201', catKey: 'tech', brand: 'Lexon', methods: ['engraving', 'print'] },
+  { code: 'TN-202', catKey: 'tech', brand: 'Lexon', methods: ['print'] },
+  { code: 'TN-203', catKey: 'tech', brand: 'Kreafunk', methods: ['engraving', 'print'] },
+  { code: 'TN-301', catKey: 'desk', brand: 'Lexon', methods: ['engraving'] },
+  { code: 'TN-302', catKey: 'desk', brand: site.name, methods: ['engraving', 'emboss'] },
+  { code: 'TN-303', catKey: 'desk', brand: 'Gingko', methods: ['engraving'] },
+  { code: 'TN-401', catKey: 'travel', brand: site.name, methods: ['engraving', 'emboss'] },
+  { code: 'TN-402', catKey: 'travel', brand: 'Korin', methods: ['print', 'embroidery'] },
+  { code: 'TN-501', catKey: 'giftSets', brand: site.name, methods: ['engraving', 'print'] },
 ];
 
-export const filterKeys = ['all', 'lighting', 'seating', 'tables', 'tabletop', 'systems'];
+export const filterKeys = ['all', 'drinkware', 'tech', 'desk', 'travel', 'giftSets'];

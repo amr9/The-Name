@@ -43,7 +43,7 @@ export default {
 
   home: {
     hero: {
-      title: 'Tout ici, avec votre nom dessus.',
+      title: 'Du Nom. À votre nom.',
       body: 'Nous sommes un atelier de personnalisation. Choisissez un produit, envoyez-nous un nom, un logo ou toute une marque, et nous l\'apposons — gravé, imprimé, brodé ou gaufré. Un seul cadeau ou deux mille. Il y a aussi un café attenant.',
       mediaLabel: 'Vidéo ou photo de personnalisation — gravure, impression, cadeaux finis',
       ctaMenu: 'La carte du café',
@@ -193,14 +193,12 @@ export default {
   },
 
   shop: {
-    badge: 'Vertex · les pièces de cette salle',
-    title: 'Tout ce qu\'il vous faut, ici même',
-    body: 'Vertex est une boutique d\'intérieur en ligne — éclairage, sièges, arts de la table et systèmes muraux. Ce restaurant en est le showroom : tout ce sur quoi vous êtes assis, ce dans quoi vous mangez et ce que vous regardez est en vente.',
+    badge: 'Marques choisies · personnalisées par nous',
+    title: 'Rendez-le personnel',
+    body: "Nous sélectionnons des objets design de marques comme Lexon, Lund London, Pantone, Korin, Kreafunk et Gingko, puis nous les rendons uniques — un nom, des initiales, un message ou un logo, gravé, imprimé ou embossé. Pas un article de rayon. Trop personnel pour être offert à quelqu'un d'autre.",
     openShop: 'Voir la boutique ↗',
-    askFloor: 'Demander ce qui est exposé →',
-    finish: 'Finition',
-    leadTime: 'Délai',
-    filters: { all: 'Tout', lighting: 'Éclairage', seating: 'Sièges', tables: 'Tables', tabletop: 'Arts de la table', systems: 'Systèmes' },
+    askPersonal: 'Parler de personnalisation →',
+    filters: { all: 'Tout', drinkware: 'Gourdes & tasses', tech: 'Tech', desk: 'Bureau', travel: 'Voyage', giftSets: 'Coffrets' },
     viewList: 'Liste',
     viewCards: 'Cartes',
     resultPiece: (n) => `${n} pièce`,
@@ -208,38 +206,67 @@ export default {
     prevPieces: 'Pièces précédentes',
     nextPieces: 'Plus de pièces',
     viewLink: 'Voir ↗',
-    viewOnShop: 'Voir sur Vertex ↗',
-    inTheRoom: 'Dans la salle',
+    personaliseItem: (name) => `Personnaliser ${name}`,
     items: {
-      'VX-101': {
-        name: 'Suspension Halo, 600mm', finish: 'Laiton brossé, verre opale', lead: '2 semaines', where: 'Au-dessus de chaque table',
-        note: 'Un simple anneau de lumière sur un fil fin — ce qui donne à la salle son éclat.',
-        placeholder: 'Suspension Halo au-dessus d\'une table',
+      'TN-101': {
+        name: 'Gourde Skittle, 500 ml', finish: 'Acier inoxydable double paroi', lead: '3 – 5 jours',
+        note: "Garde les boissons fraîches toute la journée. Un nom sur le côté, ou un logo sur l'épaule.",
+        placeholder: 'Gourde Skittle Lund London avec un nom gravé',
       },
-      'VX-204': {
-        name: 'Chaise de salle à manger Arc', finish: 'Frêne cintré, laine terracotta', lead: 'En stock', where: 'Les 40 couverts',
-        note: 'Une courbe continue pour le dossier et les accoudoirs. Empilable sur quatre niveaux.',
-        placeholder: 'Chaise de salle à manger Arc',
+      'TN-102': {
+        name: 'Tasse à café isotherme', finish: 'Acier inoxydable, fini mat', lead: '3 – 5 jours',
+        note: 'Le café du quotidien, dans une tasse qui porte leurs initiales.',
+        placeholder: 'Tasse Lund London avec des initiales imprimées',
       },
-      'VX-318': {
-        name: 'Table Monolith, 2,4m', finish: 'Pierre coulée, socle laqué', lead: '4 semaines', where: 'Le long banc',
-        note: 'Une dalle, un socle. La table sur laquelle est servi le souper du vendredi.',
-        placeholder: 'Table à manger Monolith',
+      'TN-201': {
+        name: 'Enceinte Fine', finish: 'Aluminium, sans fil', lead: '5 – 7 jours',
+        note: "Une enceinte de poche qui se grave nettement — un classique des cadeaux d'équipe et clients.",
+        placeholder: 'Enceinte Lexon Fine avec un logo gravé',
       },
-      'VX-422': {
-        name: 'Service de table Orbit', finish: 'Grès mat, six pièces', lead: 'En stock', where: 'Chaque assiette que vous utilisez',
-        note: 'Les assiettes, bols et accompagnements sur lesquels la cuisine dresse ses plats.',
-        placeholder: 'Service de table en grès Orbit',
+      'TN-202': {
+        name: 'Chargeur sans fil Oblio', finish: 'Station de recharge sans fil', lead: '5 – 7 jours',
+        note: 'Il reste sur le bureau toute la journée — et la marque imprimée dessus aussi.',
+        placeholder: 'Chargeur Lexon Oblio avec un logo imprimé',
       },
-      'VX-530': {
-        name: 'Système mural Grid, module de 1,2m', finish: 'Aluminium anodisé', lead: '3 semaines', where: 'Le mur du fond',
-        note: 'Des modules qui accueillent étagères, plantes ou luminaires. Ajoutez des modules au fil du temps.',
-        placeholder: 'Système d\'étagères murales Grid',
+      'TN-301': {
+        name: 'Lampe Mina', finish: 'LED rechargeable', lead: '3 – 5 jours',
+        note: 'Une petite lampe qui va partout. Gravée à leurs initiales, elle devient la leur.',
+        placeholder: 'Lampe Lexon Mina gravée aux initiales',
       },
-      'VX-611': {
-        name: 'Lampadaire Signal', finish: 'Acier, abat-jour en lin', lead: '2 semaines', where: 'Près des places en fenêtre',
-        note: 'Haut, fin, variable jusqu\'à presque rien. Celui dont les clients parlent le plus.',
-        placeholder: 'Lampadaire Signal près d\'une fenêtre',
+      'TN-302': {
+        name: 'Set de bureau en cuir', finish: 'Carnet, stylo et porte-cartes', lead: '7 – 10 jours',
+        note: "Un accessoire de bureau qui porte le nom de chaque membre de l'équipe, sur chaque pièce.",
+        placeholder: 'Set de bureau en cuir embossé à un nom',
+      },
+      'TN-401': {
+        name: 'Protège-passeport en cuir', finish: 'Cuir pleine fleur', lead: '7 – 10 jours',
+        note: "Des initiales pressées dans la couverture. Discret, tactile, et trop personnel pour être offert à quelqu'un d'autre.",
+        placeholder: 'Protège-passeport en cuir aux initiales embossées',
+      },
+      'TN-501': {
+        name: 'Coffret signature', finish: 'Pièces sélectionnées, emballage complet', lead: '7 – 10 jours',
+        note: 'Des pièces Lexon et Lund London, personnalisées et présentées dans un emballage à votre nom ou à votre marque.',
+        placeholder: 'Un coffret cadeau personnalisé, ouvert',
+      },
+      'TN-103': {
+        name: 'Mug Pantone', finish: 'Porcelaine, couleur au choix', lead: '2 – 4 jours',
+        note: 'Choisissez leur couleur Pantone, puis ajoutez le prénom. Un mug deux fois à eux.',
+        placeholder: 'Mug Pantone avec un prénom imprimé',
+      },
+      'TN-203': {
+        name: 'Enceinte aGO', finish: 'Portable, sans fil', lead: '5 – 7 jours',
+        note: 'Un son au design danois, assez petit pour un bureau ou un sac, avec un logo en façade.',
+        placeholder: 'Enceinte Kreafunk aGO avec un logo imprimé',
+      },
+      'TN-303': {
+        name: 'Réveil Click', finish: 'Bois naturel, affichage LED', lead: '3 – 5 jours',
+        note: "Touchez le dessus et l'heure s'allume à travers le bois. Gravé, il les réveille avec leur nom.",
+        placeholder: 'Réveil Gingko Click gravé à un nom',
+      },
+      'TN-402': {
+        name: 'Sac à dos ClickPack', finish: 'Antivol, déperlant', lead: '7 – 10 jours',
+        note: "Fermetures cachées, poche fine pour ordinateur, et de la place devant pour un logo d'équipe.",
+        placeholder: 'Korin ClickPack avec un logo brodé',
       },
     },
   },

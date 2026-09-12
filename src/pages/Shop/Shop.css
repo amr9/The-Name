@@ -103,40 +103,95 @@
   font-size: var(--text-sm);
 }
 
+/* — cards view: frosted overlay. The photo fills the card; the methods and
+     code float over its top edge and the name sits on a glass panel. — */
 .shop-card {
-  padding: 0;
-  overflow: hidden;
-  background: #fff;
+  position: relative;
+  isolation: isolate;
   flex: 0 0 calc((100% - 48px) / 3);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--gradient-light);
 }
-.shop-card-image { aspect-ratio: 4 / 3; }
-.shop-card-body {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex: 1;
+.shop-card-image.img-slot {
+  height: 100%;
+  border-radius: 0;
+  background: transparent;
 }
-.shop-card-top-row {
+.shop-card-image img { transition: transform 0.7s cubic-bezier(.22,.61,.36,1); }
+.shop-card:hover .shop-card-image img { transform: scale(1.04); }
+/* Until the photo exists, lift the placeholder label clear of the panel. */
+.shop-card-image.img-slot-empty { border: 0; padding-bottom: 38%; }
+
+.shop-card-top {
+  position: absolute;
+  top: 14px;
+  inset-inline: 14px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 8px;
 }
-.shop-card-specs {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding-top: 10px;
-  border-top: 1px solid var(--color-accent-200);
-  font-size: var(--text-sm);
-  opacity: 0.78;
+.shop-card-chip {
+  font-size: var(--text-xs);
+  line-height: 1.4;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-white) 72%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
-.shop-card-bottom-row {
-  display: flex;
+.shop-card-code {
+  flex: none;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+
+.shop-card-panel {
+  position: absolute;
+  inset-inline: 10px;
+  bottom: 10px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 12px;
   align-items: center;
-  gap: 12px;
-  margin-top: 10px;
+  padding-block: 16px;
+  padding-inline: 18px 16px;
+  border-radius: calc(var(--radius-md) * 1.25);
+  border: 1px solid color-mix(in srgb, var(--color-white) 60%, transparent);
+  background: color-mix(in srgb, var(--color-white) 72%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
+}
+.shop-card-brand {
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+}
+.shop-card-name { font-size: 19px; }
+.shop-card-meta { font-size: var(--text-xs); color: var(--color-gray); }
+.shop-card-go {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--color-accent);
+  color: var(--color-black);
+  transition: transform 0.35s cubic-bezier(.22,.61,.36,1), background 0.2s ease;
+}
+.shop-card-go:hover { background: var(--color-accent-600); color: var(--color-black); }
+.shop-card:hover .shop-card-go,
+.shop-card:focus-within .shop-card-go { transform: rotate(-45deg); }
+[dir='rtl'] .shop-card-go svg { transform: scaleX(-1); }
+[dir='rtl'] .shop-card:hover .shop-card-go,
+[dir='rtl'] .shop-card:focus-within .shop-card-go { transform: rotate(45deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-card-image img, .shop-card-go { transition: none; }
 }
 
 @media (max-width: 700px) {

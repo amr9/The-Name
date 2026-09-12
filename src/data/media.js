@@ -48,12 +48,18 @@ export const media = {
 
   // Shop products — keys match the `code` in data/catalogue.js.
   shop: {
-    'VX-101': `${BASE}/shop/vx-101.jpg`,
-    'VX-204': `${BASE}/shop/vx-204.jpg`,
-    'VX-318': `${BASE}/shop/vx-318.jpg`,
-    'VX-422': `${BASE}/shop/vx-422.jpg`,
-    'VX-530': `${BASE}/shop/vx-530.jpg`,
-    'VX-611': `${BASE}/shop/vx-611.jpg`,
+    'TN-101': `${BASE}/shop/tn-101.jpg`,
+    'TN-102': `${BASE}/shop/tn-102.jpg`,
+    'TN-103': `${BASE}/shop/tn-103.jpg`,
+    'TN-201': `${BASE}/shop/tn-201.jpg`,
+    'TN-202': `${BASE}/shop/tn-202.jpg`,
+    'TN-203': `${BASE}/shop/tn-203.jpg`,
+    'TN-301': `${BASE}/shop/tn-301.jpg`,
+    'TN-302': `${BASE}/shop/tn-302.jpg`,
+    'TN-303': `${BASE}/shop/tn-303.jpg`,
+    'TN-401': `${BASE}/shop/tn-401.jpg`,
+    'TN-402': `${BASE}/shop/tn-402.jpg`,
+    'TN-501': `${BASE}/shop/tn-501.jpg`,
   },
 
   // Delivery partner logos — keys match pages/Home/data.js `partners` id.

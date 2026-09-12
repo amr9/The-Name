@@ -221,7 +221,7 @@ button { font: inherit; }
 .nav a { color: inherit; text-decoration: none; font-size: var(--text-sm); }
 .nav a:hover, .nav a[aria-current='page'] { color: var(--color-accent-700); }
 
-/* — horizontal card carousels (Menu sections, Vertex pieces cards view) — */
+/* — horizontal card carousels (Cafe menu sections, Shop cards view) — */
 .carousel-track {
   display: flex;
   gap: 24px;

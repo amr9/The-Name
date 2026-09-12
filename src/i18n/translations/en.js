@@ -43,7 +43,7 @@ export default {
 
   home: {
     hero: {
-      title: 'Anything here, with your name on it.',
+      title: 'From the Name. To Your Name.',
       body: 'We are a customization shop. Pick a product, send us a name, a logo or a whole brand, and we put it on — engraved, printed, embroidered or embossed. One gift or two thousand. There is a cafe attached, too.',
       mediaLabel: 'Customization video loop or still — engraving, printing, finished gifts',
       ctaMenu: 'The cafe menu',
@@ -193,14 +193,12 @@ export default {
   },
 
   shop: {
-    badge: 'Vertex · the pieces in this room',
-    title: 'All You Need, Right Here',
-    body: 'Vertex is an online shop for interiors — lighting, seating, tabletop and wall systems. This restaurant is its showroom: everything you sit on, eat off and look at is on the shelf.',
+    badge: 'Curated brands · personalised by us',
+    title: 'Make It Personal',
+    body: 'We curate design-led objects from brands like Lexon, Lund London, Pantone, Korin, Kreafunk and Gingko, then make them yours — a name, initials, a message or a logo, engraved, printed or embossed. Not off the shelf. Too personal to regift.',
     openShop: 'Open the shop ↗',
-    askFloor: 'Ask what is on the floor →',
-    finish: 'Finish',
-    leadTime: 'Lead time',
-    filters: { all: 'All', lighting: 'Lighting', seating: 'Seating', tables: 'Tables', tabletop: 'Tabletop', systems: 'Systems' },
+    askPersonal: 'Ask about personalising →',
+    filters: { all: 'All', drinkware: 'Drinkware', tech: 'Tech', desk: 'Desk', travel: 'Travel', giftSets: 'Gift sets' },
     viewList: 'List',
     viewCards: 'Cards',
     resultPiece: (n) => `${n} piece`,
@@ -208,38 +206,67 @@ export default {
     prevPieces: 'Previous pieces',
     nextPieces: 'More pieces',
     viewLink: 'View ↗',
-    viewOnShop: 'View on Vertex ↗',
-    inTheRoom: 'In the room',
+    personaliseItem: (name) => `Personalise ${name}`,
     items: {
-      'VX-101': {
-        name: 'Halo pendant, 600mm', finish: 'Brushed brass, opal glass', lead: '2 weeks', where: 'Over every table',
-        note: 'A single ring of light on a slim drop — what gives the room its glow.',
-        placeholder: 'Halo pendant light over a table',
+      'TN-101': {
+        name: 'Skittle bottle, 500 ml', finish: 'Double-walled stainless steel', lead: '3 – 5 days',
+        note: 'Keeps drinks cold all day. A name down the side, or a logo on the shoulder.',
+        placeholder: 'Lund London Skittle bottle with an engraved name',
       },
-      'VX-204': {
-        name: 'Arc dining chair', finish: 'Bent ash, terracotta wool', lead: 'In stock', where: 'All 40 covers',
-        note: 'One continuous curve for the back and arms. Stacks four high.',
-        placeholder: 'Arc dining chair',
+      'TN-102': {
+        name: 'Insulated coffee cup', finish: 'Stainless steel, matte finish', lead: '3 – 5 days',
+        note: 'The daily coffee, carried in something with their initials on it.',
+        placeholder: 'Lund London coffee cup with printed initials',
       },
-      'VX-318': {
-        name: 'Monolith table, 2.4m', finish: 'Cast stone, powder-coat base', lead: '4 weeks', where: 'The long bench',
-        note: 'One slab, one plinth. The table the Friday supper is served on.',
-        placeholder: 'Monolith dining table',
+      'TN-201': {
+        name: 'Fine speaker', finish: 'Aluminium, wireless', lead: '5 – 7 days',
+        note: 'A pocket-sized speaker that engraves cleanly — a favourite for team and client gifts.',
+        placeholder: 'Lexon Fine speaker with an engraved logo',
       },
-      'VX-422': {
-        name: 'Orbit tableware set', finish: 'Matte stoneware, six pieces', lead: 'In stock', where: 'Every plate you eat off',
-        note: 'The plates, bowls and side dishes the kitchen plates on.',
-        placeholder: 'Orbit stoneware tableware set',
+      'TN-202': {
+        name: 'Oblio wireless charger', finish: 'Wireless charging station', lead: '5 – 7 days',
+        note: 'It sits on the desk all day, so the brand printed on it does too.',
+        placeholder: 'Lexon Oblio charger with a printed logo',
       },
-      'VX-530': {
-        name: 'Grid wall system, 1.2m bay', finish: 'Anodised aluminium', lead: '3 weeks', where: 'The back wall',
-        note: 'Modular bays that carry shelves, planters or lights. Add bays as you go.',
-        placeholder: 'Grid wall shelving system',
+      'TN-301': {
+        name: 'Mina lamp', finish: 'Rechargeable LED', lead: '3 – 5 days',
+        note: 'A small lamp that goes anywhere. Engraved with initials, it becomes theirs.',
+        placeholder: 'Lexon Mina lamp engraved with initials',
       },
-      'VX-611': {
-        name: 'Signal floor lamp', finish: 'Steel, linen shade', lead: '2 weeks', where: 'By the window seats',
-        note: 'Tall, thin, dimmable to almost nothing. The one guests ask about most.',
-        placeholder: 'Signal floor lamp by a window',
+      'TN-302': {
+        name: 'Leather desk set', finish: 'Notebook, pen and card holder', lead: '7 – 10 days',
+        note: "A desk accessory that carries your team's names, one on every piece.",
+        placeholder: 'Leather desk set embossed with a name',
+      },
+      'TN-401': {
+        name: 'Leather passport cover', finish: 'Full-grain leather', lead: '7 – 10 days',
+        note: 'Initials pressed into the cover. Quiet, tactile, and too personal to regift.',
+        placeholder: 'Leather passport cover with embossed initials',
+      },
+      'TN-501': {
+        name: 'Signature gift box', finish: 'Curated pieces, full wrap', lead: '7 – 10 days',
+        note: 'Lexon and Lund London pieces, personalised and boxed in packaging that carries your name or your brand.',
+        placeholder: 'A personalised gift box, opened',
+      },
+      'TN-103': {
+        name: 'Pantone mug', finish: 'Porcelain, colour of your choice', lead: '2 – 4 days',
+        note: 'Pick their Pantone colour, then add the name. A mug that is theirs twice over.',
+        placeholder: 'Pantone mug with a printed name',
+      },
+      'TN-203': {
+        name: 'aGO speaker', finish: 'Portable, wireless', lead: '5 – 7 days',
+        note: 'Danish-designed sound, small enough for a desk or a bag, with a logo on the front.',
+        placeholder: 'Kreafunk aGO speaker with a printed logo',
+      },
+      'TN-303': {
+        name: 'Click alarm clock', finish: 'Natural wood, LED display', lead: '3 – 5 days',
+        note: 'Tap the top and the time lights up through the wood. Engraved, it wakes them with their name.',
+        placeholder: 'Gingko Click clock engraved with a name',
+      },
+      'TN-402': {
+        name: 'ClickPack backpack', finish: 'Anti-theft, water-resistant', lead: '7 – 10 days',
+        note: 'Hidden zips, a slim laptop sleeve, and room on the front for a team logo.',
+        placeholder: 'Korin ClickPack with an embroidered logo',
       },
     },
   },
