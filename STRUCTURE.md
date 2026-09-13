@@ -145,10 +145,13 @@ src/
                           alone. Display text lives in i18n under
                           shop.items[code].
 
-    brands.js           — the partner brands (id, name, url): Lexon, Lund
-                          London, Pantone, Korin, Kreafunk, Gingko. Proper
-                          nouns, so not in i18n. Read by the Home logo strip
-                          and by catalogue.js — one spelling per brand.
+    brands.js           — the partner brands (id, name, url, optional
+                          logoScale): Lexon, Lund London, Pantone, Korin,
+                          Kreafunk, Gingko. Proper nouns, so not in i18n.
+                          Read by the Home logo strip and by catalogue.js —
+                          one spelling per brand. `logoScale` enlarges one
+                          logo's slot in LogoMarquee so tall/stacked marks
+                          (Gingko, Lund) don't look small beside wordmarks.
     bubbles.js          — the bubble layouts (sideBubbles, rowBubbles):
                           positions/sizes/timing only, no icons, so Home and
                           Cafe share them with different icon sets.
@@ -243,8 +246,12 @@ public/media/
   cafe/       — the events section on the Cafe page
   business/   — the branded-goods offer cards + the catering section
   brands/     — partner-brand logos for the Home strip, named in
-                data/media.js `brands` (lexon.png, lund-london.png, …).
-                Empty so far — the strip shows each name as a wordmark.
+                data/media.js `brands`: lexon.svg, pantone.svg,
+                lund-london.png, korin.png, kreafunk.png, gingko.png. Copied
+                from each brand's site and stored locally (their CDN paths
+                are versioned). gingko.png is the brand's white-on-black logo
+                converted to dark ink on transparency. A missing file makes
+                the strip fall back to the brand name as a wordmark.
   partners/   — reserved for delivery-partner logos. Currently empty: the
                 Cafe logo strip (commented out for now) hot-links talabat's
                 and noon's own CDN URLs (see data/media.js `partners`) so a

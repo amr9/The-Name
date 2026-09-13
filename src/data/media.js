@@ -63,11 +63,17 @@ export const media = {
   },
 
   // Partner-brand logos for the Home logo strip — keys match data/brands.js
-  // `id`. Until a file exists the strip shows the brand name as a wordmark.
+  // `id`. Taken from each brand's own site and stored locally (their CDN
+  // paths are versioned, so hot-linking would break on their next deploy).
+  // Gingko only publishes a white-on-black logo, so gingko.png is that
+  // artwork converted to dark ink on transparency for our light strip.
+  // gingko.png and lund-london.png are also cropped to the artwork's edges —
+  // the originals carried wide empty margins that made them render small.
+  // If a file goes missing the strip shows the brand name as a wordmark.
   brands: {
-    lexon: `${BASE}/brands/lexon.png`,
+    lexon: `${BASE}/brands/lexon.svg`,
     lundLondon: `${BASE}/brands/lund-london.png`,
-    pantone: `${BASE}/brands/pantone.png`,
+    pantone: `${BASE}/brands/pantone.svg`,
     korin: `${BASE}/brands/korin.png`,
     kreafunk: `${BASE}/brands/kreafunk.png`,
     gingko: `${BASE}/brands/gingko.png`,

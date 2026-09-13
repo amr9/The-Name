@@ -53,7 +53,9 @@
 }
 .logo-marquee-link {
   display: block;
-  width: clamp(120px, 13vw, 180px);
+  /* --logo-scale is set per item (data/brands.js `logoScale`) to even out
+     tall marks against long wordmarks */
+  width: calc(clamp(120px, 13vw, 180px) * var(--logo-scale, 1));
   color: var(--color-text);
   opacity: 0.85;
   transition: opacity 0.25s ease, transform 0.25s ease;

@@ -8,9 +8,10 @@ const MIN_PER_ROW = 8;
 /**
  * A slow, continuously rolling strip of logos, each linking out to its owner.
  * Used for the partner brands on Home and the delivery partners on Cafe.
- * `items` are `{ id, name, url }`; `logos` maps id → image path (usually a
- * section of data/media.js). Until a logo file exists, the name is shown as a
- * wordmark in its place.
+ * `items` are `{ id, name, url, logoScale? }`; `logos` maps id → image path
+ * (usually a section of data/media.js). `logoScale` enlarges that one logo's
+ * slot, for tall or stacked marks that would otherwise look small beside long
+ * wordmarks. Until a logo file exists, the name is shown as a wordmark.
  */
 export default function LogoMarquee({ heading, items, logos }) {
   const strip = Array.from({ length: Math.ceil(MIN_PER_ROW / items.length) }, () => items).flat();
@@ -32,6 +33,7 @@ export default function LogoMarquee({ heading, items, logos }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="logo-marquee-link"
+                    style={item.logoScale ? { '--logo-scale': item.logoScale } : undefined}
                     tabIndex={copy === 1 ? -1 : undefined}
                   >
                     <ImagePlaceholder src={logos[item.id]} label={item.name} ratio="3 / 1" className="logo-marquee-logo" />
