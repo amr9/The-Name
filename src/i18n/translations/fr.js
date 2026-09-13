@@ -1,5 +1,5 @@
 export default {
-  nav: { home: 'Accueil', cafe: 'Café', shop: 'Boutique', business: 'Entreprises', contact: 'Nous contacter' },
+  nav: { home: 'Accueil', cafe: 'Café', shop: 'Boutique', business: 'Entreprises', about: 'À propos', contact: 'Nous contacter' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Discuter sur WhatsApp' },
 
@@ -38,6 +38,7 @@ export default {
     contactHeading: 'Contactez-nous',
     note: 'WhatsApp — tables, allergènes, devis et commandes personnalisées. Réponse dans l\'heure pendant le service.',
     message: 'Envoyer un message',
+    pagesHeading: 'Pages',
     rights: 'Tous droits réservés.',
   },
 
@@ -49,13 +50,10 @@ export default {
       ctaMenu: 'La carte du café',
       ctaShop: 'Voir les produits',
     },
-    brands: {
-      heading: 'Les marques que nous personnalisons',
-    },
     whatWeDo: {
       kicker: 'Ce que nous faisons',
-      heading: 'La personnalisation d\'abord — pour vous, puis pour votre entreprise',
-      body: 'Tout commence par un produit vierge et votre visuel. Des cadeaux personnels à l\'unité, des séries aux couleurs des entreprises, et — parce que nous cuisinons aussi — un café qui fait traiteur et reçoit.',
+      heading: 'Des objets qui racontent votre histoire',
+      body: 'Nous sélectionnons des objets porteurs de sens, qui prennent de la valeur avec votre identité',
     },
     services: {
       personalGifts: {
@@ -66,7 +64,7 @@ export default {
         cta: 'Voir les produits',
       },
       businessBranding: {
-        kicker: 'Pour votre entreprise', title: 'Votre logo, sur tout',
+        kicker: 'Pour votre entreprise', title: 'Faites de votre marque le cadeau',
         placeholder: 'Coffrets cadeaux d\'entreprise personnalisés',
         body: 'Cadeaux d\'affaires, kits d\'accueil pour les nouveaux arrivants, remerciements clients, goodies d\'événements et tenues. Envoyez vos fichiers de marque une fois, nous les conservons : chaque réassort revient identique au précédent.',
         points: ['Tarifs dégressifs à partir de 25 pièces', 'Fichiers de marque conservés pour des réassorts identiques', 'Devis, facturation et livraison à date fixe'],
@@ -91,12 +89,6 @@ export default {
       kicker: 'Comment ça marche',
       heading: 'Quatre étapes, du produit vierge au colis.',
       lede: 'Le même processus, qu\'il s\'agisse d\'un souvenir gravé ou de cinq cents kits personnalisés.',
-      steps: {
-        pick: { title: 'Choisissez un produit', body: 'Choisissez le support dans la boutique — boissons, textile, papeterie, quel qu\'il soit. Tailles et coloris sont indiqués sur chaque article.' },
-        artwork: { title: 'Envoyez votre visuel', body: 'Un nom, un logo, un monogramme ou toute une charte. Nous acceptons les fichiers vectoriels, et nous redessinons un visuel approximatif pour vous.' },
-        proof: { title: 'Validez la maquette', body: 'Nous renvoyons un bon à tirer numérique montrant l\'emplacement et la taille exacts. Rien n\'est fabriqué avant votre accord.' },
-        produce: { title: 'Nous fabriquons et expédions', body: 'Fabriqué sur place, contrôlé à la main, emballé cadeau si vous l\'avez demandé, puis expédié ou gardé ici pour retrait.' },
-      },
       methodsKicker: 'Techniques de personnalisation',
       suits: 'Idéal sur',
       minimum: 'Minimum',
@@ -334,6 +326,123 @@ export default {
         standingBuffet: { name: 'Buffet debout', note: 'Plateaux installés avec personnel sur place pendant quatre-vingt-dix minutes.', covers: '25–120', notice: '5 jours', from: '£19' },
         offSiteCatering: { name: 'Traiteur événementiel hors-site', note: 'Nous amenons la cuisine et l\'équipe à votre adresse.', covers: '50–200', notice: '6 semaines', from: '£54' },
         breakfastTrolley: { name: 'Chariot petit-déjeuner', note: 'Viennoiseries, fruits, urnes de filtre maison, livrés.', covers: '10–80', notice: '48 heures', from: '£8' },
+      },
+    },
+  },
+
+  about: {
+    kicker: 'À propos',
+    title: 'Qu\'y a-t-il dans un nom ? Tout.',
+    lede: 'Un nom, c\'est une identité, une histoire, un lien — votre signature et votre récit. The Name est né d\'une conviction : un objet prend du sens quand il porte votre nom, vos initiales, votre message ou votre marque. Nous sélectionnons des pièces au design soigné, puis nous les rendons uniques.',
+    servicesHeading: 'Ce que nous proposons',
+    servicesLede: 'Un seul studio pour les particuliers et pour les marques — d\'un cadeau gravé à tout un programme de cadeaux d\'entreprise.',
+    services: {
+      personalGifts: {
+        title: 'Cadeaux personnalisés',
+        body: 'Anniversaires, mariages, naissances et remerciements. Choisissez une pièce, ajoutez un prénom, des initiales ou un message, et nous la rendons unique — une seule pièce est une commande tout à fait normale.',
+        cta: 'Voir la boutique',
+      },
+      corporateGifting: {
+        title: 'Cadeaux d\'entreprise',
+        body: 'Cadeaux clients, délégations VIP, goodies de conférence, prix d\'excellence et kits d\'accueil — à votre logo, livrés en volume à date fixe.',
+        cta: 'Pour les entreprises',
+      },
+      curatedBrands: {
+        title: 'Marques de design sélectionnées',
+        body: 'Nous travaillons avec des marques que l\'on aime déjà, pour que chaque cadeau parte d\'un objet qui mérite d\'être gardé.',
+        cta: 'Voir les produits',
+      },
+      packaging: {
+        title: 'Coffrets et emballages',
+        body: 'Coffrets sur mesure, emballages signature et habillage complet des objets, à votre nom ou à votre marque, de la boîte jusqu\'à l\'objet.',
+        cta: 'Composer un coffret',
+      },
+      creative: {
+        title: 'Concepts créatifs',
+        body: 'Nous sommes nés agence de création : concept, narration et design sont faits en interne — un vrai service 360, pas une simple impression.',
+        cta: 'Parlons-en',
+      },
+      cafe: {
+        title: 'Le café et le traiteur',
+        body: 'L\'autre moitié de l\'adresse : du petit-déjeuner au déjeuner tardif, des soirées privées dans notre salle et un service traiteur chez vous.',
+        cta: 'Voir le café',
+      },
+    },
+    howHeading: 'Comment nous travaillons',
+    howLede: 'Les mêmes quatre étapes, qu\'il s\'agisse d\'un souvenir gravé ou de cinq cents kits à votre marque.',
+    methodsLabel: 'Nous personnalisons par',
+    mission: {
+      kicker: 'Notre mission',
+      statement: 'Transformer les objets du quotidien en objets qui comptent — sélectionner des pièces pensées et bien dessinées, puis les personnaliser pour que chaque cadeau porte un nom, une histoire ou une marque.',
+    },
+    vision: {
+      kicker: 'Notre vision',
+      statement: 'Être la référence de la région pour le design centré sur l\'identité : là où l\'on vient offrir quelque chose de vraiment personnel, et où les marques viennent se rendre mémorables.',
+    },
+    cta: {
+      heading: 'Mettons-y un nom.',
+      body: 'Dites-nous à qui c\'est destiné et ce que cela doit dire — nous nous occupons du reste.',
+      contact: 'Nous contacter',
+      whatsapp: 'Discuter sur WhatsApp',
+    },
+  },
+
+  process: {
+    steps: {
+      pick: { title: 'Choisissez un produit', body: 'Choisissez le support dans la boutique — boissons, textile, papeterie, quel qu\'il soit. Tailles et coloris sont indiqués sur chaque article.' },
+      artwork: { title: 'Envoyez votre visuel', body: 'Un nom, un logo, un monogramme ou toute une charte. Nous acceptons les fichiers vectoriels, et nous redessinons un visuel approximatif pour vous.' },
+      proof: { title: 'Validez la maquette', body: 'Nous renvoyons un bon à tirer numérique montrant l\'emplacement et la taille exacts. Rien n\'est fabriqué avant votre accord.' },
+      produce: { title: 'Nous fabriquons et expédions', body: 'Fabriqué sur place, contrôlé à la main, emballé cadeau si vous l\'avez demandé, puis expédié ou gardé ici pour retrait.' },
+    },
+  },
+
+  chat: {
+    open: 'Discuter avec nous',
+    close: 'Fermer',
+    menuTitle: 'Comment souhaitez-vous échanger ?',
+    botTitle: 'Parler à notre assistant',
+    botNote: 'Des réponses immédiates, à toute heure',
+    whatsappTitle: 'Discuter sur WhatsApp',
+    whatsappNote: 'Une personne de notre équipe',
+    assistantName: 'L\'assistant The Name',
+    assistantStatus: 'Réponses automatiques',
+    greeting: 'Bonjour ! Je peux répondre à vos questions sur nos produits, la personnalisation, les commandes d\'entreprise et le café. Choisissez un sujet ou écrivez votre question.',
+    placeholder: 'Écrivez votre question…',
+    send: 'Envoyer',
+    back: 'Retour',
+    fallback: 'Je ne suis pas sûr de pouvoir répondre à cela. Choisissez un sujet ci-dessous, ou continuez sur WhatsApp et notre équipe vous aidera.',
+    openPage: 'Ouvrir la page',
+    continueWhatsapp: 'Continuer sur WhatsApp',
+    topics: {
+      products: {
+        label: 'Que vendez-vous ?',
+        answer: 'Des objets design de marques comme Lexon, Lund London, Pantone, Korin, Kreafunk et Gingko — gourdes et tasses, tech, bureau, voyage et coffrets — ainsi que nos propres pièces. Tous peuvent être personnalisés.',
+        keywords: ['produit', 'vend', 'boutique', 'marque', 'acheter', 'gourde', 'enceinte', 'lampe', 'sac'],
+      },
+      personalise: {
+        label: 'Comment fonctionne la personnalisation ?',
+        answer: 'Choisissez un produit, envoyez-nous un prénom, des initiales, un message ou un logo, validez la maquette numérique, et nous fabriquons puis expédions. Rien n\'est produit sans votre accord.',
+        keywords: ['personnal', 'grav', 'impri', 'embos', 'brod', 'prénom', 'logo'],
+      },
+      leadTimes: {
+        label: 'Quels sont les délais ?',
+        answer: 'Cela dépend de la technique :',
+        keywords: ['délai', 'combien de temps', 'jours', 'livr', 'expédi', 'quand', 'minimum'],
+      },
+      business: {
+        label: 'Commandes d\'entreprise',
+        answer: 'Nous gérons cadeaux d\'entreprise, kits d\'accueil, goodies d\'événement et tenues, avec des prix dégressifs dès 25 pièces et vos fichiers conservés pour les recommandes.',
+        keywords: ['entreprise', 'société', 'volume', 'équipe', 'devis'],
+      },
+      cafe: {
+        label: 'Le café',
+        answer: 'Le café est ouvert de 08h00 à 16h00 tous les jours, avec un souper de quatre plats le vendredi soir. Sans réservation ; la salle peut être privatisée.',
+        keywords: ['café', 'manger', 'menu', 'horaire', 'ouvert', 'repas'],
+      },
+      human: {
+        label: 'Parler à une personne',
+        answer: 'Bien sûr — notre équipe répond sur WhatsApp dans l\'heure pendant les horaires d\'ouverture.',
+        keywords: ['personne', 'humain', 'conseiller', 'whatsapp', 'appeler', 'téléphone'],
       },
     },
   },

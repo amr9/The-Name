@@ -76,9 +76,9 @@ server/               — the contact-form service (its own package.json, run
 
 src/
   main.jsx            — ReactDOM root; wraps App in BrowserRouter + LanguageProvider
-  App.jsx             — route table (/, /cafe, /shop, /business, /contact)
-                        + global chrome
-                         (Navbar, Footer, floating WhatsApp button)
+  App.jsx             — route table (/, /cafe, /shop, /business, /about,
+                        /contact) + global chrome
+                         (Navbar, Footer, ChatLauncher — the floating button)
 
   pages/<PageName>/   — one folder per route
     <PageName>.jsx     — the page component
@@ -118,8 +118,20 @@ src/
                         Takes `scale` (Cafe uses 3). The parent needs the
                         `bubbles-host` class, which anchors and clips the
                         field and lifts page content above it.
-    WhatsAppButton.jsx — `iconOnly` renders just the icon with `children`
-                        as the aria-label (the Cafe card action).
+      ProcessSteps/   — the four order steps as an <ol> (data/process.js,
+                        copy under i18n process.steps): Home and About.
+      ChatLauncher/   — the floating corner button (App.jsx). Opens a
+                        .popover with two options — the on-site assistant
+                        (Chatbot.jsx) or WhatsApp. The assistant is
+                        rule-based, no server/AI: quick-reply topics from
+                        data/chatbot.js, free text matched against each
+                        topic's i18n keywords (active language + English),
+                        unmatched questions handed to WhatsApp. icons.jsx
+                        holds its line icons.
+    WhatsAppButton.jsx — the only WhatsApp link component (the old floating
+                        WhatsAppFab is now ChatLauncher). `iconOnly`
+                        renders just the icon with `children` as the
+                        aria-label (the Cafe card action).
 
   data/
     site.js            — cross-page structural facts (phone, contact email,
@@ -155,6 +167,11 @@ src/
     bubbles.js          — the bubble layouts (sideBubbles, rowBubbles):
                           positions/sizes/timing only, no icons, so Home and
                           Cafe share them with different icon sets.
+    process.js          — the four order steps (id, num), shared by Home
+                          and About through components/ProcessSteps.
+    chatbot.js          — the assistant's topics and what each answer adds
+                          (a page link, a WhatsApp hand-off, or the list of
+                          customization methods read from home.howItWorks).
 
   i18n/
     LanguageContext.jsx — LanguageProvider + useLanguage() hook. Persists
@@ -167,10 +184,11 @@ src/
                           mirror each page's structural data.js so lookups
                           are `t.<page>.<section>[id]`.
                           Top-level keys are one per page (`home`, `cafe`,
-                          `shop`, `business`, `contact`) plus `nav`, `footer`,
-                          `common` and `packages` — the last being the shared
-                          table/direct-line labels PackagesPanel needs on both
-                          the pages that use it.
+                          `shop`, `business`, `about`, `contact`) plus `nav`,
+                          `footer`, `common`, and the shared-component keys:
+                          `packages` (PackagesPanel), `process`
+                          (ProcessSteps) and `chat` (ChatLauncher + the
+                          assistant's topics, answers and keywords).
 
   hooks/useCarouselAutoplay.js — global effect that auto-advances every
                           `.carousel-track` on screen every 4.2s.
@@ -184,9 +202,14 @@ src/
   styles/theme.css       — ALL design tokens (--color-*, --font-*, --text-*,
                           --space-*, --radius-*, --shadow-*, the named
                           gradients) plus
-                          shared component classes (.btn*, .card, .tag,
-                          .seg*, .seg-grid, .table, .dialog,
-                          .carousel-*). A page/
+                          shared component classes (.btn* incl. .btn-light
+                          for coloured grounds, .card, .tag, .seg*,
+                          .seg-grid, .popover/.popover-option for floating
+                          menus, .table, .dialog, .carousel-*). Also the
+                          third-party brand colours (--color-whatsapp,
+                          --color-facebook, --color-tiktok*,
+                          --gradient-instagram), for those companies' marks
+                          only. A page/
                           component CSS file should only ever add layout
                           rules that are specific to it — a rule used by
                           2+ files belongs here instead (see DRY below).
@@ -272,10 +295,11 @@ placeholder instead, so partially-supplied media degrades cleanly.
 
 | Route | Folder | Notes |
 |---|---|---|
-| `/` | `pages/Home/` | Customization-led. Hero, `LogoMarquee` of the partner brands (`data/brands.js`, heading under i18n home.brands), 4 services in business order — B2C gifts, B2B branding, cafe, catering — (with the `Bubbles` ornament in shop icons: gutter fields above 1280px, left-to-right bands between the rows below it; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": a 4-step `<ol>` plus a picker of customization methods (`howItWorksSteps` / `customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
+| `/` | `pages/Home/` | Customization-led. Hero, `LogoMarquee` of the partner brands (`data/brands.js`, no heading), 4 services in business order — B2C gifts, B2B branding, cafe, catering — (with the `Bubbles` ornament in shop icons: gutter fields above 1280px, left-to-right bands between the rows below it; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": `ProcessSteps` plus a picker of customization methods (`customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
 | `/cafe` | `pages/Cafe/` | Title block, then the delivery-partner `LogoMarquee` — **commented out** for now (ids/URLs in this page's `data.js`, names under i18n cafe.partners) — then the menu (List/Cards toggle; cards are `OverlayCard` with tag + price chips and an icon-only WhatsApp action; autoplaying carousels, 3 sections). Food `Bubbles` at 3× scale fill the gutters on wide screens (no narrow-screen bands). Plus the **events** section at its foot — nights held in our own room, rendered by `PackagesPanel`. Was `pages/Menu/`. |
 | `/shop` | `pages/Shop/` | "Make It Personal" — curated objects from partner brands and house pieces that take a name, initials or a logo. Category filters (drinkware / tech / desk / travel / gift sets), List/Cards toggle, autoplaying carousel. Cards are the shared `OverlayCard` (methods + code chips, brand kicker, finish · lead meta, arrow link). The list view keeps the longer note. Was `pages/VertexPieces/` (an interiors showroom) before the customization pivot. |
 | `/business` | `pages/Business/` | B2B: branded-goods offer cards, account terms, and the **catering** section (off-site work), rendered by `PackagesPanel`. |
+| `/about` | `pages/About/` | Story (from the brand positioning doc), the services we provide (`aboutServices` in `data.js`; the curated-brands one lists `data/brands.js`), how we provide them (`ProcessSteps` + the customization method names), mission & vision side by side (`purposeIds`), and a contact / WhatsApp call to action. Copy under i18n `about`. |
 | `/contact` | `pages/Contact/` | Enquiry form (name/email/phone/message) + hidden honeypot + a fill timer (`timingField`, a ref set when the form renders — the server reads the gap as a bot signal). POSTs to `VITE_CONTACT_ENDPOINT` or same-origin `/api/contact`, which `server/` stores and a worker emails to `site.email`. Validation rules come from `shared/contactForm.js`; a 400 carries `fieldKeys` the page translates through `contact.errors.*`. States are idle / sending / sent / failed / rateLimited. |
 
 ## Conventions (read before adding code)
@@ -316,6 +340,11 @@ placeholder instead, so partially-supplied media degrades cleanly.
      were each wanted on the Cafe page too → `components/OverlayCard/`,
      `components/LogoMarquee/` and `components/Bubbles/` (with the layouts
      in `data/bubbles.js`), instead of second copies.
+   - The order steps were wanted on the new About page → extracted from
+     Home into `components/ProcessSteps/` (steps copy moved from
+     home.howItWorks.steps to the shared `process.steps`). The chat
+     launcher's option menu reuses the language switcher's look, so that
+     look became the shared `.popover` / `.popover-option` classes.
    Grep for similar class names / JSX shapes before adding a second copy of
    anything; if 2+ places need the same thing, extract it into
    `components/`, `utils/`, or a shared token in `theme.css` instead of

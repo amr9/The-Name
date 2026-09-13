@@ -1,0 +1,188 @@
+/* The floating chat button, its two-option menu (built on the shared
+   .popover classes in theme.css) and the assistant panel. */
+
+.chat-launcher-fab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 60;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border-radius: 50%;
+  box-shadow: var(--shadow-lg);
+}
+
+.chat-launcher-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+}
+
+.chat-launcher-menu,
+.chatbot {
+  position: fixed;
+  right: 24px;
+  bottom: 92px;
+  z-index: 61;
+}
+.chat-launcher-menu {
+  width: min(320px, calc(100vw - 32px));
+}
+.chat-launcher-menu-title {
+  margin: 6px 12px 8px;
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent-700);
+}
+.chat-launcher-option { padding-block: 12px; }
+/* the option's icon — BotIcon here, WhatsAppButton's own glyph on the other */
+.chat-launcher-option > svg {
+  flex: none;
+  box-sizing: content-box;
+  width: 20px;
+  height: 20px;
+  padding: 9px;
+  border-radius: 50%;
+  background: var(--color-accent-100);
+  color: var(--color-accent-800);
+}
+.chat-launcher-option-wa > svg {
+  background: var(--color-whatsapp);
+  color: var(--color-white);
+}
+.chat-launcher-option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  white-space: normal;
+}
+.chat-launcher-option-text strong {
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  font-size: 16px;
+}
+.chat-launcher-option-text span {
+  font-size: var(--text-xs);
+  color: var(--color-gray);
+}
+
+/* — assistant panel — */
+.chatbot {
+  width: min(380px, calc(100vw - 32px));
+  height: min(560px, calc(100dvh - 128px));
+  display: flex;
+  flex-direction: column;
+  background: var(--color-white);
+  border: 1px solid var(--color-accent-200);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.chatbot-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--color-accent-100);
+  border-bottom: 1px solid var(--color-accent-200);
+}
+.chatbot-icon-btn:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
+[dir='rtl'] .chatbot-back svg { transform: scaleX(-1); }
+.chatbot-id {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.chatbot-id strong {
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  font-size: 16px;
+}
+.chatbot-id span { font-size: var(--text-xs); color: var(--color-gray); }
+
+.chatbot-log {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.chatbot-msg {
+  max-width: 88%;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 18px;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+.chatbot-msg p { margin: 0; }
+.chatbot-msg ul { margin: 8px 0 0; padding-inline-start: 18px; }
+.chatbot-msg-bot {
+  align-self: flex-start;
+  background: color-mix(in srgb, var(--color-surface) 55%, var(--color-white));
+  border-end-start-radius: 6px;
+}
+.chatbot-msg-user {
+  align-self: flex-end;
+  background: var(--color-accent);
+  color: var(--color-black);
+  border-end-end-radius: 6px;
+}
+.chatbot-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-weight: 600;
+}
+.chatbot-wa {
+  margin-top: 10px;
+  gap: 8px;
+}
+
+.chatbot-topics {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 10px 12px;
+  border-top: 1px solid var(--color-divider);
+  scrollbar-width: thin;
+}
+.chatbot-topic {
+  flex: none;
+  padding: 6px 12px;
+  border: 1px solid var(--color-divider);
+  border-radius: 999px;
+  background: var(--color-white);
+  color: inherit;
+  font-size: var(--text-xs);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.chatbot-topic:hover { background: var(--color-accent-100); }
+
+.chatbot-form {
+  display: flex;
+  gap: 8px;
+  padding: 4px 12px 12px;
+}
+.chatbot-input {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 14px;
+  border: 1px solid var(--color-divider);
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+}
+.chatbot-input:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 1px; }
+
+@media (max-width: 480px) {
+  .chat-launcher-fab { right: 16px; bottom: 16px; }
+  .chat-launcher-menu,
+  .chatbot { right: 16px; bottom: 84px; }
+}

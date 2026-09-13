@@ -1,5 +1,5 @@
 // Single source for the WhatsApp glyph — reused by WhatsAppButton, the
-// floating WhatsAppFab, and the footer's phone link. Never redefine this
+// chat launcher's WhatsApp option (via WhatsAppButton), and the footer's phone link. Never redefine this
 // SVG inline elsewhere; import it here instead.
 export default function WhatsAppIcon({ size = 15 }) {
   return (

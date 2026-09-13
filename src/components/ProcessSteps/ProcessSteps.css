@@ -1,0 +1,53 @@
+/* The four order steps — see ProcessSteps.jsx. White tiles, designed to sit
+   on the pale accent band both pages put them on. */
+.process-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(14px, 1.6vw, 22px);
+}
+.process-step {
+  position: relative;
+  background: var(--color-white);
+  border-radius: calc(2 * var(--radius-lg));
+  padding: clamp(18px, 2vw, 26px);
+  box-shadow: var(--shadow-sm);
+}
+/* the link between steps — decorative, hidden once they stack */
+.process-step + .process-step::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: calc(-1 * clamp(14px, 1.6vw, 22px));
+  top: calc(clamp(18px, 2vw, 26px) + 14px);
+  width: clamp(14px, 1.6vw, 22px);
+  border-top: 2px dotted var(--color-accent-200);
+}
+.process-step-num {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
+  letter-spacing: 0.18em;
+  color: var(--color-accent-700);
+  font-variant-numeric: tabular-nums;
+}
+.process-step-title {
+  font-size: 19px;
+  margin: 8px 0 0;
+  text-wrap: balance;
+}
+.process-step-body {
+  margin: 8px 0 0;
+  font-size: var(--text-sm);
+  line-height: 22px;
+  opacity: 0.8;
+}
+
+@media (max-width: 980px) {
+  .process-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .process-step + .process-step::before { display: none; }
+}
+@media (max-width: 700px) {
+  .process-steps { grid-template-columns: minmax(0, 1fr); }
+}

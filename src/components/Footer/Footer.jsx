@@ -1,7 +1,9 @@
+import { NavLink } from 'react-router-dom';
 import Logo from '../Logo.jsx';
+import WhatsAppButton from '../WhatsAppButton.jsx';
 import WhatsAppIcon from '../WhatsAppIcon.jsx';
 import SocialLinks from './SocialLinks.jsx';
-import { site, waLink } from '../../data/site.js';
+import { navLinks, site, waLink } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import './Footer.css';
 
@@ -40,10 +42,22 @@ export default function Footer() {
             {site.phone}
           </a>
           <p className="footer-note">{t.footer.note}</p>
-          <a className="btn btn-dark footer-message-btn" href={waLink} target="_blank" rel="noopener noreferrer">
-            {t.footer.message}
-          </a>
+          <WhatsAppButton className="btn btn-light footer-message-btn">{t.footer.message}</WhatsAppButton>
         </div>
+
+        {/* the same pages as the navbar, from the same list in data/site.js */}
+        <nav className="footer-pages" aria-label={t.footer.pagesHeading}>
+          <h6 className="footer-heading">{t.footer.pagesHeading}</h6>
+          <ul className="footer-pages-list">
+            {navLinks.map((link) => (
+              <li key={link.to}>
+                <NavLink to={link.to} end={link.to === '/'} className="footer-page-link">
+                  {t.nav[link.key]}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
 
       <div className="container footer-bottom">

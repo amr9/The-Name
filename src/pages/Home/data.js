@@ -10,16 +10,6 @@ export const services = [
   { id: 'catering', num: '04', to: '/business', textOrder: 2, imgOrder: 1 },
 ];
 
-// The four steps of a customization order, shown as a numbered strip on the
-// Home page. Structural only — every string lives in i18n under
-// home.howItWorks.steps[id].
-export const howItWorksSteps = [
-  { id: 'pick', num: '01' },
-  { id: 'artwork', num: '02' },
-  { id: 'proof', num: '03' },
-  { id: 'produce', num: '04' },
-];
-
 // The ways a name/logo can be put onto a product. Selectable in the panel
 // under the steps; copy lives in i18n under home.howItWorks.methods[id] and
 // the image in data/media.js under media.methods[id].

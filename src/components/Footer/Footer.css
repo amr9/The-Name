@@ -53,7 +53,7 @@
     transparent 100%);
 }
 
-/* Slim: brand + socials on the left, contact on the right. */
+/* Brand + socials, then contact, then the site pages on the far side. */
 .footer-inner {
   display: flex;
   flex-wrap: wrap;
@@ -99,6 +99,33 @@
 .footer-message-btn {
   margin-top: var(--space-3);
   min-height: 38px;
+  gap: 8px;
+}
+
+/* the navbar's pages, repeated as a column */
+.footer-pages-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.footer-page-link {
+  font-size: var(--text-body);
+  color: var(--color-black);
+}
+.footer-page-link:hover,
+.footer-page-link[aria-current='page'] {
+  color: var(--color-black);
+  text-decoration: underline;
+}
+
+/* The site-wide selection tint is a yellow, which vanishes on this yellow
+   panel — selected text in the footer is grey instead. */
+.footer ::selection {
+  background: var(--color-surface);
+  color: var(--color-black);
 }
 
 .footer-bottom {

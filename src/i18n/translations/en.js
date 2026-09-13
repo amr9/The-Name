@@ -1,5 +1,5 @@
 export default {
-  nav: { home: 'Home', cafe: 'Cafe', shop: 'Shop', business: 'Business', contact: 'Contact us' },
+  nav: { home: 'Home', cafe: 'Cafe', shop: 'Shop', business: 'Business', about: 'About us', contact: 'Contact us' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chat on WhatsApp' },
 
@@ -38,6 +38,7 @@ export default {
     contactHeading: 'Contact us',
     note: 'WhatsApp — tables, allergens, quotes and custom orders. Replies within the hour during service.',
     message: 'Message us',
+    pagesHeading: 'Pages',
     rights: 'All rights reserved.',
   },
 
@@ -49,13 +50,10 @@ export default {
       ctaMenu: 'The cafe menu',
       ctaShop: 'Browse the products',
     },
-    brands: {
-      heading: 'The brands we personalise',
-    },
     whatWeDo: {
       kicker: 'What we do',
-      heading: 'Customization first — for you, then for your business',
-      body: 'Everything starts with a blank product and your artwork. Personal gifts one at a time, branded runs for companies, and — because we cook as well — a cafe that caters and hosts.',
+      heading: 'Objects With Your Story',
+      body: 'We curate meaningful objects that become more valuable with your identity',
     },
     services: {
       personalGifts: {
@@ -66,7 +64,7 @@ export default {
         cta: 'Browse the products',
       },
       businessBranding: {
-        kicker: 'For your business', title: 'Your logo, on everything',
+        kicker: 'For your business', title: 'Make Your Brand the Gift',
         placeholder: 'Branded corporate gift boxes',
         body: 'Corporate gifting, staff onboarding kits, client thank-yous, event giveaways and uniform. Send your brand files once and we keep them on file, so every reorder comes back identical to the last.',
         points: ['Bulk pricing from 25 pieces up', 'Brand files kept on file for exact reorders', 'Quoted, invoiced and delivered on a set date'],
@@ -91,12 +89,6 @@ export default {
       kicker: 'How it works',
       heading: 'Four steps from blank to boxed.',
       lede: 'The same process whether it is one engraved keepsake or five hundred branded kits.',
-      steps: {
-        pick: { title: 'Pick a product', body: 'Choose the blank from the shop — drinkware, apparel, stationery, whatever it is. Sizes and colours are listed on each item.' },
-        artwork: { title: 'Send your artwork', body: 'A name, a logo, a monogram or a full brand kit. We take vector files, and we will redraw a rough one for you.' },
-        proof: { title: 'Approve the mock-up', body: 'We send back a digital proof showing exact placement and size. Nothing is made until you say yes to it.' },
-        produce: { title: 'We make and ship', body: 'Produced in-house, checked by hand, gift-wrapped if you asked, then shipped or held here for collection.' },
-      },
       methodsKicker: 'Customization methods',
       suits: 'Best on',
       minimum: 'Minimum',
@@ -334,6 +326,123 @@ export default {
         standingBuffet: { name: 'Standing buffet', note: 'Platters set up and staffed at your venue for ninety minutes.', covers: '25–120', notice: '5 days', from: '£19' },
         offSiteCatering: { name: 'Off-site event catering', note: 'We bring the kitchen and the team to your address.', covers: '50–200', notice: '6 weeks', from: '£54' },
         breakfastTrolley: { name: 'Breakfast trolley', note: 'Pastry, fruit, urns of house filter, delivered.', covers: '10–80', notice: '48 hours', from: '£8' },
+      },
+    },
+  },
+
+  about: {
+    kicker: 'About us',
+    title: 'What\'s in a name? Everything.',
+    lede: 'A name is identity, history and connection — your signature and your story. The Name was built on one belief: an object becomes meaningful when it carries your name, your initials, your message or your brand. We curate design-led pieces, then make them yours.',
+    servicesHeading: 'What we do',
+    servicesLede: 'One studio for people and for brands — from a single engraved gift to a full corporate gifting programme.',
+    services: {
+      personalGifts: {
+        title: 'Personalised gifts',
+        body: 'Birthdays, weddings, new babies and thank-yous. Choose a piece, add a name, initials or a message, and we make it theirs — one piece is a perfectly normal order.',
+        cta: 'Browse the shop',
+      },
+      corporateGifting: {
+        title: 'Corporate gifting',
+        body: 'Client gifts, VIP delegations, conference giveaways, excellence awards and onboarding kits — carrying your logo, delivered in bulk on a set date.',
+        cta: 'For business',
+      },
+      curatedBrands: {
+        title: 'Curated design brands',
+        body: 'We work with brands people already love, so every gift starts from an object worth keeping.',
+        cta: 'See the products',
+      },
+      packaging: {
+        title: 'Gift kits & packaging',
+        body: 'Custom kits, signature packaging and full item wraps that carry your name or your brand from the box inwards.',
+        cta: 'Plan a kit',
+      },
+      creative: {
+        title: 'Creative concepts',
+        body: 'We started as a creative agency, so concept, storytelling and design are in-house — a full 360 service, not just a print run.',
+        cta: 'Talk to us',
+      },
+      cafe: {
+        title: 'The cafe & catering',
+        body: 'The other half of the address: breakfast to late lunch, private evenings in our room, and catering at yours.',
+        cta: 'See the cafe',
+      },
+    },
+    howHeading: 'How we do it',
+    howLede: 'The same four steps whether it is one engraved keepsake or five hundred branded kits.',
+    methodsLabel: 'We personalise with',
+    mission: {
+      kicker: 'Our mission',
+      statement: 'To turn everyday objects into meaningful ones — curating thoughtful, design-led pieces and personalising them, so every gift carries a name, a story or a brand.',
+    },
+    vision: {
+      kicker: 'Our vision',
+      statement: 'To be the region\'s destination for identity-driven design: where people come to give something truly personal, and brands come to make themselves worth remembering.',
+    },
+    cta: {
+      heading: 'Let\'s put a name on it.',
+      body: 'Tell us who it is for and what it should say — we\'ll take it from there.',
+      contact: 'Contact us',
+      whatsapp: 'Chat on WhatsApp',
+    },
+  },
+
+  process: {
+    steps: {
+      pick: { title: 'Pick a product', body: 'Choose the blank from the shop — drinkware, apparel, stationery, whatever it is. Sizes and colours are listed on each item.' },
+      artwork: { title: 'Send your artwork', body: 'A name, a logo, a monogram or a full brand kit. We take vector files, and we will redraw a rough one for you.' },
+      proof: { title: 'Approve the mock-up', body: 'We send back a digital proof showing exact placement and size. Nothing is made until you say yes to it.' },
+      produce: { title: 'We make and ship', body: 'Produced in-house, checked by hand, gift-wrapped if you asked, then shipped or held here for collection.' },
+    },
+  },
+
+  chat: {
+    open: 'Chat with us',
+    close: 'Close',
+    menuTitle: 'How would you like to talk?',
+    botTitle: 'Talk to our assistant',
+    botNote: 'Instant answers, any time',
+    whatsappTitle: 'Chat on WhatsApp',
+    whatsappNote: 'A person from our team',
+    assistantName: 'The Name assistant',
+    assistantStatus: 'Automated replies',
+    greeting: 'Hi! I can answer questions about our products, personalisation, business orders and the cafe. Pick a topic or type your question.',
+    placeholder: 'Type your question…',
+    send: 'Send',
+    back: 'Back',
+    fallback: 'I\'m not sure about that one. Pick a topic below, or continue on WhatsApp and our team will help.',
+    openPage: 'Open the page',
+    continueWhatsapp: 'Continue on WhatsApp',
+    topics: {
+      products: {
+        label: 'What do you sell?',
+        answer: 'Design-led objects from brands like Lexon, Lund London, Pantone, Korin, Kreafunk and Gingko — drinkware, tech, desk pieces, travel and gift sets — plus our own house pieces. Every one can be personalised.',
+        keywords: ['product', 'sell', 'shop', 'brand', 'buy', 'bottle', 'speaker', 'lamp', 'bag'],
+      },
+      personalise: {
+        label: 'How does personalisation work?',
+        answer: 'Pick a product, send us a name, initials, a message or a logo, approve the digital proof, and we make and ship it. Nothing is made until you approve.',
+        keywords: ['personal', 'engrav', 'print', 'emboss', 'embroider', 'name', 'logo', 'custom'],
+      },
+      leadTimes: {
+        label: 'How long does it take?',
+        answer: 'It depends on the method:',
+        keywords: ['how long', 'time', 'days', 'deliver', 'ship', 'when', 'lead', 'minimum'],
+      },
+      business: {
+        label: 'Corporate & bulk orders',
+        answer: 'We handle corporate gifting, onboarding kits, event giveaways and uniform, with bulk pricing from 25 pieces and your artwork kept on file for reorders.',
+        keywords: ['business', 'corporate', 'company', 'bulk', 'team', 'quote'],
+      },
+      cafe: {
+        label: 'The cafe',
+        answer: 'The cafe is open 08:00 – 16:00 daily, with a four-course supper on Friday evenings. Walk-ins only; the room can be booked for private events.',
+        keywords: ['cafe', 'café', 'food', 'menu', 'coffee', 'open', 'hours'],
+      },
+      human: {
+        label: 'Talk to a person',
+        answer: 'Of course — our team replies on WhatsApp within the hour during opening times.',
+        keywords: ['person', 'human', 'agent', 'whatsapp', 'call', 'talk', 'phone'],
       },
     },
   },

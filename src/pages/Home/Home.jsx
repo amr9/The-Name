@@ -4,10 +4,11 @@ import Bubbles from '../../components/Bubbles/Bubbles.jsx';
 import { shopIcons } from '../../components/Bubbles/icons.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import LogoMarquee from '../../components/LogoMarquee/LogoMarquee.jsx';
+import ProcessSteps from '../../components/ProcessSteps/ProcessSteps.jsx';
 import { brands } from '../../data/brands.js';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import { customMethods, howItWorksSteps, services } from './data.js';
+import { customMethods, services } from './data.js';
 import './Home.css';
 
 export default function Home() {
@@ -34,8 +35,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* the brands we curate and personalise — a slow, rolling logo strip */}
-      <LogoMarquee heading={t.home.brands.heading} items={brands} logos={media.brands} />
+      {/* the brands we curate and personalise — a slow, rolling logo strip, no heading */}
+      <LogoMarquee items={brands} logos={media.brands} />
 
       {/* what we do — services, one image each. The wrapper is only here to
           anchor the decorative shop-item bubbles — up the gutters on wide
@@ -104,19 +105,7 @@ export default function Home() {
             <p className="home-how-lede">{t.home.howItWorks.lede}</p>
           </div>
 
-          {/* an ordered list, because the steps genuinely happen in sequence */}
-          <ol className="home-how-steps">
-            {howItWorksSteps.map((s) => {
-              const step = t.home.howItWorks.steps[s.id];
-              return (
-                <li key={s.id} className="home-how-step">
-                  <span className="home-how-step-num">{s.num}</span>
-                  <h3 className="home-how-step-title">{step.title}</h3>
-                  <p className="home-how-step-body">{step.body}</p>
-                </li>
-              );
-            })}
-          </ol>
+          <ProcessSteps />
 
           <div className="split home-how-grid">
             <div className="washed home-how-photo">

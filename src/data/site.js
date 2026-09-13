@@ -10,7 +10,8 @@ export const site = {
   shopUrl: 'https://example.com/shop',
 };
 
-// Every WhatsApp trigger on the site links here, and the footer prints
+// Every WhatsApp trigger on the site links here (WhatsAppButton, the chat
+// launcher's WhatsApp option, the footer), and the footer prints
 // `site.phone` itself — so the number above is the single place to change it.
 export const waLink = `https://wa.me/${site.phone.replace(/[^0-9]/g, '')}`;
 
@@ -28,5 +29,6 @@ export const navLinks = [
   { to: '/cafe', key: 'cafe' },
   { to: '/shop', key: 'shop' },
   { to: '/business', key: 'business' },
+  { to: '/about', key: 'about' },
   { to: '/contact', key: 'contact' },
 ];

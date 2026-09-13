@@ -30,7 +30,7 @@ export default function LanguageSwitcher() {
       {open && (
         <>
           <div className="lang-switcher-scrim" onClick={() => setOpen(false)} />
-          <div role="listbox" className="lang-switcher-menu">
+          <div role="listbox" className="popover lang-switcher-menu">
             {languages.map((l) => (
               <button
                 key={l.code}
@@ -38,7 +38,7 @@ export default function LanguageSwitcher() {
                 role="option"
                 aria-selected={lang === l.code}
                 data-active={lang === l.code}
-                className="lang-switcher-option"
+                className="popover-option lang-switcher-option"
                 onClick={() => { setLang(l.code); setOpen(false); }}
               >
                 <span className="lang-switcher-code">{l.code}</span>

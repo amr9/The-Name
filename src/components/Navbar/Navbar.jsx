@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
 import Logo from '../Logo.jsx';
-import WhatsAppButton from '../WhatsAppButton.jsx';
 import LanguageSwitcher from '../LanguageSwitcher.jsx';
 import { navLinks } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
@@ -21,7 +20,6 @@ export default function Navbar() {
         </NavLink>
       ))}
 
-      <WhatsAppButton style={{ minHeight: 36, gap: 8 }} />
       <LanguageSwitcher />
     </nav>
   );
