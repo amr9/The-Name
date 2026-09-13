@@ -85,11 +85,10 @@ src/
     <PageName>.css     — page-specific layout (uses theme.css tokens, never
                          hardcodes a color/font)
     <Part>.jsx         — a piece used by that page only stays in its folder
-                         (currently: Home/FoodBubbles.jsx, the decorative
-                         burger/drink bubbles beside — or, on narrow screens,
-                         between — the service rows; still cafe ornament,
-                         predating the customization pivot). Anything a
-                         second page needs moves to components/ instead.
+                         (currently none). Anything a second page needs
+                         moves to components/ instead — as the bubbles did,
+                         from Home/FoodBubbles.jsx to components/Bubbles/,
+                         once the Cafe page wanted them too.
     data.js            — STRUCTURAL data only for that page: ids, ordering,
                          numeric prices, x/y coordinates, route targets.
                          Never display copy — see i18n/ below.
@@ -100,13 +99,27 @@ src/
   components/         — shared UI building blocks used by 2+ pages
     <Name>.jsx + <Name>.css       — simple components stay as flat files
     <Name>/<Name>.jsx + .css      — a component gets its own folder once it
-                                    has real internal complexity (currently:
-                                    Navbar/, Footer/, PackagesPanel/ — the
-                                    packages table + direct-line panel shared
-                                    by the Cafe (events) and Business
-                                    (catering) pages). Parts used by only
-                                    that component live in its folder too
-                                    (e.g. Footer/SocialLinks.jsx).
+                                    has real internal complexity. Parts used
+                                    by only that component live in its folder
+                                    too (e.g. Footer/SocialLinks.jsx).
+                                    Currently:
+      Navbar/, Footer/
+      PackagesPanel/  — packages table + direct-line panel: Cafe (events)
+                        and Business (catering).
+      OverlayCard/    — the frosted card (full-bleed 3:4 photo, chips over
+                        it, glass panel with a round yellow action): Shop
+                        catalogue and Cafe menu. Also exports
+                        OverlayCardArrow for link actions.
+      LogoMarquee/    — rolling, looping logo strip; a missing logo file
+                        shows the name as a wordmark: Home (partner brands)
+                        and Cafe (delivery partners, commented out).
+      Bubbles/        — drifting, poppable bubble field + icons.jsx (icon
+                        sets: shopIcons for Home, foodIcons for Cafe).
+                        Takes `scale` (Cafe uses 3). The parent needs the
+                        `bubbles-host` class, which anchors and clips the
+                        field and lifts page content above it.
+    WhatsAppButton.jsx — `iconOnly` renders just the icon with `children`
+                        as the aria-label (the Cafe card action).
 
   data/
     site.js            — cross-page structural facts (phone, contact email,
@@ -131,6 +144,14 @@ src/
                           than repeated under shop. Read by the Shop page
                           alone. Display text lives in i18n under
                           shop.items[code].
+
+    brands.js           — the partner brands (id, name, url): Lexon, Lund
+                          London, Pantone, Korin, Kreafunk, Gingko. Proper
+                          nouns, so not in i18n. Read by the Home logo strip
+                          and by catalogue.js — one spelling per brand.
+    bubbles.js          — the bubble layouts (sideBubbles, rowBubbles):
+                          positions/sizes/timing only, no icons, so Home and
+                          Cafe share them with different icon sets.
 
   i18n/
     LanguageContext.jsx — LanguageProvider + useLanguage() hook. Persists
@@ -221,11 +242,14 @@ public/media/
   shop/       — the shop's products, named by product code
   cafe/       — the events section on the Cafe page
   business/   — the branded-goods offer cards + the catering section
+  brands/     — partner-brand logos for the Home strip, named in
+                data/media.js `brands` (lexon.png, lund-london.png, …).
+                Empty so far — the strip shows each name as a wordmark.
   partners/   — reserved for delivery-partner logos. Currently empty: the
-                Home logo strip hot-links talabat's and noon's own CDN URLs
-                (see data/media.js `partners`) so a rebrand on their side
-                appears automatically. Drop a file here and repoint that
-                entry to pin an asset locally instead.
+                Cafe logo strip (commented out for now) hot-links talabat's
+                and noon's own CDN URLs (see data/media.js `partners`) so a
+                rebrand on their side appears automatically. Drop a file
+                here and repoint that entry to pin an asset locally instead.
   brand/      — logo exports and other brand assets. Contains
                 `footer-pattern.svg`, the guideline's hand-drawn wavy line
                 texture — kept, but no longer applied: the footer is now the
@@ -241,9 +265,9 @@ placeholder instead, so partially-supplied media degrades cleanly.
 
 | Route | Folder | Notes |
 |---|---|---|
-| `/` | `pages/Home/` | Customization-led. Hero, rolling delivery-partner logo strip (CSS marquee, duplicated row), 4 services in business order — B2C gifts, B2B branding, cafe, catering — (with the `FoodBubbles` ornament: gutter fields above 1280px, left-to-right bands between the rows below it, both rendered and swapped by media query; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": a 4-step `<ol>` plus a picker of customization methods (`howItWorksSteps` / `customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
-| `/cafe` | `pages/Cafe/` | The menu (List/Cards toggle, autoplaying carousels, 3 sections) plus the **events** section at its foot — nights held in our own room, rendered by `PackagesPanel`. Was `pages/Menu/`. |
-| `/shop` | `pages/Shop/` | "Make It Personal" — curated objects from partner brands and house pieces that take a name, initials or a logo. Category filters (drinkware / tech / desk / travel / gift sets), List/Cards toggle, autoplaying carousel. Cards use the frosted-overlay design: a full-bleed 3:4 photo, methods + code chips over its top, and brand/name/finish·lead on a glass panel with a round yellow arrow (mirrored in RTL). The list view keeps the longer note. Was `pages/VertexPieces/` (an interiors showroom) before the customization pivot. |
+| `/` | `pages/Home/` | Customization-led. Hero, `LogoMarquee` of the partner brands (`data/brands.js`, heading under i18n home.brands), 4 services in business order — B2C gifts, B2B branding, cafe, catering — (with the `Bubbles` ornament in shop icons: gutter fields above 1280px, left-to-right bands between the rows below it; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": a 4-step `<ol>` plus a picker of customization methods (`howItWorksSteps` / `customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
+| `/cafe` | `pages/Cafe/` | Title block, then the delivery-partner `LogoMarquee` — **commented out** for now (ids/URLs in this page's `data.js`, names under i18n cafe.partners) — then the menu (List/Cards toggle; cards are `OverlayCard` with tag + price chips and an icon-only WhatsApp action; autoplaying carousels, 3 sections). Food `Bubbles` at 3× scale fill the gutters on wide screens (no narrow-screen bands). Plus the **events** section at its foot — nights held in our own room, rendered by `PackagesPanel`. Was `pages/Menu/`. |
+| `/shop` | `pages/Shop/` | "Make It Personal" — curated objects from partner brands and house pieces that take a name, initials or a logo. Category filters (drinkware / tech / desk / travel / gift sets), List/Cards toggle, autoplaying carousel. Cards are the shared `OverlayCard` (methods + code chips, brand kicker, finish · lead meta, arrow link). The list view keeps the longer note. Was `pages/VertexPieces/` (an interiors showroom) before the customization pivot. |
 | `/business` | `pages/Business/` | B2B: branded-goods offer cards, account terms, and the **catering** section (off-site work), rendered by `PackagesPanel`. |
 | `/contact` | `pages/Contact/` | Enquiry form (name/email/phone/message) + hidden honeypot + a fill timer (`timingField`, a ref set when the form renders — the server reads the gap as a bot signal). POSTs to `VITE_CONTACT_ENDPOINT` or same-origin `/api/contact`, which `server/` stores and a worker emails to `site.email`. Validation rules come from `shared/contactForm.js`; a 400 carries `fieldKeys` the page translates through `contact.errors.*`. States are idle / sending / sent / failed / rateLimited. |
 
@@ -281,6 +305,10 @@ placeholder instead, so partially-supplied media degrades cleanly.
      CateringEvents page. When that page was split — events onto Cafe,
      catering onto Business — the shared markup went to
      `components/PackagesPanel/` rather than being copied into both.
+   - The Shop's frosted card, Home's logo strip and Home's bubble field
+     were each wanted on the Cafe page too → `components/OverlayCard/`,
+     `components/LogoMarquee/` and `components/Bubbles/` (with the layouts
+     in `data/bubbles.js`), instead of second copies.
    Grep for similar class names / JSX shapes before adding a second copy of
    anything; if 2+ places need the same thing, extract it into
    `components/`, `utils/`, or a shared token in `theme.css` instead of

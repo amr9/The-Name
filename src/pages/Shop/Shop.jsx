@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import Carousel from '../../components/Carousel.jsx';
+import OverlayCard, { OverlayCardArrow } from '../../components/OverlayCard/OverlayCard.jsx';
 import ViewToggle from '../../components/ViewToggle.jsx';
 import { catalogue, filterKeys } from '../../data/catalogue.js';
 import { media } from '../../data/media.js';
@@ -85,25 +86,20 @@ export default function Shop() {
             {shown.map((p) => {
               const info = t.shop.items[p.code];
               return (
-                // Frosted-overlay card: the photo fills the card, methods and
-                // code float over it, and name/brand sit on a glass panel.
-                <div key={p.code} className="carousel-card shop-card">
-                  <ImagePlaceholder className="washed shop-card-image" src={media.shop[p.code]} label={info.name} ratio="3 / 4" />
-                  <div className="shop-card-top">
-                    <span className="shop-card-chip">{methodNames(p)}</span>
-                    <span className="shop-card-chip shop-card-code">{p.code}</span>
-                  </div>
-                  <div className="shop-card-panel">
-                    <span className="shop-card-brand">{p.brand}</span>
-                    <h3 className="card-title shop-card-name">{info.name}</h3>
-                    <span className="shop-card-meta">{info.finish} · {info.lead}</span>
-                    <a className="shop-card-go" href={site.shopUrl} target="_blank" rel="noopener noreferrer" aria-label={t.shop.personaliseItem(info.name)}>
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <path d="M5 12h14M13 6l6 6-6 6" />
-                      </svg>
+                <OverlayCard
+                  key={p.code}
+                  className="carousel-card"
+                  image={media.shop[p.code]}
+                  chips={[methodNames(p), p.code]}
+                  kicker={p.brand}
+                  title={info.name}
+                  meta={`${info.finish} · ${info.lead}`}
+                  action={
+                    <a href={site.shopUrl} target="_blank" rel="noopener noreferrer" aria-label={t.shop.personaliseItem(info.name)}>
+                      <OverlayCardArrow />
                     </a>
-                  </div>
-                </div>
+                  }
+                />
               );
             })}
           </Carousel>

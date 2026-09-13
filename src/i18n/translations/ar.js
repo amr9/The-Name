@@ -49,12 +49,8 @@ export default {
       ctaMenu: 'قائمة المقهى',
       ctaShop: 'تصفّح المنتجات',
     },
-    partners: {
-      heading: 'شركاؤنا',
-      items: {
-        talabat: { name: 'طلبات' },
-        noon: { name: 'نون' },
-      },
+    brands: {
+      heading: 'العلامات التي نخصّصها',
     },
     whatWeDo: {
       kicker: 'ما نقدّمه',
@@ -135,6 +131,14 @@ export default {
   cafe: {
     kicker: 'المقهى',
     title: 'نكهات طازجة كل يوم',
+    partners: {
+      heading: 'شركاؤنا',
+      items: {
+        talabat: { name: 'طلبات' },
+        noon: { name: 'نون' },
+      },
+    },
+    askAboutDish: (dish) => `اسأل عن ${dish} عبر واتساب`,
     viewList: 'قائمة',
     viewCards: 'بطاقات',
     updated: 'آخر تحديث الأربعاء 02 سبتمبر',

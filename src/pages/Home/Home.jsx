@@ -1,10 +1,13 @@
 import { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Bubbles from '../../components/Bubbles/Bubbles.jsx';
+import { shopIcons } from '../../components/Bubbles/icons.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
+import LogoMarquee from '../../components/LogoMarquee/LogoMarquee.jsx';
+import { brands } from '../../data/brands.js';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import FoodBubbles from './FoodBubbles.jsx';
-import { customMethods, howItWorksSteps, partners, services } from './data.js';
+import { customMethods, howItWorksSteps, services } from './data.js';
 import './Home.css';
 
 export default function Home() {
@@ -12,9 +15,6 @@ export default function Home() {
   const [methodIdx, setMethodIdx] = useState(0);
   const method = customMethods[methodIdx];
   const methodCopy = t.home.howItWorks.methods[method.id];
-  // Only two partners, so the row is padded out to fill a wide screen before
-  // the track duplicates it for the loop.
-  const partnerStrip = [partners, partners, partners, partners].flat();
 
   return (
     <div className="home">
@@ -34,40 +34,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* delivery partners — a slow, continuously rolling logo strip */}
-      <section className="home-partners">
-        <h2 className="container home-partners-heading">{t.home.partners.heading}</h2>
-
-        {/* the list is rendered twice back to back so the -50% translation
-            lands exactly on the start of the copy — a seamless loop */}
-        <div className="home-partners-marquee">
-          <div className="home-partners-track">
-            {[0, 1].map((copy) => (
-              <ul key={copy} className="home-partners-row" aria-hidden={copy === 1}>
-                {partnerStrip.map((p, i) => (
-                  <li key={`${p.id}-${i}`} className="home-partners-item">
-                    <a href={p.url} target="_blank" rel="noopener noreferrer" className="home-partners-link">
-                      <ImagePlaceholder
-                        src={media.partners[p.id]}
-                        label={t.home.partners.items[p.id].name}
-                        ratio="3 / 1"
-                        className="home-partners-logo"
-                      />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* the brands we curate and personalise — a slow, rolling logo strip */}
+      <LogoMarquee heading={t.home.brands.heading} items={brands} logos={media.brands} />
 
       {/* what we do — services, one image each. The wrapper is only here to
-          anchor the decorative bubbles — up the gutters on wide screens, in
-          bands between the rows on narrow ones. */}
-      <div className="home-services">
-        <FoodBubbles side="left" />
-        <FoodBubbles side="right" />
+          anchor the decorative shop-item bubbles — up the gutters on wide
+          screens, in bands between the rows on narrow ones. */}
+      <div className="bubbles-host">
+        <Bubbles side="left" icons={shopIcons} />
+        <Bubbles side="right" icons={shopIcons} />
 
         <section className="container home-services-intro">
           <span className="card-kicker">{t.home.whatWeDo.kicker}</span>
@@ -80,8 +55,8 @@ export default function Home() {
           return (
             <Fragment key={s.id}>
             {/* on narrow screens the bubbles run between the rows instead of
-                beside them — see FoodBubbles / Home.css */}
-            {i > 0 && <FoodBubbles side="row" phase={i * 29} />}
+                beside them — see components/Bubbles */}
+            {i > 0 && <Bubbles side="row" icons={shopIcons} phase={i * 29} />}
               <section className="container home-service-row">
                 <div className="row-flip home-service-grid">
                   <div className="row-text home-service-text" style={{ order: s.textOrder }}>

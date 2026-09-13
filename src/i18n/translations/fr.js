@@ -49,12 +49,8 @@ export default {
       ctaMenu: 'La carte du café',
       ctaShop: 'Voir les produits',
     },
-    partners: {
-      heading: 'Nos partenaires',
-      items: {
-        talabat: { name: 'talabat' },
-        noon: { name: 'noon' },
-      },
+    brands: {
+      heading: 'Les marques que nous personnalisons',
     },
     whatWeDo: {
       kicker: 'Ce que nous faisons',
@@ -135,6 +131,14 @@ export default {
   cafe: {
     kicker: 'Le café',
     title: 'Des saveurs fraîches chaque jour',
+    partners: {
+      heading: 'Nos partenaires',
+      items: {
+        talabat: { name: 'talabat' },
+        noon: { name: 'noon' },
+      },
+    },
+    askAboutDish: (dish) => `Demander à propos de ${dish} sur WhatsApp`,
     viewList: 'Liste',
     viewCards: 'Cartes',
     updated: 'Mis à jour mer. 02 sept.',

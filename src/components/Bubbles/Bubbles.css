@@ -1,0 +1,150 @@
+/* Decorative bubble fields — see Bubbles.jsx. Two layouts of the same
+   ornament, both in the markup and swapped by the media queries at the end
+   of this file: the gutter fields when there is white space beside
+   .container, the horizontal band between content rows when there is not. */
+
+/* The element the fields sit in. The bubbles are clipped to it, so they can
+   never add scroll, and its content is lifted above them — a bubble wider
+   than the gutter drifts behind the copy, never over it. */
+.bubbles-host {
+  position: relative;
+  overflow: hidden;
+}
+.bubbles-host > :not(.bubbles) {
+  position: relative;
+  z-index: 1;
+}
+
+.bubbles {
+  /* only the bubbles themselves take taps — the field is see-through */
+  pointer-events: none;
+  color: var(--color-accent-700);
+}
+.bubbles-left,
+.bubbles-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* the white space left over beside .container (max-width 1240px) — a bit
+     narrower than the true gutter so a bubble never touches the copy */
+  width: calc((100vw - 1180px) / 2);
+}
+.bubbles-left { left: 0; }
+.bubbles-right { right: 0; }
+
+/* the narrow-screen band: a strip of its own between two content rows */
+.bubbles-row {
+  position: relative;
+  height: 96px;
+  overflow: hidden;
+}
+
+.bubble {
+  position: absolute;
+  width: var(--bubble-size);
+  height: var(--bubble-size);
+  padding: 0;
+  border: 0;
+  background: none;
+  /* the bubble is the one hit target in the field, and popping it is the
+     whole point of tapping one */
+  pointer-events: auto;
+  cursor: pointer;
+  opacity: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.bubbles-left .bubble,
+.bubbles-right .bubble {
+  bottom: var(--bubble-y);
+  left: var(--bubble-x);
+  animation: bubble-rise var(--bubble-duration) linear var(--bubble-delay) infinite;
+}
+.bubbles-row .bubble {
+  top: var(--bubble-y);
+  left: 0;
+  animation: bubble-cross var(--bubble-duration) linear var(--bubble-delay) infinite;
+}
+
+/* the visible circle — kept separate from the travelling button so popping
+   it can play its own burst without interrupting the drift */
+.bubble-skin {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%,
+    var(--color-white) 0%,
+    var(--color-accent-200) 45%,
+    var(--color-accent-300) 100%);
+  border: 1px solid var(--color-accent-300);
+  box-shadow: var(--shadow-sm);
+}
+.bubble-icon {
+  width: 50%;
+  height: 50%;
+  opacity: 0.75;
+  animation: bubble-sway calc(var(--bubble-duration) / 3) ease-in-out var(--bubble-delay) infinite alternate;
+}
+
+/* popped: the skin bursts outwards once, then the bubble stays gone until
+   the component refills it (see REFILL_MS in Bubbles.jsx) */
+.bubble[data-popped] { cursor: default; }
+/* the single frame that restarts the travel — nothing drawn, no animation,
+   so the next frame begins the pass at its first keyframe and the bubble
+   fades back in instead of blinking on mid-flight */
+.bubble.is-refilling {
+  animation: none;
+  opacity: 0;
+}
+.bubble.is-refilling .bubble-skin,
+.bubble.is-refilling .bubble-icon {
+  animation: none;
+}
+.bubble[data-popped] .bubble-skin {
+  animation: bubble-pop 260ms ease-out forwards;
+}
+.bubble[data-popped] .bubble-icon {
+  animation: none;
+  opacity: 0;
+  transition: opacity 90ms linear;
+}
+
+/* each bubble drifts up from where it sits, swelling slightly, then
+   dissolves — a fade-out rather than a hard cut, so the loop never snaps */
+@keyframes bubble-rise {
+  0%   { transform: translate(0, 40px) scale(0.6); opacity: 0; }
+  18%  { opacity: 0.9; }
+  55%  { transform: translate(var(--bubble-drift), -110px) scale(1); opacity: 0.9; }
+  100% { transform: translate(calc(var(--bubble-drift) * 0.4), -260px) scale(1.12); opacity: 0; }
+}
+/* the same idea turned on its side for the narrow-screen band: in at the
+   left edge, out past the right one */
+@keyframes bubble-cross {
+  0%   { transform: translate(-90px, 0) scale(0.6); opacity: 0; }
+  18%  { opacity: 0.9; }
+  55%  { transform: translate(50vw, var(--bubble-drift)) scale(1); opacity: 0.9; }
+  100% { transform: translate(calc(100vw + 90px), calc(var(--bubble-drift) * 0.4)) scale(1.12); opacity: 0; }
+}
+@keyframes bubble-sway {
+  from { transform: rotate(-9deg); }
+  to   { transform: rotate(9deg); }
+}
+@keyframes bubble-pop {
+  0%   { transform: scale(1); opacity: 0.95; }
+  45%  { transform: scale(1.35); opacity: 0.6; border-color: transparent; }
+  100% { transform: scale(1.7); opacity: 0; border-color: transparent; }
+}
+
+/* wide enough for gutters: the side fields run, the band is redundant */
+@media (min-width: 1281px) {
+  .bubbles-row { display: none; }
+}
+/* no gutter to fill: the band takes over */
+@media (max-width: 1280px) {
+  .bubbles-left,
+  .bubbles-right { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bubbles { display: none; }
+}

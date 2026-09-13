@@ -10,3 +10,12 @@ export const menuSections = [
 // Row order for the events table. Events are the ones held in this room —
 // anything at the customer's address is catering, and lives on /business.
 export const eventPackageIds = ['roomHire', 'supperClub', 'launchNight', 'privateBreakfast'];
+
+// Delivery partners for the logo strip under the title (currently commented
+// out in Cafe.jsx). Names are localized (Arabic spells them in its own
+// script), so they live in i18n under cafe.partners.items[id]; the logo files
+// are in data/media.js under media.partners[id].
+export const partners = [
+  { id: 'talabat', url: 'https://www.talabat.com' },
+  { id: 'noon', url: 'https://www.noon.com' },
+];

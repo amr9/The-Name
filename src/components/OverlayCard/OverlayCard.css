@@ -1,0 +1,97 @@
+/* Frosted-overlay card — see OverlayCard.jsx. The photo fills the card; the
+   chips float over its top edge and the text sits on a glass panel. */
+.overlay-card {
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--gradient-light);
+}
+
+.overlay-card-image.img-slot {
+  height: 100%;
+  border-radius: 0;
+  background: transparent;
+}
+.overlay-card-image img { transition: transform 0.7s cubic-bezier(.22,.61,.36,1); }
+.overlay-card:hover .overlay-card-image img { transform: scale(1.04); }
+/* Until the photo exists, lift the placeholder label clear of the panel. */
+.overlay-card-image.img-slot-empty { border: 0; padding-bottom: 38%; }
+
+.overlay-card-top {
+  position: absolute;
+  top: 14px;
+  inset-inline: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+.overlay-card-chip {
+  font-size: var(--text-xs);
+  line-height: 1.4;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-variant-numeric: tabular-nums;
+  background: color-mix(in srgb, var(--color-white) 72%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+/* the first chip may wrap; the ones after it (a code, a price) stay whole */
+.overlay-card-chip + .overlay-card-chip { flex: none; }
+
+.overlay-card-panel {
+  position: absolute;
+  inset-inline: 10px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-block: 16px;
+  padding-inline: 18px 16px;
+  border-radius: calc(var(--radius-md) * 1.25);
+  border: 1px solid color-mix(in srgb, var(--color-white) 60%, transparent);
+  background: color-mix(in srgb, var(--color-white) 72%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
+}
+.overlay-card-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.overlay-card-kicker {
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+}
+.overlay-card-title { font-size: 19px; }
+.overlay-card-meta { font-size: var(--text-xs); line-height: 1.5; color: var(--color-gray); }
+
+/* the round yellow button — whatever link or button the page passes in */
+.overlay-card-action { flex: none; display: flex; }
+.overlay-card-action > * {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--color-accent);
+  color: var(--color-black);
+  transition: background 0.2s ease;
+}
+.overlay-card-action > *:hover { background: var(--color-accent-600); color: var(--color-black); }
+
+.overlay-card-arrow { transition: transform 0.35s cubic-bezier(.22,.61,.36,1); }
+.overlay-card:hover .overlay-card-arrow,
+.overlay-card:focus-within .overlay-card-arrow { transform: rotate(-45deg); }
+[dir='rtl'] .overlay-card-arrow { transform: scaleX(-1); }
+[dir='rtl'] .overlay-card:hover .overlay-card-arrow,
+[dir='rtl'] .overlay-card:focus-within .overlay-card-arrow { transform: scaleX(-1) rotate(-45deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay-card-image img, .overlay-card-arrow { transition: none; }
+}

@@ -62,7 +62,19 @@ export const media = {
     'TN-501': `${BASE}/shop/tn-501.jpg`,
   },
 
-  // Delivery partner logos — keys match pages/Home/data.js `partners` id.
+  // Partner-brand logos for the Home logo strip — keys match data/brands.js
+  // `id`. Until a file exists the strip shows the brand name as a wordmark.
+  brands: {
+    lexon: `${BASE}/brands/lexon.png`,
+    lundLondon: `${BASE}/brands/lund-london.png`,
+    pantone: `${BASE}/brands/pantone.png`,
+    korin: `${BASE}/brands/korin.png`,
+    kreafunk: `${BASE}/brands/kreafunk.png`,
+    gingko: `${BASE}/brands/gingko.png`,
+  },
+
+  // Delivery partner logos for the Cafe logo strip (currently commented out)
+  // — keys match pages/Cafe/data.js `partners` id.
   // These two are hot-linked from each brand's own CDN rather than copied
   // into public/media/, so a rebrand on their side shows up here with no
   // change. If either URL ever moves, <ImagePlaceholder> falls back to its

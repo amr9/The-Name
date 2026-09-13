@@ -49,12 +49,8 @@ export default {
       ctaMenu: 'The cafe menu',
       ctaShop: 'Browse the products',
     },
-    partners: {
-      heading: 'Our partners',
-      items: {
-        talabat: { name: 'talabat' },
-        noon: { name: 'noon' },
-      },
+    brands: {
+      heading: 'The brands we personalise',
     },
     whatWeDo: {
       kicker: 'What we do',
@@ -135,6 +131,14 @@ export default {
   cafe: {
     kicker: 'The cafe',
     title: 'Fresh Flavours Every Day',
+    partners: {
+      heading: 'Our partners',
+      items: {
+        talabat: { name: 'talabat' },
+        noon: { name: 'noon' },
+      },
+    },
+    askAboutDish: (dish) => `Ask about ${dish} on WhatsApp`,
     viewList: 'List',
     viewCards: 'Cards',
     updated: 'Updated Wed 02 Sep',
