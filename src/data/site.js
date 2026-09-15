@@ -24,10 +24,9 @@ export const socials = [
 ];
 
 // `key` looks up the label in each translation's `nav` section.
-// `highlight` draws that link as the navbar's sparkly gradient pill.
 export const navLinks = [
   { to: '/', key: 'home' },
-  { to: '/shop', key: 'shop', highlight: true },
+  { to: '/shop', key: 'shop' },
   { to: '/business', key: 'business' },
   { to: '/cafe', key: 'cafe' },
   { to: '/about', key: 'about' },

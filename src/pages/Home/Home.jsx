@@ -26,10 +26,14 @@ export default function Home() {
         </div>
         <div className="home-hero-scrim" />
         <div className="container home-hero-content">
-          <h1 className="home-hero-title">{t.home.hero.title}</h1>
+          {/* two lines: the lead in the heading face, the answer under it in the script face */}
+          <h1 className="home-hero-title">
+            <span className="home-hero-title-lead">{t.home.hero.titleLead}</span>
+            <span className="home-hero-title-script">{t.home.hero.titleScript}</span>
+          </h1>
           <p className="home-hero-body">{t.home.hero.body}</p>
           <div className="home-hero-actions">
-            <Link to="/shop" className="btn btn-primary">{t.home.hero.ctaShop}</Link>
+            <Link to="/shop" className="btn btn-sparkle">{t.home.hero.ctaShop}</Link>
             <Link to="/cafe" className="btn btn-secondary home-hero-secondary">{t.home.hero.ctaMenu}</Link>
           </div>
         </div>

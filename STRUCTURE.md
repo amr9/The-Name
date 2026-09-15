@@ -80,11 +80,8 @@ src/
                         /contact) + global chrome
                          (Navbar, Footer, ChatLauncher — the floating button).
                          Nav order (data/site.js navLinks): Home → The Name
-                         Shop → Business → Cafe → About → Contact. A
-                         `highlight: true` entry (the shop) renders as the
-                         sparkly pill: --gradient-panel-flow streaming left
-                         to right, a light sweep and twinkling dots
-                         (Navbar.css). The footer is only the yellow logo,
+                         Shop → Business → Cafe → About → Contact, all
+                         plain links. The footer is only the yellow logo,
                          the social links and the copyright line, on
                          --gradient-footer (brownish black).
 
@@ -222,12 +219,21 @@ src/
                           --space-*, --radius-*, --shadow-*, the named
                           gradients) plus
                           shared component classes (.btn* incl. .btn-light
-                          for dark/coloured grounds, .card, .tag, .seg*,
+                          for dark/coloured grounds and .btn-sparkle — the
+                          flowing panel gradient with a sweep and twinkling
+                          sparkles, used instead of .btn-primary on the Home
+                          hero's shop CTA — .card, .tag, .seg*,
                           .seg-grid, .popover/.popover-option for floating
                           menus, .table, .dialog, .carousel-*) and the shared
-                          keyframes (pulse, kenburns, gradient-flow — pair the
-                          last with --gradient-panel-flow at
-                          background-size 200%). Gradients: --gradient-panel
+                          keyframes (pulse, kenburns, sparkle-sweep,
+                          sparkle-twinkle, gradient-flow — pair the last with
+                          --gradient-panel-flow at background-size 200%).
+                          Fonts: --font-heading, --font-body and
+                          --font-script (Artisoul Signature, a licensed face
+                          loaded by the @font-face at the top from
+                          public/fonts/artisoul-signature.woff2 or .otf —
+                          the file has to be added; system script fallbacks
+                          until then). Gradients: --gradient-panel
                           (the guideline's orange→gold panel, built from the
                           --color-panel-* stops), --gradient-panel-flow (its
                           seamless moving tile), --gradient-footer (--color-ink
@@ -325,9 +331,9 @@ placeholder instead, so partially-supplied media degrades cleanly.
 
 | Route | Folder | Notes |
 |---|---|---|
-| `/` | `pages/Home/` | Customization-led. Hero, `LogoMarquee` of the partner brands (`data/brands.js`, no heading), 4 services in business order — B2C gifts, B2B branding, cafe, catering — (with the `Bubbles` ornament in shop icons plus the N mark: gutter fields above 1280px, left-to-right bands between the rows below it; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": `ProcessSteps` plus a picker of customization methods (`customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
+| `/` | `pages/Home/` | Customization-led. Hero (the title in two lines — i18n `home.hero.titleLead`, then `titleScript` under it in --font-script; the "Browse the products" CTA is `.btn-sparkle`), `LogoMarquee` of the partner brands (`data/brands.js`, no heading), 4 services in business order — B2C gifts, B2B branding, cafe, catering — (with the `Bubbles` ornament in shop icons plus the N mark: gutter fields above 1280px, left-to-right bands between the rows below it; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": `ProcessSteps` plus a picker of customization methods (`customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
 | `/cafe` | `pages/Cafe/` | Title block, then the delivery-partner `LogoMarquee` — **commented out** for now (ids/URLs in this page's `data.js`, names under i18n cafe.partners) — then the menu (List/Cards toggle; cards are `OverlayCard` with tag + price chips and an icon-only WhatsApp action; autoplaying carousels, 3 sections). Food `Bubbles` (plus the N mark) at 3× scale fill the gutters on wide screens (no narrow-screen bands). Plus the **events** section at its foot — nights held in our own room, rendered by `PackagesPanel`. Was `pages/Menu/`. |
-| `/shop` | `pages/Shop/` | Labelled "The Name Shop" in the nav (the highlighted link). "Make It Personal" — curated objects from partner brands and house pieces that take a name, initials or a logo. Category filters (drinkware / tech / desk / travel / gift sets), List/Cards toggle, autoplaying carousel. Cards are the shared `OverlayCard` (methods + code chips, brand kicker, finish · lead meta, arrow link). The list view keeps the longer note. Was `pages/VertexPieces/` (an interiors showroom) before the customization pivot. |
+| `/shop` | `pages/Shop/` | Labelled "The Name Shop" in the nav. "Make It Personal" — curated objects from partner brands and house pieces that take a name, initials or a logo. Category filters (drinkware / tech / desk / travel / gift sets), List/Cards toggle, autoplaying carousel. Cards are the shared `OverlayCard` (methods + code chips, brand kicker, finish · lead meta, arrow link). The list view keeps the longer note. Was `pages/VertexPieces/` (an interiors showroom) before the customization pivot. |
 | `/business` | `pages/Business/` | B2B: branded-goods offer cards, account terms, and the **catering** section (off-site work), rendered by `PackagesPanel`. |
 | `/about` | `pages/About/` | Story (from the brand positioning doc), the services we provide (`aboutServices` in `data.js`; the curated-brands one lists `data/brands.js`), how we provide them (`ProcessSteps` + the customization method names), mission & vision side by side (`purposeIds`), and a contact / WhatsApp call to action. Copy under i18n `about`. |
 | `/contact` | `pages/Contact/` | Enquiry form (name/email/phone/message) + hidden honeypot + a fill timer (`timingField`, a ref set when the form renders — the server reads the gap as a bot signal). POSTs to `VITE_CONTACT_ENDPOINT` or same-origin `/api/contact`, which `server/` stores and a worker emails to `site.email`. Validation rules come from `shared/contactForm.js`; a 400 carries `fieldKeys` the page translates through `contact.errors.*`. States are idle / sending / sent / failed / rateLimited. |

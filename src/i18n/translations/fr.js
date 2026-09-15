@@ -39,7 +39,8 @@ export default {
 
   home: {
     hero: {
-      title: 'Du Nom. À votre nom.',
+      titleLead: 'Du Nom.',
+      titleScript: 'À votre nom.',
       body: 'Nous sommes un atelier de personnalisation. Choisissez un produit, envoyez-nous un nom, un logo ou toute une marque, et nous l\'apposons — gravé, imprimé, brodé ou gaufré. Un seul cadeau ou deux mille. Il y a aussi un café attenant.',
       mediaLabel: 'Vidéo ou photo de personnalisation — gravure, impression, cadeaux finis',
       ctaMenu: 'La carte du café',

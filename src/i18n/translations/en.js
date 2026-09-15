@@ -39,7 +39,8 @@ export default {
 
   home: {
     hero: {
-      title: 'From the Name. To Your Name.',
+      titleLead: 'From the Name.',
+      titleScript: 'To Your Name.',
       body: 'We are a customization shop. Pick a product, send us a name, a logo or a whole brand, and we put it on — engraved, printed, embroidered or embossed. One gift or two thousand. There is a cafe attached, too.',
       mediaLabel: 'Customization video loop or still — engraving, printing, finished gifts',
       ctaMenu: 'The cafe menu',

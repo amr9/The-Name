@@ -39,7 +39,8 @@ export default {
 
   home: {
     hero: {
-      title: 'Del Nombre. A tu nombre.',
+      titleLead: 'Del Nombre.',
+      titleScript: 'A tu nombre.',
       body: 'Somos un taller de personalización. Elige un producto, mándanos un nombre, un logo o toda una marca, y lo aplicamos — grabado, impreso, bordado o repujado. Un solo regalo o dos mil. Y además hay una cafetería al lado.',
       mediaLabel: 'Vídeo o foto de personalización — grabado, impresión, regalos terminados',
       ctaMenu: 'La carta de la cafetería',

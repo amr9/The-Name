@@ -63,6 +63,10 @@
   --font-heading: "Book Antiqua", "Palatino Linotype", Palatino, Georgia, serif;
   --font-heading-weight: 700;
   --font-body: "Montserrat", system-ui, sans-serif;
+  /* The signature script (the Home hero's "To Your Name."). Loaded by the
+     @font-face below from public/fonts/; until that file is there it falls
+     back to a system script face. */
+  --font-script: "Artisoul Signature", "Segoe Script", "Brush Script MT", cursive;
 
   /* Body type scale. Every non-heading run of copy picks one of these —
      never a raw px value — so the whole site's reading size is tuned here.
@@ -91,6 +95,20 @@
   --shadow-sm: 0 1px 2px color-mix(in srgb, #000000 14%, transparent);
   --shadow-md: 0 3px 10px color-mix(in srgb, #000000 16%, transparent);
   --shadow-lg: 0 12px 32px color-mix(in srgb, #000000 22%, transparent);
+}
+
+/* Artisoul Signature (--font-script) is a licensed script face, not on Google
+   Fonts — save it as public/fonts/artisoul-signature.woff2 (or .otf). A copy
+   installed on the visitor's machine is used first; with neither, the
+   --font-script fallbacks take over. */
+@font-face {
+  font-family: "Artisoul Signature";
+  src: local("Artisoul Signature"),
+    url("/fonts/artisoul-signature.woff2") format("woff2"),
+    url("/fonts/artisoul-signature.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -160,6 +178,45 @@ button { font: inherit; }
 .btn-primary { background: var(--color-accent); color: var(--color-black); }
 .btn-primary:hover { background: var(--color-accent-600); }
 .btn-primary:active { background: var(--color-accent-700); color: #fff; }
+/* sparkle: the call to action that should draw the eye (the Home hero's
+   "Browse the products"). The guideline's panel gradient flows left to right
+   under a light sweep and a scatter of twinkling sparkles. Use it INSTEAD of
+   .btn-primary — that variant's hover sets the `background` shorthand, which
+   would wipe the gradient. */
+.btn-sparkle {
+  position: relative; isolation: isolate; overflow: hidden;
+  color: var(--color-black);
+  background-color: var(--color-accent);
+  background-image: var(--gradient-panel-flow);
+  background-size: 200% 100%;
+  animation: gradient-flow 5s linear infinite;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.15s ease;
+}
+.btn-sparkle:hover, .btn-sparkle:active { color: var(--color-black); box-shadow: var(--shadow-md); }
+.btn-sparkle::before, .btn-sparkle::after {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+}
+.btn-sparkle::before {
+  background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--color-white) 70%, transparent) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: sparkle-sweep 3.4s ease-in-out infinite;
+}
+.btn-sparkle::after {
+  background:
+    radial-gradient(circle at 10% 30%, var(--color-white) 0 1.2px, transparent 2.2px),
+    radial-gradient(circle at 28% 78%, var(--color-white) 0 1px, transparent 2px),
+    radial-gradient(circle at 50% 20%, var(--color-white) 0 1.4px, transparent 2.4px),
+    radial-gradient(circle at 70% 74%, var(--color-white) 0 1px, transparent 2px),
+    radial-gradient(circle at 90% 34%, var(--color-white) 0 1.2px, transparent 2.2px);
+  animation: sparkle-twinkle 1.6s ease-in-out infinite alternate;
+}
+@keyframes sparkle-sweep { 0%, 35% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+@keyframes sparkle-twinkle { from { opacity: 0.15; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .btn-sparkle, .btn-sparkle::after { animation: none; }
+  .btn-sparkle::before { display: none; }
+}
 .btn-secondary { border-color: var(--color-divider); }
 .btn-secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
 .btn-secondary:active { background: color-mix(in srgb, var(--color-text) 14%, transparent); }
