@@ -18,6 +18,7 @@
 .bubbles {
   /* only the bubbles themselves take taps — the field is see-through */
   pointer-events: none;
+  color: var(--color-accent-700);
 }
 .bubbles-left,
 .bubbles-right {
@@ -65,8 +66,7 @@
 }
 
 /* the visible circle — kept separate from the travelling button so popping
-   it can play its own burst without interrupting the drift. A near-white
-   glass skin, so the yellow N mark inside it stands out. */
+   it can play its own burst without interrupting the drift */
 .bubble-skin {
   display: grid;
   place-items: center;
@@ -75,18 +75,32 @@
   border-radius: 50%;
   background: radial-gradient(circle at 32% 28%,
     var(--color-white) 0%,
-    var(--color-white) 45%,
-    var(--color-accent-100) 100%);
-  border: 1px solid var(--color-accent-200);
+    var(--color-accent-200) 45%,
+    var(--color-accent-300) 100%);
+  border: 1px solid var(--color-accent-300);
   box-shadow: var(--shadow-sm);
 }
+/* the brand-mark bubble (BRAND_MARK in icons.jsx): the yellow N would vanish
+   on the yellow skin, so this one bubble is near-white glass instead */
+.bubble-skin-mark {
+  background: radial-gradient(circle at 32% 28%,
+    var(--color-white) 0%,
+    var(--color-white) 45%,
+    var(--color-accent-100) 100%);
+  border-color: var(--color-accent-200);
+}
 .bubble-icon {
+  width: 50%;
+  height: 50%;
+  opacity: 0.75;
+  animation: bubble-sway calc(var(--bubble-duration) / 3) ease-in-out var(--bubble-delay) infinite alternate;
+}
+
+.bubble-skin-mark .bubble-icon {
   width: 58%;
   height: 58%;
   object-fit: contain;
-  pointer-events: none;
-  user-select: none;
-  animation: bubble-sway calc(var(--bubble-duration) / 3) ease-in-out var(--bubble-delay) infinite alternate;
+  opacity: 1;
 }
 
 /* popped: the skin bursts outwards once, then the bubble stays gone until

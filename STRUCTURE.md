@@ -126,10 +126,11 @@ src/
       LogoMarquee/    — rolling, looping logo strip; a missing logo file
                         shows the name as a wordmark: Home (partner brands)
                         and Cafe (delivery partners, commented out).
-      Bubbles/        — drifting, poppable bubble field; every bubble
-                        carries the brand's outline N mark
-                        (media.brand.markOutline) on a near-white skin.
-                        Takes `scale` (Cafe uses 3). The parent needs the
+      Bubbles/        — drifting, poppable bubble field + icons.jsx (icon
+                        sets: shopIcons for Home, foodIcons for Cafe). Each
+                        set also holds one BRAND_MARK entry, drawn as the
+                        outline N mark (media.brand.markOutline) on a
+                        near-white skin. Takes `scale` (Cafe uses 3). The parent needs the
                         `bubbles-host` class, which anchors and clips the
                         field and lifts page content above it.
       ProcessSteps/   — the four order steps as an <ol> (data/process.js,
@@ -309,7 +310,7 @@ public/media/
                   logo-secondary-dark.png / logo-secondary-yellow.png
                     — the lockups in charcoal (light grounds) and yellow
                       (dark grounds); see components/Logo.jsx
-                  mark-outline.png — the outline N tile (the bubbles)
+                  mark-outline.png — the outline N tile (one bubble per set)
                   mark-filled.png  — the filled N tile (chat button, tab icon)
                 Also `footer-pattern.svg`, the guideline's hand-drawn line
                 texture — kept, but not referenced anywhere.
@@ -324,8 +325,8 @@ placeholder instead, so partially-supplied media degrades cleanly.
 
 | Route | Folder | Notes |
 |---|---|---|
-| `/` | `pages/Home/` | Customization-led. Hero, `LogoMarquee` of the partner brands (`data/brands.js`, no heading), 4 services in business order — B2C gifts, B2B branding, cafe, catering — (with the `Bubbles` ornament carrying the N mark: gutter fields above 1280px, left-to-right bands between the rows below it; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": `ProcessSteps` plus a picker of customization methods (`customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
-| `/cafe` | `pages/Cafe/` | Title block, then the delivery-partner `LogoMarquee` — **commented out** for now (ids/URLs in this page's `data.js`, names under i18n cafe.partners) — then the menu (List/Cards toggle; cards are `OverlayCard` with tag + price chips and an icon-only WhatsApp action; autoplaying carousels, 3 sections). N-mark `Bubbles` at 3× scale fill the gutters on wide screens (no narrow-screen bands). Plus the **events** section at its foot — nights held in our own room, rendered by `PackagesPanel`. Was `pages/Menu/`. |
+| `/` | `pages/Home/` | Customization-led. Hero, `LogoMarquee` of the partner brands (`data/brands.js`, no heading), 4 services in business order — B2C gifts, B2B branding, cafe, catering — (with the `Bubbles` ornament in shop icons plus the N mark: gutter fields above 1280px, left-to-right bands between the rows below it; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": `ProcessSteps` plus a picker of customization methods (`customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
+| `/cafe` | `pages/Cafe/` | Title block, then the delivery-partner `LogoMarquee` — **commented out** for now (ids/URLs in this page's `data.js`, names under i18n cafe.partners) — then the menu (List/Cards toggle; cards are `OverlayCard` with tag + price chips and an icon-only WhatsApp action; autoplaying carousels, 3 sections). Food `Bubbles` (plus the N mark) at 3× scale fill the gutters on wide screens (no narrow-screen bands). Plus the **events** section at its foot — nights held in our own room, rendered by `PackagesPanel`. Was `pages/Menu/`. |
 | `/shop` | `pages/Shop/` | Labelled "The Name Shop" in the nav (the highlighted link). "Make It Personal" — curated objects from partner brands and house pieces that take a name, initials or a logo. Category filters (drinkware / tech / desk / travel / gift sets), List/Cards toggle, autoplaying carousel. Cards are the shared `OverlayCard` (methods + code chips, brand kicker, finish · lead meta, arrow link). The list view keeps the longer note. Was `pages/VertexPieces/` (an interiors showroom) before the customization pivot. |
 | `/business` | `pages/Business/` | B2B: branded-goods offer cards, account terms, and the **catering** section (off-site work), rendered by `PackagesPanel`. |
 | `/about` | `pages/About/` | Story (from the brand positioning doc), the services we provide (`aboutServices` in `data.js`; the curated-brands one lists `data/brands.js`), how we provide them (`ProcessSteps` + the customization method names), mission & vision side by side (`purposeIds`), and a contact / WhatsApp call to action. Copy under i18n `about`. |

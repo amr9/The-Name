@@ -1,6 +1,7 @@
 // Layouts for the decorative bubble fields (components/Bubbles). Structural
-// only — no copy, they are aria-hidden ornament. Every bubble carries the
-// same brand mark, so Home and Cafe share these layouts as they are.
+// only — no copy, they are aria-hidden ornament — and icon-free: the page
+// passes an icon set and the component deals the icons out in turn, so the
+// same layout serves the Home shop icons and the Cafe food icons.
 
 // Side fields drifting up the white gutters beside the content on wide
 // screens. `x`/`y` are percentages across and up the gutter, `size` is px at

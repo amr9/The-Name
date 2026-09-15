@@ -1,6 +1,6 @@
-// Decorative bubble field — small bubbles, each carrying the brand's N mark,
-// that drift past and fade out. Used on Home (beside and between the service
-// rows) and on Cafe (3× the size, beside the menu). Two layouts, both rendered and
+// Decorative bubble field — small marks that drift past and fade out. Used
+// on Home (shop icons, beside and between the service rows) and on Cafe (food
+// icons, 3× the size, beside the menu). Two layouts, both rendered and
 // switched by media query in Bubbles.css so the choice follows the viewport,
 // not a JS breakpoint: `side="left" | "right"` fills the white gutters beside
 // the copy on wide screens, `side="row"` is a horizontal band that drifts left
@@ -12,13 +12,14 @@
 // Ornament, so it stays out of the accessibility tree and off the tab order
 // — but a bubble can be tapped to pop it (a small burst plus a synthesized
 // blip), after which it comes back on the next pass. Positions and timing
-// come from data/bubbles.js; the mark is media.brand.markOutline; `scale`
-// multiplies every bubble's size; `phase` shifts a whole
-// band along its path (a percentage), so two bands on screen at once are
+// come from data/bubbles.js; `icons` is an ordered set from ./icons.jsx dealt
+// out in turn (its BRAND_MARK entry becomes the brand's N mark); `scale`
+// multiplies every bubble's size; `phase` shifts a whole band along its path (a percentage), so two bands on screen at once are
 // never in the same place.
 import { useEffect, useRef, useState } from 'react';
 import { rowBubbles, sideBubbles } from '../../data/bubbles.js';
 import { media } from '../../data/media.js';
+import { BRAND_MARK } from './icons.jsx';
 import './Bubbles.css';
 
 // How long a popped bubble stays gone before it drifts back in.
@@ -59,7 +60,7 @@ function playPop() {
   }
 }
 
-export default function Bubbles({ side, scale = 1, phase = 0 }) {
+export default function Bubbles({ side, icons, scale = 1, phase = 0 }) {
   // A popped bubble moves through three states before it is ordinary again:
   //   popped    — the burst is playing, then it stays gone for REFILL_MS
   //   refilling — one frame with the travel animation off, which is what
@@ -82,6 +83,9 @@ export default function Bubbles({ side, scale = 1, phase = 0 }) {
 
   const isRow = side === 'row';
   const bubbles = isRow ? rowBubbles : sideBubbles.filter((b) => b.side === side);
+  // Start the right field (and each band) part-way through the icon set, so
+  // the two gutters never show the same icon at the same height.
+  const iconOffset = isRow ? Math.round(phase / 10) : side === 'right' ? Math.ceil(icons.length / 2) : 0;
 
   // In the band, `x` is a head start along the crossing rather than a
   // position: winding the delay back by that fraction of one pass drops the
@@ -128,8 +132,10 @@ export default function Bubbles({ side, scale = 1, phase = 0 }) {
 
   return (
     <div className={`bubbles bubbles-${side}`} aria-hidden="true">
-      {bubbles.map((b) => {
+      {bubbles.map((b, i) => {
         const size = b.size * scale;
+        const icon = icons[(i + iconOffset) % icons.length];
+        const isMark = icon === BRAND_MARK;
         return (
           <button
             key={b.id}
@@ -150,8 +156,14 @@ export default function Bubbles({ side, scale = 1, phase = 0 }) {
               '--bubble-drift': `${b.drift}px`,
             }}
           >
-            <span className="bubble-skin">
-              <img className="bubble-icon" src={media.brand.markOutline} alt="" draggable="false" />
+            <span className={`bubble-skin${isMark ? ' bubble-skin-mark' : ''}`}>
+              {isMark ? (
+                <img className="bubble-icon" src={media.brand.markOutline} alt="" draggable="false" />
+              ) : (
+                <svg className="bubble-icon" viewBox="0 0 24 24" fill="currentColor">
+                  {icon}
+                </svg>
+              )}
             </span>
           </button>
         );
