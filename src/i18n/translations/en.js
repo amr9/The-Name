@@ -299,7 +299,6 @@ export default {
         { term: 'Quoted, not priced', detail: 'Send the product, the quantity and the deadline. A written quote comes back the same working day.' },
         { term: 'Artwork kept on file', detail: 'Approved once, then stored against your account. Reorders skip straight to production.' },
         { term: 'Bulk pricing', detail: 'The unit price steps down at 25, 100 and 500 pieces. Your quote shows every band.' },
-        { term: 'Invoiced monthly', detail: 'One named contact, one invoice, thirty-day terms once an account is open.' },
       ],
     },
     catering: {

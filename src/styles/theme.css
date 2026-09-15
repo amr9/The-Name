@@ -94,7 +94,14 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html, body, #root { height: 100%; }
+html, body { height: 100%; }
+/* The page chrome as a column at least one screen tall, with <main> taking
+   the spare height — so on a short page (Contact) the footer still sits at
+   the bottom of the screen instead of straight under the content. A min-
+   rather than fixed height also keeps the sticky navbar's containing block
+   as tall as the page. */
+#root { min-height: 100%; display: flex; flex-direction: column; }
+#root > main { flex: 1 0 auto; }
 
 body {
   margin: 0;

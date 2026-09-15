@@ -299,7 +299,6 @@ export default {
         { term: 'Presupuestado, no tarifado', detail: 'Dinos el producto, la cantidad y la fecha límite. El presupuesto por escrito vuelve el mismo día laborable.' },
         { term: 'Diseños guardados', detail: 'Aprobados una vez y archivados en tu cuenta. Las reposiciones pasan directas a producción.' },
         { term: 'Precio por volumen', detail: 'El precio unitario baja a las 25, 100 y 500 piezas. Tu presupuesto muestra cada tramo.' },
-        { term: 'Facturación mensual', detail: 'Un contacto fijo, una factura, y pago a treinta días una vez abierta la cuenta.' },
       ],
     },
     catering: {

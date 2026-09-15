@@ -299,7 +299,6 @@ export default {
         { term: 'Sur devis', detail: 'Indiquez le produit, la quantité et la date limite. Un devis écrit revient le jour ouvré même.' },
         { term: 'Visuels conservés', detail: 'Validés une fois, puis archivés sur votre compte. Les réassorts passent directement en production.' },
         { term: 'Tarifs dégressifs', detail: 'Le prix unitaire baisse à 25, 100 et 500 pièces. Votre devis affiche chaque palier.' },
-        { term: 'Facturation mensuelle', detail: 'Un contact désigné, une facture, paiement à trente jours une fois le compte ouvert.' },
       ],
     },
     catering: {
