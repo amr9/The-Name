@@ -1,39 +1,18 @@
+/* The artwork is cropped to its edges, so the slot's height is the logo's
+   height and the width follows the lockup's own proportions. */
 .logo {
-  letter-spacing: -0.028em;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-heading);
-  font-weight: var(--font-heading-weight);
-}
-.logo-md { font-size: 18px; }
-.logo-lg { font-size: 26px; }
-
-.logo-ring {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  border: 2px solid var(--color-accent);
-  display: grid;
-  place-content: center;
+  display: block;
   flex: none;
+  line-height: 0;
 }
-.logo-lg .logo-ring {
-  width: 38px;
-  height: 38px;
-  border-width: 2.5px;
+.logo img {
+  width: auto;
+  height: 100%;
 }
+.logo-md { height: 40px; }
+.logo-lg { height: 76px; }
 
-.logo-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  animation: pulse 2.6s ease-in-out infinite;
+@media (max-width: 480px) {
+  .logo-md { height: 38px; }
+  .logo-lg { height: 60px; }
 }
-.logo-lg .logo-dot { width: 12px; height: 12px; }
-
-/* On the yellow footer the accent mark would vanish — draw it in black, the
-   same color the footer sets its type in. */
-.logo-tone-dark .logo-ring { border-color: var(--color-black); }
-.logo-tone-dark .logo-dot { background: var(--color-black); }

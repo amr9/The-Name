@@ -1,5 +1,5 @@
 export default {
-  nav: { home: 'الرئيسية', cafe: 'المقهى', shop: 'المتجر', business: 'الشركات', about: 'من نحن', contact: 'تواصل معنا' },
+  nav: { home: 'الرئيسية', cafe: 'المقهى', shop: 'متجر The Name', business: 'الشركات', about: 'من نحن', contact: 'تواصل معنا' },
 
   common: { whatsapp: 'واتساب', chatOnWhatsapp: 'الدردشة عبر واتساب' },
 
@@ -34,11 +34,6 @@ export default {
   },
 
   footer: {
-    address: ['12 روان ستريت', 'وسط المدينة'],
-    contactHeading: 'تواصل معنا',
-    note: 'واتساب — الطاولات، الحساسية الغذائية، عروض الأسعار، والطلبات المخصصة. نرد خلال ساعة أثناء أوقات الخدمة.',
-    message: 'راسلنا',
-    pagesHeading: 'الصفحات',
     rights: 'جميع الحقوق محفوظة.',
   },
 

@@ -1,5 +1,5 @@
 export default {
-  nav: { home: 'Inicio', cafe: 'Cafetería', shop: 'Tienda', business: 'Empresas', about: 'Sobre nosotros', contact: 'Contáctanos' },
+  nav: { home: 'Inicio', cafe: 'Cafetería', shop: 'Tienda The Name', business: 'Empresas', about: 'Sobre nosotros', contact: 'Contáctanos' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chatear por WhatsApp' },
 
@@ -34,11 +34,6 @@ export default {
   },
 
   footer: {
-    address: ['12 Rowan Street', 'Centro de la ciudad'],
-    contactHeading: 'Contáctanos',
-    note: 'WhatsApp — mesas, alérgenos, presupuestos y pedidos personalizados. Respondemos en menos de una hora durante el servicio.',
-    message: 'Escríbenos',
-    pagesHeading: 'Páginas',
     rights: 'Todos los derechos reservados.',
   },
 

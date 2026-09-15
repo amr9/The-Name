@@ -1,16 +1,39 @@
 /* The floating chat button, its two-option menu (built on the shared
    .popover classes in theme.css) and the assistant panel. */
 
+/* Pinned to the viewport's bottom-right corner on every page (clear of a
+   phone's safe-area insets). It carries its own rules rather than .btn's —
+   theme.css loads after this file, so the shared button padding would win
+   and shove the mark off centre. Closed, it shows the brand's filled N tile
+   cropped to the circle; open, a centred close glyph. */
 .chat-launcher-fab {
+  --fab-inset: 24px;
   position: fixed;
-  right: 24px;
-  bottom: 24px;
+  right: calc(var(--fab-inset) + env(safe-area-inset-right, 0px));
+  bottom: calc(var(--fab-inset) + env(safe-area-inset-bottom, 0px));
   z-index: 60;
+  display: grid;
+  place-items: center;
   width: 56px;
   height: 56px;
   padding: 0;
+  border: 0;
   border-radius: 50%;
+  overflow: hidden;
+  background: var(--color-accent);
+  color: var(--color-black);
   box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.chat-launcher-fab:hover { transform: translateY(-2px); }
+.chat-launcher-fab-mark {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  /* nudges the tile's own rounded corners past the circle's edge */
+  transform: scale(1.06);
 }
 
 .chat-launcher-scrim {
@@ -182,7 +205,7 @@
 .chatbot-input:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 1px; }
 
 @media (max-width: 480px) {
-  .chat-launcher-fab { right: 16px; bottom: 16px; }
+  .chat-launcher-fab { --fab-inset: 16px; }
   .chat-launcher-menu,
   .chatbot { right: 16px; bottom: 84px; }
 }

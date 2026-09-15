@@ -6,13 +6,6 @@ const Svg = ({ size = 20, children }) => (
   </svg>
 );
 
-export const ChatIcon = (p) => (
-  <Svg {...p}>
-    <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.6A8 8 0 1 1 21 12z" />
-    <path d="M8.5 12h.01M12 12h.01M15.5 12h.01" />
-  </Svg>
-);
-
 export const CloseIcon = (p) => (
   <Svg {...p}>
     <path d="M18 6 6 18M6 6l12 12" />

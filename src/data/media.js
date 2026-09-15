@@ -62,6 +62,21 @@ export const media = {
     'TN-501': `${BASE}/shop/tn-501.jpg`,
   },
 
+  // The Name's own artwork, cropped to its edges from the guideline exports.
+  // Each lockup comes in two inks so it always contrasts with its ground —
+  // `dark` (charcoal) for light grounds, `yellow` for dark ones; the
+  // choice is made in components/Logo.jsx. The N mark comes as an outline
+  // (inside the Home/Cafe bubbles) and a filled tile (the chat button and the
+  // browser tab icon in index.html).
+  brand: {
+    logos: {
+      dark: { main: `${BASE}/brand/logo-main-dark.png`, secondary: `${BASE}/brand/logo-secondary-dark.png` },
+      yellow: { main: `${BASE}/brand/logo-main-yellow.png`, secondary: `${BASE}/brand/logo-secondary-yellow.png` },
+    },
+    markOutline: `${BASE}/brand/mark-outline.png`,
+    markFilled: `${BASE}/brand/mark-filled.png`,
+  },
+
   // Partner-brand logos for the Home logo strip — keys match data/brands.js
   // `id`. Taken from each brand's own site and stored locally (their CDN
   // paths are versioned, so hot-linking would break on their next deploy).

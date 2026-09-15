@@ -1,5 +1,5 @@
 export default {
-  nav: { home: 'Home', cafe: 'Cafe', shop: 'Shop', business: 'Business', about: 'About us', contact: 'Contact us' },
+  nav: { home: 'Home', cafe: 'Cafe', shop: 'The Name Shop', business: 'Business', about: 'About us', contact: 'Contact us' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chat on WhatsApp' },
 
@@ -34,11 +34,6 @@ export default {
   },
 
   footer: {
-    address: ['12 Rowan Street', 'City centre'],
-    contactHeading: 'Contact us',
-    note: 'WhatsApp — tables, allergens, quotes and custom orders. Replies within the hour during service.',
-    message: 'Message us',
-    pagesHeading: 'Pages',
     rights: 'All rights reserved.',
   },
 

@@ -1,14 +1,19 @@
+import { media } from '../data/media.js';
+import { site } from '../data/site.js';
 import './Logo.css';
 
-// `tone` picks the mark's colour: 'accent' (default) for light backgrounds,
-// 'dark' for the yellow footer where the accent ring would disappear.
-export default function Logo({ size = 'md', tone = 'accent' }) {
+// The brand lockup, from the artwork in public/media/brand/. `on` names the
+// ground the logo sits on, so its ink always contrasts with it: 'light'
+// grounds (the navbar) get the charcoal artwork, 'dark' grounds (the footer)
+// the yellow. On phones the wide main lockup gives way to the compact
+// secondary one (the N beside the tagline).
+export default function Logo({ size = 'md', on = 'light' }) {
+  const ink = on === 'dark' ? media.brand.logos.yellow : media.brand.logos.dark;
+
   return (
-    <span className={`logo logo-${size} logo-tone-${tone}`}>
-      <span className="logo-ring">
-        <span className="logo-dot" />
-      </span>
-      The Name
-    </span>
+    <picture className={`logo logo-${size}`}>
+      <source media="(max-width: 480px)" srcSet={ink.secondary} />
+      <img src={ink.main} alt={site.name} />
+    </picture>
   );
 }

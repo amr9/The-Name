@@ -78,7 +78,15 @@ src/
   main.jsx            — ReactDOM root; wraps App in BrowserRouter + LanguageProvider
   App.jsx             — route table (/, /cafe, /shop, /business, /about,
                         /contact) + global chrome
-                         (Navbar, Footer, ChatLauncher — the floating button)
+                         (Navbar, Footer, ChatLauncher — the floating button).
+                         Nav order (data/site.js navLinks): Home → The Name
+                         Shop → Business → Cafe → About → Contact. A
+                         `highlight: true` entry (the shop) renders as the
+                         sparkly pill: --gradient-panel-flow streaming left
+                         to right, a light sweep and twinkling dots
+                         (Navbar.css). The footer is only the yellow logo,
+                         the social links and the copyright line, on
+                         --gradient-footer (brownish black).
 
   pages/<PageName>/   — one folder per route
     <PageName>.jsx     — the page component
@@ -104,6 +112,11 @@ src/
                                     too (e.g. Footer/SocialLinks.jsx).
                                     Currently:
       Navbar/, Footer/
+    Logo.jsx          — the brand lockup as a <picture>: main lockup, swapped
+                        for the compact secondary one at ≤480px. `on` is the
+                        ground it sits on — 'light' (navbar) → charcoal
+                        artwork, 'dark' (footer) → yellow artwork — so the
+                        ink always contrasts. Files from media.brand.logos.
       PackagesPanel/  — packages table + direct-line panel: Cafe (events)
                         and Business (catering).
       OverlayCard/    — the frosted card (full-bleed 3:4 photo, chips over
@@ -113,14 +126,18 @@ src/
       LogoMarquee/    — rolling, looping logo strip; a missing logo file
                         shows the name as a wordmark: Home (partner brands)
                         and Cafe (delivery partners, commented out).
-      Bubbles/        — drifting, poppable bubble field + icons.jsx (icon
-                        sets: shopIcons for Home, foodIcons for Cafe).
+      Bubbles/        — drifting, poppable bubble field; every bubble
+                        carries the brand's outline N mark
+                        (media.brand.markOutline) on a near-white skin.
                         Takes `scale` (Cafe uses 3). The parent needs the
                         `bubbles-host` class, which anchors and clips the
                         field and lifts page content above it.
       ProcessSteps/   — the four order steps as an <ol> (data/process.js,
                         copy under i18n process.steps): Home and About.
-      ChatLauncher/   — the floating corner button (App.jsx). Opens a
+      ChatLauncher/   — the floating corner button (App.jsx), fixed
+                        bottom-right with its own centring rules (not .btn)
+                        and the filled N tile (media.brand.markFilled)
+                        cropped to the circle. Opens a
                         .popover with two options — the on-site assistant
                         (Chatbot.jsx) or WhatsApp. The assistant is
                         rule-based, no server/AI: quick-reply topics from
@@ -145,7 +162,8 @@ src/
     media.js            — maps every image slot to a file under
                           `public/media/`, keyed by the same ids the page
                           data + i18n use. Also serves as the shot list of
-                          photography still needed.
+                          photography still needed. `brand` holds The
+                          Name's own artwork (logos in two inks, the N mark).
     catalogue.js        — the shop catalogue: curated objects we
                           personalise (partner brands Lexon, Lund London,
                           Pantone, Korin, Kreafunk and Gingko, plus house
@@ -203,13 +221,17 @@ src/
                           --space-*, --radius-*, --shadow-*, the named
                           gradients) plus
                           shared component classes (.btn* incl. .btn-light
-                          for coloured grounds, .card, .tag, .seg*,
+                          for dark/coloured grounds, .card, .tag, .seg*,
                           .seg-grid, .popover/.popover-option for floating
-                          menus, .table, .dialog, .carousel-*). Also the
-                          third-party brand colours (--color-whatsapp,
-                          --color-facebook, --color-tiktok*,
-                          --gradient-instagram), for those companies' marks
-                          only. A page/
+                          menus, .table, .dialog, .carousel-*) and the shared
+                          keyframes (pulse, kenburns, gradient-flow — pair the
+                          last with --gradient-panel-flow at
+                          background-size 200%). Gradients: --gradient-panel
+                          (the guideline's orange→gold panel, built from the
+                          --color-panel-* stops), --gradient-panel-flow (its
+                          seamless moving tile), --gradient-footer (--color-ink
+                          → --color-brown-*). --color-whatsapp is the one
+                          third-party brand colour, for its own mark only. A page/
                           component CSS file should only ever add layout
                           rules that are specific to it — a rule used by
                           2+ files belongs here instead (see DRY below).
@@ -280,10 +302,17 @@ public/media/
                 and noon's own CDN URLs (see data/media.js `partners`) so a
                 rebrand on their side appears automatically. Drop a file
                 here and repoint that entry to pin an asset locally instead.
-  brand/      — logo exports and other brand assets. Contains
-                `footer-pattern.svg`, the guideline's hand-drawn wavy line
-                texture — kept, but no longer applied: the footer is now the
-                flat accent gradient with no line overlay.
+  brand/      — The Name's own artwork, cropped to the artwork's edges
+                from the 500×500 guideline exports (the originals sit
+                untracked at the repo root):
+                  logo-main-dark.png / logo-main-yellow.png
+                  logo-secondary-dark.png / logo-secondary-yellow.png
+                    — the lockups in charcoal (light grounds) and yellow
+                      (dark grounds); see components/Logo.jsx
+                  mark-outline.png — the outline N tile (the bubbles)
+                  mark-filled.png  — the filled N tile (chat button, tab icon)
+                Also `footer-pattern.svg`, the guideline's hand-drawn line
+                texture — kept, but not referenced anywhere.
 ```
 
 `src/data/media.js` already points at the expected filename for every slot.
@@ -295,9 +324,9 @@ placeholder instead, so partially-supplied media degrades cleanly.
 
 | Route | Folder | Notes |
 |---|---|---|
-| `/` | `pages/Home/` | Customization-led. Hero, `LogoMarquee` of the partner brands (`data/brands.js`, no heading), 4 services in business order — B2C gifts, B2B branding, cafe, catering — (with the `Bubbles` ornament in shop icons: gutter fields above 1280px, left-to-right bands between the rows below it; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": `ProcessSteps` plus a picker of customization methods (`customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
-| `/cafe` | `pages/Cafe/` | Title block, then the delivery-partner `LogoMarquee` — **commented out** for now (ids/URLs in this page's `data.js`, names under i18n cafe.partners) — then the menu (List/Cards toggle; cards are `OverlayCard` with tag + price chips and an icon-only WhatsApp action; autoplaying carousels, 3 sections). Food `Bubbles` at 3× scale fill the gutters on wide screens (no narrow-screen bands). Plus the **events** section at its foot — nights held in our own room, rendered by `PackagesPanel`. Was `pages/Menu/`. |
-| `/shop` | `pages/Shop/` | "Make It Personal" — curated objects from partner brands and house pieces that take a name, initials or a logo. Category filters (drinkware / tech / desk / travel / gift sets), List/Cards toggle, autoplaying carousel. Cards are the shared `OverlayCard` (methods + code chips, brand kicker, finish · lead meta, arrow link). The list view keeps the longer note. Was `pages/VertexPieces/` (an interiors showroom) before the customization pivot. |
+| `/` | `pages/Home/` | Customization-led. Hero, `LogoMarquee` of the partner brands (`data/brands.js`, no heading), 4 services in business order — B2C gifts, B2B branding, cafe, catering — (with the `Bubbles` ornament carrying the N mark: gutter fields above 1280px, left-to-right bands between the rows below it; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": `ProcessSteps` plus a picker of customization methods (`customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
+| `/cafe` | `pages/Cafe/` | Title block, then the delivery-partner `LogoMarquee` — **commented out** for now (ids/URLs in this page's `data.js`, names under i18n cafe.partners) — then the menu (List/Cards toggle; cards are `OverlayCard` with tag + price chips and an icon-only WhatsApp action; autoplaying carousels, 3 sections). N-mark `Bubbles` at 3× scale fill the gutters on wide screens (no narrow-screen bands). Plus the **events** section at its foot — nights held in our own room, rendered by `PackagesPanel`. Was `pages/Menu/`. |
+| `/shop` | `pages/Shop/` | Labelled "The Name Shop" in the nav (the highlighted link). "Make It Personal" — curated objects from partner brands and house pieces that take a name, initials or a logo. Category filters (drinkware / tech / desk / travel / gift sets), List/Cards toggle, autoplaying carousel. Cards are the shared `OverlayCard` (methods + code chips, brand kicker, finish · lead meta, arrow link). The list view keeps the longer note. Was `pages/VertexPieces/` (an interiors showroom) before the customization pivot. |
 | `/business` | `pages/Business/` | B2B: branded-goods offer cards, account terms, and the **catering** section (off-site work), rendered by `PackagesPanel`. |
 | `/about` | `pages/About/` | Story (from the brand positioning doc), the services we provide (`aboutServices` in `data.js`; the curated-brands one lists `data/brands.js`), how we provide them (`ProcessSteps` + the customization method names), mission & vision side by side (`purposeIds`), and a contact / WhatsApp call to action. Copy under i18n `about`. |
 | `/contact` | `pages/Contact/` | Enquiry form (name/email/phone/message) + hidden honeypot + a fill timer (`timingField`, a ref set when the form renders — the server reads the gap as a bot signal). POSTs to `VITE_CONTACT_ENDPOINT` or same-origin `/api/contact`, which `server/` stores and a worker emails to `site.email`. Validation rules come from `shared/contactForm.js`; a 400 carries `fieldKeys` the page translates through `contact.errors.*`. States are idle / sending / sent / failed / rateLimited. |

@@ -15,7 +15,12 @@ export default function Navbar() {
       </NavLink>
 
       {navLinks.map((link) => (
-        <NavLink key={link.to} to={link.to} end={link.to === '/'} className="navbar-link">
+        <NavLink
+          key={link.to}
+          to={link.to}
+          end={link.to === '/'}
+          className={`navbar-link${link.highlight ? ' navbar-link-highlight' : ''}`}
+        >
           {t.nav[link.key]}
         </NavLink>
       ))}

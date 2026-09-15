@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import WhatsAppButton from '../WhatsAppButton.jsx';
+import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import Chatbot from './Chatbot.jsx';
-import { BotIcon, ChatIcon, CloseIcon } from './icons.jsx';
+import { BotIcon, CloseIcon } from './icons.jsx';
 import './ChatLauncher.css';
 
 // The floating button in the corner of every page. It opens a small menu
@@ -56,12 +57,14 @@ export default function ChatLauncher() {
 
       <button
         type="button"
-        className="btn btn-primary chat-launcher-fab"
+        className="chat-launcher-fab"
         aria-label={mode === 'closed' ? t.chat.open : t.chat.close}
         aria-expanded={mode !== 'closed'}
         onClick={() => setMode(mode === 'closed' ? 'menu' : 'closed')}
       >
-        {mode === 'closed' ? <ChatIcon size={24} /> : <CloseIcon size={24} />}
+        {mode === 'closed'
+          ? <img className="chat-launcher-fab-mark" src={media.brand.markFilled} alt="" />
+          : <CloseIcon size={24} />}
       </button>
     </>
   );

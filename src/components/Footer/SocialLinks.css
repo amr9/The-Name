@@ -2,11 +2,10 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: var(--space-4);
 }
 
-/* Each icon sits on its own company's colour (tokens in theme.css), with a
-   white glyph; hovering any of them turns it grey. */
+/* Plain outlined circles in white on the dark footer; hovering fills one
+   with the brand yellow. */
 .social-link {
   display: inline-flex;
   align-items: center;
@@ -15,18 +14,12 @@
   height: 36px;
   border-radius: 50%;
   color: var(--color-white);
-  box-shadow: var(--shadow-sm);
-  transition: background 0.15s ease;
-}
-.social-link-instagram { background: var(--gradient-instagram); }
-.social-link-facebook { background: var(--color-facebook); }
-.social-link-tiktok { background: var(--color-tiktok); }
-/* TikTok's mark: the white note with its cyan and red offset edges */
-.social-link-tiktok svg {
-  filter: drop-shadow(-1px -1px 0 var(--color-tiktok-cyan)) drop-shadow(1px 1px 0 var(--color-tiktok-red));
+  border: 1.5px solid color-mix(in srgb, var(--color-white) 60%, transparent);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
 .social-link:hover {
-  background: var(--color-gray);
-  color: var(--color-white);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-black);
 }

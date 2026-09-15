@@ -1,7 +1,6 @@
 import { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Bubbles from '../../components/Bubbles/Bubbles.jsx';
-import { shopIcons } from '../../components/Bubbles/icons.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import LogoMarquee from '../../components/LogoMarquee/LogoMarquee.jsx';
 import ProcessSteps from '../../components/ProcessSteps/ProcessSteps.jsx';
@@ -39,11 +38,11 @@ export default function Home() {
       <LogoMarquee items={brands} logos={media.brands} />
 
       {/* what we do — services, one image each. The wrapper is only here to
-          anchor the decorative shop-item bubbles — up the gutters on wide
+          anchor the decorative brand-mark bubbles — up the gutters on wide
           screens, in bands between the rows on narrow ones. */}
       <div className="bubbles-host">
-        <Bubbles side="left" icons={shopIcons} />
-        <Bubbles side="right" icons={shopIcons} />
+        <Bubbles side="left" />
+        <Bubbles side="right" />
 
         <section className="container home-services-intro">
           <span className="card-kicker">{t.home.whatWeDo.kicker}</span>
@@ -57,7 +56,7 @@ export default function Home() {
             <Fragment key={s.id}>
             {/* on narrow screens the bubbles run between the rows instead of
                 beside them — see components/Bubbles */}
-            {i > 0 && <Bubbles side="row" icons={shopIcons} phase={i * 29} />}
+            {i > 0 && <Bubbles side="row" phase={i * 29} />}
               <section className="container home-service-row">
                 <div className="row-flip home-service-grid">
                   <div className="row-text home-service-text" style={{ order: s.textOrder }}>

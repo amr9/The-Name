@@ -24,7 +24,7 @@ export default function SocialLinks() {
           href={s.url}
           target="_blank"
           rel="noopener noreferrer"
-          className={`social-link social-link-${s.key}`}
+          className="social-link"
           aria-label={s.label}
           title={s.label}
         >

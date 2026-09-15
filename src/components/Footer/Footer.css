@@ -1,146 +1,38 @@
-/* The guideline's accent panel (cover / p.2) across the whole footer. The
-   ruled line texture no longer runs edge to edge in white — it survives only
-   as a masked, brand-toned texture down the left and right margins (below).
-   Type on it is black: on this yellow ground it is the highest-contrast
-   option, and the softer steps of the ramp stay for the texture. */
+/* A brownish-black gradient running left to right (--gradient-footer), so
+   everything on it is light: white type, white social outlines, and the
+   yellow logo artwork. */
 .footer {
-  background-color: var(--color-accent);
-  background-image: var(--gradient-panel);
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: var(--color-black);
-  position: relative;
-  overflow: hidden;
-  /* keeps the texture layers below inside the footer's own stack */
-  isolation: isolate;
+  background: var(--gradient-footer);
+  color: var(--color-white);
 }
 
-/* Texture down the outer edges only, so the panel is not a flat empty band
-   while the middle stays clean behind the copy. It is the same guideline
-   tile as before, but used as a MASK rather than an image: the lines take
-   the ramp's dark tone instead of white, and a gradient fill fades them out
-   towards the centre. z-index -1 paints them over the gradient and under
-   the text. */
-.footer::before,
-.footer::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  z-index: -1;
-  width: clamp(72px, 20vw, 320px);
-  pointer-events: none;
-  opacity: 0.38;
-  -webkit-mask-image: url('/media/brand/footer-pattern.svg');
-  mask-image: url('/media/brand/footer-pattern.svg');
-  -webkit-mask-size: 600px 56px;
-  mask-size: 600px 56px;
-  -webkit-mask-repeat: repeat;
-  mask-repeat: repeat;
-}
-.footer::before {
-  left: 0;
-  background: linear-gradient(to right,
-    var(--color-accent-800) 0%,
-    color-mix(in srgb, var(--color-accent-800) 45%, transparent) 45%,
-    transparent 100%);
-}
-.footer::after {
-  right: 0;
-  background: linear-gradient(to left,
-    var(--color-accent-800) 0%,
-    color-mix(in srgb, var(--color-accent-800) 45%, transparent) 45%,
-    transparent 100%);
-}
-
-/* Brand + socials, then contact, then the site pages on the far side. */
+/* Logo on one side, socials on the other; they stack and centre on phones. */
 .footer-inner {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--space-6);
-  padding-block: var(--space-6) var(--space-4);
-}
-
-.footer-address {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  margin: var(--space-3) 0 0;
-  font-size: var(--text-body);
-  line-height: 1.6;
-  color: var(--color-black);
-}
-
-.footer-heading {
-  color: var(--color-black);
-  margin: 0 0 var(--space-2);
-}
-
-.footer-phone {
-  display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: var(--text-lg);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-  color: var(--color-black);
-}
-.footer-phone:hover { color: var(--color-black); text-decoration: underline; }
-
-.footer-note {
-  margin: 8px 0 0;
-  font-size: var(--text-body);
-  line-height: 1.6;
-  max-width: 42ch;
-  color: color-mix(in srgb, var(--color-black) 88%, transparent);
+  justify-content: space-between;
+  gap: var(--space-4) var(--space-6);
+  padding-block: var(--space-8) var(--space-6);
 }
 
-.footer-message-btn {
-  margin-top: var(--space-3);
-  min-height: 38px;
-  gap: 8px;
-}
-
-/* the navbar's pages, repeated as a column */
-.footer-pages-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.footer-page-link {
-  font-size: var(--text-body);
-  color: var(--color-black);
-}
-.footer-page-link:hover,
-.footer-page-link[aria-current='page'] {
-  color: var(--color-black);
-  text-decoration: underline;
-}
-
-/* The site-wide selection tint is a yellow, which vanishes on this yellow
-   panel — selected text in the footer is grey instead. */
 .footer ::selection {
-  background: var(--color-surface);
-  color: var(--color-black);
+  background: color-mix(in srgb, var(--color-accent) 45%, transparent);
+  color: var(--color-white);
 }
 
 .footer-bottom {
-  border-top: 1px solid color-mix(in srgb, var(--color-black) 20%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--color-white) 14%, transparent);
   padding-block: var(--space-3);
   font-size: var(--text-sm);
-  color: color-mix(in srgb, var(--color-black) 85%, transparent);
+  color: color-mix(in srgb, var(--color-white) 72%, transparent);
 }
 
-/* On a phone the copy runs nearly edge to edge, so the texture pulls back to
-   a narrow, lighter band rather than sitting behind the first words. */
 @media (max-width: 700px) {
-  .footer::before,
-  .footer::after {
-    width: 56px;
-    opacity: 0.26;
+  .footer-inner {
+    flex-direction: column;
+    justify-content: center;
+    padding-block: var(--space-6) var(--space-4);
   }
+  .footer-bottom { text-align: center; }
 }

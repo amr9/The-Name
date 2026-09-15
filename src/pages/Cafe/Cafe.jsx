@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Bubbles from '../../components/Bubbles/Bubbles.jsx';
-import { foodIcons } from '../../components/Bubbles/icons.jsx';
 import Carousel from '../../components/Carousel.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 // import LogoMarquee from '../../components/LogoMarquee/LogoMarquee.jsx';
@@ -19,11 +18,11 @@ export default function Cafe() {
   const [view, setView] = useState('List');
 
   return (
-    // The host anchors the food bubbles in the gutters — three times the
+    // The host anchors the brand-mark bubbles in the gutters — three times the
     // Home page's size, and only beside the page (no narrow-screen bands).
     <div className="bubbles-host cafe-page">
-      <Bubbles side="left" icons={foodIcons} scale={3} />
-      <Bubbles side="right" icons={foodIcons} scale={3} />
+      <Bubbles side="left" scale={3} />
+      <Bubbles side="right" scale={3} />
 
       <header className="container">
         <span className="card-kicker">{t.cafe.kicker}</span>
