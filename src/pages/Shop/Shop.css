@@ -105,6 +105,36 @@
 
 /* The cards view is components/OverlayCard — no page-specific card CSS. */
 
+/* — gift sets: their own section, on the pale accent band so it reads as a
+     separate range rather than more of the catalogue above it — */
+.shop-gift-sets {
+  padding-block: clamp(48px, 5vw, 80px);
+  background: var(--color-accent-100);
+}
+.shop-gift-sets-title {
+  font-size: clamp(26px, 3vw, 38px);
+  line-height: 1.1;
+  margin: 8px 0 0;
+  margin-left: -0.028em;
+  text-wrap: balance;
+}
+.shop-gift-sets-lede {
+  font-size: var(--text-body);
+  line-height: 28px;
+  max-width: 58ch;
+  margin: 14px 0 0;
+}
+.shop-gift-sets-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  margin-top: clamp(24px, 3vw, 40px);
+}
+
+@media (max-width: 980px) {
+  .shop-gift-sets-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 @media (max-width: 700px) {
   /* The six filters don't fit one pill row on a phone, and wrapping mid-pill
      looks broken — so they become full-width blocks, two per row. */
@@ -129,4 +159,6 @@
   .shop-row, .shop-list-row { flex-wrap: wrap; }
   .shop-list-action-col { width: 100%; }
   .shop-list-action-col .shop-view-btn { width: 100%; }
+
+  .shop-gift-sets-grid { grid-template-columns: minmax(0, 1fr); }
 }

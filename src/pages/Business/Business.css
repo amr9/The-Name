@@ -36,9 +36,12 @@
 .business-offer {
   margin-top: clamp(48px, 5vw, 76px);
 }
+/* Three columns for the three offer cards (`brandingOffers` in data.js) —
+   keep this in step with that list, or a removed card leaves an empty
+   column here. Steps to 2 at 980px and 1 at 700px below. */
 .business-offer-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(14px, 1.8vw, 24px);
 }
 .business-offer-card {

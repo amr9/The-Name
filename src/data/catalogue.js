@@ -24,6 +24,15 @@ export const catalogue = [
   { code: 'TN-401', catKey: 'travel', brand: site.name, methods: ['engraving', 'emboss'] },
   { code: 'TN-402', catKey: 'travel', brand: korin.name, methods: ['print', 'embroidery'] },
   { code: 'TN-501', catKey: 'giftSets', brand: site.name, methods: ['engraving', 'print'] },
+  { code: 'TN-502', catKey: 'giftSets', brand: site.name, methods: ['engraving', 'emboss'] },
+  { code: 'TN-503', catKey: 'giftSets', brand: site.name, methods: ['print', 'emboss'] },
+  { code: 'TN-504', catKey: 'giftSets', brand: site.name, methods: ['engraving', 'print', 'embroidery'] },
 ];
 
-export const filterKeys = ['all', 'drinkware', 'tech', 'desk', 'travel', 'giftSets'];
+// Gift sets are no longer one of the filters — they have their own section on
+// the Shop page, so they come out of the filtered catalogue and are listed
+// separately below. Everything else stays behind the category filters.
+export const giftSetKey = 'giftSets';
+export const filterKeys = ['all', 'drinkware', 'tech', 'desk', 'travel'];
+export const giftSets = catalogue.filter((p) => p.catKey === giftSetKey);
+export const pieces = catalogue.filter((p) => p.catKey !== giftSetKey);

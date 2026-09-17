@@ -1,5 +1,7 @@
 export default {
-  nav: { home: 'Home', cafe: 'Cafe', shop: 'The Name Shop', business: 'Business', about: 'About us', contact: 'Contact us' },
+  // `cafe` is kept for the parked cafe page; `contact` for the enquiry form,
+  // which now sits at the foot of About rather than on its own page.
+  nav: { home: 'Home', cafe: 'Cafe', kids: 'Kids', shop: 'The Name Shop', business: 'Business', about: 'About', contact: 'Contact us' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chat on WhatsApp' },
 
@@ -43,7 +45,7 @@ export default {
       titleScript: 'To Your Name.',
       body: 'We are a customization shop. Pick a product, send us a name, a logo or a whole brand, and we put it on — engraved, printed, embroidered or embossed. One gift or two thousand. There is a cafe attached, too.',
       mediaLabel: 'Customization video loop or still — engraving, printing, finished gifts',
-      ctaMenu: 'The cafe menu',
+      ctaTour: 'See the products in 3D',
       ctaShop: 'Browse the products',
     },
     whatWeDo: {
@@ -65,20 +67,6 @@ export default {
         body: 'Corporate gifting, staff onboarding kits, client thank-yous, event giveaways and uniform. Send your brand files once and we keep them on file, so every reorder comes back identical to the last.',
         points: ['Bulk pricing from 25 pieces up', 'Brand files kept on file for exact reorders', 'Quoted, invoiced and delivered on a set date'],
         cta: 'Get a quote',
-      },
-      cafe: {
-        kicker: 'The cafe', title: 'And there is a cafe',
-        placeholder: 'Table mid-service, food and coffee',
-        body: 'The other half of the address. Breakfast to late lunch seven days, a four-course supper on Friday nights, and a short list that moves with the delivery. Collect an order over coffee.',
-        points: ['08:00 – 16:00 daily, Friday supper 18:00', 'Forty covers, twelve tables and a long bench', 'Walk-ins only — no online booking', 'The room is available for private evenings'],
-        cta: 'See the menu',
-      },
-      catering: {
-        kicker: 'Off-site', title: 'Catering, at your address',
-        placeholder: 'Crates being loaded for an off-site event',
-        body: 'The kitchen away from the counter. Boxed desk lunches, staffed buffets and full off-site events, cooked here and delivered in reusable crates. Branded favours can be made to match.',
-        points: ['Ten to two hundred covers', "From 48 hours' notice on lunches", 'Weekly standing orders discounted 10%'],
-        cta: 'Catering packages',
       },
     },
     howItWorks: {
@@ -199,6 +187,11 @@ export default {
     nextPieces: 'More pieces',
     viewLink: 'View ↗',
     personaliseItem: (name) => `Personalise ${name}`,
+    giftSets: {
+      kicker: 'Gift sets',
+      heading: 'Boxed, wrapped and ready to give',
+      lede: 'Curated pieces put together as one set, personalised and packed in wrapping that carries your name or your brand. The easiest way to give something considered without assembling it yourself.',
+    },
     items: {
       'TN-101': {
         name: 'Skittle bottle, 500 ml', finish: 'Double-walled stainless steel', lead: '3 – 5 days',
@@ -239,6 +232,21 @@ export default {
         name: 'Signature gift box', finish: 'Curated pieces, full wrap', lead: '7 – 10 days',
         note: 'Lexon and Lund London pieces, personalised and boxed in packaging that carries your name or your brand.',
         placeholder: 'A personalised gift box, opened',
+      },
+      'TN-502': {
+        name: 'Desk starter set', finish: 'Notebook, pen and leather sleeve', lead: '7 – 10 days',
+        note: 'A first-day set for a new starter — the notebook embossed, the pen engraved, boxed as one.',
+        placeholder: 'A boxed desk starter set',
+      },
+      'TN-503': {
+        name: "Coffee lover's set", finish: 'Cup, beans and ceramic pour-over', lead: '7 – 10 days',
+        note: 'Everything for a morning at home, with the cup printed and the box wrapped in your name.',
+        placeholder: 'A boxed coffee set, opened',
+      },
+      'TN-504': {
+        name: 'Welcome kit, large', finish: 'Bottle, notebook, tote and tech', lead: '10 – 14 days',
+        note: 'Our biggest set — four pieces personalised together for onboarding, VIP gifting or a launch.',
+        placeholder: 'A large branded welcome kit',
       },
       'TN-103': {
         name: 'Pantone mug', finish: 'Porcelain, colour of your choice', lead: '2 – 4 days',
@@ -286,11 +294,6 @@ export default {
           note: 'Conference and launch handouts, the run sized to your guest list and delivered to the venue.',
           placeholder: 'Branded giveaways on an event table',
         },
-        uniform: {
-          name: 'Uniform and workwear', moq: 'From 10',
-          note: 'Aprons, caps, tees and polos, embroidered and re-ordered by size as your team changes.',
-          placeholder: 'Embroidered aprons and caps',
-        },
       },
     },
     terms: {
@@ -319,13 +322,18 @@ export default {
       packages: {
         deskLunch: { name: 'Desk lunch', note: 'Boxed individually, delivered to your reception.', covers: '10–60', notice: '48 hours', from: '£11' },
         standingBuffet: { name: 'Standing buffet', note: 'Platters set up and staffed at your venue for ninety minutes.', covers: '25–120', notice: '5 days', from: '£19' },
-        offSiteCatering: { name: 'Off-site event catering', note: 'We bring the kitchen and the team to your address.', covers: '50–200', notice: '6 weeks', from: '£54' },
         breakfastTrolley: { name: 'Breakfast trolley', note: 'Pastry, fruit, urns of house filter, delivered.', covers: '10–80', notice: '48 hours', from: '£8' },
       },
     },
   },
 
   about: {
+    video: {
+      kicker: 'About us',
+      title: 'Watch the story.',
+      lede: 'A short film on who we are, what we make, and why a name changes an object.',
+      placeholder: 'About The Name — brand video',
+    },
     kicker: 'About us',
     title: 'What\'s in a name? Everything.',
     lede: 'A name is identity, history and connection — your signature and your story. The Name was built on one belief: an object becomes meaningful when it carries your name, your initials, your message or your brand. We curate design-led pieces, then make them yours.',
@@ -382,6 +390,50 @@ export default {
     },
   },
 
+  kids: {
+    kicker: 'For kids',
+    title: 'Their name on it, from day one.',
+    lede: "Lunchboxes, bottles, backpacks and keepsakes with a child's name on them — so less goes missing, and what comes home is theirs. The same engraving, printing and embroidery we do for everything else, sized for smaller hands.",
+    heroPlaceholder: "A child's bottle and lunchbox with a name on them",
+    ctaShop: 'Browse the products',
+    ctaAsk: "Ask about a kids' gift",
+    offerHeading: 'What we make for children',
+    offerLede: 'Three things we are asked for most. Anything in the shop can be personalised for a child — these are just the ones that come up every week.',
+    offers: {
+      backToSchool: {
+        name: 'Back to school',
+        note: 'Bottles, lunchboxes, pencil cases and bag tags, each with a name or initials, so a class of thirty stops losing them.',
+        placeholder: 'Named bottle, lunchbox and pencil case',
+      },
+      newBaby: {
+        name: 'New baby',
+        note: 'Keepsakes for a birth or a naming — a name, a date and a weight, engraved or embossed to be kept rather than used.',
+        placeholder: 'An engraved new-baby keepsake',
+      },
+      birthdays: {
+        name: 'Birthdays and parties',
+        note: 'Named party favours and a personalised main gift, made to match, from one piece up to the whole guest list.',
+        placeholder: 'Named party favours on a table',
+      },
+    },
+    note: {
+      kicker: 'How we make them',
+      heading: 'Made to be used, not just looked at.',
+      points: [
+        'Engraved and printed with the same food-safe finishes we use across the shop',
+        'A digital proof of the name and its placement before anything is made',
+        'One piece is a perfectly normal order — no minimum for a single child',
+        'Whole-class and party quantities quoted, usually within a working day',
+      ],
+    },
+    cta: {
+      heading: 'Put their name on it.',
+      body: 'Tell us the name, the age and what it is for, and we will come back with options.',
+      shop: 'Browse the products',
+      whatsapp: 'Chat on WhatsApp',
+    },
+  },
+
   process: {
     steps: {
       pick: { title: 'Pick a product', body: 'Choose the blank from the shop — drinkware, apparel, stationery, whatever it is. Sizes and colours are listed on each item.' },
@@ -401,6 +453,7 @@ export default {
     whatsappNote: 'A person from our team',
     assistantName: 'The Name assistant',
     assistantStatus: 'Automated replies',
+    typing: 'The assistant is typing…',
     greeting: 'Hi! I can answer questions about our products, personalisation, business orders and the cafe. Pick a topic or type your question.',
     placeholder: 'Type your question…',
     send: 'Send',

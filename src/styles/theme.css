@@ -97,6 +97,41 @@
   --shadow-lg: 0 12px 32px color-mix(in srgb, #000000 22%, transparent);
 }
 
+/* The guideline (p.14) names exactly three faces and no others: Book Antiqua
+   for display headings, Montserrat for body text, Artisoul Signature for the
+   script line. Montserrat is the only one on a web-font CDN — it loads from
+   Google Fonts in index.html. The other two are licensed faces that are NOT
+   on any CDN, so they render as specified ONLY where the visitor happens to
+   have them installed (Book Antiqua ships with MS Office, so Windows only) or
+   once their files are saved into public/fonts/.
+   Everywhere else the fallback chains below take over, which is why headings
+   can show as Georgia and the script line as a system handwriting face —
+   fonts the guideline never specified. Saving the two files under the names
+   below is the whole fix; no code change is needed.
+     public/fonts/book-antiqua.woff2        (+ -bold.woff2)
+     public/fonts/artisoul-signature.woff2
+   Each @font-face tries the locally installed copy first, then the self-hosted
+   file. Regular and bold are declared separately so an installed Book Antiqua
+   Bold is used as drawn rather than synthesised from the regular. */
+@font-face {
+  font-family: "Book Antiqua";
+  src: local("Book Antiqua"), local("BookAntiqua"),
+    url("/fonts/book-antiqua.woff2") format("woff2"),
+    url("/fonts/book-antiqua.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Book Antiqua";
+  src: local("Book Antiqua Bold"), local("BookAntiqua-Bold"),
+    url("/fonts/book-antiqua-bold.woff2") format("woff2"),
+    url("/fonts/book-antiqua-bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Artisoul Signature (--font-script) is a licensed script face, not on Google
    Fonts — save it as public/fonts/artisoul-signature.woff2 (or .otf). A copy
    installed on the visitor's machine is used first; with neither, the

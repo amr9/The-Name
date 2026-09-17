@@ -27,11 +27,11 @@ contact-form service) and `shared/` (the handful of modules both need).
 shared/
   contactForm.js      — the contact form's field list, length caps, honeypot
                         field name, timing field name and `validateContact()`.
-                        Imported by BOTH the React form (via pages/Contact/
-                        data.js, which just re-exports it) and server/index.js,
-                        so the browser and the server can never validate by
-                        different rules. Structural only — it returns error
-                        KEYS, and each side turns them into its own copy.
+                        Imported by BOTH the React form
+                        (components/ContactForm/) and server/index.js, so the
+                        browser and the server can never validate by different
+                        rules. Structural only — it returns error KEYS, and
+                        each side turns them into its own copy.
 
 server/               — the contact-form service (its own package.json, run
                         with `npm start` in that folder; Node 20.12+). It is
@@ -76,14 +76,22 @@ server/               — the contact-form service (its own package.json, run
 
 src/
   main.jsx            — ReactDOM root; wraps App in BrowserRouter + LanguageProvider
-  App.jsx             — route table (/, /cafe, /shop, /business, /about,
-                        /contact) + global chrome
+  App.jsx             — route table (/, /kids, /shop, /business, /about)
+                        + global chrome
                          (Navbar, Footer, ChatLauncher — the floating button).
                          Nav order (data/site.js navLinks): Home → The Name
-                         Shop → Business → Cafe → About → Contact, all
-                         plain links. The footer is only the yellow logo,
-                         the social links and the copyright line, on
-                         --gradient-footer (brownish black).
+                         Shop → Business → Kids → About, all plain links.
+                         /cafe is PARKED, not deleted — its import and route
+                         are commented out here, its nav entry in
+                         data/site.js, its chat topic in data/chatbot.js and
+                         its About service entry in pages/About/data.js. The
+                         page, its data and all four translations survive
+                         intact; uncomment those five spots to restore it.
+                         /contact is gone for good — the enquiry form moved
+                         to the foot of /about as components/ContactForm/.
+                         The footer is only the yellow logo, the social
+                         links and the copyright line, on --gradient-footer
+                         (brownish black).
 
   pages/<PageName>/   — one folder per route
     <PageName>.jsx     — the page component
@@ -97,9 +105,6 @@ src/
     data.js            — STRUCTURAL data only for that page: ids, ordering,
                          numeric prices, x/y coordinates, route targets.
                          Never display copy — see i18n/ below.
-                         (Contact's is the one exception to "owns its data":
-                         it re-exports `shared/contactForm.js`, because the
-                         server validates against the same rules.)
 
   components/         — shared UI building blocks used by 2+ pages
     <Name>.jsx + <Name>.css       — simple components stay as flat files
@@ -114,6 +119,14 @@ src/
                         ground it sits on — 'light' (navbar) → charcoal
                         artwork, 'dark' (footer) → yellow artwork — so the
                         ink always contrasts. Files from media.brand.logos.
+      ContactForm/    — the enquiry form plus the email/phone details beside
+                        it. This WAS the /contact page; when the form moved
+                        to the foot of About it became a component, so the
+                        host page owns the surrounding layout and its
+                        heading is an <h2> (About already has the <h1>).
+                        Imports shared/contactForm.js directly and POSTs to
+                        VITE_CONTACT_ENDPOINT or same-origin /api/contact.
+                        Its copy still lives under the i18n `contact` key.
       PackagesPanel/  — packages table + direct-line panel: Cafe (events)
                         and Business (catering).
       OverlayCard/    — the frosted card (full-bleed 3:4 photo, chips over
@@ -141,7 +154,16 @@ src/
                         rule-based, no server/AI: quick-reply topics from
                         data/chatbot.js, free text matched against each
                         topic's i18n keywords (active language + English),
-                        unmatched questions handed to WhatsApp. icons.jsx
+                        unmatched questions handed to WhatsApp. The answer is
+                        held back by REPLY_DELAY_MS behind a typing indicator
+                        (the bot bubble with three dots). The `pending` flag
+                        that drives it is ALSO the spam guard — while it is
+                        set the quick replies and the send button are
+                        disabled, so one timer runs at a time and a burst of
+                        taps cannot race them or flood the log. Its timeout is
+                        cleared on unmount, because ChatLauncher unmounts the
+                        panel on close. Note there is no backend to protect
+                        here: every answer is local i18n copy. icons.jsx
                         holds its line icons.
     WhatsAppButton.jsx — the only WhatsApp link component (the old floating
                         WhatsAppFab is now ChatLauncher). `iconOnly`
@@ -171,7 +193,12 @@ src/
                           read from i18n home.howItWorks.methods rather
                           than repeated under shop. Read by the Shop page
                           alone. Display text lives in i18n under
-                          shop.items[code].
+                          shop.items[code]. Gift sets are NOT one of the
+                          `filterKeys` — they have their own section on the
+                          Shop page, so this file also exports `giftSets`
+                          and `pieces` (the catalogue split on
+                          `giftSetKey`); the filter grid reads `pieces` and
+                          the gift-set section reads `giftSets`.
 
     brands.js           — the partner brands (id, name, url, optional
                           logoScale): Lexon, Lund London, Pantone, Korin,
@@ -200,7 +227,9 @@ src/
                           mirror each page's structural data.js so lookups
                           are `t.<page>.<section>[id]`.
                           Top-level keys are one per page (`home`, `cafe`,
-                          `shop`, `business`, `about`, `contact`) plus `nav`,
+                          `kids`, `shop`, `business`, `about`) plus
+                          `contact` — which is now the ContactForm
+                          component's copy rather than a page's — `nav`,
                           `footer`, `common`, and the shared-component keys:
                           `packages` (PackagesPanel), `process`
                           (ProcessSteps) and `chat` (ChatLauncher + the
@@ -228,12 +257,24 @@ src/
                           keyframes (pulse, kenburns, sparkle-sweep,
                           sparkle-twinkle, gradient-flow — pair the last with
                           --gradient-panel-flow at background-size 200%).
-                          Fonts: --font-heading, --font-body and
-                          --font-script (Artisoul Signature, a licensed face
-                          loaded by the @font-face at the top from
-                          public/fonts/artisoul-signature.woff2 or .otf —
-                          the file has to be added; system script fallbacks
-                          until then). Gradients: --gradient-panel
+                          Fonts: the brand guideline (p.14) names exactly
+                          three faces and NO others — --font-heading (Book
+                          Antiqua), --font-body (Montserrat) and
+                          --font-script (Artisoul Signature). Do not add a
+                          fourth. Montserrat is the only one available from
+                          a web-font CDN (Google Fonts, linked in
+                          index.html); the other two are licensed faces, so
+                          theme.css declares @font-face rules at the top
+                          that try the visitor's locally installed copy
+                          first and then a self-hosted file. THOSE FILES
+                          ARE NOT IN THE REPO — public/fonts/ holds only
+                          .gitkeep — so on any machine without them
+                          installed the fallback chains take over and
+                          headings render as Georgia, the script line as a
+                          system handwriting face. Saving
+                          book-antiqua.woff2, book-antiqua-bold.woff2 and
+                          artisoul-signature.woff2 into public/fonts/ is
+                          the entire fix; no code change is needed. Gradients: --gradient-panel
                           (the guideline's orange→gold panel, built from the
                           --color-panel-* stops), --gradient-panel-flow (its
                           seamless moving tile), --gradient-footer (--color-ink
@@ -297,6 +338,11 @@ public/media/
   shop/       — the shop's products, named by product code
   cafe/       — the events section on the Cafe page
   business/   — the branded-goods offer cards + the catering section
+  kids/       — the Kids page: hero.jpg, plus one image per offer block
+                (back-to-school.jpg, new-baby.jpg, birthdays.jpg)
+  about/      — the About page's brand film: about-video.mp4 and its still
+                about-video-poster.jpg. Until they exist the section shows
+                the dashed placeholder slot.
   brands/     — partner-brand logos for the Home strip, named in
                 data/media.js `brands`: lexon.svg, pantone.svg,
                 lund-london.png, korin.png, kreafunk.png, gingko.png. Copied
@@ -331,12 +377,12 @@ placeholder instead, so partially-supplied media degrades cleanly.
 
 | Route | Folder | Notes |
 |---|---|---|
-| `/` | `pages/Home/` | Customization-led. Hero (the title in two lines — i18n `home.hero.titleLead`, then `titleScript` under it in --font-script; the "Browse the products" CTA is `.btn-sparkle`), `LogoMarquee` of the partner brands (`data/brands.js`, no heading), 4 services in business order — B2C gifts, B2B branding, cafe, catering — (with the `Bubbles` ornament in shop icons plus the N mark: gutter fields above 1280px, left-to-right bands between the rows below it; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": `ProcessSteps` plus a picker of customization methods (`customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
-| `/cafe` | `pages/Cafe/` | Title block, then the delivery-partner `LogoMarquee` — **commented out** for now (ids/URLs in this page's `data.js`, names under i18n cafe.partners) — then the menu (List/Cards toggle; cards are `OverlayCard` with tag + price chips and an icon-only WhatsApp action; autoplaying carousels, 3 sections). Food `Bubbles` (plus the N mark) at 3× scale fill the gutters on wide screens (no narrow-screen bands). Plus the **events** section at its foot — nights held in our own room, rendered by `PackagesPanel`. Was `pages/Menu/`. |
-| `/shop` | `pages/Shop/` | Labelled "The Name Shop" in the nav. "Make It Personal" — curated objects from partner brands and house pieces that take a name, initials or a logo. Category filters (drinkware / tech / desk / travel / gift sets), List/Cards toggle, autoplaying carousel. Cards are the shared `OverlayCard` (methods + code chips, brand kicker, finish · lead meta, arrow link). The list view keeps the longer note. Was `pages/VertexPieces/` (an interiors showroom) before the customization pivot. |
-| `/business` | `pages/Business/` | B2B: branded-goods offer cards, account terms, and the **catering** section (off-site work), rendered by `PackagesPanel`. |
-| `/about` | `pages/About/` | Story (from the brand positioning doc), the services we provide (`aboutServices` in `data.js`; the curated-brands one lists `data/brands.js`), how we provide them (`ProcessSteps` + the customization method names), mission & vision side by side (`purposeIds`), and a contact / WhatsApp call to action. Copy under i18n `about`. |
-| `/contact` | `pages/Contact/` | Enquiry form (name/email/phone/message) + hidden honeypot + a fill timer (`timingField`, a ref set when the form renders — the server reads the gap as a bot signal). POSTs to `VITE_CONTACT_ENDPOINT` or same-origin `/api/contact`, which `server/` stores and a worker emails to `site.email`. Validation rules come from `shared/contactForm.js`; a 400 carries `fieldKeys` the page translates through `contact.errors.*`. States are idle / sending / sent / failed / rateLimited. |
+| `/` | `pages/Home/` | Customization-led. Hero (the title in two lines — i18n `home.hero.titleLead`, then `titleScript` under it in --font-script; the "Browse the products" CTA is `.btn-sparkle`, beside it a plain `<a>` to the Matterport 3D walkthrough — an external tour, so not a router Link), `LogoMarquee` of the partner brands (`data/brands.js`, no heading), 2 services — B2C gifts, B2B branding; the cafe and catering rows were removed — (with the `Bubbles` ornament in shop icons plus the N mark: gutter fields above 1280px, left-to-right bands between the rows below it; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": `ProcessSteps` plus a picker of customization methods (`customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
+| `/cafe` | `pages/Cafe/` | **PARKED — no route, no nav entry** (see App.jsx above); the folder and its copy are kept so it can be switched back on. Title block, then the delivery-partner `LogoMarquee` — **commented out** for now (ids/URLs in this page's `data.js`, names under i18n cafe.partners) — then the menu (List/Cards toggle; cards are `OverlayCard` with tag + price chips and an icon-only WhatsApp action; autoplaying carousels, 3 sections). Food `Bubbles` (plus the N mark) at 3× scale fill the gutters on wide screens (no narrow-screen bands). Plus the **events** section at its foot — nights held in our own room, rendered by `PackagesPanel`. Was `pages/Menu/`. |
+| `/shop` | `pages/Shop/` | Labelled "The Name Shop" in the nav. "Make It Personal" — curated objects from partner brands and house pieces that take a name, initials or a logo. Category filters (drinkware / tech / desk / travel), List/Cards toggle, autoplaying carousel. **Gift sets are not a filter** — they have their own section below the catalogue, a picture grid of `OverlayCard`s on the pale accent band (`shop.giftSets` copy, `giftSets` from `data/catalogue.js`). Cards are the shared `OverlayCard` (methods + code chips, brand kicker, finish · lead meta, arrow link). The list view keeps the longer note. Was `pages/VertexPieces/` (an interiors showroom) before the customization pivot. |
+| `/business` | `pages/Business/` | B2B: branded-goods offer cards, account terms, and the **catering** section ("at your address"), rendered by `PackagesPanel`. The off-site event-catering row was removed from `cateringPackageIds` and from all four translations. |
+| `/kids` | `pages/Kids/` | A landing page, not a catalogue: hero (shop + WhatsApp CTAs), three offer blocks from `kidsOffers` in `data.js` (back to school / new baby / birthdays), a "how we make them" note on the accent band, and a closing CTA. Copy under i18n `kids`. Took the nav slot the cafe page had. |
+| `/about` | `pages/About/` | Labelled just "About" in the nav. Currently **two sections only**: the brand-film section at the top (carries the page's `<h1>`; `<ImagePlaceholder>` on `media.about.videoPoster` at 16/9 with a decorative play badge over it, and a commented-out `<video>` beside it showing the swap once the film exists — copy under i18n `about.video`), then the **enquiry form** (`components/ContactForm/`) in a `#contact` section. Everything between them — hero, services (`aboutServices`), how-we-work (`ProcessSteps`), mission & vision (`purposeIds`) and the closing CTA — is **PARKED in one JSX comment** in About.jsx, with its imports commented at the top of the file. Note the inner comments inside that block are written as plain dashed lines, not `{/* */}`: a nested end-of-comment marker would close the block early and break the build. Restoring it is deleting the two comment markers and uncommenting the imports; the i18n keys and the CSS for those sections were left untouched. |
 
 ## Conventions (read before adding code)
 
@@ -376,6 +422,9 @@ placeholder instead, so partially-supplied media degrades cleanly.
      were each wanted on the Cafe page too → `components/OverlayCard/`,
      `components/LogoMarquee/` and `components/Bubbles/` (with the layouts
      in `data/bubbles.js`), instead of second copies.
+   - The enquiry form outlived its page: when /contact was folded into the
+     foot of /about, the form became `components/ContactForm/` rather than
+     being pasted into About.jsx, so the page owns only its layout.
    - The order steps were wanted on the new About page → extracted from
      Home into `components/ProcessSteps/` (steps copy moved from
      home.howItWorks.steps to the shared `process.steps`). The chat

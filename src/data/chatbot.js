@@ -11,6 +11,7 @@ export const chatTopics = [
   { id: 'personalise', to: '/about' },
   { id: 'leadTimes', appendMethods: true },
   { id: 'business', to: '/business' },
-  { id: 'cafe', to: '/cafe' },
+  // The cafe page is parked (see App.jsx) — restore this topic alongside it.
+  // { id: 'cafe', to: '/cafe' },
   { id: 'human', whatsapp: true },
 ];

@@ -24,11 +24,14 @@ export const socials = [
 ];
 
 // `key` looks up the label in each translation's `nav` section.
+// The cafe entry is parked rather than deleted — uncomment it here and its
+// import/route in App.jsx to bring the page back. Contact is gone for good:
+// the enquiry form now sits at the foot of /about.
 export const navLinks = [
   { to: '/', key: 'home' },
   { to: '/shop', key: 'shop' },
   { to: '/business', key: 'business' },
-  { to: '/cafe', key: 'cafe' },
+  // { to: '/cafe', key: 'cafe' },
+  { to: '/kids', key: 'kids' },
   { to: '/about', key: 'about' },
-  { to: '/contact', key: 'contact' },
 ];

@@ -60,6 +60,20 @@ export const media = {
     'TN-401': `${BASE}/shop/tn-401.jpg`,
     'TN-402': `${BASE}/shop/tn-402.jpg`,
     'TN-501': `${BASE}/shop/tn-501.jpg`,
+    'TN-502': `${BASE}/shop/tn-502.jpg`,
+    'TN-503': `${BASE}/shop/tn-503.jpg`,
+    'TN-504': `${BASE}/shop/tn-504.jpg`,
+  },
+
+  // Kids page — the hero and one image per offer block (keys match
+  // pages/Kids/data.js `kidsOffers` id).
+  kids: {
+    hero: `${BASE}/kids/hero.jpg`,
+    offers: {
+      backToSchool: `${BASE}/kids/back-to-school.jpg`,
+      newBaby: `${BASE}/kids/new-baby.jpg`,
+      birthdays: `${BASE}/kids/birthdays.jpg`,
+    },
   },
 
   // The Name's own artwork, cropped to its edges from the guideline exports.
@@ -120,7 +134,14 @@ export const media = {
       corporateGifts: `${BASE}/business/corporate-gifts.jpg`,
       onboardingKits: `${BASE}/business/onboarding-kits.jpg`,
       eventGiveaways: `${BASE}/business/event-giveaways.jpg`,
-      uniform: `${BASE}/business/uniform.jpg`,
     },
+  },
+
+  // About page — the brand film at the top. `videoPoster` is the still shown
+  // by <ImagePlaceholder> until the film lands (dashed slot until then);
+  // `video` is the file the commented-out <video> in About.jsx points at.
+  about: {
+    videoPoster: `${BASE}/about/about-video-poster.jpg`,
+    video: `${BASE}/about/about-video.mp4`,
   },
 };

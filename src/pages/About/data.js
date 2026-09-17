@@ -7,8 +7,10 @@ export const aboutServices = [
   { id: 'corporateGifting', to: '/business' },
   { id: 'curatedBrands', to: '/shop', showBrands: true },
   { id: 'packaging', to: '/business' },
-  { id: 'creative', to: '/contact' },
-  { id: 'cafe', to: '/cafe' },
+  // The enquiry form is now at the foot of this page, so this one is an anchor.
+  { id: 'creative', to: '#contact' },
+  // The cafe page is parked (see App.jsx) — restore this entry alongside it.
+  // { id: 'cafe', to: '/cafe' },
 ];
 
 // The two purpose statements, side by side — keys under about[id].

@@ -4,7 +4,7 @@ import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import Carousel from '../../components/Carousel.jsx';
 import OverlayCard, { OverlayCardArrow } from '../../components/OverlayCard/OverlayCard.jsx';
 import ViewToggle from '../../components/ViewToggle.jsx';
-import { catalogue, filterKeys } from '../../data/catalogue.js';
+import { filterKeys, giftSets, pieces } from '../../data/catalogue.js';
 import { media } from '../../data/media.js';
 import { site } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
@@ -15,7 +15,8 @@ export default function Shop() {
   const [filter, setFilter] = useState('all');
   const [view, setView] = useState('Cards');
 
-  const shown = filter === 'all' ? catalogue : catalogue.filter((p) => p.catKey === filter);
+  // Gift sets are not in here — they have their own section below.
+  const shown = filter === 'all' ? pieces : pieces.filter((p) => p.catKey === filter);
   const resultCount = shown.length === 1 ? t.shop.resultPiece(shown.length) : t.shop.resultPieces(shown.length);
   // Method names are shared with the Home "how it works" panel.
   const methodNames = (p) => p.methods.map((m) => t.home.howItWorks.methods[m].name).join(', ');
@@ -104,6 +105,39 @@ export default function Shop() {
             })}
           </Carousel>
         )}
+      </section>
+
+      {/* — gift sets: their own section rather than a filter, shown as a grid
+          of pictures so the boxes read as a range of their own — */}
+      <section id="gift-sets" className="shop-gift-sets">
+        <div className="container">
+          <div className="shop-gift-sets-heading">
+            <span className="card-kicker">{t.shop.giftSets.kicker}</span>
+            <h2 className="shop-gift-sets-title">{t.shop.giftSets.heading}</h2>
+            <p className="shop-gift-sets-lede">{t.shop.giftSets.lede}</p>
+          </div>
+
+          <div className="shop-gift-sets-grid">
+            {giftSets.map((p) => {
+              const info = t.shop.items[p.code];
+              return (
+                <OverlayCard
+                  key={p.code}
+                  image={media.shop[p.code]}
+                  chips={[methodNames(p), p.code]}
+                  kicker={p.brand}
+                  title={info.name}
+                  meta={`${info.finish} · ${info.lead}`}
+                  action={
+                    <a href={site.shopUrl} target="_blank" rel="noopener noreferrer" aria-label={t.shop.personaliseItem(info.name)}>
+                      <OverlayCardArrow />
+                    </a>
+                  }
+                />
+              );
+            })}
+          </div>
+        </div>
       </section>
     </div>
   );

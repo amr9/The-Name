@@ -1,6 +1,6 @@
-.contact-page {
-  padding-block: clamp(40px, 6vw, 88px);
-}
+/* The enquiry form — the details column and the form itself. Was the
+   /contact page's CSS; the page-level padding moved out with it, because the
+   host page (About) now owns the spacing around this block. */
 
 .contact-grid {
   display: grid;

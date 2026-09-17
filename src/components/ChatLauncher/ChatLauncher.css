@@ -165,6 +165,29 @@
   color: var(--color-black);
   border-end-end-radius: 6px;
 }
+/* The "typing" bubble: the bot bubble above, carrying three dots instead of
+   copy. Single-use, so the keyframe stays with the component rather than
+   going into theme.css. */
+.chatbot-typing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-block: 14px;
+}
+.chatbot-typing-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-gray);
+  animation: chatbot-typing 1.2s ease-in-out infinite;
+}
+.chatbot-typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.chatbot-typing-dot:nth-child(3) { animation-delay: 0.3s; }
+@keyframes chatbot-typing {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
+  30% { transform: translateY(-4px); opacity: 0.9; }
+}
+
 .chatbot-link {
   display: inline-block;
   margin-top: 8px;
@@ -195,6 +218,14 @@
   cursor: pointer;
 }
 .chatbot-topic:hover { background: var(--color-accent-100); }
+/* Locked while an answer is pending, so a burst of taps cannot queue up a run
+   of answers. These are plain buttons, not .btn, so theme.css's .btn:disabled
+   does not reach them. */
+.chatbot-topic:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.chatbot-topic:disabled:hover { background: var(--color-white); }
 
 .chatbot-form {
   display: flex;
@@ -216,4 +247,13 @@
   .chat-launcher-fab { --fab-inset: 16px; }
   .chat-launcher-menu,
   .chatbot { right: 16px; bottom: 84px; }
+}
+
+/* The delay itself stays — only the bouncing stops, so the indicator is still
+   visible to anyone who has asked for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  .chatbot-typing-dot {
+    animation: none;
+    opacity: 0.55;
+  }
 }

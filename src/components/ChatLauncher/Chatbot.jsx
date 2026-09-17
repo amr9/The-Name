@@ -14,25 +14,63 @@ import { BackIcon, CloseIcon } from './icons.jsx';
 //
 // The log stores topic ids, not text, so switching language mid-chat
 // re-renders the whole conversation in the new language.
+
+// How long the assistant "types" before its answer appears, so a reply reads
+// as a reply rather than as the button's own output.
+//
+// The lock this drives is also the spam guard. Nothing here talks to a server
+// — every answer is local i18n copy — so tapping the quick replies fast cannot
+// put load on anything. What it CAN do is flood the log and, once there is a
+// delay, race the timers so answers interleave or arrive out of order. Holding
+// the lock until the answer lands makes both impossible: one timer at a time,
+// and the controls are disabled while it runs.
+const REPLY_DELAY_MS = 900;
+
 export default function Chatbot({ onBack, onClose }) {
   const { t } = useLanguage();
   const c = t.chat;
   const [log, setLog] = useState([{ from: 'bot', kind: 'greeting' }]);
   const [draft, setDraft] = useState('');
+  // True from the moment a question is asked until its answer lands.
+  const [pending, setPending] = useState(false);
   const logRef = useRef(null);
   const inputRef = useRef(null);
+  const timer = useRef(null);
+  // The authoritative lock. `pending` above is for rendering only: it does not
+  // change until the next render, so two handlers firing in the SAME tick
+  // would both read it as false, both start a timer, and the second would
+  // overwrite the first's handle — leaking a timeout that still fires and
+  // appends a duplicate answer. A ref flips synchronously, so the second call
+  // is turned away however fast the taps arrive.
+  const busy = useRef(false);
 
   useEffect(() => { inputRef.current?.focus(); }, []);
+  // The panel is unmounted on close (see ChatLauncher), so a reply still in
+  // flight would otherwise fire into a component that is gone.
+  useEffect(() => () => clearTimeout(timer.current), []);
+  // Follows the indicator too, not just new messages.
   useEffect(() => {
     const el = logRef.current;
     if (el) el.scrollTop = el.scrollHeight;
-  }, [log]);
+  }, [log, pending]);
 
-  const reply = (topicId, userText) => setLog((l) => [
-    ...l,
-    { from: 'user', text: userText },
-    topicId ? { from: 'bot', kind: 'topic', topicId } : { from: 'bot', kind: 'fallback' },
-  ]);
+  // The visitor's own message appears at once and the answer follows after the
+  // pause, the way a messaging app behaves. The guard is what stops a burst of
+  // taps queueing up a run of answers.
+  const reply = (topicId, userText) => {
+    if (busy.current) return;
+    busy.current = true;
+    setPending(true);
+    setLog((l) => [...l, { from: 'user', text: userText }]);
+    timer.current = setTimeout(() => {
+      setLog((l) => [
+        ...l,
+        topicId ? { from: 'bot', kind: 'topic', topicId } : { from: 'bot', kind: 'fallback' },
+      ]);
+      busy.current = false;
+      setPending(false);
+    }, REPLY_DELAY_MS);
+  };
 
   const match = (text) => {
     const q = text.toLocaleLowerCase();
@@ -46,7 +84,7 @@ export default function Chatbot({ onBack, onClose }) {
   const submit = (e) => {
     e.preventDefault();
     const text = draft.trim();
-    if (!text) return;
+    if (!text || busy.current) return;
     reply(match(text), text);
     setDraft('');
   };
@@ -103,11 +141,28 @@ export default function Chatbot({ onBack, onClose }) {
         {log.map((msg, i) => (msg.from === 'user'
           ? <p key={i} className="chatbot-msg chatbot-msg-user">{msg.text}</p>
           : <BotMessage key={i} msg={msg} />))}
+
+        {/* The same bubble as a bot message, with dots instead of copy. The
+            dots are decorative — the label on the bubble is what a screen
+            reader announces. */}
+        {pending && (
+          <div className="chatbot-msg chatbot-msg-bot chatbot-typing" role="status" aria-label={c.typing}>
+            <span className="chatbot-typing-dot" aria-hidden="true" />
+            <span className="chatbot-typing-dot" aria-hidden="true" />
+            <span className="chatbot-typing-dot" aria-hidden="true" />
+          </div>
+        )}
       </div>
 
       <div className="chatbot-topics">
         {chatTopics.map((topic) => (
-          <button key={topic.id} type="button" className="chatbot-topic" onClick={() => reply(topic.id, c.topics[topic.id].label)}>
+          <button
+            key={topic.id}
+            type="button"
+            className="chatbot-topic"
+            disabled={pending}
+            onClick={() => reply(topic.id, c.topics[topic.id].label)}
+          >
             {c.topics[topic.id].label}
           </button>
         ))}
@@ -126,7 +181,7 @@ export default function Chatbot({ onBack, onClose }) {
           autoComplete="off"
           maxLength={300}
         />
-        <button type="submit" className="btn btn-primary chatbot-send" disabled={!draft.trim()}>{c.send}</button>
+        <button type="submit" className="btn btn-primary chatbot-send" disabled={!draft.trim() || pending}>{c.send}</button>
       </form>
     </div>
   );

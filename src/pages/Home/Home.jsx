@@ -34,7 +34,16 @@ export default function Home() {
           <p className="home-hero-body">{t.home.hero.body}</p>
           <div className="home-hero-actions">
             <Link to="/shop" className="btn btn-sparkle">{t.home.hero.ctaShop}</Link>
-            <Link to="/cafe" className="btn btn-secondary home-hero-secondary">{t.home.hero.ctaMenu}</Link>
+            {/* The Matterport walkthrough — an external 3D tour, so a plain
+                anchor rather than a router Link. */}
+            <a
+              href="https://my.matterport.com/show/?m=5rCPtmHS5iK"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-secondary home-hero-secondary"
+            >
+              {t.home.hero.ctaTour}
+            </a>
           </div>
         </div>
       </section>

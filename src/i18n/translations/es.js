@@ -1,5 +1,7 @@
 export default {
-  nav: { home: 'Inicio', cafe: 'Cafetería', shop: 'Tienda The Name', business: 'Empresas', about: 'Sobre nosotros', contact: 'Contáctanos' },
+  // `cafe` se conserva para la página de la cafetería aparcada; `contact`
+  // para el formulario, ahora al pie de la página Acerca de.
+  nav: { home: 'Inicio', cafe: 'Cafetería', kids: 'Niños', shop: 'Tienda The Name', business: 'Empresas', about: 'Acerca de', contact: 'Contáctanos' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chatear por WhatsApp' },
 
@@ -43,7 +45,7 @@ export default {
       titleScript: 'A tu nombre.',
       body: 'Somos un taller de personalización. Elige un producto, mándanos un nombre, un logo o toda una marca, y lo aplicamos — grabado, impreso, bordado o repujado. Un solo regalo o dos mil. Y además hay una cafetería al lado.',
       mediaLabel: 'Vídeo o foto de personalización — grabado, impresión, regalos terminados',
-      ctaMenu: 'La carta de la cafetería',
+      ctaTour: 'Ver los productos en 3D',
       ctaShop: 'Ver los productos',
     },
     whatWeDo: {
@@ -65,20 +67,6 @@ export default {
         body: 'Regalo corporativo, kits de bienvenida para el equipo, detalles para clientes, obsequios de evento y uniformes. Envía tus archivos de marca una vez y los guardamos, así cada reposición vuelve idéntica a la anterior.',
         points: ['Precio por volumen a partir de 25 piezas', 'Archivos de marca guardados para reposiciones idénticas', 'Presupuestado, facturado y entregado en fecha fija'],
         cta: 'Pedir presupuesto',
-      },
-      cafe: {
-        kicker: 'La cafetería', title: 'Y hay una cafetería',
-        placeholder: 'Mesa en pleno servicio, comida y café',
-        body: 'La otra mitad de la dirección. Desde el desayuno hasta el almuerzo tardío los siete días, una cena de cuatro platos los viernes por la noche, y una carta corta que sigue lo que llega. Recoge tu pedido con un café delante.',
-        points: ['08:00 – 16:00 a diario, cena del viernes a las 18:00', 'Cuarenta cubiertos, doce mesas y un banco largo', 'Solo sin reserva — no se reserva en línea', 'La sala está disponible para noches privadas'],
-        cta: 'Ver el menú',
-      },
-      catering: {
-        kicker: 'Fuera del local', title: 'Catering, en tu dirección',
-        placeholder: 'Cajas cargándose para un evento externo',
-        body: 'La cocina lejos del mostrador. Almuerzos individuales, bufés con personal y eventos externos completos, cocinados aquí y entregados en cajas reutilizables. Los detalles personalizados pueden ir a juego.',
-        points: ['De diez a doscientos comensales', 'Desde 48 horas de aviso para almuerzos', 'Pedidos semanales recurrentes con 10 % de descuento'],
-        cta: 'Paquetes de catering',
       },
     },
     howItWorks: {
@@ -199,6 +187,11 @@ export default {
     nextPieces: 'Más piezas',
     viewLink: 'Ver ↗',
     personaliseItem: (name) => `Personalizar ${name}`,
+    giftSets: {
+      kicker: 'Sets de regalo',
+      heading: 'Encajados, envueltos y listos para regalar',
+      lede: 'Piezas seleccionadas reunidas en un solo set, personalizadas y presentadas en un embalaje que lleva tu nombre o tu marca. La forma más fácil de regalar algo pensado sin tener que montarlo tú.',
+    },
     items: {
       'TN-101': {
         name: 'Botella Skittle, 500 ml', finish: 'Acero inoxidable de doble pared', lead: '3 – 5 días',
@@ -239,6 +232,21 @@ export default {
         name: 'Caja de regalo signature', finish: 'Piezas seleccionadas, envoltorio completo', lead: '7 – 10 días',
         note: 'Piezas de Lexon y Lund London, personalizadas y presentadas en un embalaje con tu nombre o tu marca.',
         placeholder: 'Una caja de regalo personalizada, abierta',
+      },
+      'TN-502': {
+        name: 'Set de escritorio de bienvenida', finish: 'Libreta, bolígrafo y funda de piel', lead: '7 – 10 días',
+        note: 'Un set para el primer día de alguien nuevo: la libreta en relieve, el bolígrafo grabado, todo en una caja.',
+        placeholder: 'Un set de escritorio en caja',
+      },
+      'TN-503': {
+        name: 'Set para amantes del café', finish: 'Taza, café en grano y goteador de cerámica', lead: '7 – 10 días',
+        note: 'Todo para una mañana en casa, con la taza impresa y la caja envuelta con tu nombre.',
+        placeholder: 'Un set de café abierto',
+      },
+      'TN-504': {
+        name: 'Kit de bienvenida, grande', finish: 'Botella, libreta, tote y tecnología', lead: '10 – 14 días',
+        note: 'Nuestro set más grande: cuatro piezas personalizadas juntas para bienvenidas, regalos VIP o un lanzamiento.',
+        placeholder: 'Un kit de bienvenida grande personalizado',
       },
       'TN-103': {
         name: 'Taza Pantone', finish: 'Porcelana, color a elegir', lead: '2 – 4 días',
@@ -286,11 +294,6 @@ export default {
           note: 'Detalles para congresos y lanzamientos, la tirada ajustada a tu lista de invitados y entregada en el sitio.',
           placeholder: 'Obsequios personalizados en una mesa de evento',
         },
-        uniform: {
-          name: 'Uniforme y ropa de trabajo', moq: 'Desde 10',
-          note: 'Delantales, gorras, camisetas y polos, bordados y repuestos por tallas según cambie tu equipo.',
-          placeholder: 'Delantales y gorras bordados',
-        },
       },
     },
     terms: {
@@ -319,13 +322,18 @@ export default {
       packages: {
         deskLunch: { name: 'Almuerzo de oficina', note: 'En cajas individuales, entregado en tu recepción.', covers: '10–60', notice: '48 horas', from: '£11' },
         standingBuffet: { name: 'Bufé de pie', note: 'Bandejas montadas con personal en tu local durante noventa minutos.', covers: '25–120', notice: '5 días', from: '£19' },
-        offSiteCatering: { name: 'Catering de eventos externos', note: 'Llevamos la cocina y el equipo a tu dirección.', covers: '50–200', notice: '6 semanas', from: '£54' },
         breakfastTrolley: { name: 'Carrito de desayuno', note: 'Bollería, fruta, termos de café de filtro, entregado.', covers: '10–80', notice: '48 horas', from: '£8' },
       },
     },
   },
 
   about: {
+    video: {
+      kicker: 'Sobre nosotros',
+      title: 'Mira nuestra historia.',
+      lede: 'Un corto sobre quiénes somos, qué hacemos y por qué un nombre cambia un objeto.',
+      placeholder: 'Sobre The Name — vídeo de marca',
+    },
     kicker: 'Sobre nosotros',
     title: '¿Qué hay en un nombre? Todo.',
     lede: 'Un nombre es identidad, historia y conexión: tu firma y tu relato. The Name nació de una convicción: un objeto cobra sentido cuando lleva tu nombre, tus iniciales, tu mensaje o tu marca. Seleccionamos piezas de buen diseño y las hacemos tuyas.',
@@ -382,6 +390,50 @@ export default {
     },
   },
 
+  kids: {
+    kicker: 'Para niños',
+    title: 'Su nombre encima, desde el primer día.',
+    lede: 'Botellas, fiambreras, mochilas y recuerdos con el nombre del niño — así se pierde menos y lo que vuelve a casa es suyo. El mismo grabado, impresión y bordado que hacemos para todo lo demás, a la medida de manos pequeñas.',
+    heroPlaceholder: 'Una botella y una fiambrera de niño con un nombre',
+    ctaShop: 'Ver los productos',
+    ctaAsk: 'Preguntar por un regalo infantil',
+    offerHeading: 'Qué hacemos para niños',
+    offerLede: 'Las tres cosas que más nos piden. Cualquier artículo de la tienda se puede personalizar para un niño — estos son solo los que salen cada semana.',
+    offers: {
+      backToSchool: {
+        name: 'Vuelta al cole',
+        note: 'Botellas, fiambreras, estuches y etiquetas de mochila, cada uno con un nombre o unas iniciales, para que una clase de treinta deje de perderlos.',
+        placeholder: 'Botella, fiambrera y estuche con nombre',
+      },
+      newBaby: {
+        name: 'Recién nacido',
+        note: 'Recuerdos para un nacimiento o una imposición de nombre — un nombre, una fecha y un peso, grabados o en relieve, para guardar más que para usar.',
+        placeholder: 'Un recuerdo de nacimiento grabado',
+      },
+      birthdays: {
+        name: 'Cumpleaños y fiestas',
+        note: 'Detalles de fiesta con nombre y un regalo principal personalizado, a juego, desde una pieza hasta toda la lista de invitados.',
+        placeholder: 'Detalles de fiesta con nombre en una mesa',
+      },
+    },
+    note: {
+      kicker: 'Cómo los hacemos',
+      heading: 'Hechos para usarse, no solo para mirarse.',
+      points: [
+        'Grabados e impresos con los mismos acabados aptos para alimentos que usamos en toda la tienda',
+        'Una prueba digital del nombre y su colocación antes de fabricar nada',
+        'Una sola pieza es un pedido de lo más normal — sin mínimo para un único niño',
+        'Las cantidades para una clase entera o una fiesta se presupuestan, normalmente en un día laborable',
+      ],
+    },
+    cta: {
+      heading: 'Pongámosle su nombre.',
+      body: 'Cuéntanos el nombre, la edad y para qué es, y te devolvemos opciones.',
+      shop: 'Ver los productos',
+      whatsapp: 'Chatear por WhatsApp',
+    },
+  },
+
   process: {
     steps: {
       pick: { title: 'Elige un producto', body: 'Escoge la base en la tienda — vasos y botellas, ropa, papelería, lo que sea. Las tallas y los colores están en cada artículo.' },
@@ -401,6 +453,7 @@ export default {
     whatsappNote: 'Una persona de nuestro equipo',
     assistantName: 'Asistente de The Name',
     assistantStatus: 'Respuestas automáticas',
+    typing: 'El asistente está escribiendo…',
     greeting: '¡Hola! Puedo responder preguntas sobre nuestros productos, la personalización, los pedidos de empresa y la cafetería. Elige un tema o escribe tu pregunta.',
     placeholder: 'Escribe tu pregunta…',
     send: 'Enviar',
