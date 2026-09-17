@@ -1,7 +1,7 @@
 export default {
   // `cafe` is kept for the parked cafe page; `contact` for the enquiry form,
   // which now sits at the foot of About rather than on its own page.
-  nav: { home: 'Home', cafe: 'Cafe', kids: 'Kids', shop: 'The Name Shop', business: 'Business', about: 'About', contact: 'Contact us' },
+  nav: { home: 'Home', cafe: 'Cafe', kids: 'Kids', shop: 'The Name Store', business: 'Business', about: 'About', contact: 'Contact us' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chat on WhatsApp' },
 
@@ -43,41 +43,41 @@ export default {
     hero: {
       titleLead: 'From the Name.',
       titleScript: 'To Your Name.',
-      body: 'We are a customization shop. Pick a product, send us a name, a logo or a whole brand, and we put it on — engraved, printed, embroidered or embossed. One gift or two thousand. There is a cafe attached, too.',
+      body: 'We curate design-forward objects and make them personal — with your name, your message, your story or your brand. From one meaningful gift to a full corporate collection, every piece is made to carry an identity.',
       mediaLabel: 'Customization video loop or still — engraving, printing, finished gifts',
       ctaTour: 'See the products in 3D',
-      ctaShop: 'Browse the products',
+      ctaShop: 'Make It Personal',
     },
     whatWeDo: {
       kicker: 'What we do',
       heading: 'Objects With Your Story',
-      body: 'We curate meaningful objects that become more valuable with your identity',
+      body: 'We find objects worth keeping — then make them mean something more. A name. An initial. A message. A brand. A story that turns something beautifully designed into something unmistakably yours.',
     },
     services: {
       personalGifts: {
-        kicker: 'For you', title: 'Gifts with a name on them',
+        kicker: 'For you', title: 'Make It Personal',
         placeholder: 'A personalised gift being wrapped',
-        body: 'Birthdays, weddings, new babies, thank-yous and leaving presents. Pick a product, tell us the name or the date, and we put it on. Single pieces are welcome — there is no minimum on engraving or printing.',
-        points: ['One piece is a perfectly normal order', 'A digital proof before anything is made', 'Gift wrapping and a handwritten card on request'],
-        cta: 'Browse the products',
+        body: 'For birthdays, milestones, thank-yous, little celebrations — or simply because it should have your name on it. Choose from our curated collection and make it yours with a name, initials, date or message.',
+        points: ['One piece? Absolutely.', 'Personalize it your way', 'Beautifully finished and ready to gift.'],
+        cta: 'Shop & Personalize',
       },
       businessBranding: {
         kicker: 'For your business', title: 'Make Your Brand the Gift',
         placeholder: 'Branded corporate gift boxes',
-        body: 'Corporate gifting, staff onboarding kits, client thank-yous, event giveaways and uniform. Send your brand files once and we keep them on file, so every reorder comes back identical to the last.',
-        points: ['Bulk pricing from 25 pieces up', 'Brand files kept on file for exact reorders', 'Quoted, invoiced and delivered on a set date'],
-        cta: 'Get a quote',
+        body: 'Corporate gifting should do more than carry your logo. We create thoughtful, design-led gifts and branded collections that keep your identity visible, useful and remembered — from employee kits and client gifts to events, VIP gifting and large-scale orders.',
+        points: ['Individual personalization at scale', 'Curated products, custom kits & premium packaging', 'Corporate, government & event orders', 'Creative concepts built around your brand'],
+        cta: 'Start a Business Enquiry',
       },
     },
     howItWorks: {
       kicker: 'How it works',
       heading: 'Four steps from blank to boxed.',
-      lede: 'The same process whether it is one engraved keepsake or five hundred branded kits.',
+      lede: 'One piece or one thousand, we make personalization simple.',
       methodsKicker: 'Customization methods',
       suits: 'Best on',
       minimum: 'Minimum',
       leadTime: 'Lead time',
-      ctaShop: 'Browse the products',
+      ctaShop: 'Make It Personal',
       footnote: 'Business quantities are quoted — talk to us',
       methods: {
         engraving: {
@@ -436,10 +436,10 @@ export default {
 
   process: {
     steps: {
-      pick: { title: 'Pick a product', body: 'Choose the blank from the shop — drinkware, apparel, stationery, whatever it is. Sizes and colours are listed on each item.' },
-      artwork: { title: 'Send your artwork', body: 'A name, a logo, a monogram or a full brand kit. We take vector files, and we will redraw a rough one for you.' },
-      proof: { title: 'Approve the mock-up', body: 'We send back a digital proof showing exact placement and size. Nothing is made until you say yes to it.' },
-      produce: { title: 'We make and ship', body: 'Produced in-house, checked by hand, gift-wrapped if you asked, then shipped or held here for collection.' },
+      pick: { title: 'Choose It', body: 'Find your piece from our curated collection — from lifestyle and desk objects to drinkware, accessories, gifting and more.' },
+      artwork: { title: 'Name It', body: 'Add a name, initials, message, artwork or brand identity.' },
+      proof: { title: 'See It', body: 'We prepare your artwork or mock-up where required, so you know how your personalization will look before production.' },
+      produce: { title: 'Make It Yours', body: 'We produce, finish and prepare your order for collection or delivery.' },
     },
   },
 
@@ -465,7 +465,7 @@ export default {
       products: {
         label: 'What do you sell?',
         answer: 'Design-led objects from brands like Lexon, Lund London, Pantone, Korin, Kreafunk and Gingko — drinkware, tech, desk pieces, travel and gift sets — plus our own house pieces. Every one can be personalised.',
-        keywords: ['product', 'sell', 'shop', 'brand', 'buy', 'bottle', 'speaker', 'lamp', 'bag'],
+        keywords: ['product', 'sell', 'shop', 'store', 'brand', 'buy', 'bottle', 'speaker', 'lamp', 'bag'],
       },
       personalise: {
         label: 'How does personalisation work?',

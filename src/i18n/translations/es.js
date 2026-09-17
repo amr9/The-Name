@@ -43,41 +43,41 @@ export default {
     hero: {
       titleLead: 'Del Nombre.',
       titleScript: 'A tu nombre.',
-      body: 'Somos un taller de personalización. Elige un producto, mándanos un nombre, un logo o toda una marca, y lo aplicamos — grabado, impreso, bordado o repujado. Un solo regalo o dos mil. Y además hay una cafetería al lado.',
+      body: 'Seleccionamos objetos de diseño y los hacemos personales — con tu nombre, tu mensaje, tu historia o tu marca. Desde un único regalo con significado hasta una colección corporativa completa, cada pieza está hecha para llevar una identidad.',
       mediaLabel: 'Vídeo o foto de personalización — grabado, impresión, regalos terminados',
       ctaTour: 'Ver los productos en 3D',
-      ctaShop: 'Ver los productos',
+      ctaShop: 'Hazlo personal',
     },
     whatWeDo: {
       kicker: 'Qué hacemos',
       heading: 'Objetos con tu historia',
-      body: 'Seleccionamos objetos con significado que ganan valor con tu identidad',
+      body: 'Encontramos objetos que merece la pena conservar — y luego hacemos que signifiquen algo más. Un nombre. Una inicial. Un mensaje. Una marca. Una historia que convierte algo bien diseñado en algo inconfundiblemente tuyo.',
     },
     services: {
       personalGifts: {
-        kicker: 'Para ti', title: 'Regalos con un nombre encima',
+        kicker: 'Para ti', title: 'Hazlo personal',
         placeholder: 'Un regalo personalizado siendo envuelto',
-        body: 'Cumpleaños, bodas, nacimientos, agradecimientos y regalos de despedida. Elige un producto, dinos el nombre o la fecha, y lo aplicamos. Las piezas sueltas son bienvenidas — no hay mínimo en grabado ni impresión.',
-        points: ['Una sola pieza es un pedido perfectamente normal', 'Una prueba digital antes de fabricar nada', 'Envoltorio de regalo y tarjeta manuscrita si lo pides'],
-        cta: 'Ver los productos',
+        body: 'Para cumpleaños, grandes momentos, agradecimientos, pequeñas celebraciones — o simplemente porque debería llevar tu nombre. Elige de nuestra colección y hazla tuya con un nombre, unas iniciales, una fecha o un mensaje.',
+        points: ['¿Una sola pieza? Por supuesto.', 'Personalízalo a tu manera', 'Perfectamente acabado y listo para regalar.'],
+        cta: 'Compra y personaliza',
       },
       businessBranding: {
         kicker: 'Para tu empresa', title: 'Haz de tu marca el regalo',
         placeholder: 'Cajas de regalo corporativas personalizadas',
-        body: 'Regalo corporativo, kits de bienvenida para el equipo, detalles para clientes, obsequios de evento y uniformes. Envía tus archivos de marca una vez y los guardamos, así cada reposición vuelve idéntica a la anterior.',
-        points: ['Precio por volumen a partir de 25 piezas', 'Archivos de marca guardados para reposiciones idénticas', 'Presupuestado, facturado y entregado en fecha fija'],
-        cta: 'Pedir presupuesto',
+        body: 'El regalo corporativo debería hacer más que llevar tu logo. Creamos regalos y colecciones de diseño que mantienen tu identidad visible, útil y memorable — desde kits para empleados y regalos para clientes hasta eventos, regalos VIP y pedidos a gran escala.',
+        points: ['Personalización individual a gran escala', 'Productos seleccionados, kits a medida y embalaje premium', 'Pedidos corporativos, institucionales y de eventos', 'Conceptos creativos pensados para tu marca'],
+        cta: 'Iniciar una consulta de empresa',
       },
     },
     howItWorks: {
       kicker: 'Cómo funciona',
       heading: 'Cuatro pasos, del producto en blanco a la caja.',
-      lede: 'El mismo proceso tanto si es un recuerdo grabado como quinientos kits con tu marca.',
+      lede: 'Una pieza o mil, hacemos que personalizar sea sencillo.',
       methodsKicker: 'Técnicas de personalización',
       suits: 'Mejor en',
       minimum: 'Mínimo',
       leadTime: 'Plazo de entrega',
-      ctaShop: 'Ver los productos',
+      ctaShop: 'Hazlo personal',
       footnote: 'Las cantidades de empresa se presupuestan — háblanos',
       methods: {
         engraving: {
@@ -436,10 +436,10 @@ export default {
 
   process: {
     steps: {
-      pick: { title: 'Elige un producto', body: 'Escoge la base en la tienda — vasos y botellas, ropa, papelería, lo que sea. Las tallas y los colores están en cada artículo.' },
-      artwork: { title: 'Manda tu diseño', body: 'Un nombre, un logo, un monograma o todo un manual de marca. Aceptamos archivos vectoriales, y te redibujamos uno que venga en mal estado.' },
-      proof: { title: 'Aprueba la maqueta', body: 'Te devolvemos una prueba digital con la colocación y el tamaño exactos. No se fabrica nada hasta que le das el visto bueno.' },
-      produce: { title: 'Lo hacemos y lo enviamos', body: 'Producido aquí mismo, revisado a mano, envuelto para regalo si lo pediste, y enviado o guardado para que lo recojas.' },
+      pick: { title: 'Elígelo', body: 'Encuentra tu pieza en nuestra colección — desde objetos de hogar y escritorio hasta botellas, accesorios, regalos y más.' },
+      artwork: { title: 'Ponle nombre', body: 'Añade un nombre, unas iniciales, un mensaje, un diseño o una identidad de marca.' },
+      proof: { title: 'Velo', body: 'Preparamos tu diseño o maqueta cuando hace falta, para que sepas cómo quedará tu personalización antes de producirla.' },
+      produce: { title: 'Hazlo tuyo', body: 'Producimos, acabamos y preparamos tu pedido para recogida o entrega.' },
     },
   },
 

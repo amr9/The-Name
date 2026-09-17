@@ -43,41 +43,41 @@ export default {
     hero: {
       titleLead: 'Du Nom.',
       titleScript: 'À votre nom.',
-      body: 'Nous sommes un atelier de personnalisation. Choisissez un produit, envoyez-nous un nom, un logo ou toute une marque, et nous l\'apposons — gravé, imprimé, brodé ou gaufré. Un seul cadeau ou deux mille. Il y a aussi un café attenant.',
+      body: 'Nous sélectionnons des objets au design affirmé et les rendons personnels — avec votre nom, votre message, votre histoire ou votre marque. D\'un cadeau unique à toute une collection d\'entreprise, chaque pièce est faite pour porter une identité.',
       mediaLabel: 'Vidéo ou photo de personnalisation — gravure, impression, cadeaux finis',
       ctaTour: 'Voir les produits en 3D',
-      ctaShop: 'Voir les produits',
+      ctaShop: 'Rendez-le personnel',
     },
     whatWeDo: {
       kicker: 'Ce que nous faisons',
       heading: 'Des objets qui racontent votre histoire',
-      body: 'Nous sélectionnons des objets porteurs de sens, qui prennent de la valeur avec votre identité',
+      body: 'Nous trouvons des objets qui méritent d\'être gardés — puis nous leur donnons plus de sens. Un nom. Une initiale. Un message. Une marque. Une histoire qui transforme un bel objet en quelque chose d\'incontestablement vôtre.',
     },
     services: {
       personalGifts: {
-        kicker: 'Pour vous', title: 'Des cadeaux qui portent un nom',
+        kicker: 'Pour vous', title: 'Rendez-le personnel',
         placeholder: 'Un cadeau personnalisé en cours d\'emballage',
-        body: 'Anniversaires, mariages, naissances, remerciements et cadeaux de départ. Choisissez un produit, dites-nous le nom ou la date, et nous l\'apposons. Les pièces uniques sont les bienvenues — aucun minimum sur la gravure ni l\'impression.',
-        points: ['Une seule pièce est une commande tout à fait normale', 'Un bon à tirer numérique avant toute fabrication', 'Emballage cadeau et carte manuscrite sur demande'],
-        cta: 'Voir les produits',
+        body: 'Pour les anniversaires, les grandes étapes, les remerciements, les petites célébrations — ou simplement parce que cela devrait porter votre nom. Choisissez dans notre collection et rendez-la vôtre avec un nom, des initiales, une date ou un message.',
+        points: ['Une seule pièce ? Bien sûr.', 'Personnalisez-le à votre façon', 'Magnifiquement fini et prêt à offrir.'],
+        cta: 'Acheter et personnaliser',
       },
       businessBranding: {
         kicker: 'Pour votre entreprise', title: 'Faites de votre marque le cadeau',
         placeholder: 'Coffrets cadeaux d\'entreprise personnalisés',
-        body: 'Cadeaux d\'affaires, kits d\'accueil pour les nouveaux arrivants, remerciements clients, goodies d\'événements et tenues. Envoyez vos fichiers de marque une fois, nous les conservons : chaque réassort revient identique au précédent.',
-        points: ['Tarifs dégressifs à partir de 25 pièces', 'Fichiers de marque conservés pour des réassorts identiques', 'Devis, facturation et livraison à date fixe'],
-        cta: 'Demander un devis',
+        body: 'Un cadeau d\'entreprise doit faire plus que porter votre logo. Nous créons des cadeaux et des collections au design soigné qui gardent votre identité visible, utile et mémorable — des kits collaborateurs aux cadeaux clients, en passant par les événements, les cadeaux VIP et les commandes à grande échelle.',
+        points: ['Une personnalisation individuelle à grande échelle', 'Produits sélectionnés, coffrets sur mesure et emballage premium', 'Commandes entreprises, administrations et événements', 'Des concepts créatifs pensés autour de votre marque'],
+        cta: 'Démarrer une demande entreprise',
       },
     },
     howItWorks: {
       kicker: 'Comment ça marche',
       heading: 'Quatre étapes, du produit vierge au colis.',
-      lede: 'Le même processus, qu\'il s\'agisse d\'un souvenir gravé ou de cinq cents kits personnalisés.',
+      lede: 'Une pièce ou mille, nous rendons la personnalisation simple.',
       methodsKicker: 'Techniques de personnalisation',
       suits: 'Idéal sur',
       minimum: 'Minimum',
       leadTime: 'Délai',
-      ctaShop: 'Voir les produits',
+      ctaShop: 'Rendez-le personnel',
       footnote: 'Les quantités professionnelles font l\'objet d\'un devis — parlons-en',
       methods: {
         engraving: {
@@ -436,10 +436,10 @@ export default {
 
   process: {
     steps: {
-      pick: { title: 'Choisissez un produit', body: 'Choisissez le support dans la boutique — boissons, textile, papeterie, quel qu\'il soit. Tailles et coloris sont indiqués sur chaque article.' },
-      artwork: { title: 'Envoyez votre visuel', body: 'Un nom, un logo, un monogramme ou toute une charte. Nous acceptons les fichiers vectoriels, et nous redessinons un visuel approximatif pour vous.' },
-      proof: { title: 'Validez la maquette', body: 'Nous renvoyons un bon à tirer numérique montrant l\'emplacement et la taille exacts. Rien n\'est fabriqué avant votre accord.' },
-      produce: { title: 'Nous fabriquons et expédions', body: 'Fabriqué sur place, contrôlé à la main, emballé cadeau si vous l\'avez demandé, puis expédié ou gardé ici pour retrait.' },
+      pick: { title: 'Choisissez-le', body: 'Trouvez votre pièce dans notre collection — des objets de vie et de bureau aux gourdes, accessoires, cadeaux et bien plus.' },
+      artwork: { title: 'Nommez-le', body: 'Ajoutez un nom, des initiales, un message, un visuel ou une identité de marque.' },
+      proof: { title: 'Voyez-le', body: 'Nous préparons votre visuel ou votre maquette lorsque c\'est nécessaire, pour que vous sachiez à quoi ressemblera votre personnalisation avant la production.' },
+      produce: { title: 'Rendez-le vôtre', body: 'Nous produisons, finissons et préparons votre commande pour le retrait ou la livraison.' },
     },
   },
 
