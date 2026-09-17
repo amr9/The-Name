@@ -261,6 +261,15 @@ src/
 
   hooks/useCarouselAutoplay.js — global effect that auto-advances every
                           `.carousel-track` on screen every 4.2s.
+  hooks/useScrollToTop.js — global effect that puts each new page at the top
+                          on navigation; React Router keeps the window's
+                          scroll offset otherwise, so a link followed from the
+                          foot of one page lands part-way down the next. It
+                          watches the PATHNAME only — an in-page anchor (the
+                          `#contact` button at the foot of About) changes the
+                          hash, not the path, and must be left to the browser.
+                          The fade that goes with it is `.page-enter` in
+                          theme.css, replayed by the `key` on <main>.
   utils/carousel.js      — stepCarousel(el, dir): the one-card-per-step
                           scroll math, used by the Carousel component and
                           the autoplay hook. Wraps in both directions (a closed
@@ -280,7 +289,14 @@ src/
                           menus, .table, .dialog, .carousel-*) and the shared
                           keyframes (pulse, kenburns, sparkle-sweep,
                           sparkle-twinkle, gradient-flow — pair the last with
-                          --gradient-panel-flow at background-size 200%).
+                          --gradient-panel-flow at background-size 200% — and
+                          page-enter, the route-change fade carried by the
+                          .page-enter class on <main>; App.jsx keys <main> on
+                          the pathname so it replays on every navigation, and
+                          hooks/useScrollToTop.js puts the new page at the top
+                          first. Its transform settles at `none`, so it never
+                          becomes a lasting containing block for a fixed-
+                          position descendant — do not make it permanent).
                           Fonts: the brand guideline (p.14) names exactly
                           three faces and NO others — --font-heading (Book
                           Antiqua), --font-body (Montserrat) and

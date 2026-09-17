@@ -45,7 +45,7 @@ export default {
       titleScript: 'À votre nom.',
       body: 'Nous sélectionnons des objets au design affirmé et les rendons personnels — avec votre nom, votre message, votre histoire ou votre marque. D\'un cadeau unique à toute une collection d\'entreprise, chaque pièce est faite pour porter une identité.',
       mediaLabel: 'Vidéo ou photo de personnalisation — gravure, impression, cadeaux finis',
-      ctaTour: 'Voir les produits en 3D',
+      ctaTour: 'Vue virtuelle des produits',
       ctaShop: 'Rendez-le personnel',
     },
     whatWeDo: {

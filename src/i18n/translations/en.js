@@ -45,7 +45,7 @@ export default {
       titleScript: 'To Your Name.',
       body: 'We curate design-forward objects and make them personal — with your name, your message, your story or your brand. From one meaningful gift to a full corporate collection, every piece is made to carry an identity.',
       mediaLabel: 'Customization video loop or still — engraving, printing, finished gifts',
-      ctaTour: 'See the products in 3D',
+      ctaTour: 'Virtual product view',
       ctaShop: 'Make It Personal',
     },
     whatWeDo: {

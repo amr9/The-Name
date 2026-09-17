@@ -1,8 +1,9 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import ChatLauncher from './components/ChatLauncher/ChatLauncher.jsx';
 import useCarouselAutoplay from './hooks/useCarouselAutoplay.js';
+import useScrollToTop from './hooks/useScrollToTop.js';
 import Home from './pages/Home/Home.jsx';
 // The cafe page is parked, not deleted — uncomment this import and its route
 // below (and the nav entry in data/site.js) to bring it back.
@@ -14,11 +15,16 @@ import About from './pages/About/About.jsx';
 
 export default function App() {
   useCarouselAutoplay();
+  useScrollToTop();
+  const { pathname } = useLocation();
 
   return (
     <>
       <Navbar />
-      <main>
+      {/* Keyed on the path so <main> remounts on every navigation, which is
+          what replays the .page-enter animation. The scroll reset that pairs
+          with it is hooks/useScrollToTop.js. */}
+      <main key={pathname} className="page-enter">
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="/cafe" element={<Cafe />} /> */}

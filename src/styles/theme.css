@@ -393,6 +393,25 @@ button { font: inherit; }
 @keyframes gradient-flow { from { background-position: 0% 0; } to { background-position: -200% 0; } }
 @keyframes kenburns { 0% { transform: scale(1.04) translate3d(0,0,0); } 100% { transform: scale(1.14) translate3d(-1.5%,-1%,0); } }
 
+/* — page transition — carried by <main>, which App.jsx keys on the pathname
+   so this replays on every navigation. It pairs with hooks/useScrollToTop.js:
+   the new page is put at the top first, then eased in, rather than smooth-
+   scrolling up through content the visitor never asked to see.
+   Note the transform only exists while the animation runs and settles at
+   `none`, so it never becomes a lasting containing block for any fixed-
+   position descendant — do not give .page-enter a permanent transform. */
+.page-enter {
+  animation: page-enter 260ms cubic-bezier(.22,.61,.36,1) both;
+}
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+/* The scroll reset still happens — only the easing is dropped. */
+@media (prefers-reduced-motion: reduce) {
+  .page-enter { animation: none; }
+}
+
 /* — responsive: tablet / mobile (shared layout breakpoints) — */
 @media (max-width: 1024px) {
   .row-flip, .split { grid-template-columns: minmax(0, 1fr) !important; }

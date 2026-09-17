@@ -45,7 +45,7 @@ export default {
       titleScript: 'A tu nombre.',
       body: 'Seleccionamos objetos de diseño y los hacemos personales — con tu nombre, tu mensaje, tu historia o tu marca. Desde un único regalo con significado hasta una colección corporativa completa, cada pieza está hecha para llevar una identidad.',
       mediaLabel: 'Vídeo o foto de personalización — grabado, impresión, regalos terminados',
-      ctaTour: 'Ver los productos en 3D',
+      ctaTour: 'Vista virtual de los productos',
       ctaShop: 'Hazlo personal',
     },
     whatWeDo: {
