@@ -117,8 +117,16 @@ src/
     LanguageSwitcher.jsx
                       — the language menu in the navbar. Its menu and scrim
                         are rendered in a PORTAL on <body> and positioned from
-                        the trigger's getBoundingClientRect(), clamped to the
-                        viewport. This is load-bearing, not style: `.navbar`
+                        the trigger's getBoundingClientRect(), clamped into the
+                        viewport on BOTH edges — which needs the menu's real
+                        width, so it is measured via a ref and re-placed in a
+                        useLayoutEffect (pre-paint, so nothing jumps). Clamping
+                        only the anchored edge is NOT enough: at 320–360px the
+                        longer French nav labels wrap the switcher onto its own
+                        row where it sits at the left, and a right-anchored menu
+                        then ran off the left of the screen (measured
+                        left = -121px at vw 352). This is load-bearing, not
+                        style: `.navbar`
                         has `backdrop-filter`, and a backdrop-filter element
                         becomes the containing block for `position: fixed`
                         descendants and opens its own stacking context — so in

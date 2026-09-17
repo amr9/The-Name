@@ -8,6 +8,9 @@ import './LanguageSwitcher.css';
 // leave between the menu and the edge of the screen.
 const GAP = 10;
 const EDGE = 12;
+// First-pass width estimate, before the menu exists to measure. Keep in step
+// with min-width in LanguageSwitcher.css.
+const MIN_W = 232;
 
 /**
  * The language menu.
@@ -18,33 +21,53 @@ const EDGE = 12;
  * containing block for `position: fixed` descendants AND opens a new stacking
  * context. Left inside the bar, the scrim's `inset: 0` covered only the navbar
  * instead of the page, and the menu's z-index was trapped under the bar's own.
- * Both broke on narrow screens, where the nav wraps and the bar is short.
  *
- * Positioning from the trigger's rect also settles the drift: the trigger
- * moves when nav labels change width between languages, and the menu now
- * follows it and is clamped to the viewport, so it lands in the same place
- * relative to the button at every width, in every language, LTR or RTL.
+ * Placement clamps BOTH edges into the viewport, which needs the menu's real
+ * width, so it is measured and re-placed once mounted. Clamping only the
+ * anchored edge is not enough, and failed in exactly this case: at 320-360px
+ * the longer French nav labels wrap the switcher onto its own row, where as
+ * the last item it sits at the LEFT of the bar. A menu whose right edge is
+ * pinned to the trigger's then extends off the left of the screen
+ * (measured: left = -121px at a 352px viewport).
  */
 export default function LanguageSwitcher() {
   const [open, setOpen] = useState(false);
   const [pos, setPos] = useState(null);
   const { lang, setLang } = useLanguage();
   const triggerRef = useRef(null);
+  const menuRef = useRef(null);
 
   const rtl = languages.find((l) => l.code === lang)?.dir === 'rtl';
 
-  // Pin the menu's trailing edge to the trigger's trailing edge, then clamp so
-  // it can never run off the screen. Only one axis is set: `max-width` in the
-  // stylesheet keeps the far edge inside the viewport.
   const place = useCallback(() => {
     const el = triggerRef.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
-    // clientWidth, not innerWidth — it excludes the scrollbar.
     const vw = document.documentElement.clientWidth;
-    setPos(rtl
-      ? { top: r.bottom + GAP, left: Math.max(EDGE, r.left) }
-      : { top: r.bottom + GAP, right: Math.max(EDGE, vw - r.right) });
+    const vh = window.innerHeight;
+    // The menu is not mounted on the first pass, so estimate from the
+    // stylesheet's min-width; the layout effect re-runs this once it is.
+    const menu = menuRef.current;
+    const mw = menu ? menu.offsetWidth : MIN_W;
+    const mh = menu ? menu.offsetHeight : 0;
+
+    // Line the menu's trailing edge up with the trigger's, then clamp it into
+    // the viewport from BOTH sides. `maxLeft` is floored at EDGE so that a
+    // menu wider than the screen still starts on-screen rather than being
+    // pushed off to the left by the clamp meant to keep it on.
+    const ideal = rtl ? r.left : r.right - mw;
+    const maxLeft = Math.max(EDGE, vw - EDGE - mw);
+    const left = Math.min(Math.max(EDGE, ideal), maxLeft);
+
+    // Below the trigger by default; flip above only when it would not fit, and
+    // fall back to pinning it inside the bottom edge if it fits neither way.
+    let top = r.bottom + GAP;
+    if (mh > 0 && top + mh > vh - EDGE) {
+      const above = r.top - GAP - mh;
+      top = above >= EDGE ? above : Math.max(EDGE, vh - EDGE - mh);
+    }
+
+    setPos({ top, left });
   }, [rtl]);
 
   // Measured before opening, so the menu never paints at the wrong spot first.
@@ -56,6 +79,10 @@ export default function LanguageSwitcher() {
 
   useLayoutEffect(() => {
     if (!open) return undefined;
+    // Runs after the portal mounts, so the menu can now be measured — this is
+    // the pass that gets the width right. useLayoutEffect, not useEffect, so
+    // the correction lands before the browser paints and nothing jumps.
+    place();
     const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
     // The bar is sticky, so scrolling can still move the trigger under it.
     window.addEventListener('resize', place);
@@ -93,7 +120,7 @@ export default function LanguageSwitcher() {
         <>
           {/* Genuinely covers the page now that it is outside the navbar. */}
           <div className="lang-switcher-scrim" onClick={() => setOpen(false)} />
-          <div role="listbox" className="popover lang-switcher-menu" style={pos ?? undefined}>
+          <div ref={menuRef} role="listbox" className="popover lang-switcher-menu" style={pos ?? undefined}>
             {languages.map((l) => (
               <button
                 key={l.code}
