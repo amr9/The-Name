@@ -114,6 +114,22 @@ src/
                                     too (e.g. Footer/SocialLinks.jsx).
                                     Currently:
       Navbar/, Footer/
+    LanguageSwitcher.jsx
+                      — the language menu in the navbar. Its menu and scrim
+                        are rendered in a PORTAL on <body> and positioned from
+                        the trigger's getBoundingClientRect(), clamped to the
+                        viewport. This is load-bearing, not style: `.navbar`
+                        has `backdrop-filter`, and a backdrop-filter element
+                        becomes the containing block for `position: fixed`
+                        descendants and opens its own stacking context — so in
+                        place, the scrim's `inset: 0` covered only the bar and
+                        the menu's z-index could not escape the bar's. Both
+                        showed up on mobile, where `.nav` wraps and the bar is
+                        short. Measuring from the trigger also fixes the menu
+                        drifting as nav labels change width between languages.
+                        DO NOT give the menu or scrim a plain CSS position
+                        again, and beware of adding `position: fixed` children
+                        anywhere inside `.navbar` for the same reason.
     Logo.jsx          — the brand lockup as a <picture>: main lockup, swapped
                         for the compact secondary one at ≤480px. `on` is the
                         ground it sits on — 'light' (navbar) → charcoal
@@ -448,3 +464,14 @@ placeholder instead, so partially-supplied media degrades cleanly.
    `<head>` metadata (fonts, title) and the `#root` div + script tag — it
    cannot be removed while this is a Vite SPA. Page content changes never
    touch this file; only global `<head>` changes (fonts, meta tags) do.
+7. **Never size anything with `dvh`.** `dvh` is the *dynamic* viewport unit:
+   it is specified to track the browser chrome, so on mobile it changes on
+   every address-bar show/hide and reflows the page mid-scroll. This bit the
+   Home hero (`height: calc(100dvh - var(--navbar-h))`) and the chat panel,
+   and it resized the whole site while scrolling. Use **`svh`** for anything
+   meant to fill the screen — it is the height with the chrome *visible*, so
+   the content fits in the worst case and never moves — and pair it with a
+   plain `vh` line above it as the fallback for older engines. `vh`, `svh` and
+   `lvh` are all stable during scroll; only `dvh` moves. Percentage heights
+   (`html, body { height: 100% }`) resolve against the initial containing
+   block and are stable too.

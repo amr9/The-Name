@@ -1,10 +1,18 @@
 /* — hero — */
 .home-hero {
   position: relative;
-  /* Fills exactly the space under the sticky navbar, so the opening view is
-     the video and its heading and nothing else. dvh keeps that true on
-     mobile, where the browser chrome shrinks the visible viewport. */
-  height: calc(100dvh - var(--navbar-h));
+  /* Fills the space under the sticky navbar, so the opening view is the video
+     and its heading and nothing else.
+
+     svh, NOT dvh. dvh is the *dynamic* viewport and is defined to track the
+     browser chrome, so on mobile every address-bar show/hide resized this
+     hero and reflowed the whole page under it mid-scroll. svh is the *small*
+     viewport — the height with the chrome visible — so the hero is sized for
+     the worst case once and then never moves. The plain vh line below is the
+     fallback for engines predating these units; it is the LARGE viewport and
+     is also stable. Of the four, only dvh moves. Do not put it back. */
+  height: calc(100vh - var(--navbar-h));
+  height: calc(100svh - var(--navbar-h));
   min-height: 480px;
   overflow: hidden;
   background: var(--color-accent-100);

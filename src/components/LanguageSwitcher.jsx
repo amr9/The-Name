@@ -1,18 +1,80 @@
-import { useState } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { languages } from '../i18n/languages.js';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
 import './LanguageSwitcher.css';
 
+// Distance from the trigger to the menu, and the smallest margin we will ever
+// leave between the menu and the edge of the screen.
+const GAP = 10;
+const EDGE = 12;
+
+/**
+ * The language menu.
+ *
+ * The menu and its scrim are rendered in a PORTAL on <body>, not in place, and
+ * positioned from the trigger's own box. That is not decoration — `.navbar`
+ * carries `backdrop-filter`, and an element with a backdrop-filter becomes the
+ * containing block for `position: fixed` descendants AND opens a new stacking
+ * context. Left inside the bar, the scrim's `inset: 0` covered only the navbar
+ * instead of the page, and the menu's z-index was trapped under the bar's own.
+ * Both broke on narrow screens, where the nav wraps and the bar is short.
+ *
+ * Positioning from the trigger's rect also settles the drift: the trigger
+ * moves when nav labels change width between languages, and the menu now
+ * follows it and is clamped to the viewport, so it lands in the same place
+ * relative to the button at every width, in every language, LTR or RTL.
+ */
 export default function LanguageSwitcher() {
   const [open, setOpen] = useState(false);
+  const [pos, setPos] = useState(null);
   const { lang, setLang } = useLanguage();
+  const triggerRef = useRef(null);
+
+  const rtl = languages.find((l) => l.code === lang)?.dir === 'rtl';
+
+  // Pin the menu's trailing edge to the trigger's trailing edge, then clamp so
+  // it can never run off the screen. Only one axis is set: `max-width` in the
+  // stylesheet keeps the far edge inside the viewport.
+  const place = useCallback(() => {
+    const el = triggerRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    // clientWidth, not innerWidth — it excludes the scrollbar.
+    const vw = document.documentElement.clientWidth;
+    setPos(rtl
+      ? { top: r.bottom + GAP, left: Math.max(EDGE, r.left) }
+      : { top: r.bottom + GAP, right: Math.max(EDGE, vw - r.right) });
+  }, [rtl]);
+
+  // Measured before opening, so the menu never paints at the wrong spot first.
+  const toggle = () => {
+    if (open) { setOpen(false); return; }
+    place();
+    setOpen(true);
+  };
+
+  useLayoutEffect(() => {
+    if (!open) return undefined;
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    // The bar is sticky, so scrolling can still move the trigger under it.
+    window.addEventListener('resize', place);
+    window.addEventListener('scroll', place, true);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('resize', place);
+      window.removeEventListener('scroll', place, true);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [open, place]);
 
   return (
     <div className="lang-switcher">
       <button
+        ref={triggerRef}
         type="button"
         className="btn btn-secondary lang-switcher-trigger"
-        onClick={() => setOpen((o) => !o)}
+        onClick={toggle}
         aria-expanded={open}
         aria-haspopup="listbox"
       >
@@ -27,10 +89,11 @@ export default function LanguageSwitcher() {
         </svg>
       </button>
 
-      {open && (
+      {open && createPortal(
         <>
+          {/* Genuinely covers the page now that it is outside the navbar. */}
           <div className="lang-switcher-scrim" onClick={() => setOpen(false)} />
-          <div role="listbox" className="popover lang-switcher-menu">
+          <div role="listbox" className="popover lang-switcher-menu" style={pos ?? undefined}>
             {languages.map((l) => (
               <button
                 key={l.code}
@@ -47,7 +110,8 @@ export default function LanguageSwitcher() {
               </button>
             ))}
           </div>
-        </>
+        </>,
+        document.body,
       )}
     </div>
   );

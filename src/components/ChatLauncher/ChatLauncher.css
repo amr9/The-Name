@@ -103,7 +103,10 @@
 /* — assistant panel — */
 .chatbot {
   width: min(380px, calc(100vw - 32px));
-  height: min(560px, calc(100dvh - 128px));
+  /* svh, not dvh — see the note on .home-hero in pages/Home/Home.css. dvh
+     tracks the address bar, so the panel resized while the page scrolled. */
+  height: min(560px, calc(100vh - 128px));
+  height: min(560px, calc(100svh - 128px));
   display: flex;
   flex-direction: column;
   background: var(--color-white);

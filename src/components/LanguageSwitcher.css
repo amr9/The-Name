@@ -1,5 +1,9 @@
+/* The menu and scrim are portalled onto <body> (see LanguageSwitcher.jsx for
+   why), so nothing here may anchor to the wrapper — the component sets `top`
+   and one of `left`/`right` inline, measured from the trigger. */
+
 .lang-switcher {
-  position: relative;
+  display: inline-flex;
 }
 
 .lang-switcher-trigger {
@@ -7,21 +11,21 @@
   gap: 8px;
 }
 
+/* Above the navbar (40), the chat launcher (60) and its panel (61): while the
+   menu is open it is the frontmost thing on the page. */
 .lang-switcher-scrim {
   position: fixed;
   inset: 0;
-  z-index: 35;
+  z-index: 85;
 }
 
 /* The panel and option look come from the shared .popover / .popover-option
-   classes in theme.css; only placement and the columns are specific here. */
+   classes in theme.css; only placement and the columns are specific here.
+   `max-width` is what keeps the edge the component does NOT set from running
+   off-screen, so the menu always lands fully inside the viewport. */
 .lang-switcher-menu {
-  position: absolute;
-  top: calc(100% + 10px);
-  /* Logical, so in RTL the menu hangs off the trigger's left edge and opens
-     into the page instead of off the side of the screen. */
-  inset-inline-end: 0;
-  z-index: 80;
+  position: fixed;
+  z-index: 90;
   width: max-content;
   min-width: 232px;
   max-width: calc(100vw - 24px);
