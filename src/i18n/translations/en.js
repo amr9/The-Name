@@ -175,9 +175,9 @@ export default {
   shop: {
     badge: 'Curated brands · personalised by us',
     title: 'Make It Personal',
-    body: 'We curate design-led objects from brands like Lexon, Lund London, Pantone, Korin, Kreafunk and Gingko, then make them yours — a name, initials, a message or a logo, engraved, printed or embossed. Not off the shelf. Too personal to regift.',
-    openShop: 'Open the shop ↗',
-    askPersonal: 'Ask about personalising →',
+    body: 'Discover design-led objects from brands we love — then make them unmistakably yours. Add a name, initials, a message or something that means something to you.',
+    openShop: 'Shop the Collection ↗',
+    askPersonal: 'Customize Yours →',
     filters: { all: 'All', drinkware: 'Drinkware', tech: 'Tech', desk: 'Desk', travel: 'Travel', giftSets: 'Gift sets' },
     viewList: 'List',
     viewCards: 'Cards',

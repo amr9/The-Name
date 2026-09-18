@@ -175,9 +175,9 @@ export default {
   shop: {
     badge: 'Marques choisies · personnalisées par nous',
     title: 'Rendez-le personnel',
-    body: "Nous sélectionnons des objets design de marques comme Lexon, Lund London, Pantone, Korin, Kreafunk et Gingko, puis nous les rendons uniques — un nom, des initiales, un message ou un logo, gravé, imprimé ou embossé. Pas un article de rayon. Trop personnel pour être offert à quelqu'un d'autre.",
-    openShop: 'Voir la boutique ↗',
-    askPersonal: 'Parler de personnalisation →',
+    body: "Découvrez des objets design de marques que nous aimons — puis faites-en des pièces qui n'appartiennent qu'à vous. Ajoutez un nom, des initiales, un message ou ce qui compte pour vous.",
+    openShop: 'Découvrir la collection ↗',
+    askPersonal: 'Personnalisez la vôtre →',
     filters: { all: 'Tout', drinkware: 'Gourdes & tasses', tech: 'Tech', desk: 'Bureau', travel: 'Voyage', giftSets: 'Coffrets' },
     viewList: 'Liste',
     viewCards: 'Cartes',
