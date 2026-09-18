@@ -88,6 +88,12 @@
      screen exactly. */
   --navbar-h: 64px;
 
+  /* How far the floating chat launcher sits from the viewport's corner. A
+     token because two pinned elements now measure off it: the launcher's own
+     button and the nudge bubble that points at it, which has to land beside
+     the button at both values below. */
+  --fab-inset: 24px;
+
   --radius-sm: 8px;
   --radius-md: 16px;
   --radius-lg: 28px;
@@ -421,4 +427,9 @@ button { font: inherit; }
   /* The bar used to wrap to two rows here; the pages now fold into the
      navbar's dropdown instead, so it stays a single row at every width. */
   .seg { flex-wrap: wrap; }
+}
+@media (max-width: 480px) {
+  /* Phones pull the floating launcher (and the bubble beside it) in to the
+     tighter corner inset. */
+  :root { --fab-inset: 16px; }
 }

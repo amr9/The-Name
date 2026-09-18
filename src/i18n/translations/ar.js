@@ -445,6 +445,7 @@ export default {
 
   chat: {
     open: 'تحدّث معنا',
+    nudge: 'لنتحدّث',
     close: 'إغلاق',
     menuTitle: 'كيف تفضّل التواصل؟',
     botTitle: 'تحدّث مع مساعدنا',

@@ -6,12 +6,18 @@ import Chatbot from './Chatbot.jsx';
 import { BotIcon, CloseIcon } from './icons.jsx';
 import './ChatLauncher.css';
 
+// How long a visitor reads before the nudge bubble offers to talk. Long
+// enough that it lands as an offer rather than an interruption.
+const NUDGE_DELAY_MS = 30_000;
+
 // The floating button in the corner of every page. It opens a small menu
 // with two ways to reach us — the on-site assistant, or WhatsApp directly —
-// and hosts the assistant panel once that is picked.
+// and hosts the assistant panel once that is picked. Beside it, a speech
+// bubble pointing at the button appears after NUDGE_DELAY_MS.
 export default function ChatLauncher() {
   const { t } = useLanguage();
   const [mode, setMode] = useState('closed'); // closed | menu | bot
+  const [nudge, setNudge] = useState('waiting'); // waiting | shown | gone
   const close = () => setMode('closed');
 
   useEffect(() => {
@@ -19,6 +25,20 @@ export default function ChatLauncher() {
     const onKey = (e) => { if (e.key === 'Escape') setMode('closed'); };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
+  }, [mode]);
+
+  // The launcher sits outside <main>, so it survives navigation: one timer
+  // per page load, not one per page viewed.
+  useEffect(() => {
+    if (nudge !== 'waiting') return undefined;
+    const id = setTimeout(() => setNudge('shown'), NUDGE_DELAY_MS);
+    return () => clearTimeout(id);
+  }, [nudge]);
+
+  // Opening the launcher any other way answers the bubble's question, so it
+  // stops waiting to ask it — before the 30s are up as much as after.
+  useEffect(() => {
+    if (mode !== 'closed') setNudge('gone');
   }, [mode]);
 
   return (
@@ -54,6 +74,19 @@ export default function ChatLauncher() {
       )}
 
       {mode === 'bot' && <Chatbot onBack={() => setMode('menu')} onClose={close} />}
+
+      {/* Points at the button below it, so it reads as coming from there.
+          Clicking opens the menu it is pointing at, which also dismisses it
+          (the effect above); it never comes back for this page load. */}
+      {nudge === 'shown' && (
+        <button
+          type="button"
+          className="chat-launcher-nudge"
+          onClick={() => { setNudge('gone'); setMode('menu'); }}
+        >
+          {t.chat.nudge}
+        </button>
+      )}
 
       <button
         type="button"

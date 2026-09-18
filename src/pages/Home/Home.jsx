@@ -32,10 +32,11 @@ export default function Home() {
               brand, so it is artwork rather than translated copy, and `titleLeadPrefix` is
               only the word(s) in front of it (the lockup reads "THE NAME", article included).
               `compact={false}` keeps the full wordmark on phones; the secondary N would
-              leave the sentence reading "From N." */}
+              leave the line reading "From N". The lockup ends the line unpunctuated —
+              the full stop the copy used to carry belongs to the wordmark's own shape. */}
           <h1 className="home-hero-title">
             <span className="home-hero-title-lead">
-              {t.home.hero.titleLeadPrefix} <Logo size="inline" compact={false} />.
+              {t.home.hero.titleLeadPrefix} <Logo size="inline" compact={false} />
             </span>
             <span className="home-hero-title-script">{t.home.hero.titleScript}</span>
           </h1>

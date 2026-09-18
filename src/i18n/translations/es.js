@@ -445,6 +445,7 @@ export default {
 
   chat: {
     open: 'Habla con nosotros',
+    nudge: '¡Hablamos!',
     close: 'Cerrar',
     menuTitle: '¿Cómo prefieres hablar?',
     botTitle: 'Hablar con nuestro asistente',

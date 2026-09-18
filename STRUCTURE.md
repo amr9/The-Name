@@ -216,6 +216,17 @@ src/
                         panel on close. Note there is no backend to protect
                         here: every answer is local i18n copy. icons.jsx
                         holds its line icons.
+                        Beside the button, `.chat-launcher-nudge` — a speech
+                        bubble (i18n chat.nudge) that appears after
+                        NUDGE_DELAY_MS (30s), points at the button with a
+                        CSS-triangle tail, and on click opens the menu and
+                        goes for good. Opening the launcher any other way
+                        cancels it too, so it never asks a question the
+                        visitor has already answered. The timer is per PAGE
+                        LOAD, not per page viewed — the launcher sits outside
+                        <main> in App.jsx, so navigating does not remount it.
+                        It is positioned physically (right/bottom), like the
+                        button, so both stay in the same corner under RTL.
     WhatsAppButton.jsx — the only WhatsApp link component (the old floating
                         WhatsAppFab is now ChatLauncher). `iconOnly`
                         renders just the icon with `children` as the

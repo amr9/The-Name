@@ -9,7 +9,6 @@
    yellow mark from the button's edge (on a yellow ground the gap would not
    show); open, a centred close glyph on the accent. */
 .chat-launcher-fab {
-  --fab-inset: 24px;
   --fab-gap: 7px;
   position: fixed;
   right: calc(var(--fab-inset) + env(safe-area-inset-right, 0px));
@@ -48,6 +47,64 @@
   position: fixed;
   inset: 0;
   z-index: 55;
+}
+
+/* — the nudge bubble — */
+
+/* Sits immediately to the LEFT of the button with a tail aimed at it, so it
+   reads as speech coming out of the launcher. Everything here is physical
+   (right/left), not logical: the button itself is pinned with `right`, so it
+   stays in the same corner under RTL and the tail must keep pointing the same
+   way. `bottom` centres a ~40px bubble on the 56px button. z-index is one
+   below the button's, so the tail's tip tucks under its edge rather than
+   crossing it. */
+.chat-launcher-nudge {
+  position: fixed;
+  right: calc(var(--fab-inset) + 56px + 14px + env(safe-area-inset-right, 0px));
+  bottom: calc(var(--fab-inset) + 8px + env(safe-area-inset-bottom, 0px));
+  z-index: 59;
+  padding: 10px 16px;
+  border: 1px solid var(--color-accent-200);
+  border-radius: 999px;
+  background: var(--color-white);
+  color: inherit;
+  box-shadow: var(--shadow-lg);
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  font-size: 15px;
+  white-space: nowrap;
+  cursor: pointer;
+  transform-origin: right center;
+  animation: chat-launcher-nudge-in 0.32s ease-out both;
+}
+.chat-launcher-nudge:hover { background: var(--color-accent-100); }
+
+/* The tail, as the usual pair of stacked triangles: ::before is the border
+   colour, ::after the fill laid 1px over it so only a hairline shows. */
+.chat-launcher-nudge::before,
+.chat-launcher-nudge::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  transform: translateY(-50%);
+}
+.chat-launcher-nudge::before {
+  right: -9px;
+  border-left: 9px solid var(--color-accent-200);
+}
+.chat-launcher-nudge::after {
+  right: -8px;
+  border-left: 9px solid var(--color-white);
+}
+.chat-launcher-nudge:hover::after { border-left-color: var(--color-accent-100); }
+
+@keyframes chat-launcher-nudge-in {
+  from { opacity: 0; transform: translateX(10px) scale(0.92); }
+  to { opacity: 1; transform: none; }
 }
 
 .chat-launcher-menu,
@@ -247,7 +304,8 @@
 .chatbot-input:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 1px; }
 
 @media (max-width: 480px) {
-  .chat-launcher-fab { --fab-inset: 16px; }
+  /* --fab-inset itself drops to 16px in theme.css, so the button and the
+     nudge bubble follow it together. */
   .chat-launcher-menu,
   .chatbot { right: 16px; bottom: 84px; }
 }
@@ -259,4 +317,8 @@
     animation: none;
     opacity: 0.55;
   }
+  /* The bubble still arrives after its 30s — it just arrives rather than
+     slides in. `both` on the animation means dropping it here would leave the
+     from-state's opacity: 0 applied, so it has to be cancelled outright. */
+  .chat-launcher-nudge { animation: none; }
 }
