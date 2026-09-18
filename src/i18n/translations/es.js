@@ -1,7 +1,7 @@
 export default {
   // `cafe` se conserva para la página de la cafetería aparcada; `contact`
   // para el formulario, ahora al pie de la página Acerca de.
-  nav: { home: 'Inicio', cafe: 'Cafetería', kids: 'Niños', shop: 'Tienda The Name', business: 'Empresas', about: 'Acerca de', contact: 'Contáctanos' },
+  nav: { home: 'Inicio', cafe: 'Cafetería', kids: 'Niños', shop: 'Tienda The Name', business: 'Empresas', about: 'Acerca de', contact: 'Contáctanos', menu: 'Menú' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chatear por WhatsApp' },
 
@@ -41,7 +41,7 @@ export default {
 
   home: {
     hero: {
-      titleLead: 'Del Nombre.',
+      titleLeadPrefix: 'De',
       titleScript: 'A tu nombre.',
       body: 'Seleccionamos objetos de diseño y los hacemos personales — con tu nombre, tu mensaje, tu historia o tu marca. Desde un único regalo con significado hasta una colección corporativa completa, cada pieza está hecha para llevar una identidad.',
       mediaLabel: 'Vídeo o foto de personalización — grabado, impresión, regalos terminados',

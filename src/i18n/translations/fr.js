@@ -1,7 +1,7 @@
 export default {
   // `cafe` est conservé pour la page café mise de côté ; `contact` pour le
   // formulaire, désormais au bas de la page À propos.
-  nav: { home: 'Accueil', cafe: 'Café', kids: 'Enfants', shop: 'Boutique The Name', business: 'Entreprises', about: 'À propos', contact: 'Nous contacter' },
+  nav: { home: 'Accueil', cafe: 'Café', kids: 'Enfants', shop: 'Boutique The Name', business: 'Entreprises', about: 'À propos', contact: 'Nous contacter', menu: 'Menu' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Discuter sur WhatsApp' },
 
@@ -41,7 +41,7 @@ export default {
 
   home: {
     hero: {
-      titleLead: 'Du Nom.',
+      titleLeadPrefix: 'De',
       titleScript: 'À votre nom.',
       body: 'Nous sélectionnons des objets au design affirmé et les rendons personnels — avec votre nom, votre message, votre histoire ou votre marque. D\'un cadeau unique à toute une collection d\'entreprise, chaque pièce est faite pour porter une identité.',
       mediaLabel: 'Vidéo ou photo de personnalisation — gravure, impression, cadeaux finis',

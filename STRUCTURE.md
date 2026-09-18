@@ -113,7 +113,21 @@ src/
                                     by only that component live in its folder
                                     too (e.g. Footer/SocialLinks.jsx).
                                     Currently:
-      Navbar/, Footer/
+      Navbar/         — the sticky top bar. It renders the pages and the
+                        LanguageSwitcher ONCE, inside `.navbar-menu`: above
+                        860px that wrapper is `display: contents`, so they lay
+                        out as direct children of the bar (the desktop row);
+                        at or below 860px it becomes a translucent dropdown
+                        under a stack (hamburger) toggle, and the bar is a
+                        single row of logo + toggle at every width. The panel
+                        is `position: absolute` and there is NO scrim — the
+                        bar's backdrop-filter would trap a fixed overlay
+                        inside it (see LanguageSwitcher.jsx below), so the
+                        menu closes on Escape, on a route change, and on a
+                        pointerdown outside the bar. That same backdrop root
+                        makes a backdrop-filter on the panel a no-op, which is
+                        why the panel is translucent but not blurred.
+      Footer/
     LanguageSwitcher.jsx
                       — the language menu in the navbar. Its menu and scrim
                         are rendered in a PORTAL on <body> and positioned from
@@ -132,8 +146,13 @@ src/
                         descendants and opens its own stacking context — so in
                         place, the scrim's `inset: 0` covered only the bar and
                         the menu's z-index could not escape the bar's. Both
-                        showed up on mobile, where `.nav` wraps and the bar is
-                        short. Measuring from the trigger also fixes the menu
+                        showed up on mobile, back when `.nav` wrapped to two
+                        rows there; the bar is one row at every width now that
+                        the pages fold into Navbar's dropdown, but the
+                        containing-block trap is unchanged and the switcher
+                        still has to portal out of the bar — from inside the
+                        dropdown as much as from the desktop row. Measuring
+                        from the trigger also fixes the menu
                         drifting as nav labels change width between languages.
                         DO NOT give the menu or scrim a plain CSS position
                         again, and beware of adding `position: fixed` children
@@ -143,6 +162,14 @@ src/
                         ground it sits on — 'light' (navbar) → charcoal
                         artwork, 'dark' (footer) → yellow artwork — so the
                         ink always contrasts. Files from media.brand.logos.
+                        Two props for setting it INSIDE a line of text, both
+                        used by the Home hero and nowhere else:
+                        `compact={false}` drops the ≤480px swap (the secondary
+                        N alone does not read as the brand's name mid-
+                        sentence), and `size="inline"` sizes it off the
+                        surrounding font-size onto the text baseline instead
+                        of a fixed pixel height — see the comment in Logo.css
+                        for why that height is 1.11em and not the cap height.
       ContactForm/    — the enquiry form plus the email/phone details beside
                         it. This WAS the /contact page; when the form moved
                         to the foot of About it became a component, so the
@@ -401,7 +428,12 @@ public/media/
                   logo-main-dark.png / logo-main-yellow.png
                   logo-secondary-dark.png / logo-secondary-yellow.png
                     — the lockups in charcoal (light grounds) and yellow
-                      (dark grounds); see components/Logo.jsx
+                      (dark grounds); see components/Logo.jsx. The
+                      "YOUR SOCIAL HUB" tagline was cropped out of all four
+                      in Sept 2026 (it sat under the main wordmark and beside
+                      the secondary N), so they are wordmark-only now. The
+                      untracked repo-root originals still have it — re-crop
+                      rather than re-export if these are ever regenerated.
                   mark-outline.png — the outline N tile (one bubble per set)
                   mark-filled.png  — the filled N tile (chat button, tab icon)
                 Also `footer-pattern.svg`, the guideline's hand-drawn line
@@ -417,7 +449,7 @@ placeholder instead, so partially-supplied media degrades cleanly.
 
 | Route | Folder | Notes |
 |---|---|---|
-| `/` | `pages/Home/` | Customization-led. Hero (the title in two lines — i18n `home.hero.titleLead`, then `titleScript` under it in --font-script; the "Browse the products" CTA is `.btn-sparkle`, beside it a plain `<a>` to the Matterport 3D walkthrough — an external tour, so not a router Link), `LogoMarquee` of the partner brands (`data/brands.js`, no heading), 2 services — B2C gifts, B2B branding; the cafe and catering rows were removed — (with the `Bubbles` ornament in shop icons plus the N mark: gutter fields above 1280px, left-to-right bands between the rows below it; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": `ProcessSteps` plus a picker of customization methods (`customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
+| `/` | `pages/Home/` | Customization-led. Hero (the title in two lines — the first is i18n `home.hero.titleLeadPrefix` followed by the `Logo` component standing in for the brand's name: it is the brand, so it is artwork and is never translated, and the prefix holds only the word(s) in front of it since the lockup reads "THE NAME", article included. Then `titleScript` under it in --font-script; the "Browse the products" CTA is `.btn-sparkle`, beside it a plain `<a>` to the Matterport 3D walkthrough — an external tour, so not a router Link), `LogoMarquee` of the partner brands (`data/brands.js`, no heading), 2 services — B2C gifts, B2B branding; the cafe and catering rows were removed — (with the `Bubbles` ornament in shop icons plus the N mark: gutter fields above 1280px, left-to-right bands between the rows below it; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": `ProcessSteps` plus a picker of customization methods (`customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
 | `/cafe` | `pages/Cafe/` | **PARKED — no route, no nav entry** (see App.jsx above); the folder and its copy are kept so it can be switched back on. Title block, then the delivery-partner `LogoMarquee` — **commented out** for now (ids/URLs in this page's `data.js`, names under i18n cafe.partners) — then the menu (List/Cards toggle; cards are `OverlayCard` with tag + price chips and an icon-only WhatsApp action; autoplaying carousels, 3 sections). Food `Bubbles` (plus the N mark) at 3× scale fill the gutters on wide screens (no narrow-screen bands). Plus the **events** section at its foot — nights held in our own room, rendered by `PackagesPanel`. Was `pages/Menu/`. |
 | `/shop` | `pages/Shop/` | Labelled "The Name Store" in the nav. "Make It Personal" — curated objects from partner brands and house pieces that take a name, initials or a logo. Category filters (drinkware / tech / desk / travel), List/Cards toggle, autoplaying carousel. **Gift sets are not a filter** — they have their own section below the catalogue, a picture grid of `OverlayCard`s on the pale accent band (`shop.giftSets` copy, `giftSets` from `data/catalogue.js`). Cards are the shared `OverlayCard` (methods + code chips, brand kicker, finish · lead meta, arrow link). The list view keeps the longer note. Was `pages/VertexPieces/` (an interiors showroom) before the customization pivot. |
 | `/business` | `pages/Business/` | B2B: branded-goods offer cards, account terms, and the **catering** section ("at your address"), rendered by `PackagesPanel`. The off-site event-catering row was removed from `cateringPackageIds` and from all four translations. |

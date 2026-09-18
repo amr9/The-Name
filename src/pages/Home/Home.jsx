@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Bubbles from '../../components/Bubbles/Bubbles.jsx';
 import { shopIcons } from '../../components/Bubbles/icons.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
+import Logo from '../../components/Logo.jsx';
 import LogoMarquee from '../../components/LogoMarquee/LogoMarquee.jsx';
 import ProcessSteps from '../../components/ProcessSteps/ProcessSteps.jsx';
 import { brands } from '../../data/brands.js';
@@ -26,9 +27,16 @@ export default function Home() {
         </div>
         <div className="home-hero-scrim" />
         <div className="container home-hero-content">
-          {/* two lines: the lead in the heading face, the answer under it in the script face */}
+          {/* two lines: the lead in the heading face, the answer under it in the script face.
+              The lead ends on the brand lockup standing in for the name itself — it is the
+              brand, so it is artwork rather than translated copy, and `titleLeadPrefix` is
+              only the word(s) in front of it (the lockup reads "THE NAME", article included).
+              `compact={false}` keeps the full wordmark on phones; the secondary N would
+              leave the sentence reading "From N." */}
           <h1 className="home-hero-title">
-            <span className="home-hero-title-lead">{t.home.hero.titleLead}</span>
+            <span className="home-hero-title-lead">
+              {t.home.hero.titleLeadPrefix} <Logo size="inline" compact={false} />.
+            </span>
             <span className="home-hero-title-script">{t.home.hero.titleScript}</span>
           </h1>
           <p className="home-hero-body">{t.home.hero.body}</p>

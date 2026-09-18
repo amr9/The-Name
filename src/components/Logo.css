@@ -12,6 +12,23 @@
 .logo-md { height: 40px; }
 .logo-lg { height: 76px; }
 
+/* Set in a line of text rather than placed in a layout: the lockup sizes off
+   the surrounding font-size and sits on its baseline, so it reads as a word
+   in the sentence.
+
+   The height is NOT the cap height. In the main lockup the big "NAME" letters
+   fill rows 42–122 of the 125-tall artwork, with the small raised "THE" above
+   them — so to set NAME on the heading face's caps (~0.72em) the whole box has
+   to be 0.72 × 125/81 ≈ 1.11em, and the "THE" rides above the cap line exactly
+   as it does in the navbar. The negative margin is the 2px of transparent
+   artwork below the wordmark's baseline, so the lockup sits on the text's. */
+.logo-inline {
+  display: inline-block;
+  height: 1.11em;
+  vertical-align: baseline;
+  margin-bottom: -0.018em;
+}
+
 @media (max-width: 480px) {
   .logo-md { height: 38px; }
   .logo-lg { height: 60px; }

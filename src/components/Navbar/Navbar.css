@@ -1,9 +1,9 @@
 .navbar {
   position: sticky;
   top: 0;
-  /* Below the desktop breakpoint the bar wraps to two or three rows, so it
-     may only be pinned to the token height where it genuinely fits one. */
-  min-height: var(--navbar-h);
+  /* On phones the pages fold into the dropdown, so the bar is one row at every
+     width and may be pinned to the token height. */
+  height: var(--navbar-h);
   z-index: 40;
   background: color-mix(in srgb, #fff 86%, transparent);
   backdrop-filter: blur(12px);
@@ -15,6 +15,70 @@
   font-size: var(--text-sm);
 }
 
-@media (min-width: 861px) {
-  .navbar { height: var(--navbar-h); }
+/* Above the breakpoint the wrapper disappears from the layout, so the links
+   and the language switcher are flex children of the bar itself — the row the
+   desktop bar has always been. The toggle only exists on phones. */
+.navbar-menu { display: contents; }
+.navbar-toggle { display: none; }
+
+@media (max-width: 860px) {
+  .navbar-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid var(--color-accent-200);
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+  .navbar-toggle:hover { background: var(--color-accent-100); }
+
+  /* The dropdown. It is `absolute` inside the bar rather than `fixed`, because
+     the bar's backdrop-filter makes it the containing block for fixed
+     descendants — see LanguageSwitcher.jsx. That same backdrop-filter is why
+     the panel is only translucent and does not blur behind itself: it opens a
+     backdrop root, so a backdrop-filter here is a no-op (verified in Chrome).
+     With no blur to soften what shows through, the white has to stay high
+     enough that the page under the panel does not garble the link text. */
+  .navbar-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    position: absolute;
+    top: 100%;
+    inset-inline-end: clamp(20px, 5vw, 72px);
+    margin-top: 10px;
+    min-width: 200px;
+    max-width: calc(100vw - 40px);
+    padding: 8px;
+    background: color-mix(in srgb, #fff 88%, transparent);
+    border: 1px solid var(--color-accent-200);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+  .navbar-menu[data-open='false'] { display: none; }
+
+  .navbar-menu .navbar-link {
+    padding: 10px 12px;
+    border-radius: calc(var(--radius-lg) - 6px);
+  }
+  .navbar-menu .navbar-link:hover,
+  .navbar-menu .navbar-link[aria-current='page'] {
+    background: color-mix(in srgb, var(--color-accent-100) 75%, transparent);
+  }
+
+  /* The switcher sits below the pages, off the same divider that separates it
+     from them, and fills the panel's width. */
+  .navbar-menu .lang-switcher {
+    display: flex;
+    margin-top: 6px;
+    padding-top: 8px;
+    border-top: 1px solid var(--color-accent-200);
+  }
+  .navbar-menu .lang-switcher-trigger { width: 100%; justify-content: center; }
 }

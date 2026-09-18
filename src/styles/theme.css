@@ -418,7 +418,7 @@ button { font: inherit; }
   .row-text, .row-img { order: 0 !important; }
 }
 @media (max-width: 700px) {
-  .nav { flex-wrap: wrap; row-gap: 10px; padding-block: 12px; }
-  .nav-brand { width: 100%; }
+  /* The bar used to wrap to two rows here; the pages now fold into the
+     navbar's dropdown instead, so it stays a single row at every width. */
   .seg { flex-wrap: wrap; }
 }

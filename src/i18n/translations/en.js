@@ -1,7 +1,7 @@
 export default {
   // `cafe` is kept for the parked cafe page; `contact` for the enquiry form,
   // which now sits at the foot of About rather than on its own page.
-  nav: { home: 'Home', cafe: 'Cafe', kids: 'Kids', shop: 'The Name Store', business: 'Business', about: 'About', contact: 'Contact us' },
+  nav: { home: 'Home', cafe: 'Cafe', kids: 'Kids', shop: 'The Name Store', business: 'Business', about: 'About', contact: 'Contact us', menu: 'Menu' },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chat on WhatsApp' },
 
@@ -41,7 +41,7 @@ export default {
 
   home: {
     hero: {
-      titleLead: 'From the Name.',
+      titleLeadPrefix: 'From',
       titleScript: 'To Your Name.',
       body: 'We curate design-forward objects and make them personal — with your name, your message, your story or your brand. From one meaningful gift to a full corporate collection, every piece is made to carry an identity.',
       mediaLabel: 'Customization video loop or still — engraving, printing, finished gifts',
