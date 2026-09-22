@@ -335,24 +335,26 @@ src/
                           first. Its transform settles at `none`, so it never
                           becomes a lasting containing block for a fixed-
                           position descendant — do not make it permanent).
-                          Fonts: the brand guideline (p.14) names exactly
-                          three faces and NO others — --font-heading (Book
-                          Antiqua), --font-body (Montserrat) and
-                          --font-script (Artisoul Signature). Do not add a
-                          fourth. Montserrat is the only one available from
-                          a web-font CDN (Google Fonts, linked in
-                          index.html); the other two are licensed faces, so
-                          theme.css declares @font-face rules at the top
-                          that try the visitor's locally installed copy
+                          Fonts: three faces and NO others —
+                          --font-heading (Book Antiqua), --font-body
+                          (Montserrat) and --font-script (Allura). Do not
+                          add a fourth. Montserrat and Allura both load
+                          from Google Fonts (linked in index.html), so they
+                          render as drawn everywhere. Allura replaces the
+                          brand guideline's (p.14) Artisoul Signature,
+                          which is licensed, on no CDN, and so only ever
+                          rendered on machines that happened to have it
+                          installed. Book Antiqua is the one licensed face
+                          left: theme.css declares @font-face rules at the
+                          top that try the visitor's locally installed copy
                           first and then a self-hosted file. THOSE FILES
                           ARE NOT IN THE REPO — public/fonts/ holds only
-                          .gitkeep — so on any machine without them
-                          installed the fallback chains take over and
-                          headings render as Georgia, the script line as a
-                          system handwriting face. Saving
-                          book-antiqua.woff2, book-antiqua-bold.woff2 and
-                          artisoul-signature.woff2 into public/fonts/ is
-                          the entire fix; no code change is needed. Gradients: --gradient-panel
+                          .gitkeep — so on any machine without Book Antiqua
+                          installed the fallback chain takes over and
+                          headings render as Georgia. Saving
+                          book-antiqua.woff2 and book-antiqua-bold.woff2
+                          into public/fonts/ is the entire fix; no code
+                          change is needed. Gradients: --gradient-panel
                           (the guideline's orange→gold panel, built from the
                           --color-panel-* stops), --gradient-panel-flow (its
                           seamless moving tile), --gradient-footer (--color-ink

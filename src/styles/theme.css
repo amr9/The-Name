@@ -63,10 +63,10 @@
   --font-heading: "Book Antiqua", "Palatino Linotype", Palatino, Georgia, serif;
   --font-heading-weight: 700;
   --font-body: "Montserrat", system-ui, sans-serif;
-  /* The signature script (the Home hero's "To Your Name."). Loaded by the
-     @font-face below from public/fonts/; until that file is there it falls
-     back to a system script face. */
-  --font-script: "Artisoul Signature", "Segoe Script", "Brush Script MT", cursive;
+  /* The signature script (the Home hero's "To Your Name."). Allura is on
+     Google Fonts, linked from index.html, so no @font-face or self-hosted
+     file is needed here; the fallbacks only apply if that link fails. */
+  --font-script: "Allura", "Segoe Script", "Brush Script MT", cursive;
 
   /* Body type scale. Every non-heading run of copy picks one of these —
      never a raw px value — so the whole site's reading size is tuned here.
@@ -103,20 +103,17 @@
   --shadow-lg: 0 12px 32px color-mix(in srgb, #000000 22%, transparent);
 }
 
-/* The guideline (p.14) names exactly three faces and no others: Book Antiqua
-   for display headings, Montserrat for body text, Artisoul Signature for the
-   script line. Montserrat is the only one on a web-font CDN — it loads from
-   Google Fonts in index.html. The other two are licensed faces that are NOT
-   on any CDN, so they render as specified ONLY where the visitor happens to
-   have them installed (Book Antiqua ships with MS Office, so Windows only) or
-   once their files are saved into public/fonts/.
-   Everywhere else the fallback chains below take over, which is why headings
-   can show as Georgia and the script line as a system handwriting face —
-   fonts the guideline never specified. Saving the two files under the names
-   below is the whole fix; no code change is needed.
+/* Three faces and no others: Book Antiqua for display headings, Montserrat
+   for body text, Allura for the script line. Montserrat and Allura both load
+   from Google Fonts in index.html, so they render as drawn everywhere.
+   (Allura replaces the guideline's Artisoul Signature, which is licensed and
+   on no CDN — it only ever rendered on machines that happened to have it.)
+   Book Antiqua is the one licensed face left: it renders as specified ONLY
+   where the visitor has it installed (it ships with MS Office, so Windows
+   only) or once its files are saved into public/fonts/ —
      public/fonts/book-antiqua.woff2        (+ -bold.woff2)
-     public/fonts/artisoul-signature.woff2
-   Each @font-face tries the locally installed copy first, then the self-hosted
+   otherwise the fallback chain takes over and headings show as Georgia.
+   The @font-face tries the locally installed copy first, then the self-hosted
    file. Regular and bold are declared separately so an installed Book Antiqua
    Bold is used as drawn rather than synthesised from the regular. */
 @font-face {
@@ -134,20 +131,6 @@
     url("/fonts/book-antiqua-bold.woff2") format("woff2"),
     url("/fonts/book-antiqua-bold.otf") format("opentype");
   font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Artisoul Signature (--font-script) is a licensed script face, not on Google
-   Fonts — save it as public/fonts/artisoul-signature.woff2 (or .otf). A copy
-   installed on the visitor's machine is used first; with neither, the
-   --font-script fallbacks take over. */
-@font-face {
-  font-family: "Artisoul Signature";
-  src: local("Artisoul Signature"),
-    url("/fonts/artisoul-signature.woff2") format("woff2"),
-    url("/fonts/artisoul-signature.otf") format("opentype");
-  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
