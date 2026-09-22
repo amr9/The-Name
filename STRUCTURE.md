@@ -335,12 +335,23 @@ src/
                           first. Its transform settles at `none`, so it never
                           becomes a lasting containing block for a fixed-
                           position descendant — do not make it permanent).
+                          .page-title is the shared class on every page's
+                          <h1>: it sets --font-script (Cedarville Cursive),
+                          italic and 700 — both synthetic, the face ships
+                          only a regular upright cut — plus the leading,
+                          tracking and optical left pull that were
+                          identical in all seven page rules. It flips back
+                          to the upright heading serif under [dir="rtl"],
+                          since the script has no Arabic glyphs. Each page
+                          keeps only its own font-size clamp / margin /
+                          max-width.
                           Fonts: three faces and NO others —
                           --font-heading (Book Antiqua), --font-body
-                          (Montserrat) and --font-script (Allura). Do not
-                          add a fourth. Montserrat and Allura both load
-                          from Google Fonts (linked in index.html), so they
-                          render as drawn everywhere. Allura replaces the
+                          (Montserrat) and --font-script (Cedarville
+                          Cursive). Do not add a fourth. Montserrat and
+                          Cedarville Cursive both load from Google Fonts
+                          (linked in index.html), so they render as drawn
+                          everywhere. Cedarville Cursive replaces the
                           brand guideline's (p.14) Artisoul Signature,
                           which is licensed, on no CDN, and so only ever
                           rendered on machines that happened to have it

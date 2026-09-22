@@ -27,7 +27,7 @@ export default function Cafe() {
 
       <header className="container">
         <span className="card-kicker">{t.cafe.kicker}</span>
-        <h1 className="cafe-title">{t.cafe.title}</h1>
+        <h1 className="page-title cafe-title">{t.cafe.title}</h1>
         <p className="cafe-intro">{t.cafe.intro}</p>
       </header>
 

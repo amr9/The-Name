@@ -34,7 +34,7 @@ export default function Home() {
               `compact={false}` keeps the full wordmark on phones; the secondary N would
               leave the line reading "From N". The lockup ends the line unpunctuated —
               the full stop the copy used to carry belongs to the wordmark's own shape. */}
-          <h1 className="home-hero-title">
+          <h1 className="page-title home-hero-title">
             <span className="home-hero-title-lead">
               {t.home.hero.titleLeadPrefix} <Logo size="inline" compact={false} />
             </span>

@@ -26,9 +26,7 @@
 }
 .shop-hero-title {
   font-size: clamp(38px, 4.6vw, 62px);
-  line-height: 1.03;
   margin: 20px 0 0;
-  margin-left: -0.028em;
   max-width: 24ch;
 }
 .shop-hero-body {

@@ -45,23 +45,18 @@
 
 .home-hero-title {
   font-size: clamp(42px, 6vw, 86px);
-  line-height: 1.02;
   margin: 20px 0 0;
-  margin-left: -0.028em;
   max-width: 22ch;
 }
 .home-hero-title-lead,
 .home-hero-title-script {
   display: block;
 }
-/* the second line in the brand's signature script, a touch larger since
-   script faces run small for their size */
+/* Both lines are in the script now that .page-title carries it — the face,
+   weight, tracking and leading all come from there. The second line keeps the
+   size bump that sets it apart from the lead line above the Logo. */
 .home-hero-title-script {
-  font-family: var(--font-script);
-  font-weight: 400;
   font-size: 1.2em;
-  line-height: 1.15;
-  letter-spacing: 0;
   margin-top: 0.06em;
 }
 

@@ -12,7 +12,7 @@ export default function Business() {
   return (
     <div className="container business-page">
       <span className="card-kicker">{t.business.kicker}</span>
-      <h1 className="business-title">{t.business.title}</h1>
+      <h1 className="page-title business-title">{t.business.title}</h1>
       <p className="business-intro">{t.business.intro}</p>
 
       {/* — what we brand for companies — */}

@@ -63,10 +63,11 @@
   --font-heading: "Book Antiqua", "Palatino Linotype", Palatino, Georgia, serif;
   --font-heading-weight: 700;
   --font-body: "Montserrat", system-ui, sans-serif;
-  /* The signature script (the Home hero's "To Your Name."). Allura is on
-     Google Fonts, linked from index.html, so no @font-face or self-hosted
-     file is needed here; the fallbacks only apply if that link fails. */
-  --font-script: "Allura", "Segoe Script", "Brush Script MT", cursive;
+  /* The signature script: every page's hero <h1>, set italic by .page-title.
+     Cedarville Cursive is on Google Fonts, linked from index.html, so no
+     @font-face or self-hosted file is needed here; `cursive` only applies if
+     that link fails. */
+  --font-script: "Cedarville Cursive", cursive;
 
   /* Body type scale. Every non-heading run of copy picks one of these —
      never a raw px value — so the whole site's reading size is tuned here.
@@ -104,10 +105,11 @@
 }
 
 /* Three faces and no others: Book Antiqua for display headings, Montserrat
-   for body text, Allura for the script line. Montserrat and Allura both load
-   from Google Fonts in index.html, so they render as drawn everywhere.
-   (Allura replaces the guideline's Artisoul Signature, which is licensed and
-   on no CDN — it only ever rendered on machines that happened to have it.)
+   for body text, Cedarville Cursive for the script line. Montserrat and
+   Cedarville Cursive both load from Google Fonts in index.html, so they render
+   as drawn everywhere. (Cedarville Cursive replaces the guideline's Artisoul
+   Signature, which is licensed and on no CDN — it only ever rendered on
+   machines that happened to have it installed.)
    Book Antiqua is the one licensed face left: it renders as specified ONLY
    where the visitor has it installed (it ships with MS Office, so Windows
    only) or once its files are saved into public/fonts/ —
@@ -167,6 +169,34 @@ h3 { font-size: 25px; }
 h4 { font-size: 20px; }
 h5 { font-size: 16px; }
 h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* The page <h1> on every route, set in the brand's signature script. Each
+   page keeps its own font-size clamp / margin / max-width in its own CSS —
+   only what is identical on every page lives here. A script face needs more
+   leading than the 1.12 the h1 rule gives it (the loops and descenders collide
+   otherwise), and the -0.015em tracking above would run the joined letters
+   together, so both are reset; the -0.028em pull puts the first glyph's left
+   edge on the text margin. Cedarville Cursive ships one file only — regular,
+   upright — so both the italic and the 700 here are synthetic: the browser
+   shears the glyphs for the slant and smears them outward for the weight. It
+   has no Arabic glyphs either, so RTL falls back to the heading serif, which
+   has real bold and italic cuts, and is set upright at its own heading
+   weight. */
+.page-title {
+  font-family: var(--font-script);
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.15;
+  margin-left: -0.028em;
+}
+[dir="rtl"] .page-title {
+  font-family: var(--font-heading);
+  font-style: normal;
+  font-weight: var(--font-heading-weight);
+  letter-spacing: -0.015em;
+  margin-left: 0;
+}
 p { margin: 0 0 var(--space-3); }
 a { color: var(--color-accent-700); text-decoration: none; text-underline-offset: 3px; }
 a:hover { color: var(--color-accent-800); }

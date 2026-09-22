@@ -8,9 +8,7 @@
 
 .business-title {
   font-size: clamp(36px, 4.2vw, 52px);
-  line-height: 1.04;
   margin: 0;
-  margin-left: -0.028em;
 }
 .business-intro {
   font-size: var(--text-lg);

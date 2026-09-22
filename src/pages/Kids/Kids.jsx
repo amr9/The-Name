@@ -15,7 +15,7 @@ export default function Kids() {
       <header className="container kids-hero">
         <div className="kids-hero-text">
           <span className="card-kicker">{k.kicker}</span>
-          <h1 className="kids-hero-title">{k.title}</h1>
+          <h1 className="page-title kids-hero-title">{k.title}</h1>
           <p className="kids-hero-lede">{k.lede}</p>
           <div className="kids-hero-actions">
             <Link to="/shop" className="btn btn-primary">{k.ctaShop}</Link>

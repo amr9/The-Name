@@ -29,7 +29,7 @@ export default function Shop() {
             <span className="shop-hero-badge-dot" />
             {t.shop.badge}
           </span>
-          <h1 className="shop-hero-title">{t.shop.title}</h1>
+          <h1 className="page-title shop-hero-title">{t.shop.title}</h1>
           <p className="shop-hero-body">{t.shop.body}</p>
           <div className="shop-hero-actions">
             <a className="btn btn-primary" href={site.shopUrl} target="_blank" rel="noopener noreferrer">{t.shop.openShop}</a>

@@ -15,9 +15,7 @@
 }
 .kids-hero-title {
   font-size: clamp(36px, 4.6vw, 60px);
-  line-height: 1.04;
   margin: 14px 0 0;
-  margin-left: -0.028em;
   max-width: 16ch;
   text-wrap: balance;
 }

@@ -25,7 +25,7 @@ export default function About() {
           swap to a real <video> is spelled out under the figure. — */}
       <section className="container about-video">
         <span className="card-kicker">{a.video.kicker}</span>
-        <h1 className="about-video-title">{a.video.title}</h1>
+        <h1 className="page-title about-video-title">{a.video.title}</h1>
         <p className="about-video-lede">{a.video.lede}</p>
 
         <figure className="about-video-frame">
@@ -73,7 +73,7 @@ export default function About() {
 
       <header className="container about-hero">
         <span className="card-kicker">{a.kicker}</span>
-        <h1 className="about-title">{a.title}</h1>
+        <h1 className="page-title about-title">{a.title}</h1>
         <p className="about-lede">{a.lede}</p>
       </header>
 
