@@ -21,6 +21,62 @@
 .navbar-menu { display: contents; }
 .navbar-toggle { display: none; }
 
+/* Every page sits in one of these. It exists so a page that also has a
+   section menu has something to anchor that menu to; for the rest it is an
+   inert wrapper that keeps all the pages equal flex children of the bar. */
+.navbar-item { position: relative; display: inline-flex; align-items: center; }
+
+/* — the section menu (today: Policies) — */
+
+/* Hidden but still laid out and still in the tab order's reach: opacity and
+   visibility rather than `display: none`, so opening it can be eased. The
+   4px lift is what gives the open a bit of movement rather than a hard cut. */
+.navbar-sub {
+  position: absolute;
+  top: 100%;
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  z-index: 1;
+  min-width: 210px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--color-bg);
+  border: 1px solid var(--color-accent-200);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s;
+}
+
+/* No gap between the link and the panel, or the pointer crosses dead space on
+   the way down and the menu closes under it. The bar's own bottom padding is
+   not enough to bridge that, so the panel starts flush and pads itself. */
+.navbar-item-has-menu:hover .navbar-sub,
+.navbar-item-has-menu:focus-within .navbar-sub {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.navbar-sub-link {
+  display: block;
+  padding: 9px 12px;
+  border-radius: calc(var(--radius-md) - 8px);
+  white-space: nowrap;
+}
+.navbar-sub-link:hover {
+  background: var(--color-accent-100);
+}
+
+/* The panel opens on hover, so it must not animate for anyone who has asked
+   the site to stop moving. */
+@media (prefers-reduced-motion: reduce) {
+  .navbar-sub { transition: none; }
+}
+
 @media (max-width: 860px) {
   .navbar-toggle {
     display: inline-flex;
@@ -63,10 +119,35 @@
   }
   .navbar-menu[data-open='false'] { display: none; }
 
+  /* The bar is already a panel here and a touch screen has no hover, so the
+     wrapper goes back to being a block and its sections are always visible,
+     indented under their page rather than floating over it. */
+  .navbar-item { display: block; }
+
   .navbar-menu .navbar-link {
     padding: 10px 12px;
     border-radius: calc(var(--radius-lg) - 6px);
   }
+
+  .navbar-sub {
+    position: static;
+    translate: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    min-width: 0;
+    padding: 2px 0 2px 12px;
+    background: none;
+    border: none;
+    box-shadow: none;
+  }
+  .navbar-sub-link {
+    padding: 8px 12px;
+    font-size: var(--text-sm);
+    opacity: 0.75;
+    border-radius: calc(var(--radius-lg) - 6px);
+  }
+  .navbar-sub-link:hover { opacity: 1; }
   .navbar-menu .navbar-link:hover,
   .navbar-menu .navbar-link[aria-current='page'] {
     background: color-mix(in srgb, var(--color-accent-100) 75%, transparent);

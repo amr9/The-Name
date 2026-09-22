@@ -1,7 +1,8 @@
 export default {
   // `cafe` is kept for the parked cafe page; `contact` for the enquiry form,
   // which now sits at the foot of About rather than on its own page.
-  nav: { home: 'Home', cafe: 'Cafe', kids: 'Kids', shop: 'The Name Store', business: 'Business', about: 'About', contact: 'Contact us', menu: 'Menu' },
+  nav: { home: 'Home', cafe: 'Cafe', kids: 'Kids', shop: 'The Name Store', business: 'Business', about: 'About', policies: 'Policies', contact: 'Contact us', menu: 'Menu',
+         policyTabs: { terms: 'Terms & Conditions', delivery: 'Delivery & Returns', privacy: 'Privacy Policy' } },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chat on WhatsApp' },
 
@@ -37,6 +38,444 @@ export default {
 
   footer: {
     rights: 'All rights reserved.',
+  },
+
+  // ───────────────────────────────────────────────────────────────────────────
+  // The three legal documents on /policies. Structure (which docs, which
+  // sections, in what order) is in pages/Policies/data.js; this is the copy.
+  //
+  // Each section is { heading, blocks: [...] }. A block is either a string (one
+  // paragraph) or { list: [...] } (a bulleted list). The renderer walks them in
+  // order, so a section's shape is set entirely here.
+  //
+  // {legalName}, {licensedBy} and {address} are filled from data/site.js at
+  // render time — the entity details are never retyped into the copy.
+  //
+  // The "Contact Us" clause that closed each of the three source documents is
+  // NOT repeated per doc: the page ends with a single `policies.contact` block.
+  //
+  // DELIBERATELY NOT TRANSLATED: fr.js, es.js and ar.js carry no `policies`
+  // key, so every locale falls through to this English text via the deepMerge
+  // in LanguageContext. Machine-translating binding consumer terms would create
+  // four versions that could be read against each other; a translation here
+  // needs a person who can be held to it.
+  // ───────────────────────────────────────────────────────────────────────────
+  policies: {
+    kicker: 'Legal',
+    title: 'Policies',
+    lede: 'Our terms of sale, how delivery and returns work, and what we do with your information. Everything below applies to purchases made through this website.',
+    updated: 'Last updated: September 2026',
+    tocHeading: 'On this page',
+    backToTop: 'Back to top',
+
+    docs: {
+      terms: {
+        title: 'Terms & Conditions',
+        intro: [
+          'Welcome to THE NAME.',
+          'This website and online store are operated by {legalName}, licensed by {licensedBy} and operating from {address}.',
+          'These Terms & Conditions apply to purchases made through THE NAME website. By placing an order, you agree to these Terms & Conditions.',
+          'Nothing in these Terms is intended to limit any rights available to you under applicable UAE consumer protection laws.',
+        ],
+        sections: {
+          orders: {
+            heading: 'Online Orders',
+            blocks: [
+              'Products displayed on our website are subject to availability.',
+              'Payment is made in full at checkout. Once payment has been received, your order will be reviewed by THE NAME to confirm product availability, requested quantity and, where applicable, customization requirements.',
+              'Your payment confirmation does not by itself mean that your order has been accepted for production. Your order is confirmed once it has been reviewed and accepted by THE NAME.',
+              'If we are unable to fulfil your order, we may offer you a suitable alternative. If you choose not to accept the alternative, the amount paid for the unavailable order will be refunded to your original payment method.',
+            ],
+          },
+          prices: {
+            heading: 'Prices & Payment',
+            blocks: [
+              'All prices on the website are displayed in UAE Dirhams (AED) unless otherwise stated.',
+              'Applicable VAT is calculated and displayed before checkout and will form part of the final amount payable.',
+              'Online payments are processed securely through Stripe. THE NAME does not directly store your complete payment-card details.',
+            ],
+          },
+          personalization: {
+            heading: 'Personalization & Custom Orders',
+            blocks: [
+              'THE NAME allows selected products to be personalized with details such as names, initials, dates, messages, logos or artwork.',
+              'Where the online customization tool is available, you will be shown a digital mock-up of your personalization before proceeding to checkout.',
+              'Please review your personalization carefully before placing your order. You are responsible for checking the accuracy of all information you submit, including spelling, names, initials, dates, messages and uploaded artwork.',
+              'If an item is produced correctly according to the personalization submitted and approved by you, THE NAME is not responsible for errors contained in the information you provided. Any requested remake in such circumstances may be subject to additional charges.',
+              'If THE NAME produces an item incorrectly or differently from the personalization approved by you, please contact us and we will arrange an appropriate replacement, remake or other remedy.',
+              'Requests to amend personalization after an order has been submitted may be accommodated only where production has not yet started. Once production has begun, changes may no longer be possible.',
+            ],
+          },
+          artwork: {
+            heading: 'Customer-Supplied Artwork & Content',
+            blocks: [
+              'By submitting a logo, image, artwork, trademark or other material for customization, you confirm that you own the material or have the necessary permission or rights to use it for the requested purpose.',
+              'THE NAME reserves the right to decline customization containing content that is unlawful, offensive, inappropriate or reasonably suspected of infringing the rights of another person or organization.',
+            ],
+          },
+          production: {
+            heading: 'Production Time',
+            blocks: [
+              'Standard personalized B2C orders normally require approximately 3–5 business days for production after the order has been reviewed and confirmed.',
+              "For this purpose, THE NAME's business days are Monday to Saturday, excluding UAE public holidays.",
+              'Production time and delivery time are separate.',
+              'Large-volume, corporate, bulk and specially produced orders may require different production timelines. Applicable timelines and commercial terms for such orders will be stated in the relevant quotation and/or invoice.',
+            ],
+          },
+          delivery: {
+            heading: 'Delivery',
+            blocks: [
+              'THE NAME currently delivers within the United Arab Emirates only, covering all seven Emirates.',
+              'The standard UAE delivery fee is AED 30 per order. Orders are normally delivered 1–2 business days after production is completed.',
+              "Delivery estimates are provided in good faith and may be affected by circumstances outside THE NAME's reasonable control.",
+              'A minimum order value for free delivery will be confirmed and published here.',
+              'Customers may have the option to collect their completed order free of charge from THE NAME at Dubai CommerCity, Dubai.',
+              'Full delivery information is in the Delivery & Returns Policy below.',
+            ],
+          },
+          cancellations: {
+            heading: 'Cancellations',
+            blocks: [
+              'For non-customized products, an order may be cancelled before it has been dispatched.',
+              'For personalized or custom-made products, cancellation is possible only before production has started. Once production of a personalized item has begun, the order becomes non-cancellable and non-refundable for change-of-mind purposes.',
+              'This does not affect your rights where a product is defective, damaged, incorrect or has been produced differently from the customization approved by you.',
+            ],
+          },
+          returns: {
+            heading: 'Returns & Exchanges',
+            blocks: [
+              'Eligible non-customized products may be returned within 7 days of receipt, provided that the product is unused, undamaged, in its original condition and returned with its original packaging and tags intact.',
+              'Personalized or custom-made products are non-returnable and non-refundable for change of mind once they have been produced specifically for you. This does not apply where an item is defective, damaged, incorrect or has been incorrectly customized by THE NAME.',
+              'These terms do not exclude or limit any rights or remedies that cannot lawfully be excluded under applicable UAE consumer-protection legislation. UAE rules require e-commerce providers to disclose return and exchange conditions, and restrict contractual provisions that improperly waive consumer rights.',
+            ],
+          },
+          damaged: {
+            heading: 'Damaged, Defective or Incorrect Orders',
+            blocks: [
+              'If your order arrives damaged or defective, you receive the wrong product, or THE NAME has produced personalization differently from what you approved, please contact us within 48 hours of delivery.',
+              'We may ask you to provide clear photographs of the product and, where relevant, its packaging so that we can review the issue.',
+              'Where THE NAME confirms an error or qualifying issue, we will first arrange an appropriate replacement or remake. Where replacement or remake is not possible, a full refund will be issued.',
+              'The 48-hour reporting request does not limit any statutory rights you may have under applicable UAE law.',
+            ],
+          },
+          refunds: {
+            heading: 'Refunds',
+            blocks: [
+              'Approved refunds will be issued to the original payment method used to make the purchase.',
+              'Refunds are normally processed within 7–14 business days of approval.',
+              'Your bank or payment provider may require additional time for a processed refund to appear in your account.',
+            ],
+          },
+          corporate: {
+            heading: 'Corporate & Bulk Orders',
+            blocks: [
+              'Corporate, government, event, bulk and other B2B orders may be subject to separate commercial terms.',
+              'Where applicable, payment terms, production schedules, quantities, delivery requirements and other project-specific conditions will be stated in the relevant quotation and/or invoice.',
+              'Where project-specific terms have been agreed separately, those terms will apply to that order to the extent specified.',
+            ],
+          },
+          warranty: {
+            heading: 'Product Warranty',
+            blocks: [
+              'Where a third-party branded product carries a manufacturer warranty, the terms of that warranty are set by the manufacturer. Contact us and we will tell you what cover applies to your item and how to make a claim.',
+              'Any applicable statutory warranty or consumer rights remain unaffected.',
+            ],
+          },
+          accounts: {
+            heading: 'Customer Accounts',
+            blocks: [
+              'You may purchase through THE NAME using guest checkout or by creating a customer account.',
+              'Registered customers may access their account information and previous order history when logged in.',
+              'You are responsible for keeping your account credentials secure and for notifying us if you believe your account has been accessed without authorization.',
+            ],
+          },
+          privacy: {
+            heading: 'Privacy',
+            blocks: [
+              'When you purchase from THE NAME or create an account, we may collect information necessary to process and fulfil your order, including your name, email address, mobile number, delivery address and order or customization information.',
+              'Our handling of personal information is explained in the Privacy Policy below.',
+              'Purchasing from THE NAME does not automatically subscribe you to marketing communications. Promotional communications will only be sent where you have separately opted in.',
+            ],
+          },
+          age: {
+            heading: 'Age Requirements',
+            blocks: [
+              'You must be 18 years of age or older to make a purchase directly through this website.',
+              'Any purchase, registration or submission involving a person under the age of 18 must be completed by or through their parent or legal guardian.',
+            ],
+          },
+          ip: {
+            heading: 'Intellectual Property',
+            blocks: [
+              'Unless otherwise stated, the website design, copy, photography, graphics, creative materials and original content associated with THE NAME may not be copied, reproduced, distributed or commercially used without prior permission.',
+              'Third-party brand names, product names, logos and trademarks displayed on the website remain the property of their respective owners.',
+              'The website is designed and developed by The Name Agency.',
+            ],
+          },
+          changes: {
+            heading: 'Changes to These Terms',
+            blocks: [
+              'THE NAME may update these Terms & Conditions from time to time to reflect changes to our services, website, operational practices or applicable legal requirements.',
+              'The version applicable to your purchase will be the version in effect when your order is placed, except where a change is required by applicable law.',
+            ],
+          },
+          law: {
+            heading: 'Governing Law',
+            blocks: [
+              'These Terms & Conditions and purchases made through THE NAME website are governed by the applicable laws of the United Arab Emirates.',
+              'Nothing in these Terms excludes or restricts rights provided to consumers under applicable UAE law. UAE consumer-protection legislation applies to goods and services in the UAE, including e-commerce transactions involving providers registered in the UAE and free zones.',
+            ],
+          },
+        },
+      },
+
+      delivery: {
+        title: 'Delivery & Returns Policy',
+        intro: [
+          "At THE NAME, many of our pieces are made personal especially for you. Below you'll find everything you need to know about production, delivery, cancellations, returns and refunds.",
+          'This policy should be read together with the Terms & Conditions above. Nothing in this policy limits your rights under applicable UAE consumer protection laws, which apply to UAE-registered e-commerce providers including businesses operating in free zones.',
+        ],
+        sections: {
+          production: {
+            heading: 'Production Time',
+            blocks: [
+              'Personalized orders typically require 3–5 business days for production after your order has been reviewed and confirmed by THE NAME.',
+              'Our business days are Monday to Saturday, excluding UAE public holidays.',
+              'Please remember that production time and delivery time are separate.',
+              'For corporate, bulk or specially produced orders, the applicable production timeframe will be confirmed separately in the relevant quotation and/or invoice.',
+            ],
+          },
+          across: {
+            heading: 'Delivery Across the UAE',
+            blocks: [
+              'We currently deliver within the UAE only, covering all seven Emirates.',
+              'Delivery is AED 30 per order, and your order normally arrives approximately 1–2 business days after production is completed.',
+              'Delivery estimates are provided in good faith and may occasionally be affected by circumstances outside our reasonable control.',
+              'A minimum order value for free delivery will be confirmed and published here.',
+            ],
+          },
+          collection: {
+            heading: 'Collection from THE NAME',
+            blocks: [
+              'Customers may also have the option to collect their completed order free of charge from THE NAME at Dubai CommerCity, Dubai.',
+              'Collection details will be provided once the order is ready.',
+            ],
+          },
+          cancelling: {
+            heading: 'Cancelling an Order',
+            blocks: [
+              'Changed your mind? The cancellation conditions depend on whether your order has been personalized.',
+              'Non-customized orders may be cancelled before they have been dispatched. Personalized or custom-made orders may be cancelled only before production has started.',
+              'Once production of a personalized item has begun, the order becomes non-cancellable and non-refundable for change of mind.',
+              'To request a cancellation, contact us as soon as possible using the details at the foot of this page.',
+            ],
+          },
+          returns: {
+            heading: 'Returns — Non-Customized Products',
+            blocks: [
+              'Eligible non-customized products may be returned within 7 days of receipt. To qualify for a return, the product must be:',
+              { list: [
+                'unused and undamaged;',
+                'in its original condition; and',
+                'returned with its original packaging and tags intact.',
+              ] },
+              'Contact our team before returning an item so we can confirm the return process.',
+            ],
+          },
+          personalized: {
+            heading: 'Personalized Products',
+            blocks: [
+              'Because personalized products are created specifically for you, they are non-returnable and non-refundable for change of mind once produced.',
+              'Please check all names, initials, dates, messages, artwork and other personalization carefully before completing your order. Where a digital customization preview is provided, proceeding to checkout confirms the personalization displayed.',
+              'If the information you entered and approved contains an error, THE NAME is not responsible for that customer-entered error and a remake may be chargeable.',
+              'This does not affect your rights where the item is defective, damaged, incorrect, or THE NAME has produced it differently from the customization you approved. UAE consumer-protection rules impose remedies in cases involving defective goods and prohibit terms that improperly remove statutory consumer rights.',
+            ],
+          },
+          damaged: {
+            heading: 'Damaged, Defective or Incorrect Orders',
+            blocks: [
+              'Please contact us within 48 hours of delivery if your item:',
+              { list: [
+                'arrives damaged or defective,',
+                'is not the product you ordered, or',
+                'has been personalized differently from what you approved.',
+              ] },
+              'Include your order details and clear photographs of the product and, where relevant, its packaging so our team can review the issue.',
+              "Where THE NAME confirms an error or qualifying issue, we will first arrange a replacement or remake. If a replacement or remake isn't possible, we will issue a full refund.",
+              'The 48-hour reporting request does not restrict any statutory consumer rights that apply under UAE law.',
+            ],
+          },
+          refunds: {
+            heading: 'Refunds',
+            blocks: [
+              'Approved refunds will be returned to the original payment method used for the purchase.',
+              'Refunds are normally processed within 7–14 business days from approval.',
+              'Please note that your bank or card provider may require additional processing time before a completed refund appears in your account.',
+            ],
+          },
+        },
+      },
+
+      privacy: {
+        title: 'Privacy Policy',
+        intro: [
+          'At THE NAME, we respect your privacy and are committed to handling your personal information responsibly and in accordance with applicable laws of the United Arab Emirates.',
+          'This Privacy Policy explains what information we collect when you use our website or purchase from us, why we collect it, how it may be used and shared, and the choices available to you.',
+        ],
+        sections: {
+          who: {
+            heading: 'Who We Are',
+            blocks: [
+              'This website and online store are operated by {legalName}, of {address}, licensed by {licensedBy}.',
+              'Privacy-related questions and requests go to the privacy address at the foot of this page.',
+            ],
+          },
+          collect: {
+            heading: 'Information We Collect',
+            blocks: [
+              'When you browse, create an account, place an order or contact us in relation to a purchase, we may collect information including:',
+              { list: [
+                'your full name;',
+                'email address;',
+                'mobile number;',
+                'delivery address;',
+                'account information, where you create an account;',
+                'order details; and',
+                'information, text, logos or artwork you provide for personalization.',
+              ] },
+              'We collect only information reasonably required to provide our services, fulfil your orders, communicate with you and operate our online store.',
+            ],
+          },
+          payment: {
+            heading: 'Payment Information',
+            blocks: [
+              'Online payments are processed through Stripe.',
+              'THE NAME does not directly store your complete payment-card details. Payment information required to process your transaction is handled by the payment provider in accordance with its applicable security and privacy practices.',
+            ],
+          },
+          use: {
+            heading: 'How We Use Your Information',
+            blocks: [
+              'We may use your personal information to:',
+              { list: [
+                'create and manage your customer account;',
+                'process and confirm your orders;',
+                'produce personalized products;',
+                'arrange delivery or collection;',
+                'communicate with you about your order;',
+                'manage cancellations, returns, refunds and complaints;',
+                'provide customer support;',
+                'maintain transaction and order records;',
+                'comply with applicable accounting, tax, regulatory or legal obligations; and',
+                'protect the security and integrity of our website and services.',
+              ] },
+              'We will not use information collected through an order to automatically subscribe you to marketing communications.',
+            ],
+          },
+          marketing: {
+            heading: 'Marketing Communications',
+            blocks: [
+              'Purchasing from THE NAME does not automatically subscribe you to promotional communications.',
+              'We may send you promotional emails, WhatsApp messages or other marketing communications only where you have separately chosen to receive them. You may withdraw your marketing consent at any time.',
+              'UAE consumer-protection legislation recognizes protection of consumer privacy and data security, and restricts the use of consumer data for promotion and marketing.',
+            ],
+          },
+          sharing: {
+            heading: 'Sharing Your Information',
+            blocks: [
+              'We do not sell your personal information or provide it to third parties for their own marketing purposes.',
+              'We may share only the information reasonably necessary with service providers that help us operate and fulfil your purchase. This may include:',
+              { list: [
+                'Stripe — to process online payments.',
+                'Delivery and courier providers — to deliver your order. This may include sharing information such as your name, mobile number and delivery address.',
+              ] },
+              'We may also disclose information where required by applicable law, regulation, court order or a competent UAE authority.',
+            ],
+          },
+          accounts: {
+            heading: 'Customer Accounts',
+            blocks: [
+              'You may shop through THE NAME using guest checkout or by creating a registered customer account.',
+              'If you create an account, certain information may be retained so that you can access your account details and previous order history when logged in.',
+              'You are responsible for maintaining the confidentiality of your account credentials.',
+            ],
+          },
+          personalization: {
+            heading: 'Personalization Information',
+            blocks: [
+              'Where you personalize a product, we may process the information necessary to produce your order, including names, initials, messages, logos, artwork or other customization content you submit.',
+              'This information will be used for the purpose of processing and producing your order and maintaining relevant transaction records.',
+              'Please do not submit personal information about another person through a customization unless you have the appropriate authority or permission to do so.',
+            ],
+          },
+          children: {
+            heading: 'Children',
+            blocks: [
+              'Customers must be 18 years or older to make purchases directly through our website.',
+              'Any registration, purchase, submission of personal information or artwork involving a person under 18 must be completed by or through a parent or legal guardian.',
+            ],
+          },
+          retention: {
+            heading: 'How Long We Keep Information',
+            blocks: [
+              'We retain personal information only for as long as reasonably necessary for the purposes for which it was collected, including fulfilling orders, maintaining transaction records and meeting applicable accounting, tax, regulatory and legal requirements.',
+              'Information that is no longer reasonably required will be handled in accordance with our applicable data-retention practices and legal obligations.',
+            ],
+          },
+          security: {
+            heading: 'Protecting Your Information',
+            blocks: [
+              'We take reasonable organizational and technical measures to protect personal information against unauthorized access, loss, misuse, alteration or disclosure.',
+              'However, no method of electronic transmission or storage can be guaranteed to be completely secure.',
+            ],
+          },
+          rights: {
+            heading: 'Your Personal Data Rights',
+            blocks: [
+              'Subject to applicable UAE law and any lawful exceptions, you may have rights regarding your personal information, including rights relating to access, correction, deletion or restriction of certain processing.',
+              'The UAE Personal Data Protection Law provides data subjects with rights concerning their personal information, subject to conditions and exceptions established by the legislation.',
+              'To submit a privacy or personal-data request, use the privacy address at the foot of this page. We may need to verify your identity before completing certain requests.',
+            ],
+          },
+          cookies: {
+            heading: 'Cookies & Tracking',
+            blocks: [
+              'THE NAME currently does not use advertising pixels or third-party analytics tracking tools such as Meta Pixel or Google Analytics.',
+              'The website may nevertheless use technical functionality necessary for the operation of the online store, such as maintaining sessions, customer login, shopping-cart functionality, security and checkout.',
+              'If our use of cookies, analytics or advertising technologies changes, this Privacy Policy will be updated accordingly and any required consent mechanisms will be implemented.',
+            ],
+          },
+          thirdParty: {
+            heading: 'Third-Party Services',
+            blocks: [
+              'Our website may rely on third-party services necessary to provide features such as payment processing and delivery.',
+              'Where you interact with those services, their handling of personal information may also be governed by their own applicable privacy terms.',
+              'THE NAME takes reasonable steps to work with service providers appropriate for the services they perform.',
+            ],
+          },
+          changes: {
+            heading: 'Changes to This Privacy Policy',
+            blocks: [
+              'We may update this Privacy Policy from time to time to reflect changes in our website, services, business practices or applicable legal requirements.',
+              'The latest version will be published on this website together with its updated effective date.',
+            ],
+          },
+        },
+      },
+    },
+
+    // The single contact block that closes the page, in place of the three
+    // near-identical "Contact Us" clauses the source documents each ended with.
+    contact: {
+      heading: 'Contact Us',
+      lede: 'For questions about an order, cancellation, delivery, return or complaint — and for privacy and personal-data enquiries.',
+      ordersHeading: 'Orders, delivery & returns',
+      privacyHeading: 'Privacy & personal data',
+      emailLabel: 'Email',
+      phoneLabel: 'Phone / WhatsApp',
+      addressLabel: 'Address',
+      licenceLabel: 'Licensed by',
+    },
   },
 
   home: {
@@ -273,57 +712,52 @@ export default {
 
   business: {
     kicker: 'For business',
-    title: 'Your brand, made and delivered.',
-    intro: 'Branded goods for companies — gifting, onboarding, events and uniform — plus catering at your own address. One contact, one invoice, and your artwork kept on file so every reorder matches the last.',
+    title: 'Make Your Brand the Gift.',
+    intro: 'Corporate gifting should do more than carry your logo. We create thoughtful, design-led gifts and branded collections that keep your identity visible, useful and remembered — from employee kits and client gifts to events, VIP gifting and large-scale orders.',
     offer: {
-      heading: 'What we brand',
-      lede: 'Send the logo once. We keep the artwork, the placement and the colours on file, so a reorder in six months comes back identical.',
+      heading: 'Made for Business',
+      lede: 'From one thoughtful client gift to a full employee or event collection, we bring your brand into objects people actually want to keep.',
       items: {
         corporateGifts: {
-          name: 'Corporate gifts', moq: 'From 25',
-          note: 'Client thank-yous, milestone gifts and seasonal sends, boxed and ready to hand over.',
+          name: 'Corporate Gifts', moq: 'From 25',
+          note: 'Client thank-yous, VIP gifting, milestones and seasonal moments — thoughtfully curated, branded and ready to give.',
           placeholder: 'Branded corporate gift boxes',
         },
         onboardingKits: {
-          name: 'Onboarding kits', moq: 'From 10 kits',
-          note: 'Everything a new starter gets on day one, packed as one kit and held in stock for you.',
+          name: 'Employee & Onboarding Kits', moq: 'From 10 kits',
+          note: 'Welcome new joiners with a collection that feels considered from day one — curated, personalized and packaged around your brand.',
           placeholder: 'A new-starter welcome kit, packed',
         },
         eventGiveaways: {
-          name: 'Event giveaways', moq: 'From 50',
-          note: 'Conference and launch handouts, the run sized to your guest list and delivered to the venue.',
+          name: 'Events & Brand Experiences', moq: 'From 50',
+          note: 'From launches and conferences to activations and special occasions — branded pieces designed to keep your identity in the experience.',
           placeholder: 'Branded giveaways on an event table',
         },
       },
     },
     terms: {
-      heading: 'How an account works',
-      cta: 'Start a quote on WhatsApp',
+      heading: 'How We Work With You',
+      cta: 'Start Your Brief on WhatsApp',
       items: [
-        { term: 'Quoted, not priced', detail: 'Send the product, the quantity and the deadline. A written quote comes back the same working day.' },
-        { term: 'Artwork kept on file', detail: 'Approved once, then stored against your account. Reorders skip straight to production.' },
-        { term: 'Bulk pricing', detail: 'The unit price steps down at 25, 100 and 500 pieces. Your quote shows every band.' },
+        { term: 'Tell Us What You Need', detail: "Share your brief, quantity, occasion and timeline. We'll build the right solution around your needs and budget." },
+        { term: 'Your Brand, Kept Consistent', detail: 'Once approved, your brand assets and specifications can be kept on file to make future orders simpler and consistent.' },
+        { term: 'Built Around Your Quantity', detail: 'From curated quantities to large-scale requirements, pricing and production are tailored to the scope of your order.' },
       ],
     },
     catering: {
       kicker: 'Catering',
-      heading: 'Catering, at your address',
-      lede: 'The kitchen away from the counter. Anything held in our own room is an event instead — that is on the cafe page.',
-      title: 'Catering, off-site',
-      colOne: 'Package',
-      intro: 'Everything we cook for you away from the café: lunches, buffets and full off-site events, cooked in the café kitchen and delivered in reusable crates. The menu rotates with the delivery, so it changes through the year.',
-      placeholder: 'Off-site setup at a client venue',
+      heading: 'Catering, Wherever Business Takes You.',
+      lede: 'From team lunches and meetings to corporate gatherings and off-site events, we bring THE NAME experience to your table.',
+      // No `title` here on purpose: the "Catering, off-site" heading this panel
+      // used to show above the table was dropped. PackagesPanel renders its
+      // title only when the block has one, so the Cafe page keeps its own.
+      placeholder: 'THE NAME, at your venue.',
       askFor: [
-        'The address and the delivery time',
-        'Covers and how they eat — boxed or platters',
-        'Dietary lines you need covered',
-        'Whether this repeats weekly',
+        'Date, location & preferred time',
+        'Number of guests & serving style',
+        'Dietary requirements',
+        'One-off or recurring',
       ],
-      packages: {
-        deskLunch: { name: 'Desk lunch', note: 'Boxed individually, delivered to your reception.', covers: '10–60', notice: '48 hours', from: '£11' },
-        standingBuffet: { name: 'Standing buffet', note: 'Platters set up and staffed at your venue for ninety minutes.', covers: '25–120', notice: '5 days', from: '£19' },
-        breakfastTrolley: { name: 'Breakfast trolley', note: 'Pastry, fruit, urns of house filter, delivered.', covers: '10–80', notice: '48 hours', from: '£8' },
-      },
     },
   },
 
@@ -392,45 +826,45 @@ export default {
 
   kids: {
     kicker: 'For kids',
-    title: 'Their name on it, from day one.',
-    lede: "Lunchboxes, bottles, backpacks and keepsakes with a child's name on them — so less goes missing, and what comes home is theirs. The same engraving, printing and embroidery we do for everything else, sized for smaller hands.",
+    title: 'Little Names. Big Stories.',
+    lede: 'Their name on a bottle. Their drawing on something real. Their idea turned into something they can hold. From everyday essentials to gifts, celebrations and their very first creations — we make the things that belong to their story.',
     heroPlaceholder: "A child's bottle and lunchbox with a name on them",
-    ctaShop: 'Browse the products',
-    ctaAsk: "Ask about a kids' gift",
-    offerHeading: 'What we make for children',
-    offerLede: 'Three things we are asked for most. Anything in the shop can be personalised for a child — these are just the ones that come up every week.',
+    ctaShop: 'Shop for Kids',
+    ctaAsk: 'Make Something for Them',
+    offerHeading: 'Made for Their Little Moments',
+    offerLede: "For school days, new beginnings, birthdays and everything worth putting their name on. Explore some of the ways we make it personal for little people.",
     offers: {
       backToSchool: {
-        name: 'Back to school',
-        note: 'Bottles, lunchboxes, pencil cases and bag tags, each with a name or initials, so a class of thirty stops losing them.',
+        name: 'Back to School',
+        note: 'Bottles, lunchboxes, pencil cases and everyday favourites — made easier to spot, harder to lose and unmistakably theirs.',
         placeholder: 'Named bottle, lunchbox and pencil case',
       },
       newBaby: {
-        name: 'New baby',
-        note: 'Keepsakes for a birth or a naming — a name, a date and a weight, engraved or embossed to be kept rather than used.',
+        name: 'Hello, Little One',
+        note: 'A name. A date. A tiny beginning worth remembering. Keepsakes created for the moments families hold onto.',
         placeholder: 'An engraved new-baby keepsake',
       },
       birthdays: {
-        name: 'Birthdays and parties',
-        note: 'Named party favours and a personalised main gift, made to match, from one piece up to the whole guest list.',
+        name: 'Birthdays & Celebrations',
+        note: 'Personalized gifts, party favours and little details made especially for the birthday child — and, if you like, the whole guest list.',
         placeholder: 'Named party favours on a table',
       },
     },
     note: {
-      kicker: 'How we make them',
-      heading: 'Made to be used, not just looked at.',
+      kicker: 'Made for them',
+      heading: 'Small Details. Completely Theirs.',
       points: [
-        'Engraved and printed with the same food-safe finishes we use across the shop',
-        'A digital proof of the name and its placement before anything is made',
-        'One piece is a perfectly normal order — no minimum for a single child',
-        'Whole-class and party quantities quoted, usually within a working day',
+        'Names, initials, messages, drawings and little ideas — made personal in the way that suits each piece.',
+        'See their personalization before you order, so every little detail feels right.',
+        'One child or a whole celebration — we can make one or make many.',
+        "Need something for a class, party or group? Tell us what you're planning and we'll build it with you.",
       ],
     },
     cta: {
-      heading: 'Put their name on it.',
-      body: 'Tell us the name, the age and what it is for, and we will come back with options.',
-      shop: 'Browse the products',
-      whatsapp: 'Chat on WhatsApp',
+      heading: "What's Their Name? Let's Start There.",
+      body: "Tell us who it's for, how old they are and what you're celebrating, creating or looking for. We'll help you make it theirs.",
+      shop: 'Shop for Kids',
+      whatsapp: 'Create With Us on WhatsApp',
     },
   },
 
@@ -501,9 +935,11 @@ export default {
     noticeHeader: 'Notice',
     fromHeader: 'From',
     footnote: 'Prices per head, excluding VAT and delivery. Standing orders of four weeks or more are discounted 10%.',
-    directLineKicker: 'Direct line',
-    directLineTitle: 'Send us the date and the covers',
-    openWhatsapp: 'Open WhatsApp',
-    replyNote: 'Replies within one working day · Mon–Fri 08:00–18:00',
+    // Shared with the (parked) Cafe page's own PackagesPanel — changing these
+    // changes both.
+    directLineKicker: 'Plan your catering',
+    directLineTitle: "Tell Us What You're Planning",
+    openWhatsapp: 'Plan It With Us on WhatsApp',
+    replyNote: 'Our team will get back to you with availability and next steps.',
   },
 };

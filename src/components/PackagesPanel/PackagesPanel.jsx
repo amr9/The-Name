@@ -6,6 +6,12 @@
 // `content` is one i18n block — { placeholder, title, intro, colOne, packages,
 // askFor } — and `labels` the shared table/direct-line copy under i18n
 // `packages`. `packageIds` fixes the row order and comes from the page's data.js.
+//
+// Only `placeholder` and `askFor` are required. `title`, `intro` and the whole
+// table (`packageIds` + `colOne` + `packages`) are each optional, so a page can
+// use this for the image and the direct-line panel alone: Business does, Cafe
+// still shows the full panel. Each part is omitted by leaving its key out
+// rather than by a flag, so there is nothing to keep in sync.
 import ImagePlaceholder from '../ImagePlaceholder.jsx';
 import WhatsAppButton from '../WhatsAppButton.jsx';
 import './PackagesPanel.css';
@@ -17,9 +23,11 @@ export default function PackagesPanel({ image, content, packageIds, labels }) {
         <div className="washed packages-image-wrap">
           <ImagePlaceholder src={image} label={content.placeholder} ratio="16 / 9" />
         </div>
-        <h2 className="packages-section-title">{content.title}</h2>
-        <p className="packages-section-intro">{content.intro}</p>
+        {content.title && <h2 className="packages-section-title">{content.title}</h2>}
+        {content.intro && <p className="packages-section-intro">{content.intro}</p>}
 
+        {packageIds?.length > 0 && (
+        <>
         <div className="packages-table-wrap">
           <table className="table">
             <thead>
@@ -50,6 +58,8 @@ export default function PackagesPanel({ image, content, packageIds, labels }) {
           </table>
         </div>
         <p className="packages-footnote">{labels.footnote}</p>
+        </>
+        )}
       </div>
 
       <div className="packages-direct-line">

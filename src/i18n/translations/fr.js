@@ -1,7 +1,8 @@
 export default {
   // `cafe` est conservé pour la page café mise de côté ; `contact` pour le
   // formulaire, désormais au bas de la page À propos.
-  nav: { home: 'Accueil', cafe: 'Café', kids: 'Enfants', shop: 'Boutique The Name', business: 'Entreprises', about: 'À propos', contact: 'Nous contacter', menu: 'Menu' },
+  nav: { home: 'Accueil', cafe: 'Café', kids: 'Enfants', shop: 'Boutique The Name', business: 'Entreprises', about: 'À propos', policies: 'Politiques', contact: 'Nous contacter', menu: 'Menu',
+         policyTabs: { terms: 'Conditions générales', delivery: 'Livraison et retours', privacy: 'Politique de confidentialité' } },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Discuter sur WhatsApp' },
 
@@ -309,9 +310,6 @@ export default {
       kicker: 'Traiteur',
       heading: 'Traiteur, à votre adresse',
       lede: 'La cuisine loin du comptoir. Tout ce qui se tient dans notre propre salle est un événement — c\'est sur la page du café.',
-      title: 'Traiteur, hors-site',
-      colOne: 'Formule',
-      intro: 'Tout ce que nous cuisinons pour vous en dehors du café : déjeuners, buffets et événements complets hors-site, cuisinés dans la cuisine du café et livrés dans des caisses réutilisables. Le menu tourne avec les arrivages, il change donc au fil de l\'année.',
       placeholder: 'Installation hors-site chez un client',
       askFor: [
         'L\'adresse et l\'heure de livraison',
@@ -319,11 +317,6 @@ export default {
         'Les régimes alimentaires à prévoir',
         'Si cela se répète chaque semaine',
       ],
-      packages: {
-        deskLunch: { name: 'Déjeuner au bureau', note: 'En boîtes individuelles, livré à votre accueil.', covers: '10–60', notice: '48 heures', from: '£11' },
-        standingBuffet: { name: 'Buffet debout', note: 'Plateaux installés avec personnel sur place pendant quatre-vingt-dix minutes.', covers: '25–120', notice: '5 jours', from: '£19' },
-        breakfastTrolley: { name: 'Chariot petit-déjeuner', note: 'Viennoiseries, fruits, urnes de filtre maison, livrés.', covers: '10–80', notice: '48 heures', from: '£8' },
-      },
     },
   },
 

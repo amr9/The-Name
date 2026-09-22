@@ -179,7 +179,15 @@ src/
                         VITE_CONTACT_ENDPOINT or same-origin /api/contact.
                         Its copy still lives under the i18n `contact` key.
       PackagesPanel/  — packages table + direct-line panel: Cafe (events)
-                        and Business (catering).
+                        and Business (catering). Only `content.placeholder`
+                        and `content.askFor` are required: `title`, `intro` and
+                        the whole table (`packageIds` + `colOne` + `packages`)
+                        are each dropped by leaving the key out. Business now
+                        passes none of them, so it renders the image and the
+                        direct-line panel alone; Cafe still shows the full
+                        panel. The direct-line copy (`directLineKicker/Title`,
+                        `openWhatsapp`, `replyNote`) is the SHARED i18n
+                        `packages` block, so editing it changes both pages.
       OverlayCard/    — the frosted card (full-bleed 3:4 photo, chips over
                         it, glass panel with a round yellow action): Shop
                         catalogue and Cafe menu. Also exports
@@ -297,17 +305,52 @@ src/
                           (ProcessSteps) and `chat` (ChatLauncher + the
                           assistant's topics, answers and keywords).
 
+  components/Navbar/       — the bar. A navLinks entry with a `sections` array
+                          (today only `/policies`) renders a hover menu under
+                          its link — `.navbar-item-has-menu` + `.navbar-sub`,
+                          opened by :hover AND :focus-within so it is reachable
+                          by keyboard. The sub-links are plain `Link`s, not
+                          `NavLink`s: they share one pathname, so NavLink would
+                          mark all of them current at once. Below 860px there
+                          is no hover, so the menu becomes a static indented
+                          list inside the bar's own dropdown.
+
   hooks/useCarouselAutoplay.js — global effect that auto-advances every
                           `.carousel-track` on screen every 4.2s.
   hooks/useScrollToTop.js — global effect that puts each new page at the top
                           on navigation; React Router keeps the window's
                           scroll offset otherwise, so a link followed from the
-                          foot of one page lands part-way down the next. It
-                          watches the PATHNAME only — an in-page anchor (the
-                          `#contact` button at the foot of About) changes the
-                          hash, not the path, and must be left to the browser.
-                          The fade that goes with it is `.page-enter` in
-                          theme.css, replayed by the `key` on <main>.
+                          foot of one page lands part-way down the next. The
+                          fade that goes with it is `.page-enter` in theme.css,
+                          replayed by the `key` on <main>.
+                          It watches the PATHNAME **and the hash**. With a
+                          hash — the navbar's Policies menu linking to
+                          `/policies#privacy`, that page's own index, the
+                          `#contact` button at the foot of About — the page is
+                          opened at its top and then scrolled to the target
+                          after a short beat, so the page arrives first and
+                          then carries you down. The gap left above the target
+                          is read from its own `scroll-margin-top`, so the
+                          sticky navbar's height stays a CSS concern; any new
+                          anchor target needs the shared `.scroll-anchor` class
+                          (theme.css) or it lands under the bar.
+  (theme.css) `.scroll-anchor` — put it on any element a #hash link points at.
+                          It sets the scroll-margin-top that clears the sticky
+                          navbar; useScrollToTop reads the value back off the
+                          element, so the offset lives in exactly one place.
+                          Used by the /policies sections and #catering.
+
+  utils/scrollToElement.js — scrollToElement(el, offset): animates the window
+                          to an element frame by frame from requestAnimationFrame,
+                          and returns a cancel function. NOT
+                          `scrollIntoView({behavior:'smooth'})`: the browser may
+                          abandon a native scroll animation part-way and
+                          silently (measured on /policies — the instant call
+                          landed at 5775px, the smooth one moved 39px and
+                          stopped), which strands the visitor at the top of a
+                          long page. Hands control back on wheel/touch/key, and
+                          jumps rather than animates under
+                          prefers-reduced-motion.
   utils/carousel.js      — stepCarousel(el, dir): the one-card-per-step
                           scroll math, used by the Carousel component and
                           the autoplay hook. Wraps in both directions (a closed
@@ -336,27 +379,25 @@ src/
                           becomes a lasting containing block for a fixed-
                           position descendant — do not make it permanent).
                           .page-title is the shared class on every page's
-                          <h1>: it sets --font-script (Cedarville Cursive),
-                          italic and 700 — both synthetic, the face ships
-                          only a regular upright cut — plus the leading,
-                          tracking and optical left pull that were
-                          identical in all seven page rules. It flips back
-                          to the upright heading serif under [dir="rtl"],
-                          since the script has no Arabic glyphs. Each page
-                          keeps only its own font-size clamp / margin /
-                          max-width.
-                          Fonts: three faces and NO others —
-                          --font-heading (Book Antiqua), --font-body
-                          (Montserrat) and --font-script (Cedarville
-                          Cursive). Do not add a fourth. Montserrat and
-                          Cedarville Cursive both load from Google Fonts
-                          (linked in index.html), so they render as drawn
-                          everywhere. Cedarville Cursive replaces the
-                          brand guideline's (p.14) Artisoul Signature,
-                          which is licensed, on no CDN, and so only ever
-                          rendered on machines that happened to have it
-                          installed. Book Antiqua is the one licensed face
-                          left: theme.css declares @font-face rules at the
+                          <h1>: it sets --font-body (Montserrat) at 700
+                          italic — both real cuts, requested in index.html
+                          — plus the leading, tracking and optical left
+                          pull that were identical in all seven page rules.
+                          It flips to the upright heading serif under
+                          [dir="rtl"], whose Arabic coverage is no worse.
+                          Each page keeps only its own font-size clamp /
+                          margin / max-width.
+                          Fonts: two faces and NO others —
+                          --font-heading (Book Antiqua) and --font-body
+                          (Montserrat, which also sets the page titles via
+                          .page-title). Do not add a third. There is no
+                          longer a --font-script token: the guideline's
+                          (p.14) third face, the script Artisoul Signature,
+                          is licensed, on no CDN, and so only ever rendered
+                          on machines that happened to have it installed.
+                          Montserrat loads from Google Fonts (linked in
+                          index.html), so it renders as drawn everywhere.
+                          Book Antiqua is the one licensed face left: theme.css declares @font-face rules at the
                           top that try the visitor's locally installed copy
                           first and then a self-hosted file. THOSE FILES
                           ARE NOT IN THE REPO — public/fonts/ holds only
@@ -473,12 +514,14 @@ placeholder instead, so partially-supplied media degrades cleanly.
 
 | Route | Folder | Notes |
 |---|---|---|
-| `/` | `pages/Home/` | Customization-led. Hero (the title in two lines — the first is i18n `home.hero.titleLeadPrefix` followed by the `Logo` component standing in for the brand's name: it is the brand, so it is artwork and is never translated, and the prefix holds only the word(s) in front of it since the lockup reads "THE NAME", article included. Then `titleScript` under it in --font-script; the "Browse the products" CTA is `.btn-sparkle`, beside it a plain `<a>` to the Matterport 3D walkthrough — an external tour, so not a router Link), `LogoMarquee` of the partner brands (`data/brands.js`, no heading), 2 services — B2C gifts, B2B branding; the cafe and catering rows were removed — (with the `Bubbles` ornament in shop icons plus the N mark: gutter fields above 1280px, left-to-right bands between the rows below it; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": `ProcessSteps` plus a picker of customization methods (`customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
+| `/` | `pages/Home/` | Customization-led. Hero (the title in two lines — the first is i18n `home.hero.titleLeadPrefix` followed by the `Logo` component standing in for the brand's name: it is the brand, so it is artwork and is never translated, and the prefix holds only the word(s) in front of it since the lockup reads "THE NAME", article included. Then `titleScript` under it, a size step up from the lead line (`.home-hero-title-script` — the name is historical, both lines now take `.page-title`); the "Browse the products" CTA is `.btn-sparkle`, beside it a plain `<a>` to the Matterport 3D walkthrough — an external tour, so not a router Link), `LogoMarquee` of the partner brands (`data/brands.js`, no heading), 2 services — B2C gifts, B2B branding; the cafe and catering rows were removed — (with the `Bubbles` ornament in shop icons plus the N mark: gutter fields above 1280px, left-to-right bands between the rows below it; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": `ProcessSteps` plus a picker of customization methods (`customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
 | `/cafe` | `pages/Cafe/` | **PARKED — no route, no nav entry** (see App.jsx above); the folder and its copy are kept so it can be switched back on. Title block, then the delivery-partner `LogoMarquee` — **commented out** for now (ids/URLs in this page's `data.js`, names under i18n cafe.partners) — then the menu (List/Cards toggle; cards are `OverlayCard` with tag + price chips and an icon-only WhatsApp action; autoplaying carousels, 3 sections). Food `Bubbles` (plus the N mark) at 3× scale fill the gutters on wide screens (no narrow-screen bands). Plus the **events** section at its foot — nights held in our own room, rendered by `PackagesPanel`. Was `pages/Menu/`. |
 | `/shop` | `pages/Shop/` | Labelled "The Name Store" in the nav. "Make It Personal" — curated objects from partner brands and house pieces that take a name, initials or a logo. Category filters (drinkware / tech / desk / travel), List/Cards toggle, autoplaying carousel. **Gift sets are not a filter** — they have their own section below the catalogue, a picture grid of `OverlayCard`s on the pale accent band (`shop.giftSets` copy, `giftSets` from `data/catalogue.js`). Cards are the shared `OverlayCard` (methods + code chips, brand kicker, finish · lead meta, arrow link). The list view keeps the longer note. Was `pages/VertexPieces/` (an interiors showroom) before the customization pivot. |
-| `/business` | `pages/Business/` | B2B: branded-goods offer cards, account terms, and the **catering** section ("at your address"), rendered by `PackagesPanel`. The off-site event-catering row was removed from `cateringPackageIds` and from all four translations. |
-| `/kids` | `pages/Kids/` | A landing page, not a catalogue: hero (shop + WhatsApp CTAs), three offer blocks from `kidsOffers` in `data.js` (back to school / new baby / birthdays), a "how we make them" note on the accent band, and a closing CTA. Copy under i18n `kids`. Took the nav slot the cafe page had. |
+| `/business` | `pages/Business/` | B2B: branded-goods offer cards ("Made for Business"), account terms ("How We Work With You"), and the **catering** section ("Catering, Wherever Business Takes You."), rendered by `PackagesPanel` as the image + direct-line enquiry only — **no packages table**: `business.catering` has no `title`, `intro`, `colOne` or `packages` left (deleted from all four translations) and `cateringPackageIds` is gone from this page's `data.js`. Earlier, the off-site event-catering row had been removed from that list. The page's English copy was rewritten wholesale in a later pass; **fr/es/ar still carry the previous wording** for everything under `business` except `catering.title`. |
+| `/kids` | `pages/Kids/` | A landing page, not a catalogue: hero (shop + WhatsApp CTAs), three offer blocks from `kidsOffers` in `data.js` (back to school / new baby / birthdays — the ids are unchanged; the display names are now "Back to School" / "Hello, Little One" / "Birthdays & Celebrations"), a "made for them" note on the accent band, and a closing CTA. Copy under i18n `kids`. Took the nav slot the cafe page had. The page's English copy was rewritten in a later pass; **fr/es/ar still carry the previous wording**, as on `/business`. |
 | `/about` | `pages/About/` | Labelled just "About" in the nav. Currently **two sections only**: the brand-film section at the top (carries the page's `<h1>`; `<ImagePlaceholder>` on `media.about.videoPoster` at 16/9 with a decorative play badge over it, and a commented-out `<video>` beside it showing the swap once the film exists — copy under i18n `about.video`), then the **enquiry form** (`components/ContactForm/`) in a `#contact` section. Everything between them — hero, services (`aboutServices`), how-we-work (`ProcessSteps`), mission & vision (`purposeIds`) and the closing CTA — is **PARKED in one JSX comment** in About.jsx, with its imports commented at the top of the file. Note the inner comments inside that block are written as plain dashed lines, not `{/* */}`: a nested end-of-comment marker would close the block early and break the build. Restoring it is deleting the two comment markers and uncommenting the imports; the i18n keys and the CSS for those sections were left untouched. |
+
+| `/policies` | `pages/Policies/` | All three legal documents on one page — Terms & Conditions, Delivery & Returns, Privacy Policy — each an `<section>` whose id (`#terms`, `#delivery`, `#privacy`) is the anchor the navbar's hover menu links to. `data.js` holds only the doc ids and the order of the sections inside each; every heading and paragraph is in `i18n` under `policies.docs.<docId>.sections.<sectionId>`, where a section is `{ heading, blocks }` and a block is either a string (a paragraph) or `{ list: [...] }`. Clause numbers come from the `<ol>`, never typed into a heading. `{legalName}`, `{licensedBy}` and `{address}` in the copy are filled from `data/site.js` at render time. The three source documents each ended with their own "Contact Us" clause; those are merged into the single `#contact` block that closes the page. **The policy copy is English-only on purpose** — `fr/es/ar.js` carry no `policies` key and fall through to `en.js` via the deepMerge in LanguageContext, because machine-translating binding consumer terms would produce four versions that could be read against each other. Only the nav labels (`nav.policies`, `nav.policyTabs`) are translated. See `pendingReview` in `data.js`: several commercial figures in this copy are **not yet confirmed for publication**. |
 
 ## Conventions (read before adding code)
 

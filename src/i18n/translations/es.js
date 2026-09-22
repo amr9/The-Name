@@ -1,7 +1,8 @@
 export default {
   // `cafe` se conserva para la página de la cafetería aparcada; `contact`
   // para el formulario, ahora al pie de la página Acerca de.
-  nav: { home: 'Inicio', cafe: 'Cafetería', kids: 'Niños', shop: 'Tienda The Name', business: 'Empresas', about: 'Acerca de', contact: 'Contáctanos', menu: 'Menú' },
+  nav: { home: 'Inicio', cafe: 'Cafetería', kids: 'Niños', shop: 'Tienda The Name', business: 'Empresas', about: 'Acerca de', policies: 'Políticas', contact: 'Contáctanos', menu: 'Menú',
+         policyTabs: { terms: 'Términos y condiciones', delivery: 'Envíos y devoluciones', privacy: 'Política de privacidad' } },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chatear por WhatsApp' },
 
@@ -309,9 +310,6 @@ export default {
       kicker: 'Catering',
       heading: 'Catering, en tu dirección',
       lede: 'La cocina lejos del mostrador. Lo que se celebra en nuestra propia sala es un evento — eso está en la página de la cafetería.',
-      title: 'Catering, externo',
-      colOne: 'Paquete',
-      intro: 'Todo lo que cocinamos para ti fuera del café: almuerzos, bufés y eventos externos completos, cocinados en la cocina del café y entregados en cajas reutilizables. El menú cambia con lo que llega, así que varía a lo largo del año.',
       placeholder: 'Montaje externo en la sede de un cliente',
       askFor: [
         'La dirección y la hora de entrega',
@@ -319,11 +317,6 @@ export default {
         'Restricciones alimentarias a cubrir',
         'Si esto se repite semanalmente',
       ],
-      packages: {
-        deskLunch: { name: 'Almuerzo de oficina', note: 'En cajas individuales, entregado en tu recepción.', covers: '10–60', notice: '48 horas', from: '£11' },
-        standingBuffet: { name: 'Bufé de pie', note: 'Bandejas montadas con personal en tu local durante noventa minutos.', covers: '25–120', notice: '5 días', from: '£19' },
-        breakfastTrolley: { name: 'Carrito de desayuno', note: 'Bollería, fruta, termos de café de filtro, entregado.', covers: '10–80', notice: '48 horas', from: '£8' },
-      },
     },
   },
 

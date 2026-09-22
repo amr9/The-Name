@@ -12,6 +12,7 @@ import Kids from './pages/Kids/Kids.jsx';
 import Shop from './pages/Shop/Shop.jsx';
 import Business from './pages/Business/Business.jsx';
 import About from './pages/About/About.jsx';
+import Policies from './pages/Policies/Policies.jsx';
 
 export default function App() {
   useCarouselAutoplay();
@@ -33,6 +34,9 @@ export default function App() {
           <Route path="/business" element={<Business />} />
           {/* The enquiry form now lives at the foot of /about. */}
           <Route path="/about" element={<About />} />
+          {/* Terms, delivery/returns and privacy, all on one page; the
+              navbar's hover menu links to the #anchors within it. */}
+          <Route path="/policies" element={<Policies />} />
         </Routes>
       </main>
       <Footer />

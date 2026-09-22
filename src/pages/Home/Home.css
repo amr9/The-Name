@@ -52,9 +52,10 @@
 .home-hero-title-script {
   display: block;
 }
-/* Both lines are in the script now that .page-title carries it — the face,
-   weight, tracking and leading all come from there. The second line keeps the
-   size bump that sets it apart from the lead line above the Logo. */
+/* Face, weight, tracking and leading all come from .page-title. The second
+   line keeps the size bump that sets it apart from the lead line above the
+   Logo. (The -script suffix is historical: the titles are no longer set in a
+   script face.) */
 .home-hero-title-script {
   font-size: 1.2em;
   margin-top: 0.06em;

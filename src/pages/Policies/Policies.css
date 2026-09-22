@@ -1,0 +1,173 @@
+/* Long-form legal reading. Everything here is tuned for one thing: making a
+   wall of clauses scannable — a narrow measure, generous leading, numbered
+   sections, and headings that stay clear of the sticky navbar when jumped to. */
+
+.policies-page {
+  padding-block: var(--space-8) calc(var(--space-8) * 2);
+}
+
+/* The measure. Legal copy is read line by line rather than skimmed, so it gets
+   a much narrower column than the marketing pages — everything below inherits
+   this width instead of the full 1240px container. */
+.policies-header,
+.policies-toc,
+.policies-doc,
+.policies-contact {
+  max-width: 72ch;
+}
+
+.policies-lede {
+  font-size: var(--text-lg);
+  line-height: 30px;
+  margin: var(--space-3) 0 0;
+}
+
+.policies-updated {
+  margin: var(--space-3) 0 0;
+  font-size: var(--text-sm);
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
+
+/* — the in-page index — */
+
+.policies-toc {
+  margin-top: var(--space-8);
+  padding: var(--space-4);
+  border: 1px solid var(--color-accent-200);
+  border-radius: var(--radius-md);
+  background: var(--color-accent-100);
+}
+
+.policies-toc-heading {
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent-700);
+  margin: 0 0 var(--space-2);
+}
+
+.policies-toc-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.policies-toc-link {
+  font-size: var(--text-body);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent-300);
+}
+.policies-toc-link:hover { text-decoration-color: currentColor; }
+
+/* — the documents — */
+
+.policies-doc {
+  margin-top: calc(var(--space-8) * 1.6);
+}
+
+.policies-doc-title {
+  font-size: clamp(26px, 3vw, 34px);
+  padding-bottom: var(--space-3);
+  border-bottom: 2px solid var(--color-accent);
+  margin-bottom: var(--space-4);
+}
+
+.policies-doc-intro {
+  margin-bottom: var(--space-6);
+}
+
+.policies-p {
+  font-size: var(--text-body);
+  line-height: 1.7;
+  margin: 0 0 var(--space-3);
+}
+.policies-p:last-child { margin-bottom: 0; }
+
+.policies-list {
+  margin: 0 0 var(--space-3);
+  padding-inline-start: var(--space-6);
+  font-size: var(--text-body);
+  line-height: 1.7;
+}
+.policies-list li { margin-bottom: var(--space-1); }
+
+/* Clause numbering comes from the <ol> rather than being typed into each
+   heading, so inserting or removing a section cannot leave the numbers wrong. */
+.policies-sections {
+  list-style: none;
+  counter-reset: policy-section;
+  margin: 0;
+  padding: 0;
+}
+
+.policies-section {
+  counter-increment: policy-section;
+  margin-bottom: var(--space-6);
+}
+
+.policies-section-heading {
+  display: flex;
+  gap: var(--space-2);
+  font-size: 19px;
+  margin-bottom: var(--space-2);
+}
+.policies-section-heading::before {
+  content: counter(policy-section) ".";
+  color: var(--color-accent-600);
+  /* Tabular-ish alignment so two-digit numbers do not shove the heading. */
+  min-width: 1.6em;
+}
+
+/* — the shared contact block that closes the page — */
+
+.policies-contact {
+  margin-top: calc(var(--space-8) * 1.6);
+}
+
+.policies-contact-entity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: var(--space-4) 0 0;
+  font-size: var(--text-body);
+  line-height: 1.6;
+}
+
+.policies-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.policies-contact .policies-contact-card { background: var(--color-accent-100); }
+
+.policies-contact-list {
+  margin: 0;
+  font-size: var(--text-body);
+}
+.policies-contact-list dt {
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent-700);
+  margin-top: var(--space-2);
+}
+.policies-contact-list dt:first-child { margin-top: 0; }
+.policies-contact-list dd { margin: 2px 0 0; }
+
+.policies-top-link {
+  display: inline-block;
+  margin-top: var(--space-6);
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 700px) {
+  .policies-page { padding-block: var(--space-6) var(--space-8); }
+  .policies-doc,
+  .policies-contact { margin-top: var(--space-8); }
+  .policies-toc-list { flex-direction: column; gap: var(--space-2); }
+}

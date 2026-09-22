@@ -3,9 +3,18 @@
 // not here — this file only holds structural/non-linguistic facts.
 export const site = {
   name: 'The Name',
+  // The registered entity, for the policy pages and anywhere else the legal
+  // name is required rather than the trading name above.
+  legalName: 'THE NAME CONCEPT RESTAURANT FZCO',
+  licensedBy: 'Dubai Integrated Economic Zones Authority (DIEZ)',
+  address: 'Dubai CommerCity, Dubai, United Arab Emirates',
   phone: '+971 54 344 4565',
-  // Where the contact form's submissions are meant to land.
+  // Orders, delivery, returns, complaints — and where the contact form's
+  // submissions are meant to land.
   email: 'operations@thename.me',
+  // Privacy and personal-data requests go to a separate inbox; the policies
+  // page and the Privacy Policy both point here.
+  privacyEmail: 'info@thename.me',
   // TODO: placeholder — swap for the real online shop URL.
   shopUrl: 'https://example.com/shop',
 };
@@ -34,4 +43,9 @@ export const navLinks = [
   // { to: '/cafe', key: 'cafe' },
   { to: '/kids', key: 'kids' },
   { to: '/about', key: 'about' },
+  // `sections` turns a nav entry into a hover menu: the Navbar renders one
+  // item per entry, each linking to that heading on the policies page. The
+  // ids match the doc ids in pages/Policies/data.js and the labels come from
+  // `nav.policyTabs` in the translations.
+  { to: '/policies', key: 'policies', sections: ['terms', 'delivery', 'privacy'] },
 ];
