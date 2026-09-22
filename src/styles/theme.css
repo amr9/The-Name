@@ -279,7 +279,37 @@ button { font: inherit; }
   display: flex; flex-direction: column; gap: var(--space-2);
   padding: var(--space-3); border-radius: calc(var(--radius-lg) * 1.15); background: var(--color-surface);
 }
-.card-kicker { font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent-700); }
+/* The section kicker, on every page. It is the pill the Shop hero wore first:
+   an outlined capsule with a pulsing dot, rather than the bare uppercase line
+   it used to be. The dot is a ::before so no page has to add markup for it —
+   `.shop-hero-badge` is now just this class, its dot span deleted.
+   Inline-flex, so it sits on its own line above a heading without the pill
+   stretching to the column width. */
+.card-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-xs);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-accent-700);
+  border: 1px solid var(--color-accent-300);
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+.card-kicker::before {
+  content: '';
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  animation: pulse 2.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-kicker::before { animation: none; }
+}
 .card-title {
   font-family: var(--font-heading); font-weight: var(--font-heading-weight);
   font-size: 17px; line-height: 1.2; margin: 0;

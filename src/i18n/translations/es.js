@@ -4,7 +4,7 @@ export default {
   nav: { home: 'Inicio', cafe: 'Cafetería', kids: 'Niños', shop: 'Tienda The Name', business: 'Empresas', about: 'Acerca de', policies: 'Políticas', contact: 'Contáctanos', menu: 'Menú',
          policyTabs: { terms: 'Términos y condiciones', delivery: 'Envíos y devoluciones', privacy: 'Política de privacidad' } },
 
-  common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chatear por WhatsApp' },
+  common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chatear por WhatsApp', backToTop: 'Volver arriba' },
 
   contact: {
     kicker: 'Contacto',
@@ -177,7 +177,7 @@ export default {
     badge: 'Marcas seleccionadas · personalizadas por nosotros',
     title: 'Hazlo personal',
     body: 'Descubre objetos de diseño de marcas que nos encantan — y luego hazlos inconfundiblemente tuyos. Añade un nombre, unas iniciales, un mensaje o algo que signifique algo para ti.',
-    openShop: 'Ver la colección ↗',
+    openShop: 'Ver la colección',
     askPersonal: 'Personaliza el tuyo →',
     filters: { all: 'Todo', drinkware: 'Botellas y tazas', tech: 'Tecnología', desk: 'Escritorio', travel: 'Viaje', giftSets: 'Sets de regalo' },
     viewList: 'Lista',

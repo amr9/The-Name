@@ -15,8 +15,10 @@ export const site = {
   // Privacy and personal-data requests go to a separate inbox; the policies
   // page and the Privacy Policy both point here.
   privacyEmail: 'info@thename.me',
-  // TODO: placeholder — swap for the real online shop URL.
-  shopUrl: 'https://example.com/shop',
+  // The online store, off-site. Everything that leaves for it reads this —
+  // the Shop page's hero button and its per-item View/Personalise links. (The
+  // Kids and Home "shop" CTAs are router Links to /shop, not to the store.)
+  shopUrl: 'https://store.thename.ae',
 };
 
 // Every WhatsApp trigger on the site links here (WhatsAppButton, the chat
@@ -39,7 +41,9 @@ export const socials = [
 export const navLinks = [
   { to: '/', key: 'home' },
   { to: '/shop', key: 'shop' },
-  { to: '/business', key: 'business' },
+  // `sparkle` gives this link the twinkle in the bar (Navbar.css). Only one
+  // entry should ever carry it — two competing twinkles read as a glitch.
+  { to: '/business', key: 'business', sparkle: true },
   // { to: '/cafe', key: 'cafe' },
   { to: '/kids', key: 'kids' },
   { to: '/about', key: 'about' },

@@ -159,12 +159,6 @@
 .policies-contact-list dt:first-child { margin-top: 0; }
 .policies-contact-list dd { margin: 2px 0 0; }
 
-.policies-top-link {
-  display: inline-block;
-  margin-top: var(--space-6);
-  font-size: var(--text-sm);
-}
-
 @media (max-width: 700px) {
   .policies-page { padding-block: var(--space-6) var(--space-8); }
   .policies-doc,

@@ -305,7 +305,38 @@ src/
                           (ProcessSteps) and `chat` (ChatLauncher + the
                           assistant's topics, answers and keywords).
 
-  components/Navbar/       — the bar. A navLinks entry with a `sections` array
+      BackToTop/      — the floating "back to the top" button. Rendered ONCE
+                        in App.jsx, so it is on every page and no page writes
+                        its own (the Policies page's inline link was deleted
+                        when this arrived). Shows past 20% of the SCROLLABLE
+                        distance — not 20% of the document, which on a short
+                        page can be further than you can actually scroll —
+                        and slides in from the right, stacked above the chat
+                        launcher off the same --fab-inset. Its scroll handler
+                        reads `scrollY` only, with the threshold cached and
+                        refreshed by a ResizeObserver on <html> (which also
+                        covers route changes and late-loading images). It does
+                        NOT gate on requestAnimationFrame: the usual "skip if a
+                        frame is pending" flag is only cleared by the callback,
+                        so a frame that never arrives — backgrounded tab,
+                        throttled renderer — wedges the button in its last
+                        state. Label: i18n `common.backToTop`.
+
+  components/Navbar/       — the bar. A navLinks entry with `sparkle: true`
+                          (today only `/business`) gets a twinkle on its link:
+                          `.navbar-link-sparkle` paints star points on ::after
+                          and a faint travelling glint on ::before, behind the
+                          label in its own `.navbar-link-text` span. Clicking
+                          it sets `data-burst`, which flares the star field and
+                          lights a glow behind it for 620ms; Navbar.jsx clears
+                          the attribute on animationend, so the CSS owns the
+                          duration and the idle twinkle resumes by itself. Only
+                          ever flag ONE entry — two competing twinkles read as
+                          a glitch. The glint travels by background-position
+                          inside a band narrower than the link: a transform
+                          (as .btn-sparkle uses) needs overflow: hidden, which
+                          would crop the burst.
+                          A navLinks entry with a `sections` array
                           (today only `/policies`) renders a hover menu under
                           its link — `.navbar-item-has-menu` + `.navbar-sub`,
                           opened by :hover AND :focus-within so it is reachable
@@ -340,7 +371,19 @@ src/
                           element, so the offset lives in exactly one place.
                           Used by the /policies sections and #catering.
 
+  (theme.css) `.card-kicker` — the section kicker on EVERY page, and the one
+                          the pages share: an outlined capsule with a pulsing
+                          dot, uppercase at 0.2em. The dot is a ::before, so a
+                          page adds no markup for it. This was the Shop hero's
+                          own `.shop-hero-badge`; that class and its separate
+                          dot span are gone and Shop.jsx uses .card-kicker like
+                          everywhere else. The name is historical — it is a
+                          page-section kicker, not a card part.
+
   utils/scrollToElement.js — scrollToElement(el, offset): animates the window
+                          (BackToTop passes document.body with offset 0 to
+                          return to the top, so the easing is shared with the
+                          hash jumps rather than written twice)
                           to an element frame by frame from requestAnimationFrame,
                           and returns a cancel function. NOT
                           `scrollIntoView({behavior:'smooth'})`: the browser may
@@ -365,7 +408,7 @@ src/
                           for dark/coloured grounds and .btn-sparkle — the
                           flowing panel gradient with a sweep and twinkling
                           sparkles, used instead of .btn-primary on the Home
-                          hero's shop CTA — .card, .tag, .seg*,
+                          hero's shop CTA — .card, .card-kicker, .tag, .seg*,
                           .seg-grid, .popover/.popover-option for floating
                           menus, .table, .dialog, .carousel-*) and the shared
                           keyframes (pulse, kenburns, sparkle-sweep,
@@ -521,7 +564,7 @@ placeholder instead, so partially-supplied media degrades cleanly.
 | `/kids` | `pages/Kids/` | A landing page, not a catalogue: hero (shop + WhatsApp CTAs), three offer blocks from `kidsOffers` in `data.js` (back to school / new baby / birthdays — the ids are unchanged; the display names are now "Back to School" / "Hello, Little One" / "Birthdays & Celebrations"), a "made for them" note on the accent band, and a closing CTA. Copy under i18n `kids`. Took the nav slot the cafe page had. The page's English copy was rewritten in a later pass; **fr/es/ar still carry the previous wording**, as on `/business`. |
 | `/about` | `pages/About/` | Labelled just "About" in the nav. Currently **two sections only**: the brand-film section at the top (carries the page's `<h1>`; `<ImagePlaceholder>` on `media.about.videoPoster` at 16/9 with a decorative play badge over it, and a commented-out `<video>` beside it showing the swap once the film exists — copy under i18n `about.video`), then the **enquiry form** (`components/ContactForm/`) in a `#contact` section. Everything between them — hero, services (`aboutServices`), how-we-work (`ProcessSteps`), mission & vision (`purposeIds`) and the closing CTA — is **PARKED in one JSX comment** in About.jsx, with its imports commented at the top of the file. Note the inner comments inside that block are written as plain dashed lines, not `{/* */}`: a nested end-of-comment marker would close the block early and break the build. Restoring it is deleting the two comment markers and uncommenting the imports; the i18n keys and the CSS for those sections were left untouched. |
 
-| `/policies` | `pages/Policies/` | All three legal documents on one page — Terms & Conditions, Delivery & Returns, Privacy Policy — each an `<section>` whose id (`#terms`, `#delivery`, `#privacy`) is the anchor the navbar's hover menu links to. `data.js` holds only the doc ids and the order of the sections inside each; every heading and paragraph is in `i18n` under `policies.docs.<docId>.sections.<sectionId>`, where a section is `{ heading, blocks }` and a block is either a string (a paragraph) or `{ list: [...] }`. Clause numbers come from the `<ol>`, never typed into a heading. `{legalName}`, `{licensedBy}` and `{address}` in the copy are filled from `data/site.js` at render time. The three source documents each ended with their own "Contact Us" clause; those are merged into the single `#contact` block that closes the page. **The policy copy is English-only on purpose** — `fr/es/ar.js` carry no `policies` key and fall through to `en.js` via the deepMerge in LanguageContext, because machine-translating binding consumer terms would produce four versions that could be read against each other. Only the nav labels (`nav.policies`, `nav.policyTabs`) are translated. See `pendingReview` in `data.js`: several commercial figures in this copy are **not yet confirmed for publication**. |
+| `/policies` | `pages/Policies/` | All three legal documents on one page — Terms & Conditions, Delivery & Returns, Privacy Policy — each an `<section>` whose id (`#terms`, `#delivery`, `#privacy`) is the anchor the navbar's hover menu links to. `data.js` holds only the doc ids and the order of the sections inside each; every heading and paragraph is in `i18n` under `policies.docs.<docId>.sections.<sectionId>`, where a section is `{ heading, blocks }` and a block is either a string (a paragraph) or `{ list: [...] }`. Clause numbers come from the `<ol>`, never typed into a heading. `{legalName}`, `{licensedBy}` and `{address}` in the copy are filled from `data/site.js` at render time. The three source documents each ended with their own "Contact Us" clause; those are merged into the single `#contact` block that closes the page. Its own "back to top" link is gone — `components/BackToTop/` now floats on every page. **The policy copy is English-only on purpose** — `fr/es/ar.js` carry no `policies` key and fall through to `en.js` via the deepMerge in LanguageContext, because machine-translating binding consumer terms would produce four versions that could be read against each other. Only the nav labels (`nav.policies`, `nav.policyTabs`) are translated. See `pendingReview` in `data.js`: several commercial figures in this copy are **not yet confirmed for publication**. |
 
 ## Conventions (read before adding code)
 

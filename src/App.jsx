@@ -2,6 +2,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import ChatLauncher from './components/ChatLauncher/ChatLauncher.jsx';
+import BackToTop from './components/BackToTop/BackToTop.jsx';
 import useCarouselAutoplay from './hooks/useCarouselAutoplay.js';
 import useScrollToTop from './hooks/useScrollToTop.js';
 import Home from './pages/Home/Home.jsx';
@@ -40,6 +41,8 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+      {/* Both float in the bottom-right corner, on every page. */}
+      <BackToTop />
       <ChatLauncher />
     </>
   );

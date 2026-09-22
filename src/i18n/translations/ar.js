@@ -4,7 +4,7 @@ export default {
   nav: { home: 'الرئيسية', cafe: 'المقهى', kids: 'الأطفال', shop: 'متجر The Name', business: 'الشركات', about: 'من نحن', policies: 'السياسات', contact: 'تواصل معنا', menu: 'القائمة',
          policyTabs: { terms: 'الشروط والأحكام', delivery: 'التوصيل والإرجاع', privacy: 'سياسة الخصوصية' } },
 
-  common: { whatsapp: 'واتساب', chatOnWhatsapp: 'الدردشة عبر واتساب' },
+  common: { whatsapp: 'واتساب', chatOnWhatsapp: 'الدردشة عبر واتساب', backToTop: 'العودة إلى الأعلى' },
 
   contact: {
     kicker: 'تواصل معنا',
@@ -177,7 +177,7 @@ export default {
     badge: 'علامات منتقاة · نخصّصها لك',
     title: 'اجعلها شخصية',
     body: 'اكتشف قطعًا مصمّمة بعناية من علامات نحبّها — ثم اجعلها لك بلا لبس. أضف اسمًا أو أحرفًا أولى أو رسالة أو أي شيء يعني لك شيئًا.',
-    openShop: 'تسوّق المجموعة ↗',
+    openShop: 'تسوّق المجموعة',
     askPersonal: 'خصّص قطعتك ←',
     filters: { all: 'الكل', drinkware: 'قوارير وأكواب', tech: 'تقنية', desk: 'مكتب', travel: 'سفر', giftSets: 'أطقم هدايا' },
     viewList: 'قائمة',

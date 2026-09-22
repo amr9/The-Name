@@ -19,6 +19,10 @@ function ToggleIcon({ open }) {
 export default function Navbar() {
   const { t } = useLanguage();
   const [open, setOpen] = useState(false);
+  // Which sparkling link is mid-burst. One at a time, and it is cleared by the
+  // animation's own end event rather than a timer, so the CSS owns the
+  // duration and the two cannot drift apart.
+  const [burst, setBurst] = useState(null);
   const { pathname } = useLocation();
   const barRef = useRef(null);
 
@@ -70,9 +74,23 @@ export default function Navbar() {
 
       <div id={menuId} className="navbar-menu" data-open={open}>
         {navLinks.map((link) => {
+          // A sparkling link carries its twinkle on a ::after overlay and the
+          // text in its own <span>, so the burst can scale the sparkle without
+          // scaling the word. data-burst is what CSS watches for the flare.
           const label = (
-            <NavLink to={link.to} end={link.to === '/'} className="navbar-link">
-              {t.nav[link.key]}
+            <NavLink
+              to={link.to}
+              end={link.to === '/'}
+              className={link.sparkle ? 'navbar-link navbar-link-sparkle' : 'navbar-link'}
+              data-burst={link.sparkle && burst === link.to ? 'true' : undefined}
+              onClick={link.sparkle ? () => setBurst(link.to) : undefined}
+              onAnimationEnd={
+                link.sparkle
+                  ? (e) => { if (e.animationName.startsWith('sparkle-burst')) setBurst(null); }
+                  : undefined
+              }
+            >
+              {link.sparkle ? <span className="navbar-link-text">{t.nav[link.key]}</span> : t.nav[link.key]}
             </NavLink>
           );
 

@@ -4,7 +4,9 @@ export default {
   nav: { home: 'Home', cafe: 'Cafe', kids: 'Kids', shop: 'The Name Store', business: 'Business', about: 'About', policies: 'Policies', contact: 'Contact us', menu: 'Menu',
          policyTabs: { terms: 'Terms & Conditions', delivery: 'Delivery & Returns', privacy: 'Privacy Policy' } },
 
-  common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chat on WhatsApp' },
+  // `chatOnWhatsapp` is the label on ContactForm's WhatsApp button — today
+  // that form appears only at the foot of /about.
+  common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chat with us', backToTop: 'Back to the top' },
 
   contact: {
     kicker: 'Contact',
@@ -66,7 +68,6 @@ export default {
     lede: 'Our terms of sale, how delivery and returns work, and what we do with your information. Everything below applies to purchases made through this website.',
     updated: 'Last updated: September 2026',
     tocHeading: 'On this page',
-    backToTop: 'Back to top',
 
     docs: {
       terms: {
@@ -615,7 +616,7 @@ export default {
     badge: 'Curated brands · personalised by us',
     title: 'Make It Personal',
     body: 'Discover design-led objects from brands we love — then make them unmistakably yours. Add a name, initials, a message or something that means something to you.',
-    openShop: 'Shop the Collection ↗',
+    openShop: 'Shop the Collection',
     askPersonal: 'Customize Yours →',
     filters: { all: 'All', drinkware: 'Drinkware', tech: 'Tech', desk: 'Desk', travel: 'Travel', giftSets: 'Gift sets' },
     viewList: 'List',
@@ -737,7 +738,7 @@ export default {
     },
     terms: {
       heading: 'How We Work With You',
-      cta: 'Start Your Brief on WhatsApp',
+      cta: 'Start Your Brief',
       items: [
         { term: 'Tell Us What You Need', detail: "Share your brief, quantity, occasion and timeline. We'll build the right solution around your needs and budget." },
         { term: 'Your Brand, Kept Consistent', detail: 'Once approved, your brand assets and specifications can be kept on file to make future orders simpler and consistent.' },
@@ -939,7 +940,7 @@ export default {
     // changes both.
     directLineKicker: 'Plan your catering',
     directLineTitle: "Tell Us What You're Planning",
-    openWhatsapp: 'Plan It With Us on WhatsApp',
+    openWhatsapp: 'Plan It With Us',
     replyNote: 'Our team will get back to you with availability and next steps.',
   },
 };

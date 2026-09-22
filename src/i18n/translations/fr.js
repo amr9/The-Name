@@ -4,7 +4,7 @@ export default {
   nav: { home: 'Accueil', cafe: 'Café', kids: 'Enfants', shop: 'Boutique The Name', business: 'Entreprises', about: 'À propos', policies: 'Politiques', contact: 'Nous contacter', menu: 'Menu',
          policyTabs: { terms: 'Conditions générales', delivery: 'Livraison et retours', privacy: 'Politique de confidentialité' } },
 
-  common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Discuter sur WhatsApp' },
+  common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Discuter sur WhatsApp', backToTop: 'Haut de page' },
 
   contact: {
     kicker: 'Contact',
@@ -177,7 +177,7 @@ export default {
     badge: 'Marques choisies · personnalisées par nous',
     title: 'Rendez-le personnel',
     body: "Découvrez des objets design de marques que nous aimons — puis faites-en des pièces qui n'appartiennent qu'à vous. Ajoutez un nom, des initiales, un message ou ce qui compte pour vous.",
-    openShop: 'Découvrir la collection ↗',
+    openShop: 'Découvrir la collection',
     askPersonal: 'Personnalisez la vôtre →',
     filters: { all: 'Tout', drinkware: 'Gourdes & tasses', tech: 'Tech', desk: 'Bureau', travel: 'Voyage', giftSets: 'Coffrets' },
     viewList: 'Liste',

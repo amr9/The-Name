@@ -21,6 +21,101 @@
 .navbar-menu { display: contents; }
 .navbar-toggle { display: none; }
 
+/* — the sparkling link (today: Business) — */
+
+/* Two layers over the word: ::before is a sweep of light crossing the text,
+   ::after is a field of small star points that twinkle in place. Both sit
+   behind the label (z-index on .navbar-link-text) so the word stays readable
+   at every frame. Built from the same vocabulary as .btn-sparkle in theme.css,
+   scaled down for 14.5px nav type. */
+.navbar-link-sparkle {
+  position: relative;
+  isolation: isolate;
+  /* Room for the sparkle field to spill past the word without the glyphs
+     touching the neighbouring links. */
+  padding-inline: 6px;
+}
+.navbar-link-text { position: relative; z-index: 1; }
+
+.navbar-link-sparkle::before,
+.navbar-link-sparkle::after {
+  content: '';
+  position: absolute;
+  inset: -4px -2px;
+  pointer-events: none;
+  z-index: 0;
+  transform-origin: 50% 50%;
+}
+
+/* The star points. Five dots at fixed spots, brightening and dimming together
+   — cheap, and it reads as a twinkle rather than a loading shimmer. */
+.navbar-link-sparkle::after {
+  background:
+    radial-gradient(circle at 6% 24%, var(--color-accent-600) 0 1.1px, transparent 2px),
+    radial-gradient(circle at 30% 84%, var(--color-accent-600) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 54% 10%, var(--color-accent-600) 0 1.2px, transparent 2.1px),
+    radial-gradient(circle at 78% 78%, var(--color-accent-600) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 96% 28%, var(--color-accent-600) 0 1.1px, transparent 2px);
+  animation: sparkle-twinkle 1.6s ease-in-out infinite alternate;
+}
+
+/* The sweep, kept faint: at this size a strong band reads as a highlight
+   rather than a glint. It travels by BACKGROUND-POSITION, not by transform the
+   way .btn-sparkle does — that button clips its sweep with overflow: hidden,
+   which here would also crop the burst below. Moving the gradient inside a
+   fixed box keeps the band from ever leaving the link (it was painting over
+   the neighbouring nav item) while leaving the element free to scale. */
+.navbar-link-sparkle::before {
+  background-image: linear-gradient(100deg, transparent 0%, color-mix(in srgb, var(--color-accent) 22%, transparent) 50%, transparent 100%);
+  background-size: 30% 100%;
+  background-repeat: no-repeat;
+  background-position: -30% 0;
+  animation: navbar-sparkle-sweep 3.4s ease-in-out infinite;
+}
+/* The band is NARROWER than the box (38%), which is what makes these
+   percentages behave: with a background smaller than its element, 0% aligns
+   left edges and 100% right edges, so -30% starts it clear of the word and
+   130% carries it clear off the other side. A background WIDER than the box
+   inverts that mapping — the first attempt used 260% and painted a broad slab
+   over the neighbouring link instead of a glint. */
+@keyframes navbar-sparkle-sweep {
+  0%, 35% { background-position: -30% 0; }
+  100%    { background-position: 130% 0; }
+}
+
+/* The click: the star field flares — bigger, brighter, and lit from behind by
+   a glow — then settles back into the idle twinkle. `both` is deliberately NOT
+   used: the animation must hand the element back to the looping twinkle above
+   when it finishes, and Navbar.jsx clears data-burst off animationend. */
+.navbar-link-sparkle[data-burst='true']::after {
+  animation: sparkle-burst 620ms cubic-bezier(.22,.61,.36,1);
+}
+.navbar-link-sparkle[data-burst='true']::before {
+  background-image: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--color-accent) 60%, transparent) 0%, transparent 55%);
+  background-size: 100% 100%;
+  background-position: 0 0;
+  animation: sparkle-burst-glow 620ms ease-out;
+}
+
+@keyframes sparkle-burst {
+  0%   { opacity: 1; transform: scale(1); filter: none; }
+  30%  { opacity: 1; transform: scale(1.85); filter: brightness(1.9) drop-shadow(0 0 5px var(--color-accent)); }
+  100% { opacity: 1; transform: scale(1); filter: none; }
+}
+@keyframes sparkle-burst-glow {
+  0%   { transform: scale(0.6); opacity: 0; }
+  35%  { transform: scale(1.25); opacity: 1; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* The link is decoration on a working nav item, so it all comes off rather
+   than degrading — the link itself is unaffected. */
+@media (prefers-reduced-motion: reduce) {
+  .navbar-link-sparkle::before { display: none; }
+  .navbar-link-sparkle::after,
+  .navbar-link-sparkle[data-burst='true']::after { animation: none; opacity: 0.55; }
+}
+
 /* Every page sits in one of these. It exists so a page that also has a
    section menu has something to anchor that menu to; for the rest it is an
    inert wrapper that keeps all the pages equal flex children of the bar. */

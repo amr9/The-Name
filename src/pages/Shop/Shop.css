@@ -4,26 +4,6 @@
 .shop-hero .container {
   padding-block: clamp(36px, 4.5vw, 76px);
 }
-.shop-hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: var(--text-xs);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: var(--color-accent-700);
-  border: 1px solid var(--color-accent-300);
-  border-radius: 999px;
-  padding: 6px 14px;
-}
-.shop-hero-badge-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  animation: pulse 2.6s ease-in-out infinite;
-}
 .shop-hero-title {
   font-size: clamp(38px, 4.6vw, 62px);
   margin: 20px 0 0;

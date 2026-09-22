@@ -132,8 +132,6 @@ export default function Policies() {
             </dl>
           </div>
         </div>
-
-        <Link className="policies-top-link" to="/policies#top">{p.backToTop}</Link>
       </section>
     </div>
   );
