@@ -147,6 +147,48 @@
   padding-block: clamp(48px, 5vw, 80px);
   background: var(--color-accent-100);
 }
+
+/* — the kid-drawn ornament on both beige bands (Doodles.jsx). The bands
+     anchor and clip them, so a doodle can sit half off the edge without
+     ever adding scroll, and the content stays above them. — */
+.kids-note,
+.kids-two-ts {
+  position: relative;
+  overflow: hidden;
+}
+.kids-note > .container,
+.kids-two-ts > .container {
+  position: relative;
+  z-index: 1;
+}
+.kids-doodle {
+  position: absolute;
+  color: var(--color-accent-400);
+  /* ornament — it must never eat a tap meant for the copy */
+  pointer-events: none;
+  z-index: 0;
+}
+/* Both sit partly outside the band's padding, tucked into the corner and
+   tipped off-axis, so they read as dropped on the page rather than placed. */
+.kids-doodle-flower {
+  width: clamp(76px, 9vw, 124px);
+  top: clamp(-14px, -1vw, -8px);
+  inset-inline-end: clamp(16px, 4vw, 72px);
+  transform: rotate(13deg);
+}
+.kids-doodle-sun {
+  width: clamp(66px, 8vw, 104px);
+  bottom: clamp(-12px, -1vw, -6px);
+  inset-inline-start: clamp(12px, 3vw, 56px);
+  transform: rotate(-9deg);
+}
+
+/* Narrow screens have no room beside the copy, so the doodles shrink and
+   tuck further into the corners rather than crowding the text. */
+@media (max-width: 700px) {
+  .kids-doodle-flower { width: 62px; inset-inline-end: 8px; }
+  .kids-doodle-sun { width: 56px; inset-inline-start: 6px; }
+}
 .kids-two-ts-inner {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

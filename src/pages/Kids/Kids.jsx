@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom';
+import Bubbles from '../../components/Bubbles/Bubbles.jsx';
 import Carousel from '../../components/Carousel.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import VideoPlaceholder from '../../components/VideoPlaceholder/VideoPlaceholder.jsx';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
+import { kidsIcons } from '../../components/Bubbles/icons.jsx';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { activationShots, kidsOffers } from './data.js';
+import Doodles from './Doodles.jsx';
 import './Kids.css';
 
 export default function Kids() {
@@ -13,7 +16,14 @@ export default function Kids() {
   const k = t.kids;
 
   return (
-    <div className="kids-page">
+    // The host anchors the kids bubbles — up the gutters on wide screens,
+    // in a band between the offer blocks and the note on narrow ones. The
+    // field spreads over the whole page here (not one section, as on Home),
+    // so the marks are scaled up to read at that spacing.
+    <div className="bubbles-host kids-page">
+      <Bubbles side="left" icons={kidsIcons} scale={1.6} />
+      <Bubbles side="right" icons={kidsIcons} scale={1.6} />
+
       <header className="container kids-hero">
         <div className="kids-hero-text">
           <span className="card-kicker">{k.kicker}</span>
@@ -50,8 +60,13 @@ export default function Kids() {
         </div>
       </section>
 
+      {/* on narrow screens there is no gutter, so the bubbles run in a band
+          here instead of beside the page — see components/Bubbles */}
+      <Bubbles side="row" icons={kidsIcons} phase={37} />
+
       {/* — safety / making note, then the closing call to action — */}
       <section className="kids-note">
+        <Doodles />
         <div className="container">
           <span className="card-kicker">{k.note.kicker}</span>
           <h2 className="kids-section-title">{k.note.heading}</h2>
@@ -101,6 +116,7 @@ export default function Kids() {
       {/* — the story that came out of the activation, on the pale band so it
           reads as a feature rather than another offer block — */}
       <section className="kids-two-ts">
+        <Doodles />
         <div className="container kids-two-ts-inner">
           <div className="kids-two-ts-copy">
             <span className="card-kicker">{k.twoTs.kicker}</span>
