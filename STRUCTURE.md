@@ -204,6 +204,16 @@ src/
                         field and lifts page content above it.
       ProcessSteps/   — the four order steps as an <ol> (data/process.js,
                         copy under i18n process.steps): Home and About.
+      VideoPlaceholder/ — a film slot that has no film yet: the poster still
+                        via <ImagePlaceholder> (dashed fallback when the file
+                        is missing) with a decorative, aria-hidden play badge
+                        over it. `.video-frame` / `.video-slot` / `.video-play`.
+                        Used by the Kids activation (both films) and by the
+                        About brand film inside its parked block — it was
+                        About's own `.about-video-*` markup until Kids wanted
+                        the same frame. Note `display:block` is scoped to
+                        `video.video-slot`: setting it on `.video-slot` would
+                        override the flex centring of the dashed fallback.
       ChatLauncher/   — the floating corner button (App.jsx), fixed
                         bottom-right with its own centring rules (not .btn)
                         and the filled N tile (media.brand.markFilled)
@@ -371,6 +381,16 @@ src/
                           element, so the offset lives in exactly one place.
                           Used by the /policies sections and #catering.
 
+  (theme.css) `.container` — the page gutter: max-width, `margin-inline: auto`
+                          and the horizontal padding. It sets NO vertical
+                          margin, deliberately. It used to say `margin: 0 auto`,
+                          whose shorthand also zeroed margin-top — and at equal
+                          specificity that beat the `margin-top` a section
+                          declared for itself whenever the page's CSS was
+                          bundled before theme.css, which is how the Kids offer
+                          section lost its gap under the hero. Vertical rhythm
+                          is each section's own business; keep it that way.
+
   (theme.css) `.card-kicker` — the section kicker on EVERY page, and the one
                           the pages share: an outlined capsule with a pulsing
                           dot, uppercase at 0.2em. The dot is a ::before, so a
@@ -514,7 +534,12 @@ public/media/
   cafe/       — the events section on the Cafe page
   business/   — the branded-goods offer cards + the catering section
   kids/       — the Kids page: hero.jpg, plus one image per offer block
-                (back-to-school.jpg, new-baby.jpg, birthdays.jpg)
+                (back-to-school.jpg, new-baby.jpg, birthdays.jpg). The Little
+                Creators activation adds activation.mp4 + activation-poster.jpg
+                (the opening film), activation-interviews.mp4 +
+                activation-interviews-poster.jpg (the Two T's film) and one
+                activation-<shot>.jpg per id in pages/Kids/data.js
+                `activationShots`.
   about/      — the About page's brand film: about-video.mp4 and its still
                 about-video-poster.jpg. Until they exist the section shows
                 the dashed placeholder slot.
@@ -561,8 +586,8 @@ placeholder instead, so partially-supplied media degrades cleanly.
 | `/cafe` | `pages/Cafe/` | **PARKED — no route, no nav entry** (see App.jsx above); the folder and its copy are kept so it can be switched back on. Title block, then the delivery-partner `LogoMarquee` — **commented out** for now (ids/URLs in this page's `data.js`, names under i18n cafe.partners) — then the menu (List/Cards toggle; cards are `OverlayCard` with tag + price chips and an icon-only WhatsApp action; autoplaying carousels, 3 sections). Food `Bubbles` (plus the N mark) at 3× scale fill the gutters on wide screens (no narrow-screen bands). Plus the **events** section at its foot — nights held in our own room, rendered by `PackagesPanel`. Was `pages/Menu/`. |
 | `/shop` | `pages/Shop/` | Labelled "The Name Store" in the nav. "Make It Personal" — curated objects from partner brands and house pieces that take a name, initials or a logo. Category filters (drinkware / tech / desk / travel), List/Cards toggle, autoplaying carousel. **Gift sets are not a filter** — they have their own section below the catalogue, a picture grid of `OverlayCard`s on the pale accent band (`shop.giftSets` copy, `giftSets` from `data/catalogue.js`). Cards are the shared `OverlayCard` (methods + code chips, brand kicker, finish · lead meta, arrow link). The list view keeps the longer note. Was `pages/VertexPieces/` (an interiors showroom) before the customization pivot. |
 | `/business` | `pages/Business/` | B2B: branded-goods offer cards ("Made for Business"), account terms ("How We Work With You"), and the **catering** section ("Catering, Wherever Business Takes You."), rendered by `PackagesPanel` as the image + direct-line enquiry only — **no packages table**: `business.catering` has no `title`, `intro`, `colOne` or `packages` left (deleted from all four translations) and `cateringPackageIds` is gone from this page's `data.js`. Earlier, the off-site event-catering row had been removed from that list. The page's English copy was rewritten wholesale in a later pass; **fr/es/ar still carry the previous wording** for everything under `business` except `catering.title`. |
-| `/kids` | `pages/Kids/` | A landing page, not a catalogue: hero (shop + WhatsApp CTAs), three offer blocks from `kidsOffers` in `data.js` (back to school / new baby / birthdays — the ids are unchanged; the display names are now "Back to School" / "Hello, Little One" / "Birthdays & Celebrations"), a "made for them" note on the accent band, and a closing CTA. Copy under i18n `kids`. Took the nav slot the cafe page had. The page's English copy was rewritten in a later pass; **fr/es/ar still carry the previous wording**, as on `/business`. |
-| `/about` | `pages/About/` | Labelled just "About" in the nav. Currently **two sections only**: the brand-film section at the top (carries the page's `<h1>`; `<ImagePlaceholder>` on `media.about.videoPoster` at 16/9 with a decorative play badge over it, and a commented-out `<video>` beside it showing the swap once the film exists — copy under i18n `about.video`), then the **enquiry form** (`components/ContactForm/`) in a `#contact` section. Everything between them — hero, services (`aboutServices`), how-we-work (`ProcessSteps`), mission & vision (`purposeIds`) and the closing CTA — is **PARKED in one JSX comment** in About.jsx, with its imports commented at the top of the file. Note the inner comments inside that block are written as plain dashed lines, not `{/* */}`: a nested end-of-comment marker would close the block early and break the build. Restoring it is deleting the two comment markers and uncommenting the imports; the i18n keys and the CSS for those sections were left untouched. |
+| `/kids` | `pages/Kids/` | A landing page, not a catalogue: hero (shop + WhatsApp CTAs), three offer blocks from `kidsOffers` in `data.js` (back to school / new baby / birthdays — the ids are unchanged; the display names are now "Back to School" / "Hello, Little One" / "Birthdays & Celebrations"), a "made for them" note on the accent band, then the **Little Creators activation** (`kids.activation`: copy, an opening `<VideoPlaceholder>`, and a `<Carousel>` gallery of one card per id in `activationShots` — caption from i18n `kids.activation.shots[id]`, picture from `media.kids.activation.shots[id]`), the **Two T's feature** on the accent band (`kids.twoTs`, copy beside the interviews film), and a closing CTA. Copy under i18n `kids`. Took the nav slot the cafe page had. The page's English copy was rewritten in a later pass; **fr/es/ar still carry the previous wording** for the older sections, as on `/business` — the activation and Two T's copy is translated in all four. |
+| `/about` | `pages/About/` | Labelled just "About" in the nav, but titled **"Our story"** on the page. It runs: **hero** (`about.kicker` / `title` / `lede` / `heroSupport`, carrying the page's `<h1>`) -> **story timeline**, one `<article>` per id in `storyChapters` (`legacy`, `evolution`, `today`) reading copy from i18n `about.story[id]` and art from `media.about.story[id]`, the copy/image pair swapping sides on even chapters -> the **FROM THE NAME / TO YOUR NAME** card (`about.tagline`; a raised beige card with an accent left edge, not a full-bleed band — it is the page's one pull-quote; its first line ends on `components/Logo` at `size="inline" compact={false}`, so the wordmark is the artwork and `tagline.fromPrefix` is only the word in front of it — the same treatment as the Home hero) -> the **takeovers**, one card per entry in `takeovers` (names are proper nouns so they live in `pages/About/data.js`, art in `media.about.takeovers[id]`; copy in `about.takeover`) -> **built through collaboration** (`about.collab`) -> **what's next** (`about.future`, ending on the page's sign-off line) -> the **enquiry form** (`components/ContactForm/`) in a `#contact` section. **PARKED in one JSX comment**: the brand film (held back until the video is delivered - restoring it means moving the `<h1>` back to it and dropping it from the hero), the services (`aboutServices`), how-we-work (`ProcessSteps`), mission & vision (`purposeIds`) and the closing CTA. Their i18n keys and CSS are kept. Note the inner comments inside that block are written as plain dashed lines, not `{/* */}`: a nested end-of-comment marker would close the block early and break the build. |
 
 | `/policies` | `pages/Policies/` | All three legal documents on one page — Terms & Conditions, Delivery & Returns, Privacy Policy — each an `<section>` whose id (`#terms`, `#delivery`, `#privacy`) is the anchor the navbar's hover menu links to. `data.js` holds only the doc ids and the order of the sections inside each; every heading and paragraph is in `i18n` under `policies.docs.<docId>.sections.<sectionId>`, where a section is `{ heading, blocks }` and a block is either a string (a paragraph) or `{ list: [...] }`. Clause numbers come from the `<ol>`, never typed into a heading. `{legalName}`, `{licensedBy}` and `{address}` in the copy are filled from `data/site.js` at render time. The three source documents each ended with their own "Contact Us" clause; those are merged into the single `#contact` block that closes the page. Its own "back to top" link is gone — `components/BackToTop/` now floats on every page. **The policy copy is English-only on purpose** — `fr/es/ar.js` carry no `policies` key and fall through to `en.js` via the deepMerge in LanguageContext, because machine-translating binding consumer terms would produce four versions that could be read against each other. Only the nav labels (`nav.policies`, `nav.policyTabs`) are translated. See `pendingReview` in `data.js`: several commercial figures in this copy are **not yet confirmed for publication**. |
 

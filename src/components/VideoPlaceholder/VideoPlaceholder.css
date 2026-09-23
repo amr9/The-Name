@@ -1,0 +1,45 @@
+/* The frame anchors the play badge over the slot. The slot itself is either
+   <ImagePlaceholder> (poster or dashed fallback) or, once the footage lands,
+   a real <video> — both take .video-slot, so the rounding is written once. */
+.video-frame {
+  position: relative;
+  margin: clamp(24px, 3vw, 40px) 0 0;
+}
+.video-slot {
+  width: 100%;
+  border-radius: calc(2 * var(--radius-lg));
+  overflow: hidden;
+}
+/* Only a real <video> needs the block display. Setting it on .video-slot
+   outright would override the flex centring <ImagePlaceholder> uses for its
+   dashed fallback, stranding the icon and label at the top of the slot. */
+video.video-slot {
+  display: block;
+}
+.video-play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 76px;
+  height: 76px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-black);
+  box-shadow: var(--shadow-lg);
+  /* decorative only — it sits over a placeholder, there is nothing to play */
+  pointer-events: none;
+}
+/* nudge the triangle onto the optical centre of the circle */
+.video-play svg {
+  margin-inline-start: 4px;
+}
+
+/* The play badge sits dead centre, which is exactly where <ImagePlaceholder>
+   puts its icon and label — so while there is no poster, move that content
+   down to the foot of the slot and let the two coexist. */
+.video-frame .img-slot-empty {
+  justify-content: flex-end;
+  padding-bottom: clamp(16px, 2vw, 24px);
+}

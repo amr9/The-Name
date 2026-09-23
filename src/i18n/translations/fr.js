@@ -73,7 +73,6 @@ export default {
     howItWorks: {
       kicker: 'Comment ça marche',
       heading: 'Quatre étapes, du produit vierge au colis.',
-      lede: 'Une pièce ou mille, nous rendons la personnalisation simple.',
       methodsKicker: 'Techniques de personnalisation',
       suits: 'Idéal sur',
       minimum: 'Minimum',
@@ -321,15 +320,66 @@ export default {
   },
 
   about: {
+    // Le film de marque est EN PAUSE jusqu'à sa livraison — voir About.jsx.
     video: {
-      kicker: 'À propos',
+      kicker: 'Notre histoire',
       title: 'Regardez notre histoire.',
       lede: 'Un court film sur qui nous sommes, ce que nous fabriquons et pourquoi un nom change un objet.',
       placeholder: 'À propos de The Name — vidéo de marque',
     },
-    kicker: 'À propos',
-    title: 'Qu\'y a-t-il dans un nom ? Tout.',
-    lede: 'Un nom, c\'est une identité, une histoire, un lien — votre signature et votre récit. The Name est né d\'une conviction : un objet prend du sens quand il porte votre nom, vos initiales, votre message ou votre marque. Nous sélectionnons des pièces au design soigné, puis nous les rendons uniques.',
+
+    kicker: 'Notre histoire',
+    title: 'Tout a commencé par un nom.',
+    lede: 'Notre histoire a commencé en 1990, bien avant que THE NAME ait un nom à lui. Elle a commencé par la personnalisation, les cadeaux d\'entreprise et la conviction que les choses les plus mémorables sont celles que l\'on rend personnelles.',
+    heroSupport: 'Plus de trois décennies plus tard, cette conviction a trouvé une nouvelle maison.',
+
+    story: {
+      legacy: {
+        era: '1990 — là où tout a commencé',
+        headline: 'Personnel dès le premier jour.',
+        body: 'Le parcours a commencé en 1990 avec la personnalisation et les cadeaux d\'entreprise — créer pour des entreprises, des occasions et des personnes des objets qui portaient plus que le produit lui-même : une identité.',
+        placeholder: '1990 — les premières pièces personnalisées',
+      },
+      evolution: {
+        era: 'Le chapitre suivant',
+        headline: 'De la personnalisation des marques à l\'arrivée des plus belles marques.',
+        body: 'À mesure que l\'entreprise a évolué, notre monde aussi. Nous avons commencé à faire venir au Moyen-Orient des marques internationales de design et de lifestyle, en nouant des relations, en découvrant des produits d\'exception et en apprenant ce qui rend un objet digne d\'être choisi, utilisé et retenu.',
+        closing: 'Personnalisation. Cadeaux. Marques. Expériences. Chaque chapitre a nourri le suivant.',
+        placeholder: 'Les marques de design amenées dans la région',
+      },
+      today: {
+        era: 'Aujourd\'hui — The Name',
+        headline: 'Un seul lieu. Toute notre histoire.',
+        body: 'THE NAME réunit cet héritage en un seul lieu. Une destination pour découvrir le design, personnaliser ce que vous aimez, se retrouver, manger, collaborer, créer et vivre autre chose. Physique et numérique. Personnel et professionnel. Une boutique, un lieu de vie et une plateforme pour la suite.',
+        placeholder: 'À l\'intérieur de THE NAME aujourd\'hui',
+      },
+    },
+
+    tagline: {
+      fromPrefix: 'De',
+      to: 'À votre nom.',
+      lede: 'C\'est plus qu\'une signature. C\'est notre façon de penser.',
+      body: 'Quand une marque franchit nos portes, THE NAME peut devenir son nom. Quand quelqu\'un choisit un objet, il devient le sien. Son identité. Son moment. Son histoire.',
+    },
+
+    takeover: {
+      headline: 'Le temps d\'un moment, le lieu n\'est plus le nôtre. Il est le leur.',
+      body: 'Nous construisons nos collaborations autour de l\'identité des personnes et des marques avec qui nous travaillons — en transformant les produits, l\'expérience et parfois le lieu lui-même autour de leur nom.',
+    },
+
+    collab: {
+      era: 'Construit par la collaboration',
+      headline: 'Quelques noms avec qui nous avons créé.',
+      body: 'Tout au long du parcours, notre travail nous a réunis avec des marques, des institutions et des organisations du monde entier — produits personnalisés, cadeaux, expériences et collaborations construits autour de leur identité.',
+    },
+
+    future: {
+      era: 'La suite',
+      headline: 'Un héritage bâti ici. Prêt à voyager.',
+      body: 'Les Émirats nous ont appris à toujours regarder devant — construire, évoluer et penser au-delà d\'aujourd\'hui. THE NAME est notre prochain chapitre : porter plus de trois décennies d\'expérience dans une nouvelle ère de personnalisation numérique, d\'expériences et de collaboration, avec le regard tourné au-delà des Émirats, vers tout le Golfe.',
+      closing: 'L\'histoire a commencé en 1990. La suite portera votre nom.',
+    },
+
     servicesHeading: 'Ce que nous proposons',
     servicesLede: 'Un seul studio pour les particuliers et pour les marques — d\'un cadeau gravé à tout un programme de cadeaux d\'entreprise.',
     services: {
@@ -418,6 +468,31 @@ export default {
         'Une seule pièce est une commande tout à fait normale — aucun minimum pour un seul enfant',
         'Les quantités pour une classe entière ou une fête sont chiffrées, généralement sous un jour ouvré',
       ],
+    },
+    activation: {
+      kicker: 'The Name : petits créateurs',
+      heading: 'Et si leur idée avait un nom ?',
+      body: 'Nous croyons que les enfants ne devraient pas seulement recevoir ce que l\'on fait pour eux. Parfois, ils devraient pouvoir créer l\'idée. La dessiner. La nommer. La faire exister — et découvrir ce qui arrive quand ce qui a commencé dans leur imagination devient réel.',
+      support: 'C\'est exactement ce qui s\'est passé lors de notre dernière activation enfants.',
+      videoPlaceholder: 'Des enfants à l\'activation, présentant leurs produits et répondant aux questions',
+      galleryHeading: 'De l\'activation',
+      prevShots: 'Photos précédentes',
+      nextShots: 'Plus de photos',
+      shots: {
+        showingProducts: 'Un enfant montrant ce qu\'il a créé',
+        heartsCollection: 'Gros plan sur la collection Hearts',
+        withParents: 'Parents et enfants autour de la table',
+        makingTogether: 'Dessiner et créer ensemble',
+        onTheStand: 'Le stand des petits créateurs',
+      },
+    },
+
+    twoTs: {
+      kicker: 'Découvrez Two T\'s',
+      heading: 'Une petite marque au grand cœur.',
+      body: 'Créée par Teya, cinq ans, Two T\'s est née de ses dessins et de ses idées — dont sa collection Hearts — pour devenir quelque chose qu\'elle peut fièrement appeler sien. Lors de notre activation enfants, elle a pu la partager, en parler et voir d\'autres enfants découvrir ce qu\'elle avait créé.',
+      closing: 'Son idée. Ses dessins. Son nom dessus.',
+      videoPlaceholder: 'Interviews des enfants à l\'activation',
     },
     cta: {
       heading: 'Mettons-y leur prénom.',

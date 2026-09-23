@@ -8,3 +8,14 @@ export const kidsOffers = [
   { id: 'newBaby' },
   { id: 'birthdays' },
 ];
+
+// The activation gallery, in the order the photos run. Ids are the keys
+// under i18n kids.activation.shots.* and the slots in data/media.js
+// `kids.activation.shots` — caption and picture share the one id.
+export const activationShots = [
+  { id: 'showingProducts' },
+  { id: 'heartsCollection' },
+  { id: 'withParents' },
+  { id: 'makingTogether' },
+  { id: 'onTheStand' },
+];

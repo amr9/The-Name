@@ -74,6 +74,25 @@ export const media = {
       newBaby: `${BASE}/kids/new-baby.jpg`,
       birthdays: `${BASE}/kids/birthdays.jpg`,
     },
+
+    // The Little Creators activation. `video` is the opening film (kids
+    // showing their products, the Two T's pieces, the Hearts collection
+    // close-ups) and `videoPoster` its still; `shots` is the gallery, keys
+    // matching `activationShots` in pages/Kids/data.js. `interviews` is the
+    // second film, the kids interviews under the Two T's story.
+    activation: {
+      video: `${BASE}/kids/activation.mp4`,
+      videoPoster: `${BASE}/kids/activation-poster.jpg`,
+      shots: {
+        showingProducts: `${BASE}/kids/activation-showing-products.jpg`,
+        heartsCollection: `${BASE}/kids/activation-hearts-collection.jpg`,
+        withParents: `${BASE}/kids/activation-with-parents.jpg`,
+        makingTogether: `${BASE}/kids/activation-making-together.jpg`,
+        onTheStand: `${BASE}/kids/activation-on-the-stand.jpg`,
+      },
+      interviews: `${BASE}/kids/activation-interviews.mp4`,
+      interviewsPoster: `${BASE}/kids/activation-interviews-poster.jpg`,
+    },
   },
 
   // The Name's own artwork, cropped to its edges from the guideline exports.
@@ -143,5 +162,24 @@ export const media = {
   about: {
     videoPoster: `${BASE}/about/about-video-poster.jpg`,
     video: `${BASE}/about/about-video.mp4`,
+
+    // The three chapters of the story timeline — keys match `storyChapters`
+    // in pages/About/data.js. Archive photography for the first two, a shot
+    // of the space as it is now for the third.
+    story: {
+      legacy: `${BASE}/about/story-1990.jpg`,
+      evolution: `${BASE}/about/story-evolution.jpg`,
+      today: `${BASE}/about/story-today.jpg`,
+    },
+
+    // The takeovers — keys match `takeovers` in pages/About/data.js. Each
+    // wants the space, product or experience built around that name.
+    takeovers: {
+      bentley: `${BASE}/about/takeover-bentley.jpg`,
+      sephora: `${BASE}/about/takeover-sephora.jpg`,
+      vogue: `${BASE}/about/takeover-vogue.jpg`,
+      colombianPavilion: `${BASE}/about/takeover-colombian-pavilion.jpg`,
+      customShow: `${BASE}/about/takeover-custom-show.jpg`,
+    },
   },
 };

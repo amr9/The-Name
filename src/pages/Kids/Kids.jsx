@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
+import Carousel from '../../components/Carousel.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
+import VideoPlaceholder from '../../components/VideoPlaceholder/VideoPlaceholder.jsx';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import { kidsOffers } from './data.js';
+import { activationShots, kidsOffers } from './data.js';
 import './Kids.css';
 
 export default function Kids() {
@@ -61,6 +63,58 @@ export default function Kids() {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      {/* — the activation: the film first, then the gallery from the day.
+          Both are <VideoPlaceholder>/<ImagePlaceholder> slots, so the
+          section is live now and fills in as the footage is delivered. — */}
+      <section className="container kids-activation">
+        <span className="card-kicker">{k.activation.kicker}</span>
+        <h2 className="kids-section-title">{k.activation.heading}</h2>
+        <p className="kids-section-lede">{k.activation.body}</p>
+        <p className="kids-activation-support">{k.activation.support}</p>
+
+        <VideoPlaceholder
+          poster={media.kids.activation.videoPoster}
+          label={k.activation.videoPlaceholder}
+        />
+
+        <h3 className="kids-activation-gallery-heading">{k.activation.galleryHeading}</h3>
+        <Carousel prevLabel={k.activation.prevShots} nextLabel={k.activation.nextShots}>
+          {activationShots.map((shot) => (
+            <figure key={shot.id} className="carousel-card kids-activation-shot">
+              <ImagePlaceholder
+                src={media.kids.activation.shots[shot.id]}
+                label={k.activation.shots[shot.id]}
+                ratio="4 / 3"
+                className="kids-activation-shot-image"
+              />
+              <figcaption className="kids-activation-shot-caption">
+                {k.activation.shots[shot.id]}
+              </figcaption>
+            </figure>
+          ))}
+        </Carousel>
+      </section>
+
+      {/* — the story that came out of the activation, on the pale band so it
+          reads as a feature rather than another offer block — */}
+      <section className="kids-two-ts">
+        <div className="container kids-two-ts-inner">
+          <div className="kids-two-ts-copy">
+            <span className="card-kicker">{k.twoTs.kicker}</span>
+            <h2 className="kids-section-title">{k.twoTs.heading}</h2>
+            <p className="kids-section-lede">{k.twoTs.body}</p>
+            <p className="kids-two-ts-closing">{k.twoTs.closing}</p>
+          </div>
+
+          <VideoPlaceholder
+            poster={media.kids.activation.interviewsPoster}
+            label={k.twoTs.videoPlaceholder}
+            ratio="4 / 3"
+            className="kids-two-ts-video"
+          />
         </div>
       </section>
 

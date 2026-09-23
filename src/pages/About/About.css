@@ -1,5 +1,8 @@
-/* The About page: story, services, how we work (components/ProcessSteps),
-   mission & vision, and a closing call to action. */
+/* The About page — "Our story": the hero, the 1990 → today timeline, the
+   FROM THE NAME / TO YOUR NAME panel, the takeovers, who we built it with,
+   what comes next, and the enquiry form. The rules for the brand film,
+   services, how-we-work, mission & vision and the closing CTA are kept
+   below because that markup is parked in About.jsx, not deleted. */
 
 .about-page {
   padding-top: clamp(32px, 4vw, 64px);
@@ -21,42 +24,17 @@
   max-width: 60ch;
   margin: 20px 0 0;
 }
-/* The frame anchors the play badge over the slot. The slot itself is either
-   <ImagePlaceholder> (poster or dashed fallback) or a real <video> — both
-   take .about-video-slot, so the rounding is written once. */
-.about-video-frame {
-  position: relative;
-  margin: clamp(24px, 3vw, 40px) 0 0;
-}
-.about-video-slot {
-  width: 100%;
-  border-radius: calc(2 * var(--radius-lg));
-  overflow: hidden;
-  display: block;
-}
-.about-video-play {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 76px;
-  height: 76px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--color-accent);
-  color: var(--color-black);
-  box-shadow: var(--shadow-lg);
-  /* decorative only — it sits over a placeholder, there is nothing to play */
-  pointer-events: none;
-}
-/* nudge the triangle onto the optical centre of the circle */
-.about-video-play svg {
-  margin-inline-start: 4px;
-}
+/* The frame, slot and play badge now live in components/VideoPlaceholder/ —
+   the Kids activation wanted the same treatment, so they moved there rather
+   than being written twice. Only this section's own layout is left here. */
 
+/* — the hero — */
+.about-hero {
+  padding-bottom: clamp(40px, 5vw, 72px);
+}
 .about-title {
   font-size: clamp(36px, 4.6vw, 60px);
-  margin: 0;
+  margin: 14px 0 0;
   max-width: 18ch;
   text-wrap: balance;
 }
@@ -65,6 +43,183 @@
   line-height: 30px;
   max-width: 60ch;
   margin: 20px 0 0;
+}
+/* the third line of the hero — a beat on its own, so it is set apart */
+.about-hero-support {
+  margin: 20px 0 0;
+  padding-inline-start: 18px;
+  border-inline-start: 2px solid var(--color-accent);
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  font-size: clamp(19px, 2vw, 24px);
+  line-height: 1.35;
+  max-width: 44ch;
+  text-wrap: balance;
+}
+
+/* — the story timeline. Each chapter is copy + one image slot; the pair
+     swaps sides on every second chapter so the page zig-zags. The left
+     rule is the through-line that ties the chapters together. — */
+.about-story {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(48px, 6vw, 88px);
+}
+.about-chapter {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: clamp(24px, 4vw, 56px);
+}
+.about-chapter:nth-child(even) .about-chapter-media {
+  order: -1;
+}
+.about-chapter-copy {
+  padding-inline-start: clamp(16px, 2vw, 24px);
+  border-inline-start: 2px solid var(--color-accent);
+}
+.about-chapter-headline {
+  font-size: clamp(26px, 3vw, 38px);
+  line-height: 1.1;
+  margin: 14px 0 0;
+  margin-left: -0.028em;
+  text-wrap: balance;
+}
+.about-chapter-body {
+  font-size: var(--text-body);
+  line-height: 28px;
+  margin: 16px 0 0;
+  max-width: 54ch;
+}
+/* the line a chapter signs off on */
+.about-chapter-closing {
+  margin: 18px 0 0;
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  font-size: clamp(18px, 1.8vw, 22px);
+  line-height: 1.35;
+  max-width: 44ch;
+  text-wrap: balance;
+}
+.about-chapter-media {
+  border-radius: calc(2 * var(--radius-lg));
+  overflow: hidden;
+}
+
+/* — From [THE NAME lockup]. To Your Name. On a raised beige card rather
+     than a full-bleed band: it is the one pull-quote on the page, so it is
+     lifted off the ground instead of blending into it. The section carries
+     the rhythm on both sides; the card carries the look. — */
+.about-tagline {
+  margin-block: clamp(56px, 6vw, 96px);
+}
+.about-tagline-card {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: clamp(24px, 4vw, 56px);
+  padding: clamp(32px, 4vw, 64px);
+  border-radius: calc(2 * var(--radius-lg));
+  background: var(--color-accent-100);
+  /* the accent edge is what makes it read as lifted rather than just tinted */
+  border-inline-start: 4px solid var(--color-accent);
+}
+/* The first line ends on the Logo, which is artwork sized off this
+   font-size (components/Logo.css .logo-inline) — so the two lines are one
+   block of type, not a heading plus an image. */
+.about-tagline-lines {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  font-size: clamp(28px, 4vw, 50px);
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.about-tagline-from,
+.about-tagline-to {
+  display: block;
+}
+.about-tagline-to {
+  /* the same size bump the Home hero gives its second line */
+  font-size: 1.2em;
+  margin-top: 0.06em;
+}
+.about-tagline-lede {
+  margin: 0;
+  font-size: var(--text-lg);
+  line-height: 30px;
+}
+.about-tagline-body {
+  margin: 16px 0 0;
+  font-size: var(--text-body);
+  line-height: 28px;
+  opacity: 0.8;
+  max-width: 52ch;
+}
+
+/* — the takeovers — */
+.about-takeover {
+  margin-top: clamp(56px, 6vw, 96px);
+}
+.about-takeover-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 20px);
+}
+.about-takeover-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.about-takeover-media {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.about-takeover-name {
+  margin: 0;
+  font-size: var(--text-xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+.about-takeover-name strong {
+  display: block;
+  color: var(--color-accent-700);
+}
+
+/* — built through collaboration — */
+.about-collab {
+  margin-top: clamp(56px, 6vw, 96px);
+  padding-block: clamp(48px, 5vw, 80px);
+  background: var(--color-accent-100);
+}
+.about-collab .about-section-title {
+  margin-top: 14px;
+}
+/* nothing follows the lede inside the band, so it keeps no bottom gap */
+.about-collab .about-section-lede {
+  margin-bottom: 0;
+}
+
+/* — what comes next — */
+.about-future {
+  padding-block: clamp(56px, 6vw, 96px) clamp(32px, 4vw, 56px);
+}
+.about-future .about-section-title {
+  margin-top: 14px;
+}
+/* the last line of the story — the page's sign-off */
+.about-future-closing {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  font-size: clamp(22px, 2.6vw, 32px);
+  line-height: 1.25;
+  max-width: 26ch;
+  text-wrap: balance;
 }
 
 .about-section {
@@ -201,8 +356,15 @@
 
 @media (max-width: 980px) {
   .about-services { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .about-takeover-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 700px) {
   .about-services,
   .about-purpose { grid-template-columns: minmax(0, 1fr); }
+  .about-takeover-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* one column: the image goes back under the copy in every chapter, so
+     the zig-zag does not leave a stray picture above its own heading */
+  .about-chapter,
+  .about-tagline-card { grid-template-columns: minmax(0, 1fr); }
+  .about-chapter:nth-child(even) .about-chapter-media { order: 0; }
 }

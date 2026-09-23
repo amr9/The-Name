@@ -124,7 +124,6 @@ export default function Home() {
               <span className="card-kicker">{t.home.howItWorks.kicker}</span>
               <h2>{t.home.howItWorks.heading}</h2>
             </div>
-            <p className="home-how-lede">{t.home.howItWorks.lede}</p>
           </div>
 
           <ProcessSteps />

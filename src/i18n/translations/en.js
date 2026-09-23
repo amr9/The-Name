@@ -512,7 +512,6 @@ export default {
     howItWorks: {
       kicker: 'How it works',
       heading: 'Four steps from blank to boxed.',
-      lede: 'One piece or one thousand, we make personalization simple.',
       methodsKicker: 'Customization methods',
       suits: 'Best on',
       minimum: 'Minimum',
@@ -763,15 +762,78 @@ export default {
   },
 
   about: {
+    // The brand film is PARKED until the video is delivered — see the JSX
+    // comment in About.jsx. Keys kept so uncommenting it is the only step.
     video: {
-      kicker: 'About us',
+      kicker: 'Our story',
       title: 'Watch the story.',
       lede: 'A short film on who we are, what we make, and why a name changes an object.',
       placeholder: 'About The Name — brand video',
     },
-    kicker: 'About us',
-    title: 'What\'s in a name? Everything.',
-    lede: 'A name is identity, history and connection — your signature and your story. The Name was built on one belief: an object becomes meaningful when it carries your name, your initials, your message or your brand. We curate design-led pieces, then make them yours.',
+
+    // — the hero —
+    kicker: 'Our story',
+    title: 'It Started With a Name.',
+    lede: 'Our story began in 1990, long before THE NAME had a name of its own. It began with customization, corporate gifting and a belief that the most memorable things are the ones made personal.',
+    heroSupport: 'More than three decades later, that belief has found a new home.',
+
+    // — the timeline: 1990 → evolution → today. Ids match storyChapters in
+    //   pages/About/data.js and the slots in data/media.js `about.story`. —
+    story: {
+      legacy: {
+        era: '1990 — where it started',
+        headline: 'Made Personal, From the Beginning.',
+        body: 'The journey began in 1990 with customization and corporate gifting — creating objects for businesses, occasions and people that carried something more meaningful than the product itself: an identity.',
+        placeholder: '1990 — the first customized pieces',
+      },
+      evolution: {
+        era: 'The next chapter',
+        headline: 'From Making Brands Personal to Bringing Great Brands Closer.',
+        body: 'As the business evolved, so did our world. We began bringing international design and lifestyle brands to the Middle East, building relationships, discovering exceptional products and learning what makes an object worth choosing, using and remembering.',
+        closing: 'Customization. Gifting. Brands. Experiences. Each chapter added something to the next.',
+        placeholder: 'The design brands we brought to the region',
+      },
+      today: {
+        era: 'Today — The Name',
+        headline: 'One Place. Every Part of Our Story.',
+        body: 'THE NAME brings that legacy together in one place. A destination to discover design, personalize what you love, meet, eat, collaborate, create and experience something new. Physical and digital. Personal and corporate. A store, a social hub and a platform for what comes next.',
+        placeholder: 'Inside THE NAME today',
+      },
+    },
+
+    // — the philosophy panel. `fromPrefix` is only the word before the
+    //   brand lockup: the logo artwork supplies "THE NAME" itself, article
+    //   included, exactly as it does in the Home hero. —
+    tagline: {
+      fromPrefix: 'From',
+      to: 'To Your Name.',
+      lede: 'It\'s more than our tagline. It\'s how we think.',
+      body: 'When a brand walks through our doors, THE NAME can become their name. When an individual chooses something, it becomes their name. Their identity. Their moment. Their story.',
+    },
+
+    // — the takeovers: proof the space itself changes. The collaborator
+    //   names are proper nouns and live in pages/About/data.js. —
+    takeover: {
+      headline: 'For a moment, the space isn\'t ours. It\'s theirs.',
+      body: 'We build collaborations around the identity of the people and brands we work with — transforming the products, experience and sometimes the space itself around their name.',
+    },
+
+    // — who we have worked with —
+    collab: {
+      era: 'Built through collaboration',
+      headline: 'Some Names We\'ve Made Something With.',
+      body: 'Across the journey, our work has brought us together with global brands, institutions and organizations — creating customized products, gifting, experiences and collaborations built around their identity.',
+    },
+
+    // — where it goes next —
+    future: {
+      era: 'What\'s next',
+      headline: 'A Legacy Built Here. Ready to Travel.',
+      body: 'The UAE taught us to keep looking forward — to build, evolve and think beyond where we are today. THE NAME is our next chapter: bringing more than three decades of experience into a new era of digital customization, experiences and collaboration, with our sights set beyond the UAE and across the GCC.',
+      closing: 'The story started in 1990. What comes next has your name on it.',
+    },
+
+    // — everything below belongs to the PARKED block in About.jsx —
     servicesHeading: 'What we do',
     servicesLede: 'One studio for people and for brands — from a single engraved gift to a full corporate gifting programme.',
     services: {
@@ -860,6 +922,35 @@ export default {
         'One child or a whole celebration — we can make one or make many.',
         "Need something for a class, party or group? Tell us what you're planning and we'll build it with you.",
       ],
+    },
+    // — the activation: the kids' own creations. The opening film and the
+    //   gallery are both placeholders until Saturday's footage is cut —
+    //   see data/media.js `kids.activation`. —
+    activation: {
+      kicker: 'The Name: Little Creators',
+      heading: 'What If Their Idea Had a Name?',
+      body: "We believe kids shouldn't only receive things made for them. Sometimes, they should get to make the idea. Draw it. Name it. Put it out into the world — and discover what happens when something that started in their imagination becomes real.",
+      support: 'That\'s exactly what happened at our latest kids activation.',
+      videoPlaceholder: 'Kids at the activation — showing their products and answering questions',
+      galleryHeading: 'From the activation',
+      prevShots: 'Previous photos',
+      nextShots: 'More photos',
+      shots: {
+        showingProducts: 'A child showing off what they made',
+        heartsCollection: 'Close-up of the Hearts collection',
+        withParents: 'Parents and children around the table',
+        makingTogether: 'Drawing and making together',
+        onTheStand: 'The little creators\' stand',
+      },
+    },
+
+    // — the featured story that came out of it —
+    twoTs: {
+      kicker: "Meet Two T's",
+      heading: 'A Little Brand With a Big Heart.',
+      body: "Created by five-year-old Teya, Two T's began with her drawings and ideas — including her Hearts collection — and became something she could proudly call her own. At our kids activation, she got to share it, talk about it and watch other children discover what she created.",
+      closing: 'Her idea. Her drawings. Her name on it.',
+      videoPlaceholder: 'Kids interviews from the activation',
     },
     cta: {
       heading: "What's Their Name? Let's Start There.",

@@ -205,12 +205,6 @@
   margin: 14px 0 0;
   margin-left: -0.028em;
 }
-.home-how-lede {
-  margin: 0;
-  font-size: var(--text-body);
-  line-height: 28px;
-  max-width: 36ch;
-}
 
 /* the steps themselves are components/ProcessSteps */
 .home-how .process-steps {

@@ -196,9 +196,15 @@ button { font: inherit; }
 
 .washed { filter: saturate(0.6) contrast(0.85) brightness(1.1) opacity(0.94); }
 
+/* Centres a section and gives it the page gutter. `margin-inline`, NOT
+   `margin: 0 auto` — the shorthand also sets margin-top/bottom to 0, and at
+   equal specificity it silently beat the `margin-top` a section declared for
+   itself whenever that page's CSS was bundled before this file (which is why
+   the Kids offer section sat flush against the hero). Vertical rhythm is the
+   section's own business; this class only handles the horizontal. */
 .container {
   max-width: 1240px;
-  margin: 0 auto;
+  margin-inline: auto;
   padding-inline: clamp(20px, 5vw, 72px);
 }
 
