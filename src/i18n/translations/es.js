@@ -275,6 +275,7 @@ export default {
     kicker: 'Para empresas',
     title: 'Tu marca, fabricada y entregada.',
     intro: 'Artículos personalizados para empresas — regalo, bienvenida, eventos y uniforme — además de catering en tu propia dirección. Un contacto, una factura, y tus archivos guardados para que cada reposición sea igual que la anterior.',
+    ctaEnquiry: 'Iniciar una consulta de empresa',
     offer: {
       heading: 'Qué personalizamos',
       lede: 'Manda el logo una vez. Guardamos el diseño, la colocación y los colores, así una reposición dentro de seis meses vuelve idéntica.',
@@ -479,10 +480,11 @@ export default {
       prevShots: 'Fotos anteriores',
       nextShots: 'Más fotos',
       shots: {
-        showingProducts: 'Un niño mostrando lo que ha creado',
-        heartsCollection: 'Primer plano de la colección Hearts',
+        showingProducts: 'Las pequeñas creadoras detrás de su puesto',
+        theCollection: 'La colección expuesta — tazas, botellas, gorras y cuadernos',
+        mugs: 'Tazas con los dibujos de los niños',
         withParents: 'Padres y niños alrededor de la mesa',
-        makingTogether: 'Dibujando y creando juntos',
+        makingTogether: 'Creando en la mesa de manualidades',
         onTheStand: 'El puesto de los pequeños creadores',
       },
     },

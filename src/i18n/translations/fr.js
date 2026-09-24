@@ -275,6 +275,7 @@ export default {
     kicker: 'Pour les entreprises',
     title: 'Votre marque, fabriquée et livrée.',
     intro: 'Des articles personnalisés pour les entreprises — cadeaux, kits d\'accueil, événements et tenues — ainsi que le traiteur à votre adresse. Un seul contact, une seule facture, et vos visuels conservés pour que chaque réassort soit identique au précédent.',
+    ctaEnquiry: 'Lancer une demande entreprise',
     offer: {
       heading: 'Ce que nous personnalisons',
       lede: 'Envoyez le logo une fois. Nous conservons le visuel, l\'emplacement et les couleurs, pour qu\'un réassort dans six mois revienne identique.',
@@ -479,10 +480,11 @@ export default {
       prevShots: 'Photos précédentes',
       nextShots: 'Plus de photos',
       shots: {
-        showingProducts: 'Un enfant montrant ce qu\'il a créé',
-        heartsCollection: 'Gros plan sur la collection Hearts',
+        showingProducts: 'Les petites créatrices derrière leur stand',
+        theCollection: 'La collection installée — mugs, gourdes, casquettes et carnets',
+        mugs: 'Des mugs portant les dessins des enfants',
         withParents: 'Parents et enfants autour de la table',
-        makingTogether: 'Dessiner et créer ensemble',
+        makingTogether: 'À l\'atelier, en pleine création',
         onTheStand: 'Le stand des petits créateurs',
       },
     },

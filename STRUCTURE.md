@@ -551,7 +551,14 @@ public/media/
                 (the opening film), activation-interviews.mp4 +
                 activation-interviews-poster.jpg (the Two T's film) and one
                 activation-<shot>.jpg per id in pages/Kids/data.js
-                `activationShots`.
+                `activationShots`. The gallery shots are the only photos in
+                the repo exported from originals rather than dropped in as-is:
+                each is PRE-CROPPED to 4:3 at 1440x1080, because the carousel
+                slot is a fixed 4/3 and `.img-slot img` is `object-fit: cover`
+                — an uncropped frame would be silently trimmed by the browser,
+                on the centre rather than on the subject. Crop a replacement to
+                4:3 before it lands here, and do not upscale: the portrait
+                frame among them gives up half its height to fit.
   about/      — the About page's brand film: about-video.mp4 and its still
                 about-video-poster.jpg. Until they exist the section shows
                 the dashed placeholder slot.

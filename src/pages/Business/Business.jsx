@@ -14,6 +14,9 @@ export default function Business() {
       <span className="card-kicker">{t.business.kicker}</span>
       <h1 className="page-title business-title">{t.business.title}</h1>
       <p className="business-intro">{t.business.intro}</p>
+      <div className="business-hero-actions">
+        <WhatsAppButton className="btn btn-primary">{t.business.ctaEnquiry}</WhatsAppButton>
+      </div>
 
       {/* — what we brand for companies — */}
       <section className="business-offer">

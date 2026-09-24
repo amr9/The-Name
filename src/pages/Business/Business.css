@@ -16,6 +16,14 @@
   max-width: 58ch;
   margin: 20px 0 0;
 }
+/* Same shape as the Shop and Kids hero action rows: a wrapping flex row, so
+   a second button can join this one without touching the layout. */
+.business-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
 
 .business-section-title {
   font-size: clamp(26px, 3vw, 36px);

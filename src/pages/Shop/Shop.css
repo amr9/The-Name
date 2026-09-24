@@ -1,6 +1,3 @@
-.shop-hero {
-  background: var(--gradient-light);
-}
 .shop-hero .container {
   padding-block: clamp(36px, 4.5vw, 76px);
 }

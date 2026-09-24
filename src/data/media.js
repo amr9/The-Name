@@ -85,7 +85,8 @@ export const media = {
       videoPoster: `${BASE}/kids/activation-poster.jpg`,
       shots: {
         showingProducts: `${BASE}/kids/activation-showing-products.jpg`,
-        heartsCollection: `${BASE}/kids/activation-hearts-collection.jpg`,
+        theCollection: `${BASE}/kids/activation-the-collection.jpg`,
+        mugs: `${BASE}/kids/activation-mugs.jpg`,
         withParents: `${BASE}/kids/activation-with-parents.jpg`,
         makingTogether: `${BASE}/kids/activation-making-together.jpg`,
         onTheStand: `${BASE}/kids/activation-on-the-stand.jpg`,

@@ -714,6 +714,7 @@ export default {
     kicker: 'For business',
     title: 'Make Your Brand the Gift.',
     intro: 'Corporate gifting should do more than carry your logo. We create thoughtful, design-led gifts and branded collections that keep your identity visible, useful and remembered — from employee kits and client gifts to events, VIP gifting and large-scale orders.',
+    ctaEnquiry: 'Start a Business Enquiry',
     offer: {
       heading: 'Made for Business',
       lede: 'From one thoughtful client gift to a full employee or event collection, we bring your brand into objects people actually want to keep.',
@@ -923,9 +924,9 @@ export default {
         "Need something for a class, party or group? Tell us what you're planning and we'll build it with you.",
       ],
     },
-    // — the activation: the kids' own creations. The opening film and the
-    //   gallery are both placeholders until Saturday's footage is cut —
-    //   see data/media.js `kids.activation`. —
+    // — the activation: the kids' own creations. The gallery is the real
+    //   photography now; the two films are still placeholders until the
+    //   footage is cut — see data/media.js `kids.activation`. —
     activation: {
       kicker: 'The Name: Little Creators',
       heading: 'What If Their Idea Had a Name?',
@@ -936,10 +937,11 @@ export default {
       prevShots: 'Previous photos',
       nextShots: 'More photos',
       shots: {
-        showingProducts: 'A child showing off what they made',
-        heartsCollection: 'Close-up of the Hearts collection',
+        showingProducts: 'The little creators behind their stand',
+        theCollection: 'The collection laid out — mugs, bottles, caps and notebooks',
+        mugs: 'Mugs carrying the kids\' own drawings',
         withParents: 'Parents and children around the table',
-        makingTogether: 'Drawing and making together',
+        makingTogether: 'Making at the craft table',
         onTheStand: 'The little creators\' stand',
       },
     },
