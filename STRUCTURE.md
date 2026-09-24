@@ -257,6 +257,14 @@ src/
                         <main> in App.jsx, so navigating does not remount it.
                         It is positioned physically (right/bottom), like the
                         button, so both stay in the same corner under RTL.
+    ShopIcon.jsx       — the shopping-bag glyph, single source. It is the
+                        leading mark on every button that sends the visitor
+                        to the store (Home's personal-gifts CTA, the store
+                        hero's "Shop the Collection", both Kids shop links).
+                        Stroked in `currentColor` like WhatsAppIcon, so it
+                        takes each button variant's color; `.btn` already
+                        supplies the gap, so buttons just render it before
+                        their label. Do not inline a bag SVG elsewhere.
     WhatsAppButton.jsx — the only WhatsApp link component (the old floating
                         WhatsAppFab is now ChatLauncher). `iconOnly`
                         renders just the icon with `children` as the
@@ -631,7 +639,9 @@ placeholder instead, so partially-supplied media degrades cleanly.
 3. **DRY — before writing new JSX/CSS, search for an existing match.** This
    codebase has already hit and fixed real duplication twice:
    - The WhatsApp SVG icon existed in two places → extracted to
-     `components/WhatsAppIcon.jsx`.
+     `components/WhatsAppIcon.jsx`. The shop bag glyph, needed by four
+     buttons across three pages, was written once the same way in
+     `components/ShopIcon.jsx`.
    - The List/Cards segmented toggle (markup + CSS) was duplicated between
      the Menu and VertexPieces pages (now Cafe and Shop) → extracted to
      `components/ViewToggle.jsx` and

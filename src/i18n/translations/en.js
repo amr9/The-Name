@@ -616,7 +616,7 @@ export default {
     title: 'Make It Personal',
     body: 'Discover design-led objects from brands we love — then make them unmistakably yours. Add a name, initials, a message or something that means something to you.',
     openShop: 'Shop the Collection',
-    askPersonal: 'Customize Yours →',
+    askPersonal: 'Customize Yours',
     filters: { all: 'All', drinkware: 'Drinkware', tech: 'Tech', desk: 'Desk', travel: 'Travel', giftSets: 'Gift sets' },
     viewList: 'List',
     viewCards: 'Cards',

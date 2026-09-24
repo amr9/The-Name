@@ -3,6 +3,7 @@ import Bubbles from '../../components/Bubbles/Bubbles.jsx';
 import Carousel from '../../components/Carousel.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import VideoPlaceholder from '../../components/VideoPlaceholder/VideoPlaceholder.jsx';
+import ShopIcon from '../../components/ShopIcon.jsx';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import { kidsIcons } from '../../components/Bubbles/icons.jsx';
 import { media } from '../../data/media.js';
@@ -30,7 +31,7 @@ export default function Kids() {
           <h1 className="page-title kids-hero-title">{k.title}</h1>
           <p className="kids-hero-lede">{k.lede}</p>
           <div className="kids-hero-actions">
-            <Link to="/shop" className="btn btn-primary">{k.ctaShop}</Link>
+            <Link to="/shop" className="btn btn-primary"><ShopIcon />{k.ctaShop}</Link>
             <WhatsAppButton className="btn btn-secondary">{k.ctaAsk}</WhatsAppButton>
           </div>
         </div>
@@ -138,7 +139,7 @@ export default function Kids() {
         <h2 className="kids-section-title">{k.cta.heading}</h2>
         <p className="kids-section-lede">{k.cta.body}</p>
         <div className="kids-hero-actions">
-          <Link to="/shop" className="btn btn-primary">{k.cta.shop}</Link>
+          <Link to="/shop" className="btn btn-primary"><ShopIcon />{k.cta.shop}</Link>
           <WhatsAppButton className="btn btn-secondary">{k.cta.whatsapp}</WhatsAppButton>
         </div>
       </section>

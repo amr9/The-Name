@@ -177,7 +177,7 @@ export default {
     title: 'Hazlo personal',
     body: 'Descubre objetos de diseño de marcas que nos encantan — y luego hazlos inconfundiblemente tuyos. Añade un nombre, unas iniciales, un mensaje o algo que signifique algo para ti.',
     openShop: 'Ver la colección',
-    askPersonal: 'Personaliza el tuyo →',
+    askPersonal: 'Personaliza el tuyo',
     filters: { all: 'Todo', drinkware: 'Botellas y tazas', tech: 'Tecnología', desk: 'Escritorio', travel: 'Viaje', giftSets: 'Sets de regalo' },
     viewList: 'Lista',
     viewCards: 'Tarjetas',

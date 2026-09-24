@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
+import ShopIcon from '../../components/ShopIcon.jsx';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import Carousel from '../../components/Carousel.jsx';
 import OverlayCard, { OverlayCardArrow } from '../../components/OverlayCard/OverlayCard.jsx';
@@ -29,8 +30,8 @@ export default function Shop() {
           <h1 className="page-title shop-hero-title">{t.shop.title}</h1>
           <p className="shop-hero-body">{t.shop.body}</p>
           <div className="shop-hero-actions">
-            <a className="btn btn-primary" href={site.shopUrl} target="_blank" rel="noopener noreferrer">{t.shop.openShop}</a>
-            <WhatsAppButton className="btn btn-ghost">{t.shop.askPersonal}</WhatsAppButton>
+            <a className="btn btn-primary" href={site.shopUrl} target="_blank" rel="noopener noreferrer"><ShopIcon />{t.shop.openShop}</a>
+            <WhatsAppButton className="btn btn-secondary">{t.shop.askPersonal}</WhatsAppButton>
           </div>
         </div>
       </section>

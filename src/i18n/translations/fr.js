@@ -177,7 +177,7 @@ export default {
     title: 'Rendez-le personnel',
     body: "Découvrez des objets design de marques que nous aimons — puis faites-en des pièces qui n'appartiennent qu'à vous. Ajoutez un nom, des initiales, un message ou ce qui compte pour vous.",
     openShop: 'Découvrir la collection',
-    askPersonal: 'Personnalisez la vôtre →',
+    askPersonal: 'Personnalisez la vôtre',
     filters: { all: 'Tout', drinkware: 'Gourdes & tasses', tech: 'Tech', desk: 'Bureau', travel: 'Voyage', giftSets: 'Coffrets' },
     viewList: 'Liste',
     viewCards: 'Cartes',

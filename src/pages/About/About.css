@@ -74,10 +74,6 @@
 .about-chapter:nth-child(even) .about-chapter-media {
   order: -1;
 }
-.about-chapter-copy {
-  padding-inline-start: clamp(16px, 2vw, 24px);
-  border-inline-start: 2px solid var(--color-accent);
-}
 .about-chapter-headline {
   font-size: clamp(26px, 3vw, 38px);
   line-height: 1.1;

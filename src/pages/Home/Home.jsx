@@ -6,6 +6,7 @@ import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import Logo from '../../components/Logo.jsx';
 import LogoMarquee from '../../components/LogoMarquee/LogoMarquee.jsx';
 import ProcessSteps from '../../components/ProcessSteps/ProcessSteps.jsx';
+import ShopIcon from '../../components/ShopIcon.jsx';
 import { brands } from '../../data/brands.js';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
@@ -99,6 +100,7 @@ export default function Home() {
                       ))}
                     </div>
                     <Link to={s.to} className="btn btn-secondary home-service-cta">
+                      {s.to === '/shop' && <ShopIcon />}
                       {info.cta}
                     </Link>
                   </div>
