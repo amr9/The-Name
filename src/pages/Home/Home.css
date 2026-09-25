@@ -43,8 +43,17 @@
   pointer-events: none;
 }
 
+/* 62px at desktop, down from 86px. The point is the VIDEO: the hero is one
+   screen tall and the title sat at the bottom of it, so every pixel the type
+   gives back is background that can be seen. The clamp is kept because a flat
+   62px wraps badly on a phone — 62 is the ceiling, not a fixed size.
+
+   The brand lockup on the first line needs no rule of its own: .logo-inline is
+   1.11em, so it is sized BY this number and follows it down automatically.
+   That is also why it must stay em-based — a px height here would leave the
+   wordmark at its old size beside smaller text. */
 .home-hero-title {
-  font-size: clamp(42px, 6vw, 86px);
+  font-size: clamp(32px, 5vw, 62px);
   margin: 20px 0 0;
   max-width: 22ch;
 }

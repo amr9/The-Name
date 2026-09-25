@@ -3,7 +3,8 @@
 }
 .shop-hero-title {
   font-size: clamp(38px, 4.6vw, 62px);
-  margin: 20px 0 0;
+  /* Top margin comes from `.card-kicker + .page-title` in theme.css. */
+  margin: 0;
   max-width: 24ch;
 }
 .shop-hero-body {
@@ -30,25 +31,172 @@
   flex-wrap: wrap;
   margin-bottom: 28px;
 }
+
+/* The category filters WRAP, at every width.
+
+   The shared `.seg` is one clipped capsule — `inline-flex` + `overflow:
+   hidden` + a 999px radius — which works for the four or five options it was
+   built for and breaks silently at ten: measured at 1240px the row wanted
+   1286px inside a 1096px box, so `overflow: hidden` simply cut 190px off the
+   end and "Technology" disappeared mid-word. Nothing warns you; it just
+   vanishes.
+
+   So the capsule is undone here and each option becomes its own pill, the same
+   treatment .seg-grid gives a cramped picker (and the 404 page's links). The
+   row then wraps instead of clipping, and every pill carries identical padding,
+   which is what makes the last one end the way the first one starts. */
+/* `.seg.shop-filters`, not `.shop-filters` — theme.css's `.seg` is exactly
+   as specific and lands later in the bundle, so a single class silently loses
+   to it and the capsule's border, radius and overflow all survive. (They did,
+   at first: the pills wrapped correctly inside a leftover outline.) */
+.seg.shop-filters {
+  flex-wrap: wrap;
+  gap: 8px;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+}
+.shop-filters .seg-opt {
+  border: 1px solid var(--color-divider);
+  border-radius: 999px;
+}
+/* theme.css drops the first option's leading border to butt it against the
+   capsule's edge. There is no capsule any more, so it needs its own outline
+   back or "All Products" alone sits open on one side. */
+.shop-filters .seg-opt:first-child {
+  border-inline-start: 1px solid var(--color-divider);
+}
+/* The search field, on its own row under the filters. It is full width
+   because it applies to the whole catalogue rather than sitting as one more
+   control in the filter row. */
+.shop-search {
+  margin-top: var(--space-4);
+}
+/* Visible label rather than a placeholder doing the labelling: a placeholder
+   disappears the moment you type, and it is not a label to a screen reader. */
+.shop-search-label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-accent-700);
+}
+.shop-search-input {
+  width: 100%;
+  max-width: 420px;
+  padding: 10px 16px;
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  background: var(--color-white);
+  border: 1px solid var(--color-divider);
+  border-radius: 999px;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.shop-search-input::placeholder { color: color-mix(in srgb, var(--color-text) 45%, transparent); }
+.shop-search-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 30%, transparent);
+}
+
 .shop-result-count {
   font-size: var(--text-sm);
   opacity: 0.6;
   font-variant-numeric: tabular-nums;
 }
 
+/* — CORNER RADII on this page, one rule —
+
+   Every card-level surface uses --radius-md. Nothing picks a radius because it
+   looks nice; there is one size and it is that one.
+
+   The exception is a surface nested INSIDE another rounded surface. Two
+   concentric rounded boxes only look concentric when the inner radius is the
+   outer radius MINUS the gap between them — equal radii make the inner corner
+   look too round, and an inner radius larger than (outer - gap) makes it bulge
+   away from the corner it sits in. So a nested surface is always written as
+   `calc(var(--radius-md) - <the inset>)`, with the inset being the parent's
+   own padding, and the arithmetic left visible rather than resolved to a
+   number so the relationship survives a change to either value.
+
+   Capsules are not part of this. Buttons, the category pills and the search
+   field are 999px everywhere on the site — a different shape, not a different
+   corner size — and they keep it. */
+
+
+/* The "load more" control under the catalogue. Centred and given room, so it
+   reads as the end of the current batch rather than a stray button. */
+.shop-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+}
+.shop-more-count {
+  font-size: var(--text-sm);
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}
+
+/* A shelf with nothing on it yet. Not an error state — the export simply does
+   not carry categories, so nine of the ten filters are empty by construction
+   (see data/storeProducts.js). */
+.shop-empty {
+  margin: var(--space-8) 0;
+  padding: var(--space-6);
+  border: 1px dashed var(--color-accent-300);
+  border-radius: var(--radius-md);
+  background: var(--color-accent-100);
+  color: var(--color-accent-800);
+  text-align: center;
+  font-size: var(--text-body);
+}
+
+/* The list is a stack of beige cards rather than rows divided by rules: each
+   product gets its own surface, and the surface is what lifts on hover. The
+   gap between them replaces the divider the rows used to carry. */
+.shop-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
 .shop-row,
 .shop-list-row {
   display: flex;
   gap: 20px;
   align-items: center;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--color-accent-200);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-accent-100);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-md);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+/* Here the hover DOES raise — a list row has no resting shadow to give up, so
+   lifting is the only depth cue available. The cards above work the other way
+   round on purpose. */
+.shop-row:hover,
+.shop-list-row:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-accent-300);
+}
+@media (prefers-reduced-motion: reduce) {
+  .shop-row,
+  .shop-list-row { transition: none; }
+  .shop-row:hover,
+  .shop-list-row:hover { transform: none; }
 }
 .shop-list-thumb {
   width: 96px;
   height: 96px;
   flex: none;
-  border-radius: var(--radius-lg);
+  /* Inset from the row's edge by its vertical padding. */
+  border-radius: calc(var(--radius-md) - var(--space-3));
   overflow: hidden;
 }
 .shop-list-info { flex: 1; min-width: 0; }
@@ -58,7 +206,17 @@
   gap: 12px;
   flex-wrap: wrap;
 }
-.shop-list-title-row h3 { font-size: 20px; margin: 0; }
+/* One line, then an ellipsis — several of these names are very long, and a
+   wrapped one makes its row twice as tall as its neighbours. The full string
+   is on the element's `title`, so hovering shows it. */
+.shop-list-title-row h3 {
+  font-size: 20px;
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .shop-list-code {
   font-size: var(--text-xs);
   letter-spacing: 0.14em;
@@ -99,6 +257,15 @@
   max-width: 58ch;
   margin: 14px 0 0;
 }
+/* The gift sets are shared OverlayCards, which are --radius-lg everywhere
+   they appear. On THIS page that would put a second corner size next to the
+   catalogue above, so they are brought onto the page's own radius here rather
+   than in OverlayCard.css — the Cafe page uses that component too and is not
+   part of this change. The panel floating over the picture is inset 10px from
+   the card's edge, so it steps down by exactly that. */
+.shop-gift-sets-grid .overlay-card { border-radius: var(--radius-md); }
+.shop-gift-sets-grid .overlay-card-panel { border-radius: calc(var(--radius-md) - 10px); }
+
 .shop-gift-sets-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -113,23 +280,11 @@
 @media (max-width: 700px) {
   /* The six filters don't fit one pill row on a phone, and wrapping mid-pill
      looks broken — so they become full-width blocks, two per row. */
+  /* The pills already wrap at every width (see .shop-filters above), so the
+     two-column grid this used to force is gone — it only has to stop the
+     longest labels from being held on one line now. */
   .shop-controls { align-items: stretch; }
-  .shop-controls .seg {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
-    width: 100%;
-    border: 0;
-    border-radius: 0;
-    overflow: visible;
-  }
-  .shop-controls .seg-opt {
-    justify-content: center;
-    text-align: center;
-    border: 1px solid var(--color-divider);
-    border-radius: 999px;
-    white-space: normal;
-  }
+  .shop-filters .seg-opt { white-space: normal; }
 
   .shop-row, .shop-list-row { flex-wrap: wrap; }
   .shop-list-action-col { width: 100%; }

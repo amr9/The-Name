@@ -1,6 +1,6 @@
 /* Design tokens + shared component classes — brand palette: primary
-   yellow #FFBD14 on black / gray / white, with Book Antiqua for display
-   headings and Montserrat for body text. Every color/font/spacing/
+   yellow #FFBD14 on black / gray / white, set throughout in Montserrat —
+   regular for body copy, bold for every title and heading. Every color/font/spacing/
    radius/shadow used across pages reads from the variables here — change
    the look by editing this file. */
 
@@ -56,13 +56,24 @@
   /* The footer: brownish black, left to right. */
   --gradient-footer: linear-gradient(to right, var(--color-ink) 0%, var(--color-brown-900) 55%, var(--color-brown-700) 100%);
 
+  /* The panel gradient's pale end of the ramp, on the same 135deg axis as
+     --gradient-accent below. For small tinted surfaces that must not shout —
+     the navbar's current-page pill is the first — where the full accent
+     gradient would fight the type sitting on it. */
+  --gradient-accent-soft: linear-gradient(135deg, var(--color-accent-100) 0%, var(--color-accent-300) 100%);
+
   --gradient-dark: linear-gradient(135deg, var(--color-gray), var(--color-black));
   --gradient-light: linear-gradient(135deg, var(--color-white), var(--color-surface));
   --gradient-accent: linear-gradient(135deg, var(--color-accent), var(--color-accent-400));
 
-  --font-heading: "Book Antiqua", "Palatino Linotype", Palatino, Georgia, serif;
-  --font-heading-weight: 700;
+  /* ONE face for the whole site. --font-heading is no longer a second family
+     — it is the same Montserrat, kept as its own token because ~30 rules name
+     it to mean "this is a title": they get the heading WEIGHT from
+     --font-heading-weight, and a future display face would drop in here
+     without touching any of them. */
   --font-body: "Montserrat", system-ui, sans-serif;
+  --font-heading: var(--font-body);
+  --font-heading-weight: 700;
 
   /* Body type scale. Every non-heading run of copy picks one of these —
      never a raw px value — so the whole site's reading size is tuned here.
@@ -99,37 +110,13 @@
   --shadow-lg: 0 12px 32px color-mix(in srgb, #000000 22%, transparent);
 }
 
-/* Two faces: Book Antiqua for display headings, Montserrat for body text and
-   the page titles. Montserrat loads from Google Fonts in index.html, so it
-   renders as drawn everywhere. (The guideline's third face, the script
-   Artisoul Signature, is gone — it is licensed, on no CDN, and only ever
-   rendered on machines that happened to have it installed.)
-   Book Antiqua is the one licensed face left: it renders as specified ONLY
-   where the visitor has it installed (it ships with MS Office, so Windows
-   only) or once its files are saved into public/fonts/ —
-     public/fonts/book-antiqua.woff2        (+ -bold.woff2)
-   otherwise the fallback chain takes over and headings show as Georgia.
-   The @font-face tries the locally installed copy first, then the self-hosted
-   file. Regular and bold are declared separately so an installed Book Antiqua
-   Bold is used as drawn rather than synthesised from the regular. */
-@font-face {
-  font-family: "Book Antiqua";
-  src: local("Book Antiqua"), local("BookAntiqua"),
-    url("/fonts/book-antiqua.woff2") format("woff2"),
-    url("/fonts/book-antiqua.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Book Antiqua";
-  src: local("Book Antiqua Bold"), local("BookAntiqua-Bold"),
-    url("/fonts/book-antiqua-bold.woff2") format("woff2"),
-    url("/fonts/book-antiqua-bold.otf") format("opentype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
+/* One face, Montserrat, loaded from Google Fonts in index.html — so it renders
+   as drawn on every machine, which is the point of the change: the two faces
+   this file used to carry (Book Antiqua for headings, and before it the script
+   Artisoul Signature) were both licensed, on no CDN, and so only ever appeared
+   on visitors who happened to own them. Everyone else saw Georgia. There are
+   no @font-face rules here any more and public/fonts/ is unused — add nothing
+   back without a webfont the site is licensed to serve. */
 
 *, *::before, *::after { box-sizing: border-box; }
 html, body { height: 100%; }
@@ -164,26 +151,36 @@ h4 { font-size: 20px; }
 h5 { font-size: 16px; }
 h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
 
-/* The page <h1> on every route, set in the body face rather than the heading
-   serif. Each page keeps its own font-size clamp / margin / max-width in its
-   own CSS — only what is identical on every page lives here. Montserrat's
-   700 italic is requested in index.html, so both are real cuts, not synthetic.
-   Its Arabic coverage is no better than the serif's, so RTL stays on the
-   heading face, upright, as the rest of the headings do. */
+/* The page <h1> on every route. Same Montserrat as everything else, bold like
+   every other heading, and set in ITALIC — the one thing that still separates
+   a page title from the section headings under it. Montserrat's 700 italic is
+   requested in index.html, so it is a real cut, not a synthetic slant. Each
+   page keeps its own font-size clamp / margin / max-width in its own CSS —
+   only what is identical on every page lives here. */
 .page-title {
-  font-family: var(--font-body);
+  font-family: var(--font-heading);
   font-style: italic;
-  font-weight: 700;
+  font-weight: var(--font-heading-weight);
   letter-spacing: -0.015em;
   line-height: 1.1;
   margin-left: -0.04em;
 }
+/* Arabic has no italic cut, so RTL titles stand upright — and without the
+   slant there is no overhang to pull back with the optical margin. */
 [dir="rtl"] .page-title {
-  font-family: var(--font-heading);
   font-style: normal;
-  font-weight: var(--font-heading-weight);
   margin-left: 0;
 }
+/* The gap between a kicker and the page title under it, in ONE place. Every
+   page hero is the same pair — a .card-kicker then an h1.page-title — and each
+   used to set its own top margin, which had drifted to four different values
+   (0 on Business and Policies, 13.2 on the 404, 14 on About and Kids, 20 on
+   Shop). The adjacent-sibling selector carries two classes, so it outranks the
+   single-class rule each page uses for its own title and wins wherever the
+   bundle happens to order them. A new page gets the spacing for free; none
+   should set a top margin on its title again. */
+.card-kicker + .page-title { margin-top: var(--space-4); }
+
 p { margin: 0 0 var(--space-3); }
 a { color: var(--color-accent-700); text-decoration: none; text-underline-offset: 3px; }
 a:hover { color: var(--color-accent-800); }

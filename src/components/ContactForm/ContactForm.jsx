@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import WhatsAppButton from '../WhatsAppButton.jsx';
-import { site } from '../../data/site.js';
+import { site, mapsLink } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { contactFields, honeypotField, timingField, validateContact } from '../../../shared/contactForm.js';
 import './ContactForm.css';
@@ -128,6 +128,11 @@ export default function ContactForm() {
         <h2 className="contact-title">{t.contact.title}</h2>
         <p className="contact-body">{t.contact.body}</p>
 
+        {/* These details are the site's ONLY copy of them: the policies page
+            used to end with its own contact block and no longer does, so the
+            orders address, the separate privacy address and the registered
+            entity all landed here. Do not thin this list out without putting
+            them somewhere else first. */}
         <dl className="contact-details">
           <div className="contact-detail">
             <dt>{t.contact.emailHeading}</dt>
@@ -139,9 +144,37 @@ export default function ContactForm() {
                 under Arabic without dragging the line's alignment with it. */}
             <dd><bdi dir="ltr">{site.phone}</bdi></dd>
           </div>
+          <div className="contact-detail">
+            <dt>{t.contact.privacyHeading}</dt>
+            <dd><a href={`mailto:${site.privacyEmail}`}>{site.privacyEmail}</a></dd>
+          </div>
+          <div className="contact-detail">
+            <dt>{t.contact.locationHeading}</dt>
+            <dd>
+              {/* Opens Google Maps with directions already asked for. A new
+                  tab, because on a phone this hands off to the Maps app and
+                  the enquiry form would otherwise be torn down mid-typing. */}
+              <a
+                className="contact-map-link"
+                href={mapsLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {site.address}
+                <span className="contact-map-cue">{t.contact.directions}</span>
+              </a>
+            </dd>
+          </div>
         </dl>
 
         <WhatsAppButton className="btn btn-secondary">{t.common.chatOnWhatsapp}</WhatsAppButton>
+
+        {/* The registered entity, carried over from the policies page — the
+            trading name is "The Name", but the terms bind this company. */}
+        <p className="contact-entity">
+          <strong>{site.legalName}</strong>
+          <span>{t.contact.licenceLabel}: {site.licensedBy}</span>
+        </p>
       </div>
 
       <form className="contact-form" onSubmit={submit} noValidate>

@@ -1,0 +1,102 @@
+/* "Customize Yours" — the process, then the pieces it applies to. The cards
+   and their grid are components/ProductCard; only the page around them is
+   here. */
+
+.customize-page {
+  padding-block: var(--space-8) calc(var(--space-8) * 2);
+}
+
+.customize-hero { max-width: 62ch; }
+.customize-title { font-size: clamp(36px, 4.6vw, 60px); }
+/* Top margin comes from `.card-kicker + .page-title` in theme.css. */
+.customize-lede {
+  font-size: var(--text-lg);
+  line-height: 1.6;
+  margin: var(--space-4) 0 0;
+  color: color-mix(in srgb, var(--color-text) 75%, transparent);
+}
+
+/* — the three steps —
+
+   An <ol>, because they are a sequence and not three equal features: base,
+   then detail, then the finished thing. The numbers are rendered rather than
+   left to a list marker so they can carry the accent and sit above the
+   heading instead of beside it. */
+.customize-steps { margin-top: calc(var(--space-8) * 1.2); }
+.customize-steps-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-6);
+}
+.customize-step {
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-accent-100);
+  border: 1px solid var(--color-divider);
+}
+.customize-step-num {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--color-accent-700);
+  font-variant-numeric: tabular-nums;
+}
+.customize-step-title {
+  font-size: clamp(19px, 2vw, 24px);
+  line-height: 1.2;
+  margin: var(--space-2) 0 0;
+  text-wrap: balance;
+}
+.customize-step-body {
+  font-size: var(--text-body);
+  line-height: 1.6;
+  margin: var(--space-2) 0 0;
+}
+
+/* — the pieces — */
+.customize-catalogue { margin-top: calc(var(--space-8) * 1.4); }
+.customize-catalogue-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+.customize-catalogue-title {
+  font-size: clamp(26px, 3vw, 38px);
+  margin: 0;
+  text-wrap: balance;
+}
+.customize-count {
+  font-size: var(--text-sm);
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}
+
+/* — the closing line — */
+.customize-cta {
+  margin-top: calc(var(--space-8) * 1.4);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-divider);
+  max-width: 62ch;
+}
+.customize-cta-body {
+  font-size: var(--text-lg);
+  line-height: 1.6;
+  margin: 0;
+}
+.customize-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+@media (max-width: 700px) {
+  .customize-page { padding-block: var(--space-6) calc(var(--space-8) * 1.5); }
+  .customize-steps-list { grid-template-columns: minmax(0, 1fr); }
+}

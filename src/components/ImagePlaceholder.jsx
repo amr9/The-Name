@@ -7,7 +7,7 @@ import './ImagePlaceholder.css';
  * it falls back to the dashed placeholder, so paths can be wired up before
  * the artwork lands.
  */
-export default function ImagePlaceholder({ label, src, ratio = '4 / 3', className = '' }) {
+export default function ImagePlaceholder({ label, src, ratio = '4 / 3', className = '', loading }) {
   const [failed, setFailed] = useState(false);
 
   // A new src deserves a fresh attempt (e.g. the selected hotspot changes).
@@ -16,7 +16,10 @@ export default function ImagePlaceholder({ label, src, ratio = '4 / 3', classNam
   if (src && !failed) {
     return (
       <div className={`img-slot ${className}`} style={{ aspectRatio: ratio }}>
-        <img src={src} alt={label || ''} onError={() => setFailed(true)} />
+        {/* `loading` is opt-in rather than lazy by default: a catalogue of
+            192 thumbnails wants it, but lazy-loading a hero image delays the
+            largest paint on the page, which is the opposite of the point. */}
+        <img src={src} alt={label || ''} loading={loading} decoding="async" onError={() => setFailed(true)} />
       </div>
     );
   }

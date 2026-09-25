@@ -12,7 +12,7 @@
 .policies-header,
 .policies-toc,
 .policies-doc,
-.policies-contact {
+.policies-contact-note {
   max-width: 72ch;
 }
 
@@ -123,45 +123,22 @@
 
 /* — the shared contact block that closes the page — */
 
-.policies-contact {
-  margin-top: calc(var(--space-8) * 1.6);
-}
-
-.policies-contact-entity {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin: var(--space-4) 0 0;
-  font-size: var(--text-body);
+/* The closing pointer to /about#contact. Set off from the last clause above
+   it by a rule and its own beige ground, so it reads as the page's footnote
+   rather than as one more term. */
+.policies-contact-note {
+  margin-top: calc(var(--space-8) * 1.4);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-accent-100);
+  border: 1px solid var(--color-divider);
+  font-size: var(--text-sm);
   line-height: 1.6;
 }
 
-.policies-contact-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: var(--space-3);
-  margin-top: var(--space-4);
-}
-
-.policies-contact .policies-contact-card { background: var(--color-accent-100); }
-
-.policies-contact-list {
-  margin: 0;
-  font-size: var(--text-body);
-}
-.policies-contact-list dt {
-  font-size: var(--text-xs);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-accent-700);
-  margin-top: var(--space-2);
-}
-.policies-contact-list dt:first-child { margin-top: 0; }
-.policies-contact-list dd { margin: 2px 0 0; }
-
 @media (max-width: 700px) {
   .policies-page { padding-block: var(--space-6) var(--space-8); }
-  .policies-doc,
-  .policies-contact { margin-top: var(--space-8); }
+  .policies-doc { margin-top: var(--space-8); }
+  .policies-contact-note { margin-top: var(--space-8); }
   .policies-toc-list { flex-direction: column; gap: var(--space-2); }
 }

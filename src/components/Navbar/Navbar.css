@@ -11,9 +11,46 @@
   border-bottom: 1px solid var(--color-accent-200);
 }
 
+/* Tighter than the --space-4 `.nav` sets: the links now carry pill padding of
+   their own, and at the full gap the French labels came within 6px of running
+   out of bar at 861px, the narrowest this row is ever asked to fit.
+   `.nav.navbar` rather than `.navbar` — theme.css's `.nav` is equally
+   specific and lands later in the bundle, so a single class here loses. */
+.nav.navbar { gap: var(--space-3); }
+
+/* Every link is a pill-shaped box, whether or not it is lit — the padding has
+   to be on all of them, or the row would reflow each time the current page
+   changed. Only the background differs. */
 .navbar-link {
   font-size: var(--text-sm);
+  padding: 7px 12px;
+  border-radius: 999px;
+  transition: background 0.18s ease, color 0.18s ease;
 }
+
+/* The current page, and the hover that previews it: the same light orange
+   gradient, one step apart in strength. --gradient-accent-soft is the shared
+   token (theme.css) rather than a one-off linear-gradient here, so the bar
+   stays on the brand's ramp. A gradient cannot be transitioned, so the fade
+   above carries the colour and the gradient itself simply appears; at 180ms
+   under a pointer that reads as one movement. */
+/* Qualified with .navbar on purpose. theme.css sets the nav's link colour as
+   `.nav a:hover, .nav a[aria-current='page']` — one type selector MORE
+   specific than a bare `.navbar-link[aria-current]`, so without this the
+   pill kept accent-700 and the rule looked like it had no effect. */
+.navbar .navbar-link:hover {
+  background: color-mix(in srgb, var(--color-accent-100) 70%, transparent);
+  color: var(--color-accent-800);
+}
+.navbar .navbar-link[aria-current='page'] {
+  background: var(--gradient-accent-soft);
+  /* Darkest of the ramp, on its palest end — the pill has to clear contrast
+     at --text-sm, which the accent-700 the bare nav link uses would not. */
+  color: var(--color-accent-800);
+}
+/* Nothing extra is needed for the sparkling link: an element's own background
+   paints BELOW its ::before/::after, so the glint and the star field stay
+   visible over the lit pill. */
 
 /* Above the breakpoint the wrapper disappears from the layout, so the links
    and the language switcher are flex children of the bar itself — the row the
@@ -21,158 +58,66 @@
 .navbar-menu { display: contents; }
 .navbar-toggle { display: none; }
 
-/* — the sparkling link (today: Business) — */
+/* — the emphasised link (today: Business) — */
 
-/* Two layers over the word: ::before is a sweep of light crossing the text,
-   ::after is a field of small star points that twinkle in place. Both sit
-   behind the label (z-index on .navbar-link-text) so the word stays readable
-   at every frame. Built from the same vocabulary as .btn-sparkle in theme.css,
-   scaled down for 14.5px nav type. */
-.navbar-link-sparkle {
-  position: relative;
-  isolation: isolate;
-  /* Room for the sparkle field to spill past the word without the glyphs
-     touching the neighbouring links. */
-  padding-inline: 6px;
+/* One link in the bar is meant to be noticed. It used to be noticed by moving
+   — a travelling glint and a field of twinkling stars, flaring on click. That
+   is gone: the emphasis is now weight and colour, nothing else. Bold against
+   five links at 400 is what the eye lands on first, and the accent is what
+   says the difference is deliberate rather than a rendering accident.
+   Nothing here animates, so there is no reduced-motion case to answer. */
+.navbar .navbar-link-highlight {
+  font-weight: 700;
+  color: var(--color-accent-700);
 }
-.navbar-link-text { position: relative; z-index: 1; }
+/* Nothing else is declared here on purpose. The hover pill and the
+   current-page gradient come from the .navbar .navbar-link rules above, which
+   are a class more specific than this one, so they apply to this link exactly
+   as they do to every other and the bold rides along on top of them.
+   An earlier version set `background: none` here to keep the emphasis
+   "clean": it cancelled this link's hover pill AND, since that rule also won
+   on the current page, wiped the orange gradient whenever the pointer was
+   over it. Do not reintroduce a background rule for this link. */
 
-.navbar-link-sparkle::before,
-.navbar-link-sparkle::after {
-  content: '';
-  position: absolute;
-  inset: -4px -2px;
-  pointer-events: none;
-  z-index: 0;
-  transform-origin: 50% 50%;
-}
+/* Every page sits in one of these — an inert wrapper that keeps all the pages
+   equal flex children of the bar. (It used to also anchor a hover submenu for
+   Policies; that page now lives in the footer, so there is nothing to anchor.) */
+.navbar-item { display: inline-flex; align-items: center; }
 
-/* The star points. Five dots at fixed spots, brightening and dimming together
-   — cheap, and it reads as a twinkle rather than a loading shimmer. */
-.navbar-link-sparkle::after {
-  background:
-    radial-gradient(circle at 6% 24%, var(--color-accent-600) 0 1.1px, transparent 2px),
-    radial-gradient(circle at 30% 84%, var(--color-accent-600) 0 1px, transparent 1.8px),
-    radial-gradient(circle at 54% 10%, var(--color-accent-600) 0 1.2px, transparent 2.1px),
-    radial-gradient(circle at 78% 78%, var(--color-accent-600) 0 1px, transparent 1.8px),
-    radial-gradient(circle at 96% 28%, var(--color-accent-600) 0 1.1px, transparent 2px);
-  animation: sparkle-twinkle 1.6s ease-in-out infinite alternate;
-}
+/* — the compressed row, 801px to 1000px —
 
-/* The sweep, kept faint: at this size a strong band reads as a highlight
-   rather than a glint. It travels by BACKGROUND-POSITION, not by transform the
-   way .btn-sparkle does — that button clips its sweep with overflow: hidden,
-   which here would also crop the burst below. Moving the gradient inside a
-   fixed box keeps the band from ever leaving the link (it was painting over
-   the neighbouring nav item) while leaving the element free to scale. */
-.navbar-link-sparkle::before {
-  background-image: linear-gradient(100deg, transparent 0%, color-mix(in srgb, var(--color-accent) 22%, transparent) 50%, transparent 100%);
-  background-size: 30% 100%;
-  background-repeat: no-repeat;
-  background-position: -30% 0;
-  animation: navbar-sparkle-sweep 3.4s ease-in-out infinite;
-}
-/* The band is NARROWER than the box (38%), which is what makes these
-   percentages behave: with a background smaller than its element, 0% aligns
-   left edges and 100% right edges, so -30% starts it clear of the word and
-   130% carries it clear off the other side. A background WIDER than the box
-   inverts that mapping — the first attempt used 260% and painted a broad slab
-   over the neighbouring link instead of a glint. */
-@keyframes navbar-sparkle-sweep {
-  0%, 35% { background-position: -30% 0; }
-  100%    { background-position: 130% 0; }
+   These numbers moved when "Customize Yours" made the bar SIX links instead
+   of five. Re-measured with that entry in place, French being the widest set:
+   at full size the row needs 935px of content, so the full row cannot be
+   shown below ~971px; compressed it needs 724px, so it cannot be shown below
+   ~760px. Hence 1000px and 800px, each with roughly 30-40px of slack rather
+   than sitting on the limit.
+
+   Compressing means type down to the --text-xs token, the pills and the gap
+   tighter, the logo and the language trigger smaller. At 801px that leaves
+   FR 724px against 766px available. Re-measure ALL of this if a nav entry is
+   added or a label renamed — a sixth link cost ~110px and pushed the
+   hamburger breakpoint up by 100px.
+
+   The range is bounded at BOTH ends on purpose: below 801px the row is a
+   dropdown with room to spare, and it should keep the full-size type and the
+   full-size logo rather than inherit a squeeze meant for a cramped row. */
+@media (max-width: 1000px) and (min-width: 801px) {
+  .navbar-link {
+    font-size: var(--text-xs);
+    padding: 6px 8px;
+  }
+  .nav.navbar { gap: 7px; }
+  /* Scoped to .navbar: .logo-md is shared with anything else drawing a
+     medium logo, and only the bar is short of room. */
+  .navbar .logo-md { height: 28px; }
+  .navbar .lang-switcher-trigger {
+    padding: 5px 7px;
+    font-size: 12px;
+  }
 }
 
-/* The click: the star field flares — bigger, brighter, and lit from behind by
-   a glow — then settles back into the idle twinkle. `both` is deliberately NOT
-   used: the animation must hand the element back to the looping twinkle above
-   when it finishes, and Navbar.jsx clears data-burst off animationend. */
-.navbar-link-sparkle[data-burst='true']::after {
-  animation: sparkle-burst 620ms cubic-bezier(.22,.61,.36,1);
-}
-.navbar-link-sparkle[data-burst='true']::before {
-  background-image: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--color-accent) 60%, transparent) 0%, transparent 55%);
-  background-size: 100% 100%;
-  background-position: 0 0;
-  animation: sparkle-burst-glow 620ms ease-out;
-}
-
-@keyframes sparkle-burst {
-  0%   { opacity: 1; transform: scale(1); filter: none; }
-  30%  { opacity: 1; transform: scale(1.85); filter: brightness(1.9) drop-shadow(0 0 5px var(--color-accent)); }
-  100% { opacity: 1; transform: scale(1); filter: none; }
-}
-@keyframes sparkle-burst-glow {
-  0%   { transform: scale(0.6); opacity: 0; }
-  35%  { transform: scale(1.25); opacity: 1; }
-  100% { transform: scale(1.6); opacity: 0; }
-}
-
-/* The link is decoration on a working nav item, so it all comes off rather
-   than degrading — the link itself is unaffected. */
-@media (prefers-reduced-motion: reduce) {
-  .navbar-link-sparkle::before { display: none; }
-  .navbar-link-sparkle::after,
-  .navbar-link-sparkle[data-burst='true']::after { animation: none; opacity: 0.55; }
-}
-
-/* Every page sits in one of these. It exists so a page that also has a
-   section menu has something to anchor that menu to; for the rest it is an
-   inert wrapper that keeps all the pages equal flex children of the bar. */
-.navbar-item { position: relative; display: inline-flex; align-items: center; }
-
-/* — the section menu (today: Policies) — */
-
-/* Hidden but still laid out and still in the tab order's reach: opacity and
-   visibility rather than `display: none`, so opening it can be eased. The
-   4px lift is what gives the open a bit of movement rather than a hard cut. */
-.navbar-sub {
-  position: absolute;
-  top: 100%;
-  inset-inline-start: 50%;
-  translate: -50% 0;
-  z-index: 1;
-  min-width: 210px;
-  margin: 0;
-  padding: 6px;
-  list-style: none;
-  background: var(--color-bg);
-  border: 1px solid var(--color-accent-200);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-lg);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(4px);
-  transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s;
-}
-
-/* No gap between the link and the panel, or the pointer crosses dead space on
-   the way down and the menu closes under it. The bar's own bottom padding is
-   not enough to bridge that, so the panel starts flush and pads itself. */
-.navbar-item-has-menu:hover .navbar-sub,
-.navbar-item-has-menu:focus-within .navbar-sub {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.navbar-sub-link {
-  display: block;
-  padding: 9px 12px;
-  border-radius: calc(var(--radius-md) - 8px);
-  white-space: nowrap;
-}
-.navbar-sub-link:hover {
-  background: var(--color-accent-100);
-}
-
-/* The panel opens on hover, so it must not animate for anyone who has asked
-   the site to stop moving. */
-@media (prefers-reduced-motion: reduce) {
-  .navbar-sub { transition: none; }
-}
-
-@media (max-width: 860px) {
+@media (max-width: 800px) {
   .navbar-toggle {
     display: inline-flex;
     align-items: center;
@@ -193,8 +138,8 @@
      descendants — see LanguageSwitcher.jsx. That same backdrop-filter is why
      the panel is only translucent and does not blur behind itself: it opens a
      backdrop root, so a backdrop-filter here is a no-op (verified in Chrome).
-     With no blur to soften what shows through, the white has to stay high
-     enough that the page under the panel does not garble the link text. */
+     With no blur to soften what shows through, the panel is opaque: anything
+     translucent let the page scroll visibly through the link text. */
   .navbar-menu {
     display: flex;
     flex-direction: column;
@@ -207,16 +152,14 @@
     min-width: 200px;
     max-width: calc(100vw - 40px);
     padding: 8px;
-    background: color-mix(in srgb, #fff 88%, transparent);
+    background: var(--color-bg);
     border: 1px solid var(--color-accent-200);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
   }
   .navbar-menu[data-open='false'] { display: none; }
 
-  /* The bar is already a panel here and a touch screen has no hover, so the
-     wrapper goes back to being a block and its sections are always visible,
-     indented under their page rather than floating over it. */
+  /* One page per row in the dropdown. */
   .navbar-item { display: block; }
 
   .navbar-menu .navbar-link {
@@ -224,28 +167,10 @@
     border-radius: calc(var(--radius-lg) - 6px);
   }
 
-  .navbar-sub {
-    position: static;
-    translate: none;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    min-width: 0;
-    padding: 2px 0 2px 12px;
-    background: none;
-    border: none;
-    box-shadow: none;
-  }
-  .navbar-sub-link {
-    padding: 8px 12px;
-    font-size: var(--text-sm);
-    opacity: 0.75;
-    border-radius: calc(var(--radius-lg) - 6px);
-  }
-  .navbar-sub-link:hover { opacity: 1; }
-  .navbar-menu .navbar-link:hover,
-  .navbar-menu .navbar-link[aria-current='page'] {
-    background: color-mix(in srgb, var(--color-accent-100) 75%, transparent);
+  /* Same lit pill as the desktop row, squared off to the dropdown's radius. */
+  .navbar .navbar-menu .navbar-link[aria-current='page'] {
+    background: var(--gradient-accent-soft);
+    color: var(--color-accent-800);
   }
 
   /* The switcher sits below the pages, off the same divider that separates it

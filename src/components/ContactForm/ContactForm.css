@@ -23,8 +23,11 @@
   line-height: 28px;
   max-width: 44ch;
 }
+/* Four details now rather than two, so they pair up on anything wide enough
+   instead of running as one tall column beside a short form. */
 .contact-details {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: var(--space-4);
   margin: var(--space-8) 0;
 }
@@ -42,6 +45,42 @@
   color: inherit;
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+/* The address link: the street line reads as text, and the cue under it is
+   what says the tap goes somewhere. Only the cue is underlined — underlining
+   a three-line address turns it into a wall of rules. */
+.contact-detail a.contact-map-link {
+  display: inline-block;
+  text-decoration: none;
+}
+.contact-map-cue {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-accent-700);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* The arrow points the way the line runs, so it flips with the direction. */
+.contact-map-cue::after {
+  content: ' →';
+  display: inline-block;
+}
+[dir="rtl"] .contact-map-cue::after { content: ' ←'; }
+.contact-map-link:hover .contact-map-cue { color: var(--color-accent-800); }
+
+/* The registered entity, in the small print under the WhatsApp button — it is
+   there to be findable, not read. */
+.contact-entity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: var(--space-4) 0 0;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--color-text) 62%, transparent);
 }
 
 /* — right column: the form — */

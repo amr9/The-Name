@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { site, waLink } from '../../data/site.js';
+import { site } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { policyDocs } from './data.js';
 import './Policies.css';
@@ -44,9 +44,8 @@ export default function Policies() {
         <p className="policies-updated">{p.updated}</p>
       </header>
 
-      {/* The same three destinations as the navbar's hover menu, for anyone
-          who arrived here without using it — and for phones, where a hover
-          menu is not reachable at all. */}
+      {/* The same three destinations as the footer's policy list, for anyone
+          who arrived here by another route. */}
       <nav className="policies-toc" aria-label={p.tocHeading}>
         <h2 className="policies-toc-heading">{p.tocHeading}</h2>
         <ul className="policies-toc-list">
@@ -57,9 +56,6 @@ export default function Policies() {
               </Link>
             </li>
           ))}
-          <li>
-            <Link className="policies-toc-link" to="/policies#contact">{p.contact.heading}</Link>
-          </li>
         </ul>
       </nav>
 
@@ -97,42 +93,14 @@ export default function Policies() {
         );
       })}
 
-      {/* One contact block for all three documents, rather than the three
-          near-identical "Contact Us" clauses they each ended with. */}
-      <section id="contact" className="scroll-anchor policies-contact">
-        <h2 className="policies-doc-title">{p.contact.heading}</h2>
-        <p className="policies-lede">{p.contact.lede}</p>
-
-        <p className="policies-contact-entity">
-          <strong>{site.legalName}</strong>
-          <span>{site.address}</span>
-          <span>{p.contact.licenceLabel}: {site.licensedBy}</span>
-        </p>
-
-        <div className="policies-contact-grid">
-          <div className="card elev-sm policies-contact-card">
-            <h3 className="card-title">{p.contact.ordersHeading}</h3>
-            <dl className="policies-contact-list">
-              <dt>{p.contact.emailLabel}</dt>
-              <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
-              <dt>{p.contact.phoneLabel}</dt>
-              <dd>
-                <a href={waLink} target="_blank" rel="noopener noreferrer">
-                  <bdi dir="ltr">{site.phone}</bdi>
-                </a>
-              </dd>
-            </dl>
-          </div>
-
-          <div className="card elev-sm policies-contact-card">
-            <h3 className="card-title">{p.contact.privacyHeading}</h3>
-            <dl className="policies-contact-list">
-              <dt>{p.contact.emailLabel}</dt>
-              <dd><a href={`mailto:${site.privacyEmail}`}>{site.privacyEmail}</a></dd>
-            </dl>
-          </div>
-        </div>
-      </section>
+      {/* This page carries no contact block of its own; three clauses above
+          point at "our About page", and this is the link that makes that
+          followable. It is the only route from the terms to the registered
+          entity and the two addresses — do not drop it. */}
+      <p className="policies-contact-note">
+        {p.contactNote}{' '}
+        <Link to="/about#contact">{p.contactNoteLink}</Link>
+      </p>
     </div>
   );
 }

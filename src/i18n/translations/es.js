@@ -1,7 +1,7 @@
 export default {
   // `cafe` se conserva para la página de la cafetería aparcada; `contact`
   // para el formulario, ahora al pie de la página Acerca de.
-  nav: { home: 'Inicio', cafe: 'Cafetería', kids: 'Niños', shop: 'Tienda The Name', business: 'Empresas', about: 'Acerca de', policies: 'Políticas', contact: 'Contáctanos', menu: 'Menú',
+  nav: { home: 'Inicio', cafe: 'Cafetería', kids: 'Niños', shop: 'Tienda The Name', business: 'Empresas', about: 'Acerca de', policies: 'Políticas', contact: 'Contáctanos', customize: "Personalízalo", menu: 'Menú',
          policyTabs: { terms: 'Términos y condiciones', delivery: 'Envíos y devoluciones', privacy: 'Política de privacidad' } },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chatear por WhatsApp', backToTop: 'Volver arriba' },
@@ -12,6 +12,10 @@ export default {
     body: 'Reservas de ocho personas o más, presupuestos de catering, noches privadas, prensa y consultas profesionales — escríbenos aquí y el equipo de operaciones lo atiende.',
     emailHeading: 'Correo',
     phoneHeading: 'Teléfono y WhatsApp',
+    privacyHeading: 'Privacidad y datos personales',
+    locationHeading: 'Dónde estamos',
+    directions: 'Cómo llegar',
+    licenceLabel: 'Con licencia de',
     optional: 'opcional',
     send: 'Enviar mensaje',
     sending: 'Enviando…',
@@ -34,6 +38,33 @@ export default {
       rateLimited: 'Son muchos mensajes en poco tiempo. Inténtalo en un rato o escríbenos por WhatsApp.',
       send: 'No se pudo enviar. Inténtalo de nuevo o escríbenos por WhatsApp.',
     },
+  },
+
+  // The catch-all page (pages/NotFound/). `tryInstead` heads a list built
+  // from `navLinks`, so the page names themselves come from `nav` above.
+  notFound: {
+    kicker: "Página no encontrada",
+    title: "Esa página ya no está aquí.",
+    lede: "El enlace que seguiste no lleva a ninguna parte: puede estar mal escrito, o ser una página que desde entonces hemos integrado en otra.",
+    home: "Volver al inicio",
+    tryInstead: "Prueba con una de estas",
+  },
+
+  // The Customize Yours page (pages/Customize/). WHICH products it lists is
+  // in data/storeCustomizable.js; the step ids are `customizeSteps` there.
+  customize: {
+    kicker: "Personalízalo",
+    title: "Tú eliges y diseñas",
+    lede: "Empieza por una pieza que te guste, decide cada detalle y fabricamos la que has diseñado.",
+    steps: {
+      base: { title: "Elige tu base", body: "El estilo, el modelo o el material de partida: tu lienzo." },
+      detail: { title: "Personaliza cada detalle", body: "Colores, grabado, materiales y acabados, a tu manera." },
+      life: { title: "Dale vida", body: "Haz el pedido y nuestros artesanos la fabrican según tus especificaciones." },
+    },
+    gridHeading: "Piezas personalizables",
+    count: (n) => (n === 1 ? "1 pieza" : `${n} piezas`),
+    ctaBody: "¿No sabes por dónde empezar? Dinos para qué es y te orientamos.",
+    ctaShop: "Empezar a diseñar",
   },
 
   footer: {
@@ -178,7 +209,36 @@ export default {
     body: 'Descubre objetos de diseño de marcas que nos encantan — y luego hazlos inconfundiblemente tuyos. Añade un nombre, unas iniciales, un mensaje o algo que signifique algo para ti.',
     openShop: 'Ver la colección',
     askPersonal: 'Personaliza el tuyo',
-    filters: { all: 'Todo', drinkware: 'Botellas y tazas', tech: 'Tecnología', desk: 'Escritorio', travel: 'Viaje', giftSets: 'Sets de regalo' },
+    // The store's shelves. Keys and order come from `storeCategories` in
+    // data/storeProducts.js; only the wording lives here.
+    filters: {
+      all: 'Todos los productos',
+      bagsTravel: 'Bolsos y viaje',
+      deskStationery: 'Escritorio y papelería',
+      drinkware: 'Bebidas',
+      games: 'Juegos',
+      homeAccessories: 'Accesorios de hogar',
+      kids: 'Niños',
+      photoFrames: 'Foto y marcos',
+      giftSets: 'Sets de regalo personalizados',
+      technology: 'Tecnología',
+    },
+    emptyCategory: 'Nada en esta categoría todavía.',
+    price: (n) => `${n} AED`,
+    // The button across the foot of a product card. The store says "Add to
+    // Cart"; this site has no cart, so it sends you there instead.
+    viewProduct: 'Ver producto',
+    // The catalogue loads 24 at a time; these label the control under it.
+    loadMore: (n) => `Ver ${n} más`,
+    showing: (a, b) => `Mostrando ${a} de ${b}`,
+    // Corner ribbons on the Shop cards. WHICH products get one is in
+    // data/storeBadges.js; only the wording lives here, keyed by badge.
+    badges: { bestSeller: 'Más vendido' },
+    // The search field under the category filters. `noResults` takes the
+    // query so the visitor can see what was actually searched for.
+    searchLabel: 'Buscar productos',
+    searchPlaceholder: 'Buscar por nombre…',
+    noResults: (q) => `Sin resultados para “${q}”.`,
     viewList: 'Lista',
     viewCards: 'Tarjetas',
     resultPiece: (n) => `${n} pieza`,

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import Logo from '../Logo.jsx';
 import LanguageSwitcher from '../LanguageSwitcher.jsx';
 import { navLinks } from '../../data/site.js';
@@ -19,10 +19,6 @@ function ToggleIcon({ open }) {
 export default function Navbar() {
   const { t } = useLanguage();
   const [open, setOpen] = useState(false);
-  // Which sparkling link is mid-burst. One at a time, and it is cleared by the
-  // animation's own end event rather than a timer, so the CSS owns the
-  // duration and the two cannot drift apart.
-  const [burst, setBurst] = useState(null);
   const { pathname } = useLocation();
   const barRef = useRef(null);
 
@@ -73,52 +69,20 @@ export default function Navbar() {
       </button>
 
       <div id={menuId} className="navbar-menu" data-open={open}>
-        {navLinks.map((link) => {
-          // A sparkling link carries its twinkle on a ::after overlay and the
-          // text in its own <span>, so the burst can scale the sparkle without
-          // scaling the word. data-burst is what CSS watches for the flare.
-          const label = (
+        {navLinks.map((link) => (
+          // The emphasised link (`highlight`) differs by nothing but a class —
+          // its weight and colour are the whole treatment, so there is no
+          // state, no overlay element and no event handler behind it.
+          <span key={link.to} className="navbar-item">
             <NavLink
               to={link.to}
               end={link.to === '/'}
-              className={link.sparkle ? 'navbar-link navbar-link-sparkle' : 'navbar-link'}
-              data-burst={link.sparkle && burst === link.to ? 'true' : undefined}
-              onClick={link.sparkle ? () => setBurst(link.to) : undefined}
-              onAnimationEnd={
-                link.sparkle
-                  ? (e) => { if (e.animationName.startsWith('sparkle-burst')) setBurst(null); }
-                  : undefined
-              }
+              className={link.highlight ? 'navbar-link navbar-link-highlight' : 'navbar-link'}
             >
-              {link.sparkle ? <span className="navbar-link-text">{t.nav[link.key]}</span> : t.nav[link.key]}
+              {t.nav[link.key]}
             </NavLink>
-          );
-
-          // A plain page is just its link. A page with `sections` (today only
-          // /policies) also gets the menu below, which opens on hover and on
-          // keyboard focus — hover alone would leave it unreachable by
-          // keyboard, and unopenable on a touch screen where the first tap on
-          // the parent follows the link instead.
-          if (!link.sections) return <span key={link.to} className="navbar-item">{label}</span>;
-
-          return (
-            <span key={link.to} className="navbar-item navbar-item-has-menu">
-              {label}
-              <ul className="navbar-sub">
-                {link.sections.map((id) => (
-                  <li key={id}>
-                    {/* `to` carries the hash, so the jump goes through the
-                        router and hooks/useScrollToTop.js scrolls to it —
-                        a plain <a href="#id"> would bypass both. */}
-                    <Link to={`${link.to}#${id}`} className="navbar-sub-link">
-                      {t.nav.policyTabs[id]}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </span>
-          );
-        })}
+          </span>
+        ))}
 
         <LanguageSwitcher />
       </div>

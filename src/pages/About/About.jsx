@@ -30,26 +30,36 @@ export default function About() {
         <p className="about-hero-support">{a.heroSupport}</p>
       </header>
 
-      {/* — the timeline: 1990 → the evolution → today. One <article> per
-          chapter, alternating sides on wide screens (CSS does the swap on
-          :nth-child(even), so the markup stays in reading order). — */}
+      {/* — the timeline: 1990 → the next chapter → today, walked as a memory
+          lane rather than read as three blocks. A single rail runs down the
+          whole section and every chapter hangs off it: a small square of
+          artwork sitting ON the line, its copy beside it. The big alternating
+          pictures this replaced were the loudest thing on the page and broke
+          the run in half at every chapter; a thumbnail keeps the eye on the
+          line, which is what makes it read as one journey.
+
+          The rail is drawn by CSS on the section and the markers, so the
+          markup is just chapters in order — nothing here knows it is first or
+          last, and adding a chapter to storyChapters extends the line. — */}
       <section className="container about-story">
         {storyChapters.map((id) => {
           const c = a.story[id];
           return (
             <article key={id} className="about-chapter">
+              <div className="about-chapter-marker">
+                <ImagePlaceholder
+                  src={media.about.story[id]}
+                  label={c.placeholder}
+                  ratio="1 / 1"
+                  className="about-chapter-thumb"
+                />
+              </div>
               <div className="about-chapter-copy">
                 <span className="card-kicker">{c.era}</span>
                 <h2 className="about-chapter-headline">{c.headline}</h2>
                 <p className="about-chapter-body">{c.body}</p>
                 {c.closing && <p className="about-chapter-closing">{c.closing}</p>}
               </div>
-              <ImagePlaceholder
-                src={media.about.story[id]}
-                label={c.placeholder}
-                ratio="4 / 3"
-                className="about-chapter-media"
-              />
             </article>
           );
         })}

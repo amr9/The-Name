@@ -1,7 +1,7 @@
 export default {
   // يبقى `cafe` لصفحة المقهى المؤجّلة، و`contact` لنموذج التواصل الذي صار
   // في أسفل صفحة «من نحن».
-  nav: { home: 'الرئيسية', cafe: 'المقهى', kids: 'الأطفال', shop: 'متجر The Name', business: 'الشركات', about: 'من نحن', policies: 'السياسات', contact: 'تواصل معنا', menu: 'القائمة',
+  nav: { home: 'الرئيسية', cafe: 'المقهى', kids: 'الأطفال', shop: 'متجر The Name', business: 'الشركات', about: 'من نحن', policies: 'السياسات', contact: 'تواصل معنا', customize: "خصّصها", menu: 'القائمة',
          policyTabs: { terms: 'الشروط والأحكام', delivery: 'التوصيل والإرجاع', privacy: 'سياسة الخصوصية' } },
 
   common: { whatsapp: 'واتساب', chatOnWhatsapp: 'الدردشة عبر واتساب', backToTop: 'العودة إلى الأعلى' },
@@ -12,6 +12,10 @@ export default {
     body: 'حجوزات لثمانية أشخاص فأكثر، عروض أسعار الضيافة، الأمسيات الخاصة، الصحافة، والاستفسارات التجارية — أرسلها هنا ويتولّاها مكتب العمليات.',
     emailHeading: 'البريد الإلكتروني',
     phoneHeading: 'الهاتف وواتساب',
+    privacyHeading: 'الخصوصية والبيانات الشخصية',
+    locationHeading: 'موقعنا',
+    directions: 'الحصول على الاتجاهات',
+    licenceLabel: 'مرخّصة من',
     optional: 'اختياري',
     send: 'إرسال الرسالة',
     sending: 'جارٍ الإرسال…',
@@ -34,6 +38,33 @@ export default {
       rateLimited: 'هذه رسائل كثيرة في وقت قصير. حاول بعد قليل أو راسلنا على واتساب.',
       send: 'تعذّر الإرسال. حاول مرة أخرى أو راسلنا على واتساب.',
     },
+  },
+
+  // The catch-all page (pages/NotFound/). `tryInstead` heads a list built
+  // from `navLinks`, so the page names themselves come from `nav` above.
+  notFound: {
+    kicker: "الصفحة غير موجودة",
+    title: "هذه الصفحة لم تعد هنا.",
+    lede: "الرابط الذي فتحته لا يؤدي إلى أي صفحة — ربما كُتب بشكل خاطئ، أو أنها صفحة دمجناها لاحقًا في صفحة أخرى.",
+    home: "العودة إلى الرئيسية",
+    tryInstead: "جرّب إحدى هذه الصفحات",
+  },
+
+  // The Customize Yours page (pages/Customize/). WHICH products it lists is
+  // in data/storeCustomizable.js; the step ids are `customizeSteps` there.
+  customize: {
+    kicker: "خصّصها كما تريد",
+    title: "أنت تختار وتصمّم",
+    lede: "ابدأ من قطعة تعجبك، واتّخذ كل قرار بشأنها بنفسك، ونحن نصنع التي صمّمتها.",
+    steps: {
+      base: { title: "اختر قاعدتك", body: "النمط أو الطراز أو الخامة التي تبدأ منها — لوحتك." },
+      detail: { title: "خصّص كل تفصيل", body: "الألوان والنقش والخامات واللمسات الأخيرة، كما تريدها." },
+      life: { title: "اجعلها حقيقة", body: "أكمل الطلب ويصنعها حرفيّونا وفق المواصفات التي حدّدتها." },
+    },
+    gridHeading: "قطع يمكن تخصيصها",
+    count: (n) => (n === 1 ? "قطعة واحدة" : `${n} قطعة`),
+    ctaBody: "لا تعرف من أين تبدأ؟ أخبرنا بالمناسبة وسنرشدك إلى القطعة المناسبة.",
+    ctaShop: "ابدأ التصميم",
   },
 
   footer: {
@@ -178,7 +209,36 @@ export default {
     body: 'اكتشف قطعًا مصمّمة بعناية من علامات نحبّها — ثم اجعلها لك بلا لبس. أضف اسمًا أو أحرفًا أولى أو رسالة أو أي شيء يعني لك شيئًا.',
     openShop: 'تسوّق المجموعة',
     askPersonal: 'خصّص قطعتك',
-    filters: { all: 'الكل', drinkware: 'قوارير وأكواب', tech: 'تقنية', desk: 'مكتب', travel: 'سفر', giftSets: 'أطقم هدايا' },
+    // The store's shelves. Keys and order come from `storeCategories` in
+    // data/storeProducts.js; only the wording lives here.
+    filters: {
+      all: 'كل المنتجات',
+      bagsTravel: 'الحقائب والسفر',
+      deskStationery: 'المكتب والقرطاسية',
+      drinkware: 'أدوات الشرب',
+      games: 'الألعاب',
+      homeAccessories: 'إكسسوارات المنزل',
+      kids: 'الأطفال',
+      photoFrames: 'الصور والإطارات',
+      giftSets: 'أطقم الهدايا المخصّصة',
+      technology: 'التقنية',
+    },
+    emptyCategory: 'لا يوجد شيء في هذه الفئة بعد.',
+    price: (n) => `${n} د.إ`,
+    // The button across the foot of a product card. The store says "Add to
+    // Cart"; this site has no cart, so it sends you there instead.
+    viewProduct: 'عرض المنتج',
+    // The catalogue loads 24 at a time; these label the control under it.
+    loadMore: (n) => `عرض ${n} إضافية`,
+    showing: (a, b) => `عرض ${a} من ${b}`,
+    // Corner ribbons on the Shop cards. WHICH products get one is in
+    // data/storeBadges.js; only the wording lives here, keyed by badge.
+    badges: { bestSeller: 'الأكثر مبيعًا' },
+    // The search field under the category filters. `noResults` takes the
+    // query so the visitor can see what was actually searched for.
+    searchLabel: 'البحث في المنتجات',
+    searchPlaceholder: 'ابحث بالاسم…',
+    noResults: (q) => `لا نتائج لـ “${q}”.`,
     viewList: 'قائمة',
     viewCards: 'بطاقات',
     resultPiece: (n) => `قطعة واحدة`,

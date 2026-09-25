@@ -1,7 +1,7 @@
 export default {
   // `cafe` is kept for the parked cafe page; `contact` for the enquiry form,
   // which now sits at the foot of About rather than on its own page.
-  nav: { home: 'Home', cafe: 'Cafe', kids: 'Kids', shop: 'The Name Store', business: 'Business', about: 'About', policies: 'Policies', contact: 'Contact us', menu: 'Menu',
+  nav: { home: 'Home', cafe: 'Cafe', kids: 'Kids', shop: 'The Name Store', business: 'Business', about: 'About', policies: 'Policies', contact: 'Contact us', customize: "Customize Yours", menu: 'Menu',
          policyTabs: { terms: 'Terms & Conditions', delivery: 'Delivery & Returns', privacy: 'Privacy Policy' } },
 
   // `chatOnWhatsapp` is the label on ContactForm's WhatsApp button — today
@@ -14,6 +14,10 @@ export default {
     body: 'Bookings for eight or more, catering quotes, private nights, press and trade enquiries — send it here and the operations desk picks it up.',
     emailHeading: 'Email',
     phoneHeading: 'Phone & WhatsApp',
+    privacyHeading: 'Privacy & personal data',
+    locationHeading: 'Find us',
+    directions: 'Get directions',
+    licenceLabel: 'Licensed by',
     optional: 'optional',
     send: 'Send message',
     sending: 'Sending…',
@@ -38,6 +42,33 @@ export default {
     },
   },
 
+  // The catch-all page (pages/NotFound/). `tryInstead` heads a list built
+  // from `navLinks`, so the page names themselves come from `nav` above.
+  notFound: {
+    kicker: "Page not found",
+    title: "That page has moved on.",
+    lede: "The link you followed does not lead anywhere — it may be mistyped, or it may be a page we have since folded into another one.",
+    home: "Back to the homepage",
+    tryInstead: "Try one of these",
+  },
+
+  // The Customize Yours page (pages/Customize/). WHICH products it lists is
+  // in data/storeCustomizable.js; the step ids are `customizeSteps` there.
+  customize: {
+    kicker: "Customize Yours",
+    title: "You Choose & Design",
+    lede: "Start from a piece you like, make every decision about it yourself, and we build the one you designed.",
+    steps: {
+      base: { title: "Choose Your Base", body: "Pick the style, model or material you want to start from — that is your canvas." },
+      detail: { title: "Personalize Every Detail", body: "Colours, engraving, materials and finishes, set the way you want them." },
+      life: { title: "Bring It to Life", body: "Place the order and our craftspeople build it to the specification you set." },
+    },
+    gridHeading: "Pieces you can customize",
+    count: (n) => (n === 1 ? "1 piece" : `${n} pieces`),
+    ctaBody: "Not sure which piece to start from? Tell us what it is for and we will point you at the right one.",
+    ctaShop: "Start designing",
+  },
+
   footer: {
     rights: 'All rights reserved.',
   },
@@ -54,7 +85,9 @@ export default {
   // render time — the entity details are never retyped into the copy.
   //
   // The "Contact Us" clause that closed each of the three source documents is
-  // NOT repeated per doc: the page ends with a single `policies.contact` block.
+  // NOT repeated per doc, and no longer appears on this page at all: the
+  // entity, the two addresses and the location now live in the enquiry block
+  // at the foot of /about (components/ContactForm/), under `contact` above.
   //
   // DELIBERATELY NOT TRANSLATED: fr.js, es.js and ar.js carry no `policies`
   // key, so every locale falls through to this English text via the deepMerge
@@ -68,6 +101,12 @@ export default {
     lede: 'Our terms of sale, how delivery and returns work, and what we do with your information. Everything below applies to purchases made through this website.',
     updated: 'Last updated: September 2026',
     tocHeading: 'On this page',
+    // The line that closes the page, in place of the contact block that used
+    // to. Two keys, not one with a token in it: `contactNote` is the sentence
+    // and `contactNoteLink` is the linked clause rendered straight after it,
+    // so neither side has to be cut up at render time.
+    contactNote: 'For our registered details and every way to reach us — orders, deliveries, returns, privacy requests and where to find us —',
+    contactNoteLink: 'see the contact section on our About page',
 
     docs: {
       terms: {
@@ -268,7 +307,7 @@ export default {
               'Changed your mind? The cancellation conditions depend on whether your order has been personalized.',
               'Non-customized orders may be cancelled before they have been dispatched. Personalized or custom-made orders may be cancelled only before production has started.',
               'Once production of a personalized item has begun, the order becomes non-cancellable and non-refundable for change of mind.',
-              'To request a cancellation, contact us as soon as possible using the details at the foot of this page.',
+              'To request a cancellation, contact us as soon as possible using the contact details on our About page.',
             ],
           },
           returns: {
@@ -328,7 +367,7 @@ export default {
             heading: 'Who We Are',
             blocks: [
               'This website and online store are operated by {legalName}, of {address}, licensed by {licensedBy}.',
-              'Privacy-related questions and requests go to the privacy address at the foot of this page.',
+              'Privacy-related questions and requests go to the privacy address listed on our About page.',
             ],
           },
           collect: {
@@ -435,7 +474,7 @@ export default {
             blocks: [
               'Subject to applicable UAE law and any lawful exceptions, you may have rights regarding your personal information, including rights relating to access, correction, deletion or restriction of certain processing.',
               'The UAE Personal Data Protection Law provides data subjects with rights concerning their personal information, subject to conditions and exceptions established by the legislation.',
-              'To submit a privacy or personal-data request, use the privacy address at the foot of this page. We may need to verify your identity before completing certain requests.',
+              'To submit a privacy or personal-data request, use the privacy address listed on our About page. We may need to verify your identity before completing certain requests.',
             ],
           },
           cookies: {
@@ -465,18 +504,6 @@ export default {
       },
     },
 
-    // The single contact block that closes the page, in place of the three
-    // near-identical "Contact Us" clauses the source documents each ended with.
-    contact: {
-      heading: 'Contact Us',
-      lede: 'For questions about an order, cancellation, delivery, return or complaint — and for privacy and personal-data enquiries.',
-      ordersHeading: 'Orders, delivery & returns',
-      privacyHeading: 'Privacy & personal data',
-      emailLabel: 'Email',
-      phoneLabel: 'Phone / WhatsApp',
-      addressLabel: 'Address',
-      licenceLabel: 'Licensed by',
-    },
   },
 
   home: {
@@ -617,7 +644,36 @@ export default {
     body: 'Discover design-led objects from brands we love — then make them unmistakably yours. Add a name, initials, a message or something that means something to you.',
     openShop: 'Shop the Collection',
     askPersonal: 'Customize Yours',
-    filters: { all: 'All', drinkware: 'Drinkware', tech: 'Tech', desk: 'Desk', travel: 'Travel', giftSets: 'Gift sets' },
+    // The store's shelves. Keys and order come from `storeCategories` in
+    // data/storeProducts.js; only the wording lives here.
+    filters: {
+      all: 'All Products',
+      bagsTravel: 'Bags & Travel',
+      deskStationery: 'Desk & Stationery',
+      drinkware: 'Drinkware',
+      games: 'Games',
+      homeAccessories: 'Home Accessories',
+      kids: 'Kids',
+      photoFrames: 'Photo & Frames',
+      giftSets: 'Personalized Gift Sets',
+      technology: 'Technology',
+    },
+    emptyCategory: 'Nothing in this category yet.',
+    price: (n) => `AED ${n}`,
+    // The button across the foot of a product card. The store says "Add to
+    // Cart"; this site has no cart, so it sends you there instead.
+    viewProduct: 'View product',
+    // The catalogue loads 24 at a time; these label the control under it.
+    loadMore: (n) => `Load ${n} more`,
+    showing: (a, b) => `Showing ${a} of ${b}`,
+    // Corner ribbons on the Shop cards. WHICH products get one is in
+    // data/storeBadges.js; only the wording lives here, keyed by badge.
+    badges: { bestSeller: 'Best seller' },
+    // The search field under the category filters. `noResults` takes the
+    // query so the visitor can see what was actually searched for.
+    searchLabel: 'Search products',
+    searchPlaceholder: 'Search by name…',
+    noResults: (q) => `Nothing matches “${q}”.`,
     viewList: 'List',
     viewCards: 'Cards',
     resultPiece: (n) => `${n} piece`,

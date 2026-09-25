@@ -34,7 +34,8 @@
 }
 .about-title {
   font-size: clamp(36px, 4.6vw, 60px);
-  margin: 14px 0 0;
+  /* Top margin comes from `.card-kicker + .page-title` in theme.css. */
+  margin: 0;
   max-width: 18ch;
   text-wrap: balance;
 }
@@ -60,19 +61,64 @@
 /* — the story timeline. Each chapter is copy + one image slot; the pair
      swaps sides on every second chapter so the page zig-zags. The left
      rule is the through-line that ties the chapters together. — */
+/* — the memory lane —
+
+   One rail down the whole section with the chapters hanging off it. The rail
+   is a ::before on the section rather than a border on each chapter, so it is
+   CONTINUOUS: a per-chapter line would break at every gap, which is the one
+   thing a timeline must not do.
+
+   It is inset by half the marker's width so it runs through the centre of the
+   thumbnails, and it stops short at both ends — the gradient fades it out over
+   the first and last few percent, so the line begins at 1990 and ends at
+   today rather than running off into the page. */
 .about-story {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: clamp(48px, 6vw, 88px);
+  gap: clamp(40px, 5vw, 72px);
 }
+.about-story::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: calc(var(--about-marker) / 2 - 1px);
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0,
+    var(--color-accent-300) 6%,
+    var(--color-accent-300) 94%,
+    transparent 100%
+  );
+}
+
+/* The marker's width is the one number the layout is built from: the rail is
+   centred on it above, and the copy column starts after it. */
+.about-story { --about-marker: 116px; }
+
 .about-chapter {
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: center;
-  gap: clamp(24px, 4vw, 56px);
+  grid-template-columns: var(--about-marker) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(20px, 3vw, 40px);
 }
-.about-chapter:nth-child(even) .about-chapter-media {
-  order: -1;
+
+/* The thumbnail sits ON the rail and hides the line behind it, which is what
+   makes it read as a stop on the journey rather than a picture beside one.
+   The ring is the page background, so the rail appears to pass behind it. */
+.about-chapter-marker {
+  position: relative;
+  z-index: 1;
+  width: var(--about-marker);
+}
+.about-chapter-thumb {
+  border-radius: 50%;
+  overflow: hidden;
+  border: 6px solid var(--color-bg);
+  box-shadow: 0 0 0 1px var(--color-accent-200);
 }
 .about-chapter-headline {
   font-size: clamp(26px, 3vw, 38px);
@@ -97,10 +143,9 @@
   max-width: 44ch;
   text-wrap: balance;
 }
-.about-chapter-media {
-  border-radius: calc(2 * var(--radius-lg));
-  overflow: hidden;
-}
+/* .about-chapter-media is gone with the big alternating pictures — the story
+   artwork is now .about-chapter-thumb above. The media slots in
+   data/media.js about.story are unchanged, so the same files are used. */
 
 /* — From [THE NAME lockup]. To Your Name. On a raised beige card rather
      than a full-bleed band: it is the one pull-quote on the page, so it is
@@ -360,7 +405,10 @@
   .about-takeover-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   /* one column: the image goes back under the copy in every chapter, so
      the zig-zag does not leave a stray picture above its own heading */
-  .about-chapter,
   .about-tagline-card { grid-template-columns: minmax(0, 1fr); }
-  .about-chapter:nth-child(even) .about-chapter-media { order: 0; }
+  /* The lane narrows rather than unstacking: a timeline that loses its rail on
+     a phone stops being a timeline. */
+  .about-story { --about-marker: 72px; }
+  .about-chapter { gap: var(--space-4); }
+  .about-chapter-thumb { border-width: 4px; }
 }

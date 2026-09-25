@@ -74,8 +74,10 @@
   font-size: 15px;
   white-space: nowrap;
   cursor: pointer;
+  /* It grows out of the button it points at, so the origin is the tail end —
+     the tip stays put while the bubble opens away from it. */
   transform-origin: right center;
-  animation: chat-launcher-nudge-in 0.32s ease-out both;
+  animation: chat-launcher-nudge-in 0.42s cubic-bezier(.34, 1.4, .64, 1) both;
 }
 .chat-launcher-nudge:hover { background: var(--color-accent-100); }
 
@@ -102,9 +104,54 @@
 }
 .chat-launcher-nudge:hover::after { border-left-color: var(--color-accent-100); }
 
+/* Overshoots slightly and settles — the easing above carries past 1 and comes
+   back, which is what makes it read as a POP rather than a fade-in. Starting
+   at 0.6 rather than 0.92 gives it somewhere to travel from. */
 @keyframes chat-launcher-nudge-in {
-  from { opacity: 0; transform: translateX(10px) scale(0.92); }
-  to { opacity: 1; transform: none; }
+  from { opacity: 0; transform: translateX(8px) scale(0.6); }
+  60%  { opacity: 1; }
+  to   { opacity: 1; transform: none; }
+}
+
+/* — opening, and changing from the menu to the assistant —
+
+   The menu and the panel are separate elements: picking the assistant
+   unmounts one and mounts the other, which without this was a hard cut. They
+   now share ONE animation and ONE transform-origin — the launcher button in
+   the corner — so the menu grows out of the button, and the panel grows out of
+   the same point as the menu leaves. Two movements along the same path read as
+   one thing changing size rather than two things swapping.
+
+   Slightly longer for the panel: it travels further (a 560px panel against a
+   short menu), and matching the durations made the bigger one feel abrupt. */
+.chat-launcher-menu,
+.chatbot {
+  transform-origin: bottom right;
+  animation: chat-launcher-open 0.26s cubic-bezier(.22, .61, .36, 1) both;
+}
+[dir="rtl"] .chat-launcher-menu,
+[dir="rtl"] .chatbot { transform-origin: bottom left; }
+.chatbot { animation-duration: 0.32s; }
+
+@keyframes chat-launcher-open {
+  from { opacity: 0; transform: translateY(12px) scale(0.92); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* The scrim behind the menu fades with it rather than appearing instantly. */
+.chat-launcher-scrim { animation: chat-launcher-scrim-in 0.26s ease both; }
+@keyframes chat-launcher-scrim-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* All of the above is motion for its own sake — the launcher works identically
+   without it, so it comes off entirely rather than being slowed down. */
+@media (prefers-reduced-motion: reduce) {
+  .chat-launcher-nudge,
+  .chat-launcher-menu,
+  .chatbot,
+  .chat-launcher-scrim { animation: none; }
 }
 
 .chat-launcher-menu,
