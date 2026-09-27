@@ -27,7 +27,7 @@
   position: fixed;
   z-index: 90;
   width: max-content;
-  min-width: 232px;
+  min-width: 262px;
   max-width: calc(100vw - 24px);
 }
 
@@ -41,3 +41,16 @@
 }
 .lang-switcher-name { flex: 1; }
 .lang-switcher-check { width: 16px; flex: none; color: var(--color-accent-700); }
+
+/* The flags (components/Flag.jsx), in the trigger and beside each option. The
+   hairline ring is what gives the white-edged flags (France, the UAE) an edge
+   against a light surface; `flex: none` stops the option's name column from
+   squeezing them. */
+.flag {
+  flex: none;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.16);
+  /* The menu is a flex row, so the SVG's inline baseline gap would otherwise
+     shift it half a pixel against the text. */
+  display: block;
+}

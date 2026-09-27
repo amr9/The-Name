@@ -42,6 +42,13 @@ export default function Policies() {
         <h1 className="page-title policies-title">{p.title}</h1>
         <p className="policies-lede">{p.lede}</p>
         <p className="policies-updated">{p.updated}</p>
+        {/* Only the translations carry this line — `translationNote` is an
+            empty string in en.js, because English is the version these terms
+            are binding in. Rendered here rather than per document so it is
+            read before any clause is. */}
+        {p.translationNote ? (
+          <p className="policies-translation-note">{p.translationNote}</p>
+        ) : null}
       </header>
 
       {/* The same three destinations as the footer's policy list, for anyone

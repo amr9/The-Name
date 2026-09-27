@@ -70,6 +70,426 @@ export default {
   footer: {
     rights: 'Todos los derechos reservados.',
   },
+  // ───────────────────────────────────────────────────────────────────────────
+  // Los tres documentos legales de /policies. La ESTRUCTURA (qué documentos,
+  // qué secciones y en qué orden) está en pages/Policies/data.js; aquí solo
+  // está el texto. Las claves deben coincidir exactamente con las de en.js: si
+  // falta una, esa sección vuelve al inglés por el deepMerge de
+  // LanguageContext.
+  //
+  // {legalName}, {licensedBy} y {address} se rellenan desde data/site.js al
+  // renderizar — nunca se reescriben los datos registrados aquí.
+  //
+  // Traducción de cortesía: la versión de referencia sigue siendo la inglesa,
+  // y eso es lo que dice `translationNote`, que se muestra al principio de la
+  // página en todos los idiomas salvo el inglés.
+  // ───────────────────────────────────────────────────────────────────────────
+  policies: {
+    kicker: 'Aviso legal',
+    title: 'Políticas',
+    lede: 'Nuestras condiciones de venta, cómo funcionan el envío y las devoluciones, y qué hacemos con tu información. Todo lo siguiente se aplica a las compras realizadas a través de esta web.',
+    updated: 'Última actualización: septiembre de 2026',
+    tocHeading: 'En esta página',
+    translationNote: 'Esta traducción se ofrece por comodidad. En caso de discrepancia, prevalece la versión inglesa de estos documentos.',
+    contactNote: 'Para consultar nuestros datos registrados y todas las formas de contactarnos — pedidos, envíos, devoluciones, solicitudes de privacidad y dónde encontrarnos —',
+    contactNoteLink: 'consulta la sección de contacto de nuestra página Acerca de',
+
+    docs: {
+      terms: {
+        title: 'Términos y condiciones',
+        intro: [
+          'Te damos la bienvenida a THE NAME.',
+          'Esta web y su tienda online están gestionadas por {legalName}, con licencia de {licensedBy} y domicilio en {address}.',
+          'Estos Términos y condiciones se aplican a las compras realizadas a través de la web de THE NAME. Al realizar un pedido, aceptas estos Términos y condiciones.',
+          'Nada en estos Términos pretende limitar los derechos que te reconoce la legislación de protección del consumidor aplicable en los Emiratos Árabes Unidos.',
+        ],
+        sections: {
+          orders: {
+            heading: 'Pedidos online',
+            blocks: [
+              'Los productos que se muestran en nuestra web están sujetos a disponibilidad.',
+              'El pago se realiza íntegramente al finalizar la compra. Una vez recibido el pago, THE NAME revisa tu pedido para confirmar la disponibilidad del producto, la cantidad solicitada y, en su caso, los requisitos de personalización.',
+              'La confirmación del pago no significa por sí sola que tu pedido haya sido aceptado para producción. Tu pedido queda confirmado una vez que THE NAME lo ha revisado y aceptado.',
+              'Si no podemos atender tu pedido, podremos ofrecerte una alternativa adecuada. Si decides no aceptarla, el importe pagado por el pedido no disponible se reembolsará en tu método de pago original.',
+            ],
+          },
+          prices: {
+            heading: 'Precios y pago',
+            blocks: [
+              'Todos los precios de la web se muestran en dírhams de los Emiratos Árabes Unidos (AED), salvo que se indique lo contrario.',
+              'El IVA aplicable se calcula y se muestra antes de finalizar la compra y forma parte del importe final a pagar.',
+              'Los pagos online se procesan de forma segura a través de Stripe. THE NAME no almacena directamente los datos completos de tu tarjeta de pago.',
+            ],
+          },
+          personalization: {
+            heading: 'Personalización y pedidos a medida',
+            blocks: [
+              'THE NAME permite personalizar determinados productos con elementos como nombres, iniciales, fechas, mensajes, logotipos o ilustraciones.',
+              'Cuando la herramienta de personalización online está disponible, verás una simulación digital de tu personalización antes de finalizar la compra.',
+              'Revisa tu personalización con atención antes de realizar el pedido. Es tu responsabilidad comprobar la exactitud de toda la información que envías, incluidas la ortografía, los nombres, las iniciales, las fechas, los mensajes y las imágenes cargadas.',
+              'Si un artículo se produce correctamente conforme a la personalización enviada y aprobada por ti, THE NAME no es responsable de los errores contenidos en la información que facilitaste. Cualquier repetición solicitada en esas circunstancias puede conllevar cargos adicionales.',
+              'Si THE NAME produce un artículo de forma incorrecta o distinta de la personalización que aprobaste, contáctanos y gestionaremos la sustitución, la repetición u otra solución adecuada.',
+              'Las solicitudes de modificar la personalización después de enviar un pedido solo pueden atenderse si la producción aún no ha comenzado. Una vez iniciada la producción, los cambios pueden dejar de ser posibles.',
+            ],
+          },
+          artwork: {
+            heading: 'Imágenes y contenidos aportados por el cliente',
+            blocks: [
+              'Al enviar un logotipo, una imagen, una ilustración, una marca u otro material para su personalización, confirmas que eres su titular o que cuentas con el permiso o los derechos necesarios para usarlo con la finalidad solicitada.',
+              'THE NAME se reserva el derecho de rechazar personalizaciones con contenido ilícito, ofensivo, inapropiado o del que razonablemente se sospeche que infringe los derechos de otra persona u organización.',
+            ],
+          },
+          production: {
+            heading: 'Plazo de producción',
+            blocks: [
+              'Los pedidos B2C personalizados estándar requieren normalmente entre 3 y 5 días laborables de producción una vez revisado y confirmado el pedido.',
+              'A estos efectos, los días laborables de THE NAME son de lunes a sábado, excepto los festivos de los Emiratos Árabes Unidos.',
+              'El plazo de producción y el plazo de entrega son independientes.',
+              'Los pedidos de gran volumen, corporativos, al por mayor o de producción especial pueden requerir plazos de producción distintos. Los plazos y las condiciones comerciales aplicables a esos pedidos se indicarán en el presupuesto y/o la factura correspondientes.',
+            ],
+          },
+          delivery: {
+            heading: 'Envíos',
+            blocks: [
+              'Actualmente THE NAME solo realiza envíos dentro de los Emiratos Árabes Unidos, cubriendo los siete emiratos.',
+              'La tarifa de envío estándar en los EAU es de 30 AED por pedido. Los pedidos se entregan normalmente entre 1 y 2 días laborables después de finalizada la producción.',
+              'Las estimaciones de entrega se facilitan de buena fe y pueden verse afectadas por circunstancias ajenas al control razonable de THE NAME.',
+              'El importe mínimo de pedido para el envío gratuito se confirmará y se publicará aquí.',
+              'Los clientes pueden tener la opción de recoger gratuitamente su pedido terminado en THE NAME, en Dubai CommerCity, Dubái.',
+              'Toda la información de envío está en la Política de envíos y devoluciones que figura más abajo.',
+            ],
+          },
+          cancellations: {
+            heading: 'Cancelaciones',
+            blocks: [
+              'En los productos no personalizados, un pedido puede cancelarse antes de su expedición.',
+              'En los productos personalizados o hechos a medida, la cancelación solo es posible antes de que comience la producción. Una vez iniciada la producción de un artículo personalizado, el pedido deja de ser cancelable y reembolsable por cambio de opinión.',
+              'Esto no afecta a tus derechos cuando un producto sea defectuoso, llegue dañado, sea incorrecto o se haya producido de forma distinta a la personalización que aprobaste.',
+            ],
+          },
+          returns: {
+            heading: 'Devoluciones y cambios',
+            blocks: [
+              'Los productos no personalizados que cumplan los requisitos pueden devolverse en un plazo de 7 días desde su recepción, siempre que estén sin usar, sin daños, en su estado original y se devuelvan con su embalaje y etiquetas originales intactos.',
+              'Los productos personalizados o hechos a medida no admiten devolución ni reembolso por cambio de opinión una vez producidos específicamente para ti. Esto no se aplica cuando un artículo sea defectuoso, llegue dañado, sea incorrecto o haya sido personalizado erróneamente por THE NAME.',
+              'Estas condiciones no excluyen ni limitan derechos o acciones que no puedan excluirse legalmente conforme a la legislación de protección del consumidor aplicable en los EAU. La normativa emiratí exige a los proveedores de comercio electrónico informar de las condiciones de devolución y cambio y restringe las cláusulas contractuales que renuncien indebidamente a los derechos del consumidor.',
+            ],
+          },
+          damaged: {
+            heading: 'Pedidos dañados, defectuosos o incorrectos',
+            blocks: [
+              'Si tu pedido llega dañado o defectuoso, recibes un producto equivocado o THE NAME ha realizado la personalización de forma distinta a lo que aprobaste, contáctanos en las 48 horas siguientes a la entrega.',
+              'Podremos pedirte fotografías nítidas del producto y, cuando proceda, de su embalaje para poder revisar la incidencia.',
+              'Cuando THE NAME confirme un error o una incidencia cubierta, gestionaremos en primer lugar una sustitución o repetición adecuada. Cuando ninguna de las dos sea posible, se emitirá un reembolso íntegro.',
+              'El plazo de 48 horas para comunicar la incidencia no limita los derechos legales que puedan corresponderte conforme a la legislación aplicable de los EAU.',
+            ],
+          },
+          refunds: {
+            heading: 'Reembolsos',
+            blocks: [
+              'Los reembolsos aprobados se emiten en el método de pago original utilizado en la compra.',
+              'Los reembolsos se tramitan normalmente en un plazo de 7 a 14 días laborables desde su aprobación.',
+              'Tu banco o proveedor de pago puede necesitar tiempo adicional para que un reembolso ya tramitado aparezca en tu cuenta.',
+            ],
+          },
+          corporate: {
+            heading: 'Pedidos corporativos y al por mayor',
+            blocks: [
+              'Los pedidos corporativos, institucionales, para eventos, al por mayor y otros pedidos B2B pueden estar sujetos a condiciones comerciales independientes.',
+              'Cuando proceda, las condiciones de pago, los calendarios de producción, las cantidades, los requisitos de entrega y otras condiciones propias del proyecto se indicarán en el presupuesto y/o la factura correspondientes.',
+              'Cuando se hayan acordado por separado condiciones propias de un proyecto, esas condiciones se aplicarán a ese pedido en la medida que se especifique.',
+            ],
+          },
+          warranty: {
+            heading: 'Garantía del producto',
+            blocks: [
+              'Cuando un producto de una marca de terceros cuente con garantía del fabricante, las condiciones de esa garantía las fija el fabricante. Contáctanos y te indicaremos qué cobertura se aplica a tu artículo y cómo reclamarla.',
+              'Las garantías legales y los derechos del consumidor aplicables no se ven afectados.',
+            ],
+          },
+          accounts: {
+            heading: 'Cuentas de cliente',
+            blocks: [
+              'Puedes comprar en THE NAME como invitado o creando una cuenta de cliente.',
+              'Los clientes registrados pueden consultar la información de su cuenta y su historial de pedidos al iniciar sesión.',
+              'Eres responsable de mantener seguras tus credenciales de acceso y de avisarnos si crees que se ha accedido a tu cuenta sin autorización.',
+            ],
+          },
+          privacy: {
+            heading: 'Privacidad',
+            blocks: [
+              'Cuando compras en THE NAME o creas una cuenta, podemos recopilar la información necesaria para tramitar y completar tu pedido, incluidos tu nombre, correo electrónico, número de móvil, dirección de entrega e información del pedido o de la personalización.',
+              'El tratamiento de tus datos personales se explica en la Política de privacidad que figura más abajo.',
+              'Comprar en THE NAME no te suscribe automáticamente a comunicaciones comerciales. Solo enviaremos comunicaciones promocionales si has dado tu consentimiento por separado.',
+            ],
+          },
+          age: {
+            heading: 'Requisitos de edad',
+            blocks: [
+              'Debes tener 18 años o más para comprar directamente a través de esta web.',
+              'Cualquier compra, registro o envío de información que implique a una persona menor de 18 años debe realizarlo o tramitarlo su madre, padre o tutor legal.',
+            ],
+          },
+          ip: {
+            heading: 'Propiedad intelectual',
+            blocks: [
+              'Salvo que se indique lo contrario, el diseño de la web, los textos, la fotografía, los gráficos, los materiales creativos y el contenido original asociado a THE NAME no pueden copiarse, reproducirse, distribuirse ni utilizarse comercialmente sin autorización previa.',
+              'Los nombres de marcas, nombres de productos, logotipos y marcas registradas de terceros que aparecen en la web siguen siendo propiedad de sus respectivos titulares.',
+              'La web está diseñada y desarrollada por The Name Agency.',
+            ],
+          },
+          changes: {
+            heading: 'Cambios en estos términos',
+            blocks: [
+              'THE NAME puede actualizar estos Términos y condiciones cada cierto tiempo para reflejar cambios en nuestros servicios, en la web, en nuestras prácticas operativas o en los requisitos legales aplicables.',
+              'La versión aplicable a tu compra será la vigente en el momento en que realices el pedido, salvo que la legislación aplicable exija un cambio.',
+            ],
+          },
+          law: {
+            heading: 'Legislación aplicable',
+            blocks: [
+              'Estos Términos y condiciones y las compras realizadas a través de la web de THE NAME se rigen por la legislación aplicable de los Emiratos Árabes Unidos.',
+              'Nada en estos Términos excluye ni restringe los derechos reconocidos a los consumidores por la legislación aplicable de los EAU. La legislación emiratí de protección del consumidor se aplica a los bienes y servicios en los EAU, incluidas las transacciones de comercio electrónico de proveedores registrados en el país y en sus zonas francas.',
+            ],
+          },
+        },
+      },
+
+      delivery: {
+        title: 'Política de envíos y devoluciones',
+        intro: [
+          'En THE NAME, muchas de nuestras piezas se personalizan especialmente para ti. A continuación encontrarás todo lo que necesitas saber sobre producción, envíos, cancelaciones, devoluciones y reembolsos.',
+          'Esta política debe leerse junto con los Términos y condiciones anteriores. Nada en ella limita tus derechos conforme a la legislación de protección del consumidor aplicable en los EAU, que alcanza a los proveedores de comercio electrónico registrados en el país, incluidas las empresas que operan en zonas francas.',
+        ],
+        sections: {
+          production: {
+            heading: 'Plazo de producción',
+            blocks: [
+              'Los pedidos personalizados requieren normalmente entre 3 y 5 días laborables de producción después de que THE NAME haya revisado y confirmado tu pedido.',
+              'Nuestros días laborables son de lunes a sábado, excepto los festivos de los Emiratos Árabes Unidos.',
+              'Recuerda que el plazo de producción y el plazo de entrega son independientes.',
+              'En los pedidos corporativos, al por mayor o de producción especial, el plazo de producción aplicable se confirmará por separado en el presupuesto y/o la factura correspondientes.',
+            ],
+          },
+          across: {
+            heading: 'Envíos a todos los Emiratos',
+            blocks: [
+              'Actualmente enviamos solo dentro de los EAU, cubriendo los siete emiratos.',
+              'El envío cuesta 30 AED por pedido y tu pedido llega normalmente entre 1 y 2 días laborables después de finalizada la producción.',
+              'Las estimaciones de entrega se facilitan de buena fe y en ocasiones pueden verse afectadas por circunstancias ajenas a nuestro control razonable.',
+              'El importe mínimo de pedido para el envío gratuito se confirmará y se publicará aquí.',
+            ],
+          },
+          collection: {
+            heading: 'Recogida en THE NAME',
+            blocks: [
+              'Los clientes también pueden tener la opción de recoger gratuitamente su pedido terminado en THE NAME, en Dubai CommerCity, Dubái.',
+              'Los detalles de la recogida se facilitarán en cuanto el pedido esté listo.',
+            ],
+          },
+          cancelling: {
+            heading: 'Cancelar un pedido',
+            blocks: [
+              '¿Has cambiado de opinión? Las condiciones de cancelación dependen de si tu pedido está personalizado.',
+              'Los pedidos no personalizados pueden cancelarse antes de su expedición. Los pedidos personalizados o hechos a medida solo pueden cancelarse antes de que comience la producción.',
+              'Una vez iniciada la producción de un artículo personalizado, el pedido deja de ser cancelable y reembolsable por cambio de opinión.',
+              'Para solicitar una cancelación, contáctanos lo antes posible con los datos de contacto de nuestra página Acerca de.',
+            ],
+          },
+          returns: {
+            heading: 'Devoluciones — productos no personalizados',
+            blocks: [
+              'Los productos no personalizados que cumplan los requisitos pueden devolverse en un plazo de 7 días desde su recepción. Para poder devolverlo, el producto debe estar:',
+              { list: [
+                'sin usar y sin daños;',
+                'en su estado original; y',
+                'devuelto con su embalaje y etiquetas originales intactos.',
+              ] },
+              'Contacta con nuestro equipo antes de devolver un artículo para que podamos confirmarte el proceso de devolución.',
+            ],
+          },
+          personalized: {
+            heading: 'Productos personalizados',
+            blocks: [
+              'Como los productos personalizados se crean específicamente para ti, no admiten devolución ni reembolso por cambio de opinión una vez producidos.',
+              'Revisa con atención todos los nombres, iniciales, fechas, mensajes, ilustraciones y demás elementos de personalización antes de completar tu pedido. Cuando se ofrezca una vista previa digital de la personalización, continuar con la compra confirma la personalización mostrada.',
+              'Si la información que introdujiste y aprobaste contiene un error, THE NAME no es responsable de ese error del cliente y la repetición del artículo puede ser facturable.',
+              'Esto no afecta a tus derechos cuando el artículo sea defectuoso, llegue dañado, sea incorrecto o THE NAME lo haya producido de forma distinta a la personalización que aprobaste. La normativa emiratí de protección del consumidor impone remedios en casos de productos defectuosos y prohíbe las cláusulas que supriman indebidamente derechos legales del consumidor.',
+            ],
+          },
+          damaged: {
+            heading: 'Pedidos dañados, defectuosos o incorrectos',
+            blocks: [
+              'Contáctanos en las 48 horas siguientes a la entrega si tu artículo:',
+              { list: [
+                'llega dañado o defectuoso,',
+                'no es el producto que pediste, o',
+                'se ha personalizado de forma distinta a lo que aprobaste.',
+              ] },
+              'Incluye los datos de tu pedido y fotografías nítidas del producto y, cuando proceda, de su embalaje, para que nuestro equipo pueda revisar la incidencia.',
+              'Cuando THE NAME confirme un error o una incidencia cubierta, gestionaremos primero una sustitución o repetición. Si ninguna es posible, emitiremos un reembolso íntegro.',
+              'El plazo de 48 horas para comunicar la incidencia no restringe los derechos legales del consumidor aplicables conforme a la legislación de los EAU.',
+            ],
+          },
+          refunds: {
+            heading: 'Reembolsos',
+            blocks: [
+              'Los reembolsos aprobados se devuelven al método de pago original utilizado en la compra.',
+              'Los reembolsos se tramitan normalmente en un plazo de 7 a 14 días laborables desde su aprobación.',
+              'Ten en cuenta que tu banco o el emisor de tu tarjeta puede necesitar tiempo de procesamiento adicional antes de que un reembolso completado aparezca en tu cuenta.',
+            ],
+          },
+        },
+      },
+
+      privacy: {
+        title: 'Política de privacidad',
+        intro: [
+          'En THE NAME respetamos tu privacidad y nos comprometemos a tratar tus datos personales de forma responsable y conforme a la legislación aplicable de los Emiratos Árabes Unidos.',
+          'Esta Política de privacidad explica qué información recopilamos cuando usas nuestra web o nos compras, por qué la recopilamos, cómo puede usarse y compartirse, y las opciones de que dispones.',
+        ],
+        sections: {
+          who: {
+            heading: 'Quiénes somos',
+            blocks: [
+              'Esta web y su tienda online están gestionadas por {legalName}, con domicilio en {address} y licencia de {licensedBy}.',
+              'Las preguntas y solicitudes relacionadas con la privacidad deben dirigirse a la dirección de privacidad indicada en nuestra página Acerca de.',
+            ],
+          },
+          collect: {
+            heading: 'Información que recopilamos',
+            blocks: [
+              'Cuando navegas, creas una cuenta, realizas un pedido o nos contactas en relación con una compra, podemos recopilar información como:',
+              { list: [
+                'tu nombre completo;',
+                'tu correo electrónico;',
+                'tu número de móvil;',
+                'tu dirección de entrega;',
+                'los datos de la cuenta, si creas una;',
+                'los detalles del pedido; y',
+                'la información, los textos, los logotipos o las ilustraciones que facilitas para la personalización.',
+              ] },
+              'Solo recopilamos la información razonablemente necesaria para prestar nuestros servicios, completar tus pedidos, comunicarnos contigo y operar nuestra tienda online.',
+            ],
+          },
+          payment: {
+            heading: 'Información de pago',
+            blocks: [
+              'Los pagos online se procesan a través de Stripe.',
+              'THE NAME no almacena directamente los datos completos de tu tarjeta de pago. La información de pago necesaria para tramitar tu transacción la gestiona el proveedor de pago conforme a sus propias prácticas de seguridad y privacidad.',
+            ],
+          },
+          use: {
+            heading: 'Cómo usamos tu información',
+            blocks: [
+              'Podemos usar tus datos personales para:',
+              { list: [
+                'crear y gestionar tu cuenta de cliente;',
+                'tramitar y confirmar tus pedidos;',
+                'producir productos personalizados;',
+                'organizar la entrega o la recogida;',
+                'comunicarnos contigo sobre tu pedido;',
+                'gestionar cancelaciones, devoluciones, reembolsos y reclamaciones;',
+                'prestar atención al cliente;',
+                'mantener los registros de transacciones y pedidos;',
+                'cumplir las obligaciones contables, fiscales, regulatorias o legales aplicables; y',
+                'proteger la seguridad y la integridad de nuestra web y nuestros servicios.',
+              ] },
+              'No usaremos la información recopilada en un pedido para suscribirte automáticamente a comunicaciones comerciales.',
+            ],
+          },
+          marketing: {
+            heading: 'Comunicaciones comerciales',
+            blocks: [
+              'Comprar en THE NAME no te suscribe automáticamente a comunicaciones promocionales.',
+              'Solo te enviaremos correos promocionales, mensajes de WhatsApp u otras comunicaciones comerciales si has elegido recibirlos por separado. Puedes retirar tu consentimiento en cualquier momento.',
+              'La legislación emiratí de protección del consumidor reconoce la protección de la privacidad y la seguridad de los datos del consumidor, y restringe el uso de sus datos con fines de promoción y marketing.',
+            ],
+          },
+          sharing: {
+            heading: 'Con quién compartimos tu información',
+            blocks: [
+              'No vendemos tus datos personales ni los facilitamos a terceros para sus propios fines de marketing.',
+              'Solo compartimos la información razonablemente necesaria con los proveedores de servicios que nos ayudan a operar y completar tu compra, entre ellos:',
+              { list: [
+                'Stripe — para procesar los pagos online.',
+                'Empresas de reparto y mensajería — para entregar tu pedido. Esto puede incluir compartir información como tu nombre, tu número de móvil y tu dirección de entrega.',
+              ] },
+              'También podemos revelar información cuando lo exija la legislación aplicable, la normativa, una resolución judicial o una autoridad competente de los EAU.',
+            ],
+          },
+          accounts: {
+            heading: 'Cuentas de cliente',
+            blocks: [
+              'Puedes comprar en THE NAME como invitado o creando una cuenta de cliente registrada.',
+              'Si creas una cuenta, es posible que conservemos determinada información para que puedas acceder a los datos de tu cuenta y a tu historial de pedidos al iniciar sesión.',
+              'Eres responsable de mantener la confidencialidad de tus credenciales de acceso.',
+            ],
+          },
+          personalization: {
+            heading: 'Información de personalización',
+            blocks: [
+              'Cuando personalizas un producto, podemos tratar la información necesaria para producir tu pedido, incluidos nombres, iniciales, mensajes, logotipos, ilustraciones u otro contenido de personalización que envíes.',
+              'Esta información se usará para tramitar y producir tu pedido y para mantener los registros de la transacción correspondientes.',
+              'No envíes datos personales de otra persona a través de una personalización salvo que cuentes con la autorización o el permiso adecuados.',
+            ],
+          },
+          children: {
+            heading: 'Menores',
+            blocks: [
+              'Los clientes deben tener 18 años o más para comprar directamente a través de nuestra web.',
+              'Cualquier registro, compra o envío de datos personales o ilustraciones que implique a una persona menor de 18 años debe realizarlo o tramitarlo su madre, padre o tutor legal.',
+            ],
+          },
+          retention: {
+            heading: 'Cuánto tiempo conservamos la información',
+            blocks: [
+              'Conservamos los datos personales solo durante el tiempo razonablemente necesario para los fines para los que se recopilaron, incluidos completar pedidos, mantener los registros de transacciones y cumplir los requisitos contables, fiscales, regulatorios y legales aplicables.',
+              'La información que deje de ser razonablemente necesaria se tratará conforme a nuestras prácticas de conservación de datos y a nuestras obligaciones legales.',
+            ],
+          },
+          security: {
+            heading: 'Cómo protegemos tu información',
+            blocks: [
+              'Adoptamos medidas organizativas y técnicas razonables para proteger los datos personales frente a accesos no autorizados, pérdida, uso indebido, alteración o divulgación.',
+              'No obstante, ningún método de transmisión o almacenamiento electrónico puede garantizarse como completamente seguro.',
+            ],
+          },
+          rights: {
+            heading: 'Tus derechos sobre tus datos personales',
+            blocks: [
+              'Con sujeción a la legislación aplicable de los EAU y a las excepciones legales, puedes tener derechos sobre tus datos personales, incluidos los relativos al acceso, la rectificación, la supresión o la limitación de determinados tratamientos.',
+              'La Ley de Protección de Datos Personales de los EAU reconoce a los interesados derechos sobre sus datos personales, con las condiciones y excepciones que establece la propia norma.',
+              'Para presentar una solicitud de privacidad o sobre tus datos personales, usa la dirección de privacidad indicada en nuestra página Acerca de. Es posible que necesitemos verificar tu identidad antes de atender determinadas solicitudes.',
+            ],
+          },
+          cookies: {
+            heading: 'Cookies y rastreo',
+            blocks: [
+              'Actualmente THE NAME no utiliza píxeles publicitarios ni herramientas de analítica de terceros como Meta Pixel o Google Analytics.',
+              'Aun así, la web puede emplear funciones técnicas necesarias para el funcionamiento de la tienda online, como el mantenimiento de sesiones, el inicio de sesión de clientes, el carrito, la seguridad y el pago.',
+              'Si cambia nuestro uso de cookies, analítica o tecnologías publicitarias, esta Política de privacidad se actualizará en consecuencia y se implantarán los mecanismos de consentimiento que sean necesarios.',
+            ],
+          },
+          thirdParty: {
+            heading: 'Servicios de terceros',
+            blocks: [
+              'Nuestra web puede apoyarse en servicios de terceros necesarios para ofrecer funciones como el procesamiento de pagos y la entrega.',
+              'Cuando interactúas con esos servicios, su tratamiento de los datos personales también puede regirse por sus propias condiciones de privacidad.',
+              'THE NAME adopta medidas razonables para trabajar con proveedores adecuados a los servicios que prestan.',
+            ],
+          },
+          changes: {
+            heading: 'Cambios en esta Política de privacidad',
+            blocks: [
+              'Podemos actualizar esta Política de privacidad cada cierto tiempo para reflejar cambios en nuestra web, nuestros servicios, nuestras prácticas comerciales o los requisitos legales aplicables.',
+              'La última versión se publicará en esta web junto con su fecha de entrada en vigor actualizada.',
+            ],
+          },
+        },
+      },
+    },
+  },
 
   home: {
     hero: {

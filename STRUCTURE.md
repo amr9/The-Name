@@ -205,6 +205,30 @@ src/
                         entry is gone, so do not remove it without giving the
                         page another way in. Everything centres on one column
                         below 700px.
+        SocialLinks.jsx
+                      — the footer's social icons, from `socials` in
+                        data/site.js. An entry carries EITHER `url` (a real
+                        profile → <a target="_blank">) or `to` (an in-app
+                        <Link>), and the component picks the element from
+                        that — there is no per-network special case in here.
+                        Only INSTAGRAM is live. Facebook and TikTok have no
+                        published account yet, so they carry `to:
+                        '/social/<network>'`, paths no route matches, and land
+                        on the custom 404 (which names the path and repeats
+                        the navbar). They previously linked to facebook.com
+                        and tiktok.com, which pushed a visitor off the site to
+                        a network's home page. When the real handles arrive,
+                        swap each `to` for a `url` in data/site.js — that is
+                        the whole change.
+    Flag.jsx          — the four language flags, drawn as inline SVG at a
+                        3:2 viewBox: Union Jack (EN), UAE (AR), France, Spain.
+                        Keyed by the LANGUAGE code, not a country, so there is
+                        no flag field in i18n/languages.js to fall out of step.
+                        NOT emoji on purpose — Windows ships no flag glyphs, so
+                        "🇦🇪" renders there as the letters "AE". Used by
+                        LanguageSwitcher (trigger + each option); the `.flag`
+                        rule (rounding, hairline ring, flex: none) lives in
+                        LanguageSwitcher.css as its only consumer's stylesheet.
     LanguageSwitcher.jsx
                       — the language menu in the navbar. Its menu and scrim
                         are rendered in a PORTAL on <body> and positioned from
@@ -234,6 +258,14 @@ src/
                         DO NOT give the menu or scrim a plain CSS position
                         again, and beware of adding `position: fixed` children
                         anywhere inside `.navbar` for the same reason.
+                        The trigger shows the CURRENT language's `Flag` plus
+                        its code (EN/AR/FR/ES) — it replaced a globe glyph,
+                        which said "language can be changed" where the flag
+                        says which one is being read. Each option is
+                        flag + code + native name + tick. `MIN_W` in the JSX
+                        and `min-width` in the CSS are the same number and
+                        must be kept so: the first placement pass happens
+                        before the menu exists to measure.
     Logo.jsx          — the brand lockup as a <picture>: main lockup, swapped
                         for the compact secondary one at ≤480px. `on` is the
                         ground it sits on — 'light' (navbar) → charcoal
@@ -427,7 +459,9 @@ src/
                           choice to localStorage, sets <html lang>/<html dir>
                           (Arabic is RTL), deep-merges the active language
                           over English so a missing key never breaks.
-    languages.js        — the 4 supported languages (code, native name, dir)
+    languages.js        — the 4 supported languages (code, native name, dir).
+                          No flag field: components/Flag.jsx draws one per
+                          language code, so the two cannot drift apart.
     translations/{en,fr,es,ar}.js
                         — ALL display copy for the whole site, nested to
                           mirror each page's structural data.js so lookups
@@ -439,7 +473,10 @@ src/
                           `footer`, `common`, and the shared-component keys:
                           `packages` (PackagesPanel), `process`
                           (ProcessSteps) and `chat` (ChatLauncher + the
-                          assistant's topics, answers and keywords).
+                          assistant's topics, answers and keywords), plus
+                          `policies` (the three legal documents — translated
+                          in all four, English controlling; see /policies in
+                          the routes table).
 
       BackToTop/      — the floating "back to the top" button. **PARKED** —
                         its import and its element are commented out in
@@ -820,7 +857,7 @@ placeholder instead, so partially-supplied media degrades cleanly.
 | `/kids` | `pages/Kids/` | A landing page, not a catalogue: hero (shop + WhatsApp CTAs), three offer blocks from `kidsOffers` in `data.js` (back to school / new baby / birthdays — the ids are unchanged; the display names are now "Back to School" / "Hello, Little One" / "Birthdays & Celebrations"), a "made for them" note on the accent band, then the **Little Creators activation** (`kids.activation`: copy, an opening `<VideoPlaceholder>`, and a `<Carousel>` gallery of one card per id in `activationShots` — caption from i18n `kids.activation.shots[id]`, picture from `media.kids.activation.shots[id]`), the **Two T's feature** on the accent band (`kids.twoTs`, copy beside the interviews film), and a closing CTA. Copy under i18n `kids`. Both beige bands (the note and the Two T's feature) carry `<Doodles />` from `Doodles.jsx` — a wobbly hand-drawn flower in the top-right corner and a sun in the bottom-left, stroked not filled, tucked past the band's padding and clipped by it. The whole page is a `bubbles-host`: `<Bubbles>` gutter fields at `scale={1.6}` with `kidsIcons`, plus a `side="row"` band before the note for narrow screens where the gutters are switched off. Took the nav slot the cafe page had. The page's English copy was rewritten in a later pass; **fr/es/ar still carry the previous wording** for the older sections, as on `/business` — the activation and Two T's copy is translated in all four. |
 | `/about` | `pages/About/` | Labelled just "About" in the nav, but titled **"Our story"** on the page. It runs: **hero** (`about.kicker` / `title` / `lede` / `heroSupport`, carrying the page's `<h1>`) -> **story timeline** — a MEMORY LANE: one continuous rail down the whole section with a chapter hanging off it per id in `storyChapters` (`legacy`, `evolution`, `today`), running from "1990 — where it started" to "Today — The Name". Copy comes from i18n `about.story[id]` and art from `media.about.story[id]` as before, but the artwork is now a SMALL round thumbnail sitting ON the rail rather than the big alternating picture it replaced — that picture was the loudest thing on the page and broke the run in half at every chapter. The rail is a `::before` on the SECTION, not a border per chapter, so it cannot break at the gaps, and it fades out at both ends so the line starts at 1990 and stops at today. It is inset by half of `--about-marker`, the one number the layout is built from (116px, 72px on phones); the thumbnail's thick page-coloured ring is what makes the rail appear to pass behind it. Nothing in the markup knows which chapter is first or last, so adding an id to `storyChapters` extends the lane -> the **FROM THE NAME / TO YOUR NAME** card (`about.tagline`; a raised beige card with an accent left edge, not a full-bleed band — it is the page's one pull-quote; its first line ends on `components/Logo` at `size="inline" compact={false}`, so the wordmark is the artwork and `tagline.fromPrefix` is only the word in front of it — the same treatment as the Home hero) -> the **takeovers**, one card per entry in `takeovers` (names are proper nouns so they live in `pages/About/data.js`, art in `media.about.takeovers[id]`; copy in `about.takeover`) -> **built through collaboration** (`about.collab`) -> **what's next** (`about.future`, ending on the page's sign-off line) -> the **enquiry form** (`components/ContactForm/`) in a `#contact` section. **PARKED in one JSX comment**: the brand film (held back until the video is delivered - restoring it means moving the `<h1>` back to it and dropping it from the hero), the services (`aboutServices`), how-we-work (`ProcessSteps`), mission & vision (`purposeIds`) and the closing CTA. Their i18n keys and CSS are kept. Note the inner comments inside that block are written as plain dashed lines, not `{/* */}`: a nested end-of-comment marker would close the block early and break the build. |
 
-| `/policies` | `pages/Policies/` | All three legal documents on one page — Terms & Conditions, Delivery & Returns, Privacy Policy — each an `<section>` whose id (`#terms`, `#delivery`, `#privacy`) is the anchor the footer's policy list links to. `data.js` holds only the doc ids and the order of the sections inside each; every heading and paragraph is in `i18n` under `policies.docs.<docId>.sections.<sectionId>`, where a section is `{ heading, blocks }` and a block is either a string (a paragraph) or `{ list: [...] }`. Clause numbers come from the `<ol>`, never typed into a heading. `{legalName}`, `{licensedBy}` and `{address}` in the copy are filled from `data/site.js` at render time. The three source documents each ended with their own "Contact Us" clause; the page carries NONE of them — there is no `#contact` section here any more, and the entity, both email addresses and the location live in the ContactForm details at the foot of /about instead. Three clauses that used to say "at the foot of this page" were reworded to name the About page; if the contact block ever comes back, they have to be reworded again. The page closes on `policies.contactNote` + `contactNoteLink` — a beige footnote linking to `/about#contact`, which is the only route from the binding terms to the registered entity and the two addresses, and what makes those three reworded clauses followable. Two keys rather than one with a token, so the sentence and its linked clause are each whole strings. Its own "back to top" link is gone — `components/BackToTop/` now floats on every page. **The policy copy is English-only on purpose** — `fr/es/ar.js` carry no `policies` key and fall through to `en.js` via the deepMerge in LanguageContext, because machine-translating binding consumer terms would produce four versions that could be read against each other. Only the labels (`nav.policies` — now the footer list's heading — and `nav.policyTabs`) are translated; both keys stay under `nav` even though the navbar no longer uses them. See `pendingReview` in `data.js`: several commercial figures in this copy are **not yet confirmed for publication**. |
+| `/policies` | `pages/Policies/` | All three legal documents on one page — Terms & Conditions, Delivery & Returns, Privacy Policy — each an `<section>` whose id (`#terms`, `#delivery`, `#privacy`) is the anchor the footer's policy list links to. `data.js` holds only the doc ids and the order of the sections inside each; every heading and paragraph is in `i18n` under `policies.docs.<docId>.sections.<sectionId>`, where a section is `{ heading, blocks }` and a block is either a string (a paragraph) or `{ list: [...] }`. Clause numbers come from the `<ol>`, never typed into a heading. `{legalName}`, `{licensedBy}` and `{address}` in the copy are filled from `data/site.js` at render time. The three source documents each ended with their own "Contact Us" clause; the page carries NONE of them — there is no `#contact` section here any more, and the entity, both email addresses and the location live in the ContactForm details at the foot of /about instead. Three clauses that used to say "at the foot of this page" were reworded to name the About page; if the contact block ever comes back, they have to be reworded again. The page closes on `policies.contactNote` + `contactNoteLink` — a beige footnote linking to `/about#contact`, which is the only route from the binding terms to the registered entity and the two addresses, and what makes those three reworded clauses followable. Two keys rather than one with a token, so the sentence and its linked clause are each whole strings. Its own "back to top" link is gone — `components/BackToTop/` now floats on every page. **The policy copy is translated in all four languages.** English is the CONTROLLING version, and every other locale says so in `policies.translationNote` — a line under `policies-updated` in the page header, rendered only when non-empty, which is why `en.js` holds that key as `''`. Because a key missing from a translation falls through to `en.js` via the deepMerge in LanguageContext, a gap here shows up as one clause in the wrong language rather than as an obvious bug: keep the key structure identical across the four files, and make any reviewed change to a clause in all four. The labels (`nav.policies` — now the footer list's heading — and `nav.policyTabs`) are translated too; both keys stay under `nav` even though the navbar no longer uses them. See `pendingReview` in `data.js`: several commercial figures in this copy are **not yet confirmed for publication**. |
 | _anything else_ | `pages/NotFound/` | The custom 404, on the `*` route in App.jsx. A signpost rather than an apology: kicker, title, lede, the path that missed (echoed back so a visitor can see whether they mistyped — React escapes it), a Back-to-homepage button + WhatsApp, then **the whole navbar again as a list of pills**. That list is built from `navLinks` in `data/site.js`, the same array the bar reads, so a page added or parked there appears or disappears here too. Copy is i18n `notFound`, translated in all four languages. |
 
 ## Conventions (read before adding code)

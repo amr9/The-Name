@@ -28,6 +28,18 @@
   color: color-mix(in srgb, var(--color-text) 55%, transparent);
 }
 
+/* The "English is the controlling version" line, on every locale but English
+   (i18n policies.translationNote). Marked off with the accent rule rather than
+   set in the lede's size: it is about the document, not part of it. */
+.policies-translation-note {
+  margin: var(--space-3) 0 0;
+  padding-inline-start: var(--space-3);
+  border-inline-start: 2px solid var(--color-accent-300);
+  font-size: var(--text-sm);
+  line-height: 22px;
+  color: color-mix(in srgb, var(--color-text) 70%, transparent);
+}
+
 /* — the in-page index — */
 
 .policies-toc {

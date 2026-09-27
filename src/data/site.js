@@ -35,12 +35,21 @@ export const mapsLink = `https://www.google.com/maps/dir/?api=1&destination=${en
 export const waLink = `https://wa.me/${site.phone.replace(/[^0-9]/g, '')}`;
 
 // Social profiles, shown as icon links in the footer.
-// TODO: Facebook and TikTok are still PLACEHOLDERS pointing at each network's
-// home page — swap them for the real handles. Instagram is the live account.
+//
+// An entry carries EITHER `url` (a real profile — opened in a new tab) or `to`
+// (an in-app route). Instagram is the only live account; Facebook and TikTok
+// are not published yet, so they point at paths no route matches and land on
+// the custom 404 instead. That is deliberate: they used to link to
+// facebook.com and tiktok.com, which sent a visitor off the site to a network
+// home page with no way back and looked like a broken promise of an account
+// that exists. The 404 names the missing path and repeats the whole navbar.
+//
+// TODO: when the real handles arrive, swap each `to` for a `url` — that alone
+// makes the icon an external link again, no component change needed.
 export const socials = [
   { key: 'instagram', label: 'Instagram', url: 'https://www.instagram.com/thename.me/' },
-  { key: 'facebook', label: 'Facebook', url: 'https://facebook.com/' },
-  { key: 'tiktok', label: 'TikTok', url: 'https://tiktok.com/' },
+  { key: 'facebook', label: 'Facebook', to: '/social/facebook' },
+  { key: 'tiktok', label: 'TikTok', to: '/social/tiktok' },
 ];
 
 // `key` looks up the label in each translation's `nav` section.
