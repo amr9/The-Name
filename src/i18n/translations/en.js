@@ -671,6 +671,9 @@ export default {
     // The button across the foot of a product card. The store says "Add to
     // Cart"; this site has no cart, so it sends you there instead.
     viewProduct: 'View product',
+    // The button under the three featured cards. Takes the category's own
+    // label, so it names the shelf you are standing on.
+    shopCategory: (cat) => `Shop all ${cat}`,
     // The catalogue loads 24 at a time; these label the control under it.
     loadMore: (n) => `Load ${n} more`,
     showing: (a, b) => `Showing ${a} of ${b}`,

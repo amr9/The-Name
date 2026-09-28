@@ -119,6 +119,15 @@ export const storeImage = (p) => (p.image === false ? null : \`/media/store/\${p
 // it. A product can be on several, so this is \`includes\`, not equality.
 export const productsInCategory = (catId) =>
   catId === 'all' ? storeProducts : storeProducts.filter((p) => p.cats?.includes(catId));
+
+// That shelf, open on the store itself — the destination of the "shop the
+// whole category" button under the Shop page's three featured cards. An id
+// that is not a known category falls back to the shop front rather than to a
+// url that would 404, the same rule productUrl above follows.
+export const categoryUrl = (catId) => {
+  const cat = storeCategories.find((c) => c.id === catId);
+  return cat ? \`\${site.shopUrl}\${cat.path}\` : site.shopUrl;
+};
 `);
 
 

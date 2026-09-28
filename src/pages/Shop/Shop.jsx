@@ -1,4 +1,4 @@
-import { useDeferredValue, useEffect, useState } from 'react';
+import { useDeferredValue, useState } from 'react';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import ShopIcon from '../../components/ShopIcon.jsx';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
@@ -8,28 +8,37 @@ import ViewToggle from '../../components/ViewToggle.jsx';
 // PARKED with the gift-sets section below.
 // import { giftSets } from '../../data/catalogue.js';
 import ProductCard from '../../components/ProductCard/ProductCard.jsx';
-import { productUrl, productsInCategory, storeCategories, storeImage } from '../../data/storeProducts.js';
+import { categoryUrl, productUrl, productsInCategory, storeCategories, storeImage } from '../../data/storeProducts.js';
 // PARKED with the gift-sets section below.
 // import { media } from '../../data/media.js';
 import { site } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import './Shop.css';
 
-// How many products the catalogue shows before you ask for more. 24 fills a
-// few rows at every column count the grid produces (2, 3, 4 and 6 all divide
-// it), so the last row is never a lonely orphan.
-const PAGE_SIZE = 24;
+// PARKED with the "load more" control at the foot of the catalogue.
+// // How many products the catalogue shows before you ask for more. 24 fills a
+// // few rows at every column count the grid produces (2, 3, 4 and 6 all divide
+// // it), so the last row is never a lonely orphan.
+// const PAGE_SIZE = 24;
+
+// The catalogue is now a SHOWCASE, not a full listing: every shelf shows three
+// pieces and then hands you to the store itself for the rest. Three is what
+// lets the row span the full width of the container — at three columns each
+// card is roughly twice as wide as it was in the 200px auto-fill grid, which
+// is the point: the product pictures are finally big enough to read.
+const FEATURED_COUNT = 3;
 
 export default function Shop() {
   const { t } = useLanguage();
   const [filter, setFilter] = useState('all');
   const [view, setView] = useState('Cards');
   const [query, setQuery] = useState('');
-  // How much of the filtered list is currently rendered. This is a WINDOW on
-  // `shown`, not a page number: "load more" grows it, and every card already
-  // on screen stays exactly where it was. Numbered pages would replace the
-  // grid on each click and throw away the visitor's place in it.
-  const [visible, setVisible] = useState(PAGE_SIZE);
+  // PARKED with the "load more" control at the foot of the catalogue.
+  // // How much of the filtered list is currently rendered. This is a WINDOW on
+  // // `shown`, not a page number: "load more" grows it, and every card already
+  // // on screen stays exactly where it was. Numbered pages would replace the
+  // // grid on each click and throw away the visitor's place in it.
+  // const [visible, setVisible] = useState(PAGE_SIZE);
 
   // NOT debounced. Searching 192 objects already in memory takes well under a
   // millisecond — a timer would only add lag to something that is already
@@ -55,13 +64,15 @@ export default function Shop() {
   const shown = productsInCategory(filter).filter(matches);
   const resultCount = shown.length === 1 ? t.shop.resultPiece(shown.length) : t.shop.resultPieces(shown.length);
 
-  // A new filter or a new search is a new list, so the window starts over.
-  // Without this, narrowing 192 results to 8 would still say "showing 24 of
-  // 8" and leave a Load more button with nothing to load.
-  useEffect(() => { setVisible(PAGE_SIZE); }, [filter, deferredQuery]);
+  // PARKED with the "load more" control at the foot of the catalogue.
+  // // A new filter or a new search is a new list, so the window starts over.
+  // // Without this, narrowing 192 results to 8 would still say "showing 24 of
+  // // 8" and leave a Load more button with nothing to load.
+  // useEffect(() => { setVisible(PAGE_SIZE); }, [filter, deferredQuery]);
 
-  const page = shown.slice(0, visible);
-  const remaining = shown.length - page.length;
+  // The three on show. The rest of the shelf is not rendered at all — the
+  // button under the grid is where they live now.
+  const page = shown.slice(0, FEATURED_COUNT);
 
   // PARKED with the gift-sets section below — only those cards used it.
   // const methodNames = (p) => p.methods.map((m) => t.home.howItWorks.methods[m].name).join(', ');
@@ -149,19 +160,50 @@ export default function Shop() {
             ))}
           </div>
         ) : (
-          /* A grid, not the Carousel the eleven curated pieces used: 192
-             products do not belong on a track you have to scroll sideways
-             through. The card itself is components/ProductCard — the
-             Customize Yours page renders the same one. */
-          <div className="product-grid">
+          /* The card itself is components/ProductCard — the Customize Yours
+             page renders the same one. `product-grid-featured` is the
+             three-across variant of its grid: three cards spanning the
+             container instead of as many 200px tiles as fit, which is what
+             gives the pictures their size. Customize Yours, which still
+             lists everything, keeps the plain `.product-grid`. */
+          <div className="product-grid product-grid-featured">
             {page.map((p) => <ProductCard key={p.id} product={p} />)}
           </div>
         )}
 
-        {/* Only when there is something left to load. It reports the count so
+        {/* Where the rest of the shelf went. A card opens ONE product on the
+            store; this opens the whole CATEGORY there, the same one the
+            filter above is set to — pick Drinkware here and you land on the
+            store's Drinkware page, not its shop front. Under the grid rather
+            than beside the filters because it reads as the end of the three:
+            "and here is everything else". */}
+        {shown.length > 0 && (
+          <div className="shop-more">
+            <a
+              className="btn btn-primary"
+              href={categoryUrl(filter)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ShopIcon />{t.shop.shopCategory(t.shop.filters[filter])}
+            </a>
+          </div>
+        )}
+
+        {/* — PARKED: the "load more" pager. The catalogue shows three pieces
+            per shelf now and sends you to the store for the rest, so there is
+            nothing left for it to page through. Its i18n copy
+            (shop.loadMore, shop.showing) and its CSS (.shop-more-count) are
+            both still there; restoring it means uncommenting this block AND
+            the PAGE_SIZE constant, the `visible` state and the reset effect
+            marked PARKED above, then putting `visible` back into the `page`
+            slice.
+
+            Only when there is something left to load. It reports the count so
             the click is an informed one — "load 24 more" of a known total,
             rather than an endless feed with no sense of how far in you are.
-            A real <button>, so it is reachable by keyboard and announced. */}
+            A real button, so it is reachable by keyboard and announced.
+
         {remaining > 0 && (
           <div className="shop-more">
             <span className="shop-more-count">{t.shop.showing(page.length, shown.length)}</span>
@@ -174,6 +216,7 @@ export default function Shop() {
             </button>
           </div>
         )}
+        */}
       </section>
 
       {/* — PARKED: the gift-sets section, "Boxed, wrapped and ready to give".

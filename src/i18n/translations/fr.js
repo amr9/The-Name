@@ -647,6 +647,7 @@ export default {
     // The button across the foot of a product card. The store says "Add to
     // Cart"; this site has no cart, so it sends you there instead.
     viewProduct: 'Voir le produit',
+    shopCategory: (cat) => `Voir tout : ${cat}`,
     // The catalogue loads 24 at a time; these label the control under it.
     loadMore: (n) => `Afficher ${n} de plus`,
     showing: (a, b) => `${a} sur ${b} affichés`,

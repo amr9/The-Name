@@ -17,6 +17,50 @@
   margin-top: var(--space-6);
 }
 
+/* — the featured variant —
+
+   The Shop page shows three pieces per shelf and sends you to the store for
+   the rest, so its row is three FIXED columns across the full container
+   rather than as many 200px tiles as fit. That is the whole point of it: at
+   this width a card is roughly twice the size it was, and the product picture
+   with it. It steps down at the same breakpoints the rest of the site uses —
+   two across on a tablet, one on a phone — because three cards this wide have
+   nowhere to go on a narrow screen.
+
+   Only the columns and the picture change here. Everything below about the
+   card itself is shared, so the featured cards and the Customize Yours grid
+   cannot drift apart. */
+.product-grid-featured {
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+/* A taller, squarer picture box — 4:3 was sized for a 200px tile, and at this
+   width it leaves the product floating in a letterbox. 1:1 gives the image
+   the extra height to actually fill the card, and the roomier padding keeps
+   it off the edges of its ground. */
+.product-grid-featured .product-card-media {
+  padding: var(--space-4);
+}
+.product-grid-featured .product-card-media .img-slot {
+  aspect-ratio: 1 / 1;
+  border-radius: calc(var(--radius-md) - var(--space-4));
+}
+/* The name has room for a full line now, so it reads at body-plus rather than
+   at thumbnail size. */
+.product-grid-featured .product-card-body {
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+.product-grid-featured .product-card-name {
+  font-size: var(--text-lg);
+}
+@media (max-width: 900px) {
+  .product-grid-featured { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .product-grid-featured { grid-template-columns: 1fr; }
+}
+
 /* The product card. Its LAYOUT is the tile on store.thename.ae — product on a
    tinted ground, centred name, price beneath, a button across the foot —
    but the colours are this site's, not the store's: the pale accent tint for

@@ -33,17 +33,29 @@ import { site } from './site.js';
 // shelf - it is the unfiltered view, and it is the only one with anything in
 // it until the export carries categories. Labels are in i18n under
 // `shop.filters`, keyed by id.
+//
+// `path` is that shelf's OWN page on store.thename.ae. Two things about it:
+//
+// 1. The prefix is '/shop/category/', NOT '/shop/'. '/shop/<slug>' is the
+//    PRODUCT namespace — and it does not 404 for every category, it silently
+//    resolves to whichever product happens to carry that id (bags-travel-74
+//    lands on "LUND LONDON Straw For Life"). Verified against the live store:
+//    all nine return 200 under /shop/category/.
+// 2. The slug is not derived from the id — it carries a numeric category id
+//    that exists only on the store ('games-44'), so each is written out. They
+//    are the same slugs the product urls below already contain, which is
+//    where they were read from, so a rename on the store moves both.
 export const storeCategories = [
-  { id: 'all' },
-  { id: 'bagsTravel' },
-  { id: 'deskStationery' },
-  { id: 'drinkware' },
-  { id: 'games' },
-  { id: 'homeAccessories' },
-  { id: 'kids' },
-  { id: 'photoFrames' },
-  { id: 'giftSets' },
-  { id: 'technology' },
+  { id: 'all', path: '/shop' },
+  { id: 'bagsTravel', path: '/shop/category/bags-travel-74' },
+  { id: 'deskStationery', path: '/shop/category/desk-stationery-75' },
+  { id: 'drinkware', path: '/shop/category/drinkware-73' },
+  { id: 'games', path: '/shop/category/games-44' },
+  { id: 'homeAccessories', path: '/shop/category/home-accessories-76' },
+  { id: 'kids', path: '/shop/category/kids-77' },
+  { id: 'photoFrames', path: '/shop/category/photo-frames-78' },
+  { id: 'giftSets', path: '/shop/category/personalized-gift-sets-80' },
+  { id: 'technology', path: '/shop/category/technology-79' },
 ];
 
 export const storeProducts = [
@@ -258,3 +270,12 @@ export const storeImage = (p) => (p.image === false ? null : `/media/store/${p.i
 // it. A product can be on several, so this is `includes`, not equality.
 export const productsInCategory = (catId) =>
   catId === 'all' ? storeProducts : storeProducts.filter((p) => p.cats?.includes(catId));
+
+// That shelf, open on the store itself — the destination of the "shop the
+// whole category" button under the Shop page's three featured cards. An id
+// that is not a known category falls back to the shop front rather than to a
+// url that would 404, the same rule productUrl above follows.
+export const categoryUrl = (catId) => {
+  const cat = storeCategories.find((c) => c.id === catId);
+  return cat ? `${site.shopUrl}${cat.path}` : site.shopUrl;
+};
