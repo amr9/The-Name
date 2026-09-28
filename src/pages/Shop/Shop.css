@@ -72,6 +72,23 @@
 .shop-search {
   margin-top: var(--space-4);
 }
+
+/* The field and what it filters are ONE unit: the results start --space-2
+   below the field, the same gap that sits under the field's own label, so
+   label, field and results read as one group rather than three stacked bands.
+   That is deliberately much tighter than the --space-4 above the field, which
+   is the break FROM the controls.
+
+   Set on the results rather than as a margin under the field, because the two
+   layouts arrive with different defaults and both have to land in the same
+   place. The grid inherits `.product-grid`'s --space-6 top margin — overridden
+   here rather than changed in ProductCard.css, since that grid is shared. The
+   Carousel has no margin of its own but its track carries 4px of top padding,
+   which is shadow room, not spacing; subtracting it here puts the CARD's top
+   edge level with the grid's, and touches nothing inside the track, so
+   nothing clips. Measured: 8.8px from field to first card in both. */
+.shop-catalogue .product-grid { margin-top: var(--space-2); }
+.shop-catalogue .carousel { margin-top: calc(var(--space-2) - 4px); }
 /* Visible label rather than a placeholder doing the labelling: a placeholder
    disappears the moment you type, and it is not a label to a screen reader. */
 .shop-search-label {

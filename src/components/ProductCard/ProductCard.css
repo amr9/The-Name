@@ -33,13 +33,23 @@
    `.product-card-showcase` is the PICTURE, and rides on either. It is the one
    thing all three layouts have in common and the reason it is a card class
    rather than a descendant selector off the grid. */
+/* The column count comes from CARDS_IN_VIEW, which the page sets on the grid
+   as `--cards-in-view` — the same constant the Carousel gets as `perView` and
+   the Shop page slices its shelf by, so a grid row and a carousel row can
+   never show a different number of cards. The fallback keeps the rule honest
+   if the property is ever missing. */
 .product-grid-featured {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(var(--cards-in-view, 4), 1fr);
   gap: var(--space-6);
 }
-/* Three cards this wide have nowhere to go on a narrow screen. The steps are
-   the same ones .carousel-card takes, so the two layouts break at the same
-   widths. */
+/* Cards this wide have nowhere to go on a narrow screen. The steps are the
+   same ones .carousel-card takes, at the same widths, so the two layouts stay
+   in lockstep. They are fixed counts rather than arithmetic on
+   --cards-in-view: what fits on a phone does not follow from what fits on a
+   desktop. */
+@media (max-width: 1200px) {
+  .product-grid-featured { grid-template-columns: repeat(3, 1fr); }
+}
 @media (max-width: 1024px) {
   .product-grid-featured { grid-template-columns: repeat(2, 1fr); }
 }
@@ -93,15 +103,25 @@
    copied: the wishlist heart and the compare arrows on that tile, which both
    need a cart this site does not have.
 
-   EQUAL HEIGHT is the point of the flex chain here. The grid stretches each
-   card to its row, `height: 100%` passes that down, `.product-card-body`
-   takes the slack with `flex: 1`, and the button's `margin-top: auto` then
-   pins itself to the floor. Break any one of those links and a one-line name
-   and a two-line name put their buttons at different heights. */
+   EQUAL HEIGHT is the point of the flex chain here: `align-self: stretch`
+   makes every card fill its row, `.product-card-body` takes the slack with
+   `flex: 1`, and the button's `margin-top: auto` pins itself to the floor.
+   Break any one of those links and a one-line name and a two-line name put
+   their buttons at different heights.
+
+   `align-self: stretch` and NOT `height: 100%`, which is what this used to
+   say. In a GRID the two are equivalent, so it looked correct for as long as
+   the grid was the only layout. In the Carousel it is not: `.carousel-track`
+   has auto height, so a percentage height on an item resolves against an
+   indefinite size, falls back to `auto` — and, by being set at all, suppresses
+   the very stretch it was trying to express. Measured before the fix: 461px
+   for a one-line card against 486px for a two-line one, in the same row.
+   `stretch` is the default in both layouts; it is written out because it is
+   load-bearing and was silently lost once already. */
 .product-card {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  align-self: stretch;
   position: relative;
   color: inherit;
   text-decoration: none;
@@ -249,12 +269,20 @@
   padding: var(--space-3) var(--space-2);
   text-align: center;
 }
-/* Two lines then an ellipsis: these names run long and irregular, and without
-   a clamp one product makes its whole grid row tall. */
+/* Exactly two lines: clamped at two so a long name ends in an ellipsis rather
+   than running on, and RESERVED at two so a short one still occupies both.
+   The reservation is what the clamp alone does not give — with only the clamp
+   the cards come out the same height (the chain above sees to that) but the
+   button sits 25px higher under a one-line name than under a two-line one,
+   and a row of cards reads as ragged. `em`, so it tracks whatever font-size
+   the variant sets: the showcase cards are on --text-lg, the small tiles on
+   --text-body, and both reserve two of their OWN lines. Keep the multiplier
+   and `line-height` in step. */
 .product-card-name {
   font-size: var(--text-body);
   font-weight: 400;
   line-height: 1.35;
+  min-height: calc(1.35em * 2);
   color: var(--color-text);
   display: -webkit-box;
   -webkit-line-clamp: 2;

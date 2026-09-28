@@ -8,7 +8,7 @@ import ViewToggle from '../../components/ViewToggle.jsx';
 import Carousel from '../../components/Carousel.jsx';
 // PARKED with the gift-sets section below.
 // import { giftSets } from '../../data/catalogue.js';
-import ProductCard, { SHOWCASE_RATIO } from '../../components/ProductCard/ProductCard.jsx';
+import ProductCard, { CARDS_IN_VIEW, SHOWCASE_RATIO } from '../../components/ProductCard/ProductCard.jsx';
 import { categoryUrl, productUrl, productsInCategory, storeCategories, storeImage } from '../../data/storeProducts.js';
 // PARKED with the gift-sets section below.
 // import { media } from '../../data/media.js';
@@ -22,17 +22,15 @@ import './Shop.css';
 // // it), so the last row is never a lonely orphan.
 // const PAGE_SIZE = 24;
 
-// The catalogue is a SHOWCASE, not a full listing. A named shelf shows three
-// pieces and then hands you to the store itself for the rest. Three is what
-// lets the row span the full width of the container — at three columns each
-// card is roughly twice as wide as it was in the 200px auto-fill grid, which
-// is the point: the product pictures are finally big enough to read.
+// The catalogue is a SHOWCASE, not a full listing. A named shelf shows one ROW
+// of pieces and then hands you to the store itself for the rest — so the count
+// is CARDS_IN_VIEW, not a number of its own: the row is full by construction,
+// and changing the layout cannot leave a half-empty shelf behind.
 //
-// "All Products" is the exception and does NOT get cut to three: it is the
-// whole catalogue on a Carousel instead, three cards in view at a time and
-// the rest a swipe away. Same card, same three-across measure, no truncation
-// — a shelf you are browsing rather than a sample of one.
-const FEATURED_COUNT = 3;
+// "All Products" is the exception and is not cut at all: it is the whole
+// catalogue on a Carousel instead, the same cards in view and the rest a swipe
+// away — a shelf you are browsing rather than a sample of one.
+const FEATURED_COUNT = CARDS_IN_VIEW;
 const ALL = 'all';
 
 export default function Shop() {
@@ -187,13 +185,13 @@ export default function Shop() {
              treatment and ride on both. Customize Yours renders the same
              showcase card on the same Carousel. */
           isAll ? (
-            <Carousel prevLabel={t.shop.prevPieces} nextLabel={t.shop.nextPieces}>
+            <Carousel prevLabel={t.shop.prevPieces} nextLabel={t.shop.nextPieces} perView={CARDS_IN_VIEW}>
               {page.map((p) => (
                 <ProductCard key={p.id} product={p} className="carousel-card product-card-showcase" ratio={SHOWCASE_RATIO} />
               ))}
             </Carousel>
           ) : (
-            <div className="product-grid product-grid-featured">
+            <div className="product-grid product-grid-featured" style={{ '--cards-in-view': CARDS_IN_VIEW }}>
               {page.map((p) => <ProductCard key={p.id} product={p} className="product-card-showcase" ratio={SHOWCASE_RATIO} />)}
             </div>
           )

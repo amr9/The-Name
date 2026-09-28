@@ -1,5 +1,5 @@
 import Carousel from '../../components/Carousel.jsx';
-import ProductCard, { SHOWCASE_RATIO } from '../../components/ProductCard/ProductCard.jsx';
+import ProductCard, { CARDS_IN_VIEW, SHOWCASE_RATIO } from '../../components/ProductCard/ProductCard.jsx';
 import ShopIcon from '../../components/ShopIcon.jsx';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import { customizableIds, customizeSteps } from '../../data/storeCustomizable.js';
@@ -66,7 +66,7 @@ export default function Customize() {
             `product-card-showcase` and SHOWCASE_RATIO are what make the
             picture fill the card edge to edge; both come from ProductCard,
             so this page and the Shop page cannot drift. */}
-        <Carousel prevLabel={c.prevPieces} nextLabel={c.nextPieces}>
+        <Carousel prevLabel={c.prevPieces} nextLabel={c.nextPieces} perView={CARDS_IN_VIEW}>
           {products.map((p) => (
             <ProductCard key={p.id} product={p} className="carousel-card product-card-showcase" ratio={SHOWCASE_RATIO} />
           ))}

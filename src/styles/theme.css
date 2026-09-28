@@ -399,10 +399,18 @@ button { font: inherit; }
 .nav a { color: inherit; text-decoration: none; font-size: var(--text-sm); }
 .nav a:hover, .nav a[aria-current='page'] { color: var(--color-accent-700); }
 
-/* — horizontal card carousels (Cafe menu sections, Shop cards view) — */
+/* — horizontal card carousels (Cafe menu sections, Shop and Customize Yours) —
+
+   HOW MANY CARDS ARE IN VIEW is `--carousel-per-view`, set by the Carousel
+   component from its `perView` prop and defaulting to 3 here. The product
+   carousels ask for 4; the Cafe and Kids tracks pass nothing and stay at 3.
+   The gap is a variable for the same reason: the card's flex-basis is the
+   container minus the gaps BETWEEN the cards, so the two numbers have to be
+   derived from each other rather than both hand-maintained. */
 .carousel-track {
   display: flex;
-  gap: 24px;
+  --carousel-gap: 24px;
+  gap: var(--carousel-gap);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
@@ -415,12 +423,24 @@ button { font: inherit; }
 @media (prefers-reduced-motion: reduce) { .carousel-track { scroll-behavior: auto; } }
 
 .carousel-card {
-  flex: 0 0 calc((100% - 48px) / 3);
+  /* n cards and (n - 1) gaps fill the track exactly. */
+  --carousel-n: var(--carousel-per-view, 3);
+  flex: 0 0 calc((100% - var(--carousel-gap) * (var(--carousel-n) - 1)) / var(--carousel-n));
   scroll-snap-align: start;
   transition: transform 0.45s cubic-bezier(.22,.61,.36,1), box-shadow 0.45s ease;
 }
+/* The steps down. They override `flex` DIRECTLY rather than lowering
+   --carousel-per-view, and they have to: that variable arrives as an inline
+   style from the component, which no stylesheet rule can outrank. Hence the
+   !important, which was already here for the same reason.
+   A 4-up track steps through 3 before it reaches 2, or the cards jump from
+   cramped to enormous. For the 3-up tracks this first step is a no-op — it
+   asks for the width they already have. */
+@media (max-width: 1200px) {
+  .carousel-card { flex: 0 0 calc((100% - var(--carousel-gap) * 2) / 3) !important; }
+}
 @media (max-width: 1024px) {
-  .carousel-card { flex: 0 0 calc((100% - 24px) / 2) !important; }
+  .carousel-card { flex: 0 0 calc((100% - var(--carousel-gap)) / 2) !important; }
 }
 @media (max-width: 700px) {
   .carousel-card { flex: 0 0 88% !important; }

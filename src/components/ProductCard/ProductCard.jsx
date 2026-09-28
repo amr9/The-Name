@@ -21,6 +21,19 @@ import './ProductCard.css';
 export const SHOWCASE_RATIO = '1 / 1';
 
 /**
+ * How many showcase cards are in view at full width — the Shop catalogue and
+ * Customize Yours both use it, and it drives THREE things that would otherwise
+ * drift: the Carousel's `perView`, the featured grid's column count (as the
+ * `--cards-in-view` custom property the page sets on the grid), and how many
+ * products a named shelf on Shop slices off so its row comes out full.
+ *
+ * Changing this number is the only edit needed to change the layout; the
+ * narrow-screen steps are in CSS and are deliberately NOT derived from it,
+ * since what fits on a phone does not follow from what fits on a desktop.
+ */
+export const CARDS_IN_VIEW = 4;
+
+/**
  * One product from the store catalogue, as a card.
  *
  * Shared by the Shop catalogue and the Customize Yours page, which is the
