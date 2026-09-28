@@ -62,6 +62,8 @@ export default {
       life: { title: "Donnez-lui vie", body: "Passez commande et nos artisans la fabriquent selon vos spécifications." },
     },
     gridHeading: "Pièces personnalisables",
+    prevPieces: "Pièces précédentes",
+    nextPieces: "Plus de pièces",
     count: (n) => (n === 1 ? "1 pièce" : `${n} pièces`),
     ctaBody: "Vous ne savez pas par où commencer ? Dites-nous à quoi elle servira et nous vous orienterons.",
     ctaShop: "Commencer à créer",

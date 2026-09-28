@@ -1,4 +1,5 @@
-import ProductCard from '../../components/ProductCard/ProductCard.jsx';
+import Carousel from '../../components/Carousel.jsx';
+import ProductCard, { SHOWCASE_RATIO } from '../../components/ProductCard/ProductCard.jsx';
 import ShopIcon from '../../components/ShopIcon.jsx';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import { customizableIds, customizeSteps } from '../../data/storeCustomizable.js';
@@ -54,15 +55,31 @@ export default function Customize() {
           <span className="customize-count">{c.count(products.length)}</span>
         </div>
 
-        <div className="product-grid">
-          {products.map((p) => <ProductCard key={p.id} product={p} />)}
-        </div>
+        {/* The same showcase cards the Shop catalogue uses, on the same
+            shared Carousel: `carousel-card` is theme.css's
+            `(100% - 48px) / 3` flex-basis, so three are in view and the rest
+            are a swipe away, stepping to two and then one on narrower
+            screens. Fourteen pieces is the Shop page's "All Products" case in
+            miniature — one unsegmented list longer than a row — so it gets
+            the same treatment rather than a grid of small tiles.
+
+            `product-card-showcase` and SHOWCASE_RATIO are what make the
+            picture fill the card edge to edge; both come from ProductCard,
+            so this page and the Shop page cannot drift. */}
+        <Carousel prevLabel={c.prevPieces} nextLabel={c.nextPieces}>
+          {products.map((p) => (
+            <ProductCard key={p.id} product={p} className="carousel-card product-card-showcase" ratio={SHOWCASE_RATIO} />
+          ))}
+        </Carousel>
       </section>
 
       <section className="container customize-cta">
         <p className="customize-cta-body">{c.ctaBody}</p>
         <div className="customize-cta-actions">
-          <a className="btn btn-primary" href={site.shopUrl} target="_blank" rel="noopener noreferrer"><ShopIcon />{c.ctaShop}</a>
+          {/* To the store's OWN customizable-products page, not its shop
+              front — this page mirrors that selection, so that is where
+              "start designing" actually leads. */}
+          <a className="btn btn-primary" href={site.customizableUrl} target="_blank" rel="noopener noreferrer"><ShopIcon />{c.ctaShop}</a>
           <WhatsAppButton className="btn btn-secondary">{t.common.chatOnWhatsapp}</WhatsAppButton>
         </div>
       </section>

@@ -64,6 +64,10 @@ export default {
       life: { title: "Bring It to Life", body: "Place the order and our craftspeople build it to the specification you set." },
     },
     gridHeading: "Pieces you can customize",
+    // The carousel arrows under that heading. Named for the content,
+    // the way cafe.prevDishes and the Kids page's prevShots are.
+    prevPieces: "Previous pieces",
+    nextPieces: "More pieces",
     count: (n) => (n === 1 ? "1 piece" : `${n} pieces`),
     ctaBody: "Not sure which piece to start from? Tell us what it is for and we will point you at the right one.",
     ctaShop: "Start designing",

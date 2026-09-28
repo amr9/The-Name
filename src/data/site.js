@@ -19,6 +19,12 @@ export const site = {
   // the Shop page's hero button and its per-item View/Personalise links. (The
   // Kids and Home "shop" CTAs are router Links to /shop, not to the store.)
   shopUrl: 'https://store.thename.ae',
+  // The store's OWN page for the pieces it will personalise. The Customize
+  // Yours page mirrors that selection (data/storeCustomizable.js) and its CTA
+  // hands you to this rather than to the shop front, the same way the Shop
+  // page's button hands you to a category page rather than the front. Not
+  // under /shop/: it is a CMS page on the store, not a category.
+  customizableUrl: 'https://store.thename.ae/customizable-products',
 };
 
 // The address as a Google Maps DIRECTIONS link — `dir/?api=1&destination=` is

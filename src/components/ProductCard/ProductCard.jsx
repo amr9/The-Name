@@ -5,11 +5,29 @@ import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import './ProductCard.css';
 
 /**
+ * The frame for a SHOWCASE card — the big three-across treatment the Shop
+ * catalogue and Customize Yours both use. SQUARE, because the catalogue is
+ * mixed: 143 of the store's 187 photographs are 2:3 portrait and 44 are 3:2
+ * landscape (the Message In The Bulb line, mostly). `.product-card-showcase`
+ * fills the frame with `object-fit: cover`, which crops whatever does not fit,
+ * so a portrait 3:4 frame — lovely for the majority — takes HALF THE WIDTH off
+ * each of those 44. A square gives up a third of one axis either way,
+ * symmetric, and product photography carries enough white margin to afford it.
+ *
+ * It is a value passed as a prop rather than a CSS rule because
+ * ImagePlaceholder writes the ratio as an INLINE style, which no stylesheet
+ * can override — a rule for it loses silently.
+ */
+export const SHOWCASE_RATIO = '1 / 1';
+
+/**
  * One product from the store catalogue, as a card.
  *
- * Shared by the Shop page's grid and the Customize Yours page, which is the
+ * Shared by the Shop catalogue and the Customize Yours page, which is the
  * whole reason it is a component: both show the same object and must not
- * drift apart. The grid they sit in is `.product-grid`, in this folder's CSS.
+ * drift apart. Both now render it at showcase size — Shop as a three-column
+ * grid for a named shelf and a Carousel for "All Products", Customize Yours
+ * as a Carousel throughout. The layouts are in this folder's CSS.
  *
  * The whole card is ONE <a> and the button is a <span> dressed as one — a
  * <button> or a second <a> inside a link is invalid, and three links to the

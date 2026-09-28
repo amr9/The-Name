@@ -6,10 +6,14 @@
 
 /* — the product grid —
 
-   192 products, so a grid rather than the sideways Carousel the eleven curated
-   pieces used. auto-fill (not auto-fit) so a nearly-empty shelf keeps the card
-   width it would have in a full one instead of stretching two cards across the
-   whole page. */
+   The BASE layout, and no page uses it on its own any more: the Shop page
+   pairs it with `.product-grid-featured` below, and Customize Yours moved to
+   the Carousel. Its auto-fill of 200px tiles is what both pages looked like
+   before the pictures got their real size, and it is kept as the base (and as
+   the small-tile option) rather than folded into the variant.
+
+   auto-fill, not auto-fit, so a nearly-empty shelf keeps the card width it
+   would have in a full one instead of stretching two cards across the page. */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -19,16 +23,16 @@
 
 /* — the showcase treatment —
 
-   Two independent pieces, because the Shop page needs them in two
-   combinations: a GRID of three for a named shelf, and the shared Carousel
-   track for "All Products". Both put three cards across; only the grid needs
-   its own columns, so only the grid gets a rule here — the carousel's
-   three-across measure is theme.css's `.carousel-card` flex-basis, shared
-   with the Cafe and Kids tracks and not restated.
+   Two independent pieces, because they are needed in two combinations: a GRID
+   of three (a named shelf on Shop) and the shared Carousel track (Shop's "All
+   Products", and the whole of Customize Yours). Both put three cards across;
+   only the grid needs its own columns, so only the grid gets a rule here —
+   the carousel's three-across measure is theme.css's `.carousel-card`
+   flex-basis, shared with the Cafe and Kids tracks and not restated.
 
    `.product-card-showcase` is the PICTURE, and rides on either. It is the one
-   thing both layouts have in common and the reason it is a card class rather
-   than a descendant selector off the grid. */
+   thing all three layouts have in common and the reason it is a card class
+   rather than a descendant selector off the grid. */
 .product-grid-featured {
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-6);

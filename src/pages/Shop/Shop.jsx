@@ -8,7 +8,7 @@ import ViewToggle from '../../components/ViewToggle.jsx';
 import Carousel from '../../components/Carousel.jsx';
 // PARKED with the gift-sets section below.
 // import { giftSets } from '../../data/catalogue.js';
-import ProductCard from '../../components/ProductCard/ProductCard.jsx';
+import ProductCard, { SHOWCASE_RATIO } from '../../components/ProductCard/ProductCard.jsx';
 import { categoryUrl, productUrl, productsInCategory, storeCategories, storeImage } from '../../data/storeProducts.js';
 // PARKED with the gift-sets section below.
 // import { media } from '../../data/media.js';
@@ -34,19 +34,6 @@ import './Shop.css';
 // — a shelf you are browsing rather than a sample of one.
 const FEATURED_COUNT = 3;
 const ALL = 'all';
-
-// The showcase picture's frame, and SQUARE for a reason worth keeping: the
-// catalogue is mixed. 143 of the store's 187 photographs are 2:3 portrait
-// (600x900) and 44 are 3:2 landscape (the Message In The Bulb line, mostly).
-// One frame cannot fit both, and `object-fit: cover` crops whatever does not
-// fit — so a portrait 3:4 frame, which suits the majority beautifully, takes
-// HALF THE WIDTH off each of those 44. A square splits the difference: a third
-// off one axis either way, symmetric, and product photography carries enough
-// white margin to give that up without touching the product.
-//
-// It is a prop rather than CSS because ImagePlaceholder writes the ratio as an
-// inline style, which a stylesheet cannot beat.
-const SHOWCASE_RATIO = '1 / 1';
 
 export default function Shop() {
   const { t } = useLanguage();
@@ -189,15 +176,16 @@ export default function Shop() {
              - "All Products" → the shared Carousel. `carousel-card` is
                theme.css's flex-basis `(100% - 48px) / 3`, i.e. exactly three
                in view against the track's 24px gaps, already stepping to two
-               and then one on narrower screens. The Cafe and Kids pages use
-               the same track, so nothing here is Shop-specific.
+               and then one on narrower screens. The Cafe, Kids and Customize
+               Yours pages use the same track, so nothing here is
+               Shop-specific.
              - a named shelf → `product-grid-featured`, three fixed columns.
                A track of three cards that cannot scroll is just a row with
                dead arrows on it, so it is a grid instead.
 
-             `product-card-showcase` is the picture treatment and rides on
-             both. Customize Yours, which still lists everything, keeps the
-             plain `.product-grid` and the small cards. */
+             `product-card-showcase` and SHOWCASE_RATIO are the picture
+             treatment and ride on both. Customize Yours renders the same
+             showcase card on the same Carousel. */
           isAll ? (
             <Carousel prevLabel={t.shop.prevPieces} nextLabel={t.shop.nextPieces}>
               {page.map((p) => (

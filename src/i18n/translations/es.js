@@ -62,6 +62,8 @@ export default {
       life: { title: "Dale vida", body: "Haz el pedido y nuestros artesanos la fabrican según tus especificaciones." },
     },
     gridHeading: "Piezas personalizables",
+    prevPieces: "Piezas anteriores",
+    nextPieces: "Más piezas",
     count: (n) => (n === 1 ? "1 pieza" : `${n} piezas`),
     ctaBody: "¿No sabes por dónde empezar? Dinos para qué es y te orientamos.",
     ctaShop: "Empezar a diseñar",
