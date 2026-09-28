@@ -14,14 +14,24 @@ import './ProductCard.css';
  * The whole card is ONE <a> and the button is a <span> dressed as one — a
  * <button> or a second <a> inside a link is invalid, and three links to the
  * same product is noise for a screen reader.
+ *
+ * `className` is how the Shop page attaches the two treatments it needs
+ * without this component knowing about either: `carousel-card` (the shared
+ * flex-basis that puts three across a Carousel track) and
+ * `product-card-showcase` (the picture that fills its frame). Both are plain
+ * CSS in this folder's stylesheet and theme.css — nothing here branches.
+ *
+ * `ratio` is a PROP and not a CSS rule for one reason: ImagePlaceholder sets
+ * the aspect ratio as an inline style, which no stylesheet can override. The
+ * showcase cards pass '3 / 4' and have to pass it through here.
  */
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, className = '', ratio = '4 / 3' }) {
   const { t } = useLanguage();
   const badge = productBadge(product);
 
   return (
     <a
-      className="product-card"
+      className={`product-card ${className}`.trim()}
       href={productUrl(product)}
       target="_blank"
       rel="noopener noreferrer"
@@ -35,7 +45,7 @@ export default function ProductCard({ product }) {
       <span className="product-card-media">
         {/* Lazy: a full catalogue is ~190 of these, and only a couple of
             rows are ever on screen. */}
-        <ImagePlaceholder src={storeImage(product)} label={product.name} ratio="4 / 3" loading="lazy" />
+        <ImagePlaceholder src={storeImage(product)} label={product.name} ratio={ratio} loading="lazy" />
       </span>
       <span className="product-card-body">
         {/* `title` for the same reason the footer's social icons carry one:

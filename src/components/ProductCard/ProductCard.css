@@ -17,48 +17,68 @@
   margin-top: var(--space-6);
 }
 
-/* — the featured variant —
+/* — the showcase treatment —
 
-   The Shop page shows three pieces per shelf and sends you to the store for
-   the rest, so its row is three FIXED columns across the full container
-   rather than as many 200px tiles as fit. That is the whole point of it: at
-   this width a card is roughly twice the size it was, and the product picture
-   with it. It steps down at the same breakpoints the rest of the site uses —
-   two across on a tablet, one on a phone — because three cards this wide have
-   nowhere to go on a narrow screen.
+   Two independent pieces, because the Shop page needs them in two
+   combinations: a GRID of three for a named shelf, and the shared Carousel
+   track for "All Products". Both put three cards across; only the grid needs
+   its own columns, so only the grid gets a rule here — the carousel's
+   three-across measure is theme.css's `.carousel-card` flex-basis, shared
+   with the Cafe and Kids tracks and not restated.
 
-   Only the columns and the picture change here. Everything below about the
-   card itself is shared, so the featured cards and the Customize Yours grid
-   cannot drift apart. */
+   `.product-card-showcase` is the PICTURE, and rides on either. It is the one
+   thing both layouts have in common and the reason it is a card class rather
+   than a descendant selector off the grid. */
 .product-grid-featured {
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-6);
 }
-/* A taller, squarer picture box — 4:3 was sized for a 200px tile, and at this
-   width it leaves the product floating in a letterbox. 1:1 gives the image
-   the extra height to actually fill the card, and the roomier padding keeps
-   it off the edges of its ground. */
-.product-grid-featured .product-card-media {
+/* Three cards this wide have nowhere to go on a narrow screen. The steps are
+   the same ones .carousel-card takes, so the two layouts break at the same
+   widths. */
+@media (max-width: 1024px) {
+  .product-grid-featured { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+  .product-grid-featured { grid-template-columns: 1fr; }
+}
+
+/* The picture fills its box EDGE TO EDGE — no inset ground around it, and
+   `cover` rather than the small card's `contain`, so there is no letterbox
+   inside the frame. That is the whole difference between this and the tile:
+   at three-across the product is the card, not a stamp in the middle of one.
+
+   The frame's RATIO is square, and the reasoning is in Shop.jsx next to
+   SHOWCASE_RATIO — the catalogue holds both 2:3 portrait and 3:2 landscape
+   photographs, so a square is the only shape that does not gut one of them. */
+.product-card-showcase .product-card-media {
+  padding: 0;
+  background: var(--color-accent-100);
+}
+/* The 3/4 frame itself is NOT set here — ImagePlaceholder writes the ratio as
+   an inline style, which no stylesheet can override, so it comes in as
+   ProductCard's `ratio` prop (SHOWCASE_RATIO in Shop.jsx). Do not try to
+   restate it as a rule; it will silently lose. */
+.product-card-showcase .product-card-media .img-slot {
+  /* No padding to step down from now, so it takes the card's own radius. */
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+.product-card-showcase .product-card-media .img-slot img { object-fit: cover; }
+/* A product with no picture still falls back to <ImagePlaceholder>; it keeps
+   its dashed ground, which needs the inset back or the dashes sit on the
+   card's edge. */
+.product-card-showcase .product-card-media .img-slot-empty {
   padding: var(--space-4);
 }
-.product-grid-featured .product-card-media .img-slot {
-  aspect-ratio: 1 / 1;
-  border-radius: calc(var(--radius-md) - var(--space-4));
-}
-/* The name has room for a full line now, so it reads at body-plus rather than
-   at thumbnail size. */
-.product-grid-featured .product-card-body {
+
+/* The name has room for a full line at this width, so it reads at lede size
+   rather than at thumbnail size. */
+.product-card-showcase .product-card-body {
   gap: var(--space-3);
   padding: var(--space-4);
 }
-.product-grid-featured .product-card-name {
+.product-card-showcase .product-card-name {
   font-size: var(--text-lg);
-}
-@media (max-width: 900px) {
-  .product-grid-featured { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 600px) {
-  .product-grid-featured { grid-template-columns: 1fr; }
 }
 
 /* The product card. Its LAYOUT is the tile on store.thename.ae — product on a
@@ -155,6 +175,15 @@
   border-width: 0 0 7px 10px;
   border-color: transparent transparent transparent var(--color-accent-700);
 }
+
+/* ...unless the card is in a Carousel. `.carousel-track` is an
+   `overflow-x: auto` box, so it CLIPS, and the 10px the ribbon hangs past the
+   card's start edge is cut off on the leftmost card — which is exactly where
+   the one badged product currently sits. In a track the strip goes flush and
+   the fold goes with it, since the fold exists only to give that overhang
+   thickness. The grid cards keep the ribbon: nothing clips them. */
+.carousel-card.product-card .product-card-badge { inset-inline-start: 0; }
+.carousel-card.product-card .product-card-badge::before { content: none; }
 
 /* The sparkle on the strip's trailing edge. Built from the same vocabulary as
    .btn-sparkle in theme.css and driven by ITS keyframes — `sparkle-twinkle`

@@ -5,6 +5,7 @@ import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 // PARKED with the gift-sets section below.
 // import OverlayCard, { OverlayCardArrow } from '../../components/OverlayCard/OverlayCard.jsx';
 import ViewToggle from '../../components/ViewToggle.jsx';
+import Carousel from '../../components/Carousel.jsx';
 // PARKED with the gift-sets section below.
 // import { giftSets } from '../../data/catalogue.js';
 import ProductCard from '../../components/ProductCard/ProductCard.jsx';
@@ -21,12 +22,31 @@ import './Shop.css';
 // // it), so the last row is never a lonely orphan.
 // const PAGE_SIZE = 24;
 
-// The catalogue is now a SHOWCASE, not a full listing: every shelf shows three
+// The catalogue is a SHOWCASE, not a full listing. A named shelf shows three
 // pieces and then hands you to the store itself for the rest. Three is what
 // lets the row span the full width of the container — at three columns each
 // card is roughly twice as wide as it was in the 200px auto-fill grid, which
 // is the point: the product pictures are finally big enough to read.
+//
+// "All Products" is the exception and does NOT get cut to three: it is the
+// whole catalogue on a Carousel instead, three cards in view at a time and
+// the rest a swipe away. Same card, same three-across measure, no truncation
+// — a shelf you are browsing rather than a sample of one.
 const FEATURED_COUNT = 3;
+const ALL = 'all';
+
+// The showcase picture's frame, and SQUARE for a reason worth keeping: the
+// catalogue is mixed. 143 of the store's 187 photographs are 2:3 portrait
+// (600x900) and 44 are 3:2 landscape (the Message In The Bulb line, mostly).
+// One frame cannot fit both, and `object-fit: cover` crops whatever does not
+// fit — so a portrait 3:4 frame, which suits the majority beautifully, takes
+// HALF THE WIDTH off each of those 44. A square splits the difference: a third
+// off one axis either way, symmetric, and product photography carries enough
+// white margin to give that up without touching the product.
+//
+// It is a prop rather than CSS because ImagePlaceholder writes the ratio as an
+// inline style, which a stylesheet cannot beat.
+const SHOWCASE_RATIO = '1 / 1';
 
 export default function Shop() {
   const { t } = useLanguage();
@@ -70,9 +90,12 @@ export default function Shop() {
   // // 8" and leave a Load more button with nothing to load.
   // useEffect(() => { setVisible(PAGE_SIZE); }, [filter, deferredQuery]);
 
-  // The three on show. The rest of the shelf is not rendered at all — the
-  // button under the grid is where they live now.
-  const page = shown.slice(0, FEATURED_COUNT);
+  // On "All Products" the carousel carries the lot; a named shelf is cut to
+  // three and its remainder lives behind the button under the grid. A SEARCH
+  // resets the filter to 'all' (see the input below), so results always land
+  // in the carousel and are never truncated to three.
+  const isAll = filter === ALL;
+  const page = isAll ? shown : shown.slice(0, FEATURED_COUNT);
 
   // PARKED with the gift-sets section below — only those cards used it.
   // const methodNames = (p) => p.methods.map((m) => t.home.howItWorks.methods[m].name).join(', ');
@@ -160,15 +183,32 @@ export default function Shop() {
             ))}
           </div>
         ) : (
-          /* The card itself is components/ProductCard — the Customize Yours
-             page renders the same one. `product-grid-featured` is the
-             three-across variant of its grid: three cards spanning the
-             container instead of as many 200px tiles as fit, which is what
-             gives the pictures their size. Customize Yours, which still
-             lists everything, keeps the plain `.product-grid`. */
-          <div className="product-grid product-grid-featured">
-            {page.map((p) => <ProductCard key={p.id} product={p} />)}
-          </div>
+          /* Two ways to lay out the SAME card (components/ProductCard, which
+             Customize Yours also renders), and both put three across:
+
+             - "All Products" → the shared Carousel. `carousel-card` is
+               theme.css's flex-basis `(100% - 48px) / 3`, i.e. exactly three
+               in view against the track's 24px gaps, already stepping to two
+               and then one on narrower screens. The Cafe and Kids pages use
+               the same track, so nothing here is Shop-specific.
+             - a named shelf → `product-grid-featured`, three fixed columns.
+               A track of three cards that cannot scroll is just a row with
+               dead arrows on it, so it is a grid instead.
+
+             `product-card-showcase` is the picture treatment and rides on
+             both. Customize Yours, which still lists everything, keeps the
+             plain `.product-grid` and the small cards. */
+          isAll ? (
+            <Carousel prevLabel={t.shop.prevPieces} nextLabel={t.shop.nextPieces}>
+              {page.map((p) => (
+                <ProductCard key={p.id} product={p} className="carousel-card product-card-showcase" ratio={SHOWCASE_RATIO} />
+              ))}
+            </Carousel>
+          ) : (
+            <div className="product-grid product-grid-featured">
+              {page.map((p) => <ProductCard key={p.id} product={p} className="product-card-showcase" ratio={SHOWCASE_RATIO} />)}
+            </div>
+          )
         )}
 
         {/* Where the rest of the shelf went. A card opens ONE product on the
@@ -185,7 +225,9 @@ export default function Shop() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <ShopIcon />{t.shop.shopCategory(t.shop.filters[filter])}
+              {/* "Shop all All Products" is nonsense, so the unfiltered view
+                  borrows the hero's own wording instead of naming itself. */}
+              <ShopIcon />{isAll ? t.shop.openShop : t.shop.shopCategory(t.shop.filters[filter])}
             </a>
           </div>
         )}

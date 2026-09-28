@@ -21,13 +21,30 @@ import { site } from './site.js';
 // - see storeCategories below. Fill column C, re-export, and add a `cat` to
 // each row here; nothing else on the Shop page has to change.
 //
-// Images live in public/media/store/<id>.webp, written from the sheet's
-// "Image 128" column. 34 of the 192 rows carry a 74-byte blob instead of an
-// image (mostly the MOB and Message In The Bulb lines); those are flagged
-// `image: false` and fall back to <ImagePlaceholder>. The rest are 128px
-// thumbnails - small for a card, so they upscale softly. Re-exporting with
-// Odoo's "Image 1920" field instead is the fix, and needs no code change
-// beyond dropping the bigger files in.
+// IMAGES are a THIRD source, and no longer the spreadsheet. They live in
+// public/media/store/<id>.webp and are written by
+// scripts/import-store-images.mjs, which pulls each product's original upload
+// straight off the store at /web/image/product.template/<store id>/image_1920
+// - the store id being the trailing number on `url`, so nothing extra has to
+// be scraped to find it.
+//
+// The sheet's "Image 128" column used to be the source, and it was the reason
+// the Shop cards looked pixelated: 85x128 thumbnails behind a card ~350px
+// wide, upscaled about four times. They are now 600x900 or larger. It also
+// fixed the gap: the export carried a 74-byte blob instead of a picture for 34
+// rows, and the store turned out to have a real photo for 30 of them.
+//
+// `image: false` therefore MEANS something different now - not "the
+// spreadsheet cell was empty" but "the store has no picture for this either".
+// Four rows still carry it (Lund London Curling, two Message In The Bulb
+// lines, Tips); those are the four the category importer could not match to
+// the store at all, so there is no id to fetch, and they fall back to
+// <ImagePlaceholder>.
+//
+// RUN ORDER is therefore products -> categories -> images, and it matters in
+// both directions: the image script needs the `url` the category script
+// writes, and re-running the product script resets the `image` flags the
+// image script rewrote.
 
 // The store's shelves, in the order they appear on the page. `all` is not a
 // shelf - it is the unfiltered view, and it is the only one with anything in
@@ -150,7 +167,7 @@ export const storeProducts = [
   { id: "lund-london-cleaning-brush", name: "Lund London Cleaning Brush", ref: "2", price: 53, url: "/shop/drinkware-73/lund-london-cleaning-brush-72", cats: ['drinkware'] },
   { id: "lund-london-collapsible-cup", name: "Lund London Collapsible Cup", ref: "6", price: 96, url: "/shop/drinkware-73/lund-london-collapsible-cup-66", cats: ['drinkware'] },
   { id: "lund-london-corn-hole", name: "Lund London Corn Hole", ref: "1", price: 120, url: "/shop/games-44/lund-london-corn-hole-84", cats: ['games'] },
-  { id: "lund-london-curling", name: "Lund London Curling", ref: "1", price: 120 },
+  { id: "lund-london-curling", name: "Lund London Curling", ref: "1", price: 120 , image: false},
   { id: "lund-london-edge-frames-5x7", name: "Lund London Edge Frames 5x7", ref: "2", price: 154, url: "/shop/photo-frames-78/lund-london-edge-frames-5x7-147", cats: ['photoFrames'] },
   { id: "lund-london-instax-frames", name: "Lund London Instax Frames", ref: "2", price: 120, url: "/shop/photo-frames-78/lund-london-instax-frames-86", cats: ['photoFrames'] },
   { id: "lund-london-lite-water-bottle", name: "Lund London Lite Water Bottle", ref: "3", price: 119, url: "/shop/drinkware-73/lund-london-lite-water-bottle-58", cats: ['drinkware'] },
@@ -179,50 +196,50 @@ export const storeProducts = [
   { id: "lund-london-travel-mug-350ml", name: "Lund London Travel Mug 350ml", ref: "7", price: 159, url: "/shop/drinkware-73/lund-london-travel-mug-350ml-151", cats: ['drinkware'] },
   { id: "lund-london-wireless-desktop-fan", name: "Lund London Wireless Desktop Fan", ref: "3", price: 169, url: "/shop/desk-stationery-75/lund-london-wireless-desktop-fan-78", cats: ['deskStationery', 'homeAccessories'] },
   { id: "lund-london-wireless-lamp-and-charger", name: "Lund London Wireless Lamp and Charger", ref: "5", price: 407, url: "/shop/home-accessories-76/lund-london-wireless-lamp-and-charger-80", cats: ['homeAccessories', 'kids'] },
-  { id: "mob-animal-light", name: "MOB Animal Light", ref: "1", price: 135, image: false, url: "/shop/home-accessories-76/mob-animal-light-135", cats: ['homeAccessories', 'kids'] },
+  { id: "mob-animal-light", name: "MOB Animal Light", ref: "1", price: 135, url: "/shop/home-accessories-76/mob-animal-light-135", cats: ['homeAccessories', 'kids'] },
   { id: "mob-astro-bluetooth-speaker", name: "MOB Astro Bluetooth Speaker", ref: "1", price: 162, url: "/shop/kids-77/mob-astro-bluetooth-speaker-116", cats: ['kids', 'technology'] },
-  { id: "mob-astro-cable-4-in-1", name: "MOB Astro Cable 4 in 1", ref: "1", price: 108, image: false, url: "/shop/technology-79/mob-astro-cable-4-in-1-124", cats: ['technology'] },
-  { id: "mob-billy-clock", name: "MOB Billy Clock", ref: "4", price: 271, image: false, url: "/shop/kids-77/mob-billy-clock-10", cats: ['kids', 'technology'] },
-  { id: "mob-creative-kit-memory-booklet-4-paper-rolls-3-classical-1-", name: "MOB CREATIVE KIT: MEMORY BOOKLET+ 4 PAPER ROLLS  (3  CLASSICAL + 1 STICKER)", ref: "1", price: 71, image: false, url: "/shop/personalized-gift-sets-80/mob-creative-kit-memory-booklet-4-paper-rolls-3-classical-1-sticker-132", cats: ['giftSets'] },
-  { id: "mob-cosmo-bubbly", name: "MOB Cosmo Bubbly", ref: "1", price: 217, image: false, url: "/shop/home-accessories-76/mob-cosmo-bubbly-138", cats: ['homeAccessories', 'kids', 'technology'] },
-  { id: "mob-dancing-animal-speaker", name: "MOB Dancing Animal speaker", ref: "5", price: 163, image: false, url: "/shop/home-accessories-76/mob-dancing-animal-speaker-129", cats: ['homeAccessories', 'kids', 'technology'] },
-  { id: "mob-dancing-clock", name: "MOB Dancing Clock", ref: "2", price: 326, image: false, url: "/shop/home-accessories-76/mob-dancing-clock-143", cats: ['homeAccessories', 'kids', 'technology'] },
-  { id: "mob-enceinte-reveil-vs-80", name: "MOB Enceinte & réveil VS-80", ref: "2", price: 177, image: false, url: "/shop/home-accessories-76/mob-enceinte-reveil-vs-80-127", cats: ['homeAccessories', 'technology'] },
-  { id: "mob-enceinte-rs-80", name: "MOB Enceinte RS-80", ref: "2", price: 141, image: false, url: "/shop/home-accessories-76/mob-enceinte-rs-80-126", cats: ['homeAccessories', 'kids', 'technology'] },
-  { id: "mob-kit-de-recharge-pixiprint-refill-kit", name: "MOB KIT DE RECHARGE PIXIPRINT - REFILL KIT", ref: "1", price: 101.85, image: false, url: "/shop/photo-frames-78/mob-kit-de-recharge-pixiprint-refill-kit-142", cats: ['photoFrames'] },
-  { id: "mob-mega-mush-speaker", name: "MOB Mega Mush Speaker", ref: "3", price: 163.8, image: false, url: "/shop/kids-77/mob-mega-mush-speaker-134", cats: ['kids', 'technology'] },
-  { id: "mob-mini-stellar-white", name: "MOB Mini Stellar - White", ref: "1", price: 217.35, image: false, url: "/shop/home-accessories-76/mob-mini-stellar-white-144", cats: ['homeAccessories', 'kids'] },
-  { id: "mob-pixiprint-click-print", name: "MOB Pixiprint - Click & Print", ref: "4", price: 434, image: false, url: "/shop/kids-77/mob-pixiprint-click-print-130", cats: ['kids', 'photoFrames'] },
-  { id: "mob-power-pets-4800-mah", name: "MOB Power Pets 4800 mAh", ref: "3", price: 163, image: false, url: "/shop/technology-79/mob-power-pets-4800-mah-128", cats: ['technology'] },
-  { id: "mob-reveil-tvc-80", name: "MOB Reveil TVC-80", ref: "1", price: 141, image: false, url: "/shop/home-accessories-76/mob-reveil-tvc-80-125", cats: ['homeAccessories', 'kids', 'technology'] },
-  { id: "mob-space-rover-conquest-of-space", name: "MOB Space Rover - Conquest of space", ref: "1", price: 327, image: false, url: "/shop/home-accessories-76/mob-space-rover-conquest-of-space-133", cats: ['homeAccessories', 'kids', 'technology'] },
-  { id: "mob-stellar-light", name: "MOB Stellar Light", ref: "1", price: 271, image: false, url: "/shop/home-accessories-76/mob-stellar-light-140", cats: ['homeAccessories', 'kids'] },
-  { id: "mob-stellar-light-silver", name: "MOB Stellar Light Silver", ref: "1", price: 271, image: false, url: "/shop/home-accessories-76/mob-stellar-light-silver-141", cats: ['homeAccessories', 'kids'] },
-  { id: "mob-travel-kit-pixiprint-case-4-paper-rolls-3-classical-1-st", name: "MOB TRAVEL KIT: PIXIPRINT CASE + 4  PAPER ROLLS  (3 CLASSICAL + 1 STICKER)", ref: "1", price: 162, image: false, url: "/shop/photo-frames-78/mob-travel-kit-pixiprint-case-4-paper-rolls-3-classical-1-sticker-131", cats: ['photoFrames', 'giftSets'] },
+  { id: "mob-astro-cable-4-in-1", name: "MOB Astro Cable 4 in 1", ref: "1", price: 108, url: "/shop/technology-79/mob-astro-cable-4-in-1-124", cats: ['technology'] },
+  { id: "mob-billy-clock", name: "MOB Billy Clock", ref: "4", price: 271, url: "/shop/kids-77/mob-billy-clock-10", cats: ['kids', 'technology'] },
+  { id: "mob-creative-kit-memory-booklet-4-paper-rolls-3-classical-1-", name: "MOB CREATIVE KIT: MEMORY BOOKLET+ 4 PAPER ROLLS  (3  CLASSICAL + 1 STICKER)", ref: "1", price: 71, url: "/shop/personalized-gift-sets-80/mob-creative-kit-memory-booklet-4-paper-rolls-3-classical-1-sticker-132", cats: ['giftSets'] },
+  { id: "mob-cosmo-bubbly", name: "MOB Cosmo Bubbly", ref: "1", price: 217, url: "/shop/home-accessories-76/mob-cosmo-bubbly-138", cats: ['homeAccessories', 'kids', 'technology'] },
+  { id: "mob-dancing-animal-speaker", name: "MOB Dancing Animal speaker", ref: "5", price: 163, url: "/shop/home-accessories-76/mob-dancing-animal-speaker-129", cats: ['homeAccessories', 'kids', 'technology'] },
+  { id: "mob-dancing-clock", name: "MOB Dancing Clock", ref: "2", price: 326, url: "/shop/home-accessories-76/mob-dancing-clock-143", cats: ['homeAccessories', 'kids', 'technology'] },
+  { id: "mob-enceinte-reveil-vs-80", name: "MOB Enceinte & réveil VS-80", ref: "2", price: 177, url: "/shop/home-accessories-76/mob-enceinte-reveil-vs-80-127", cats: ['homeAccessories', 'technology'] },
+  { id: "mob-enceinte-rs-80", name: "MOB Enceinte RS-80", ref: "2", price: 141, url: "/shop/home-accessories-76/mob-enceinte-rs-80-126", cats: ['homeAccessories', 'kids', 'technology'] },
+  { id: "mob-kit-de-recharge-pixiprint-refill-kit", name: "MOB KIT DE RECHARGE PIXIPRINT - REFILL KIT", ref: "1", price: 101.85, url: "/shop/photo-frames-78/mob-kit-de-recharge-pixiprint-refill-kit-142", cats: ['photoFrames'] },
+  { id: "mob-mega-mush-speaker", name: "MOB Mega Mush Speaker", ref: "3", price: 163.8, url: "/shop/kids-77/mob-mega-mush-speaker-134", cats: ['kids', 'technology'] },
+  { id: "mob-mini-stellar-white", name: "MOB Mini Stellar - White", ref: "1", price: 217.35, url: "/shop/home-accessories-76/mob-mini-stellar-white-144", cats: ['homeAccessories', 'kids'] },
+  { id: "mob-pixiprint-click-print", name: "MOB Pixiprint - Click & Print", ref: "4", price: 434, url: "/shop/kids-77/mob-pixiprint-click-print-130", cats: ['kids', 'photoFrames'] },
+  { id: "mob-power-pets-4800-mah", name: "MOB Power Pets 4800 mAh", ref: "3", price: 163, url: "/shop/technology-79/mob-power-pets-4800-mah-128", cats: ['technology'] },
+  { id: "mob-reveil-tvc-80", name: "MOB Reveil TVC-80", ref: "1", price: 141, url: "/shop/home-accessories-76/mob-reveil-tvc-80-125", cats: ['homeAccessories', 'kids', 'technology'] },
+  { id: "mob-space-rover-conquest-of-space", name: "MOB Space Rover - Conquest of space", ref: "1", price: 327, url: "/shop/home-accessories-76/mob-space-rover-conquest-of-space-133", cats: ['homeAccessories', 'kids', 'technology'] },
+  { id: "mob-stellar-light", name: "MOB Stellar Light", ref: "1", price: 271, url: "/shop/home-accessories-76/mob-stellar-light-140", cats: ['homeAccessories', 'kids'] },
+  { id: "mob-stellar-light-silver", name: "MOB Stellar Light Silver", ref: "1", price: 271, url: "/shop/home-accessories-76/mob-stellar-light-silver-141", cats: ['homeAccessories', 'kids'] },
+  { id: "mob-travel-kit-pixiprint-case-4-paper-rolls-3-classical-1-st", name: "MOB TRAVEL KIT: PIXIPRINT CASE + 4  PAPER ROLLS  (3 CLASSICAL + 1 STICKER)", ref: "1", price: 162, url: "/shop/photo-frames-78/mob-travel-kit-pixiprint-case-4-paper-rolls-3-classical-1-sticker-131", cats: ['photoFrames', 'giftSets'] },
   { id: "mob-cutie-clock-connect-with-app", name: "MOB-Cutie Clock Connect with app", ref: "2", price: 207, url: "/shop/home-accessories-76/mob-cutie-clock-connect-with-app-284", cats: ['homeAccessories', 'kids', 'technology'] },
   { id: "mob-enceinte-karaoke-ks-80-blue", name: "MOB-Enceinte Karaoke KS-80 Blue", ref: "1", price: 261, url: "/shop/kids-77/mob-enceinte-karaoke-ks-80-blue-282", cats: ['kids', 'technology'] },
   { id: "mob-glowy-lamp-torche", name: "MOB-Glowy Lamp Torche", ref: "1", price: 109, url: "/shop/home-accessories-76/mob-glowy-lamp-torche-281", cats: ['homeAccessories', 'kids'] },
   { id: "mob-micro-groovy", name: "MOB-Micro Groovy", ref: "1", price: 182, url: "/shop/kids-77/mob-micro-groovy-280", cats: ['kids', 'technology'] },
   { id: "mob-singing-party-karaoke-luminouse", name: "MOB-Singing Party Karaoke Luminouse", ref: "3", price: 271, url: "/shop/kids-77/mob-singing-party-karaoke-luminouse-283", cats: ['kids', 'technology'] },
-  { id: "message-in-the-box", name: "Message In The Box", ref: "5", price: 663, image: false, url: "/shop/home-accessories-76/message-in-the-box-258", cats: ['homeAccessories', 'kids'] },
+  { id: "message-in-the-box", name: "Message In The Box", ref: "5", price: 663, url: "/shop/home-accessories-76/message-in-the-box-258", cats: ['homeAccessories', 'kids'] },
   { id: "message-in-the-bulb-mitb-1", name: "Message In The Bulb(MITB)-1", ref: "6", price: 142, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-1-189", cats: ['homeAccessories', 'kids'] },
-  { id: "message-in-the-bulb-mitb-10", name: "Message In The Bulb(MITB)-10", ref: "17", price: 261 },
+  { id: "message-in-the-bulb-mitb-10", name: "Message In The Bulb(MITB)-10", ref: "17", price: 261 , image: false},
   { id: "message-in-the-bulb-mitb-11", name: "Message In The Bulb(MITB)-11", ref: "4", price: 285, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-11-253", cats: ['homeAccessories', 'kids'] },
-  { id: "message-in-the-bulb-mitb-12", name: "Message In The Bulb(MITB)-12", ref: "3", price: 289, image: false, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-12-254", cats: ['homeAccessories', 'kids'] },
-  { id: "message-in-the-bulb-mitb-2", name: "Message In The Bulb(MITB)-2", ref: "9", price: 156, image: false, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-2-194", cats: ['homeAccessories', 'kids'] },
-  { id: "message-in-the-bulb-mitb-3", name: "Message In The Bulb(MITB)-3", ref: "3", price: 157, image: false },
-  { id: "message-in-the-bulb-mitb-4", name: "Message In The Bulb(MITB)-4", ref: "3", price: 166, image: false, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-4-196", cats: ['homeAccessories', 'kids'] },
-  { id: "message-in-the-bulb-mitb-5", name: "Message In The Bulb(MITB)-5", ref: "13", price: 231, image: false, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-5-198", cats: ['homeAccessories', 'kids'] },
+  { id: "message-in-the-bulb-mitb-12", name: "Message In The Bulb(MITB)-12", ref: "3", price: 289, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-12-254", cats: ['homeAccessories', 'kids'] },
+  { id: "message-in-the-bulb-mitb-2", name: "Message In The Bulb(MITB)-2", ref: "9", price: 156, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-2-194", cats: ['homeAccessories', 'kids'] },
+  { id: "message-in-the-bulb-mitb-3", name: "Message In The Bulb(MITB)-3", ref: "3", price: 157 , image: false},
+  { id: "message-in-the-bulb-mitb-4", name: "Message In The Bulb(MITB)-4", ref: "3", price: 166, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-4-196", cats: ['homeAccessories', 'kids'] },
+  { id: "message-in-the-bulb-mitb-5", name: "Message In The Bulb(MITB)-5", ref: "13", price: 231, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-5-198", cats: ['homeAccessories', 'kids'] },
   { id: "message-in-the-bulb-mitb-6", name: "Message In The Bulb(MITB)-6", ref: "8", price: 234, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-6-199", cats: ['homeAccessories', 'kids'] },
-  { id: "message-in-the-bulb-mitb-7", name: "Message In The Bulb(MITB)-7", ref: "2", price: 245, image: false, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-7-200", cats: ['homeAccessories', 'kids'] },
-  { id: "message-in-the-bulb-mitb-8", name: "Message In The Bulb(MITB)-8", ref: "8", price: 253, image: false, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-8-201", cats: ['homeAccessories', 'kids'] },
+  { id: "message-in-the-bulb-mitb-7", name: "Message In The Bulb(MITB)-7", ref: "2", price: 245, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-7-200", cats: ['homeAccessories', 'kids'] },
+  { id: "message-in-the-bulb-mitb-8", name: "Message In The Bulb(MITB)-8", ref: "8", price: 253, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-8-201", cats: ['homeAccessories', 'kids'] },
   { id: "message-in-the-bulb-mitb-9", name: "Message In The Bulb(MITB)-9", ref: "6", price: 255, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-9-250", cats: ['homeAccessories', 'kids'] },
   { id: "message-in-the-bulb-mitb-lamp-base", name: "Message In The Bulb(MITB)-Lamp Base", ref: "9", price: 152, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-lamp-base-192", cats: ['homeAccessories', 'kids'] },
-  { id: "message-in-the-bulb-mitb-pop-table-lamp-base-pink-with-white", name: "Message In The Bulb(MITB)-POP TABLE LAMP BASE - PINK WITH WHITE", ref: "1", price: 149, image: false, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-pop-table-lamp-base-pink-with-white-191", cats: ['homeAccessories', 'kids'] },
-  { id: "message-in-the-bulb-lamp-base-madison", name: "Message In The Bulb-Lamp Base (Madison)", ref: "3", price: 219, image: false, url: "/shop/home-accessories-76/message-in-the-bulb-lamp-base-madison-197", cats: ['homeAccessories', 'kids'] },
-  { id: "message-in-the-frame-led-neon-sign-crazy-in-love", name: "Message In The Frame-LED NEON SIGN - CRAZY IN LOVE", ref: "1", price: 926, image: false, url: "/shop/home-accessories-76/message-in-the-frame-led-neon-sign-crazy-in-love-259", cats: ['homeAccessories', 'kids'] },
-  { id: "message-in-the-tube", name: "Message In The Tube", ref: "5", price: 337, image: false, url: "/shop/home-accessories-76/message-in-the-tube-256", cats: ['homeAccessories', 'kids'] },
-  { id: "message-in-the-tube-black-marble-table-lamp-support-black-al", name: "Message In the Tube-BLACK MARBLE TABLE LAMP SUPPORT & BLACK ALUMINUM HANDLE", ref: "1", price: 375, image: false, url: "/shop/home-accessories-76/message-in-the-tube-black-marble-table-lamp-support-black-aluminum-handle-290", cats: ['homeAccessories', 'kids'] },
+  { id: "message-in-the-bulb-mitb-pop-table-lamp-base-pink-with-white", name: "Message In The Bulb(MITB)-POP TABLE LAMP BASE - PINK WITH WHITE", ref: "1", price: 149, url: "/shop/home-accessories-76/message-in-the-bulb-mitb-pop-table-lamp-base-pink-with-white-191", cats: ['homeAccessories', 'kids'] },
+  { id: "message-in-the-bulb-lamp-base-madison", name: "Message In The Bulb-Lamp Base (Madison)", ref: "3", price: 219, url: "/shop/home-accessories-76/message-in-the-bulb-lamp-base-madison-197", cats: ['homeAccessories', 'kids'] },
+  { id: "message-in-the-frame-led-neon-sign-crazy-in-love", name: "Message In The Frame-LED NEON SIGN - CRAZY IN LOVE", ref: "1", price: 926, url: "/shop/home-accessories-76/message-in-the-frame-led-neon-sign-crazy-in-love-259", cats: ['homeAccessories', 'kids'] },
+  { id: "message-in-the-tube", name: "Message In The Tube", ref: "5", price: 337, url: "/shop/home-accessories-76/message-in-the-tube-256", cats: ['homeAccessories', 'kids'] },
+  { id: "message-in-the-tube-black-marble-table-lamp-support-black-al", name: "Message In the Tube-BLACK MARBLE TABLE LAMP SUPPORT & BLACK ALUMINUM HANDLE", ref: "1", price: 375, url: "/shop/home-accessories-76/message-in-the-tube-black-marble-table-lamp-support-black-aluminum-handle-290", cats: ['homeAccessories', 'kids'] },
   { id: "pantone-new-notebook-with-pencil-lined", name: "PANTONE  New Notebook with Pencil (Lined)", ref: "8", price: 289, url: "/shop/desk-stationery-75/pantone-new-notebook-with-pencil-lined-184", cats: ['deskStationery'] },
   { id: "pantone-booklet-set-of-2", name: "PANTONE Booklet Set of 2", ref: "2", price: 67, url: "/shop/desk-stationery-75/pantone-booklet-set-of-2-276", cats: ['deskStationery'] },
   { id: "pantone-bowl", name: "PANTONE Bowl", ref: "4", price: 105, url: "/shop/desk-stationery-75/pantone-bowl-178", cats: ['deskStationery'] },
@@ -247,10 +264,10 @@ export const storeProducts = [
   { id: "pantone-sticky-note", name: "PANTONE Sticky Note", ref: "2", price: 420, url: "/shop/desk-stationery-75/pantone-sticky-note-261", cats: ['deskStationery'] },
   { id: "pantone-tablet-sleeve-13", name: "PANTONE Tablet Sleeve 13\"", ref: "3", price: 205, url: "/shop/bags-travel-74/pantone-tablet-sleeve-13-186", cats: ['bagsTravel'] },
   { id: "pantone-tea-cup", name: "PANTONE Tea Cup", ref: "15", price: 100, url: "/shop/drinkware-73/pantone-tea-cup-172", cats: ['drinkware'] },
-  { id: "pantone-thermo-steel-drinking-bottle", name: "PANTONE Thermo Steel Drinking Bottle", ref: "8", price: 168, image: false, url: "/shop/drinkware-73/pantone-thermo-steel-drinking-bottle-20", cats: ['drinkware'] },
+  { id: "pantone-thermo-steel-drinking-bottle", name: "PANTONE Thermo Steel Drinking Bottle", ref: "8", price: 168, url: "/shop/drinkware-73/pantone-thermo-steel-drinking-bottle-20", cats: ['drinkware'] },
   { id: "pantone-to-go-cup", name: "PANTONE To Go cup", ref: "8", price: 168, url: "/shop/drinkware-73/pantone-to-go-cup-181", cats: ['drinkware'] },
   { id: "pantone-travel-umbrella-in-a-smart-box-with-a-long-logo-key-", name: "PANTONE Travel Umbrella in a smart Box with a Long Logo Key Chain", ref: "4", price: 147, url: "/shop/bags-travel-74/pantone-travel-umbrella-in-a-smart-box-with-a-long-logo-key-chain-182", cats: ['bagsTravel'] },
-  { id: "tips", name: "Tips", ref: "TIPS", price: 1, image: false },
+  { id: "tips", name: "Tips", ref: "TIPS", price: 1 , image: false},
 ];
 
 // The product's own page on the store, e.g.
