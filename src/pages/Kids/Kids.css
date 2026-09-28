@@ -33,7 +33,7 @@
   margin-top: 26px;
 }
 .kids-hero-image {
-  border-radius: calc(2 * var(--radius-lg));
+  border-radius: var(--radius-md);
   overflow: hidden;
 }
 

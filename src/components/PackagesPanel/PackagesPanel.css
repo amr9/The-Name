@@ -10,7 +10,7 @@
 }
 
 .packages-image-wrap {
-  border-radius: calc(2 * var(--radius-lg));
+  border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
   margin-bottom: 28px;
@@ -47,7 +47,7 @@
 .packages-direct-line {
   background: var(--gradient-light);
   border: 1px solid var(--color-divider);
-  border-radius: calc(2 * var(--radius-lg));
+  border-radius: var(--radius-md);
   padding: clamp(26px, 3vw, 36px);
 }
 .packages-direct-line-kicker {

@@ -3,7 +3,7 @@
 .overlay-card {
   position: relative;
   isolation: isolate;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   overflow: hidden;
   background: var(--gradient-light);
 }
@@ -49,7 +49,11 @@
   gap: 12px;
   padding-block: 16px;
   padding-inline: 18px 16px;
-  border-radius: calc(var(--radius-md) * 1.25);
+  /* Concentric: the panel floats 10px inside the card's edge (the `inset-inline`
+     and `bottom` above), so its radius is the card's minus exactly that. The
+     Shop page used to restate this for its gift sets; it is here now, where it
+     is true for every page that uses the component. */
+  border-radius: calc(var(--radius-md) - 10px);
   border: 1px solid color-mix(in srgb, var(--color-white) 60%, transparent);
   background: color-mix(in srgb, var(--color-white) 72%, transparent);
   -webkit-backdrop-filter: blur(14px) saturate(1.2);

@@ -125,23 +125,19 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* — CORNER RADII on this page, one rule —
+/* — CORNER RADII —
 
-   Every card-level surface uses --radius-md. Nothing picks a radius because it
-   looks nice; there is one size and it is that one.
+   This rule started here and is now the WHOLE SITE's; it lives with the
+   --radius-md token in theme.css, which is the place to read it and the only
+   place it should be stated. Not repeated here, so the two cannot disagree.
 
-   The exception is a surface nested INSIDE another rounded surface. Two
-   concentric rounded boxes only look concentric when the inner radius is the
-   outer radius MINUS the gap between them — equal radii make the inner corner
-   look too round, and an inner radius larger than (outer - gap) makes it bulge
-   away from the corner it sits in. So a nested surface is always written as
-   `calc(var(--radius-md) - <the inset>)`, with the inset being the parent's
-   own padding, and the arithmetic left visible rather than resolved to a
-   number so the relationship survives a change to either value.
-
-   Capsules are not part of this. Buttons, the category pills and the search
-   field are 999px everywhere on the site — a different shape, not a different
-   corner size — and they keep it. */
+   The short version, because it is what this file's `calc()`s are doing: one
+   radius for every surface, and a surface nested inside a rounded one takes
+   the parent's radius minus the parent's padding. Equal radii make the inner
+   corner look too round; a larger one makes it bulge out of the corner it sits
+   in. The arithmetic is left unresolved so the relationship survives a change
+   to either value. Capsules (the pills, the search field) are 999px — a
+   different shape, not a different corner size. */
 
 
 /* The "load more" control under the catalogue. Centred and given room, so it
@@ -274,14 +270,11 @@
   max-width: 58ch;
   margin: 14px 0 0;
 }
-/* The gift sets are shared OverlayCards, which are --radius-lg everywhere
-   they appear. On THIS page that would put a second corner size next to the
-   catalogue above, so they are brought onto the page's own radius here rather
-   than in OverlayCard.css — the Cafe page uses that component too and is not
-   part of this change. The panel floating over the picture is inset 10px from
-   the card's edge, so it steps down by exactly that. */
-.shop-gift-sets-grid .overlay-card { border-radius: var(--radius-md); }
-.shop-gift-sets-grid .overlay-card-panel { border-radius: calc(var(--radius-md) - 10px); }
+/* The gift sets' OverlayCards used to be pulled onto this page's radius here,
+   because the component carried a larger one. There is only one radius now and
+   OverlayCard already uses it (its inset panel steps down concentrically in
+   OverlayCard.css), so both overrides were deleted rather than left to shadow
+   a rule identical to themselves. */
 
 .shop-gift-sets-grid {
   display: grid;

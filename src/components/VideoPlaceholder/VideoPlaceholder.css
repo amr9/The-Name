@@ -7,7 +7,7 @@
 }
 .video-slot {
   width: 100%;
-  border-radius: calc(2 * var(--radius-lg));
+  border-radius: var(--radius-md);
   overflow: hidden;
 }
 /* Only a real <video> needs the block display. Setting it on .video-slot

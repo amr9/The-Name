@@ -54,7 +54,7 @@
   background: var(--color-surface);
 }
 .business-offer-image {
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   overflow: hidden;
 }
 .business-offer-tag {
