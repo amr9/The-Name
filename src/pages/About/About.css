@@ -23,7 +23,7 @@
   max-width: 60ch;
   margin: 20px 0 0;
 }
-/* The frame anchors the play badge over the slot. The slot itself is either
+/* The frame holds the slot, which is either
    <ImagePlaceholder> (poster or dashed fallback) or a real <video> — both
    take .about-video-slot, so the rounding is written once. */
 .about-video-frame {
@@ -35,25 +35,6 @@
   border-radius: calc(2 * var(--radius-lg));
   overflow: hidden;
   display: block;
-}
-.about-video-play {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 76px;
-  height: 76px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--color-accent);
-  color: var(--color-black);
-  box-shadow: var(--shadow-lg);
-  /* decorative only — it sits over a placeholder, there is nothing to play */
-  pointer-events: none;
-}
-/* nudge the triangle onto the optical centre of the circle */
-.about-video-play svg {
-  margin-inline-start: 4px;
 }
 
 .about-title {

@@ -35,11 +35,6 @@ export default function About() {
             ratio="16 / 9"
             className="about-video-slot"
           />
-          <span className="about-video-play" aria-hidden="true">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5.5v13l11-6.5z" />
-            </svg>
-          </span>
         </figure>
 
         {/* To go live: save the film as public/media/about/about-video.mp4
