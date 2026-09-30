@@ -43,31 +43,16 @@
   pointer-events: none;
 }
 
-/* 62px at desktop, down from 86px. The point is the VIDEO: the hero is one
-   screen tall and the title sat at the bottom of it, so every pixel the type
-   gives back is background that can be seen. The clamp is kept because a flat
-   62px wraps badly on a phone — 62 is the ceiling, not a fixed size.
-
-   The brand lockup on the first line needs no rule of its own: .logo-inline is
-   1.11em, so it is sized BY this number and follows it down automatically.
-   That is also why it must stay em-based — a px height here would leave the
-   wordmark at its old size beside smaller text. */
+/* The title is the tagline artwork (components/TaglineArt). Its width is
+   capped because the hero is one screen tall with the title at the bottom,
+   so every pixel the title takes is background VIDEO that cannot be seen. */
 .home-hero-title {
-  font-size: clamp(32px, 5vw, 62px);
   margin: 20px 0 0;
-  max-width: 22ch;
 }
-.home-hero-title-lead,
-.home-hero-title-script {
+.home-hero-title-art {
   display: block;
-}
-/* Face, weight, tracking and leading all come from .page-title. The second
-   line keeps the size bump that sets it apart from the lead line above the
-   Logo. (The -script suffix is historical: the titles are no longer set in a
-   script face.) */
-.home-hero-title-script {
-  font-size: 1.2em;
-  margin-top: 0.06em;
+  width: clamp(300px, 46vw, 620px);
+  height: auto;
 }
 
 .home-hero-body {

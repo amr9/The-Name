@@ -112,25 +112,13 @@
   /* the accent edge is what makes it read as lifted rather than just tinted */
   border-inline-start: 4px solid var(--color-accent);
 }
-/* The first line ends on the Logo, which is artwork sized off this
-   font-size (components/Logo.css .logo-inline) — so the two lines are one
-   block of type, not a heading plus an image. */
-.about-tagline-lines {
-  margin: 0;
-  font-family: var(--font-heading);
-  font-weight: var(--font-heading-weight);
-  font-size: clamp(28px, 4vw, 50px);
-  line-height: 1.12;
-  text-wrap: balance;
-}
-.about-tagline-from,
-.about-tagline-to {
+/* The tagline artwork (components/TaglineArt) fills its half of the card,
+   up to the width the two lines of type it replaced used to take. */
+.about-tagline-art {
   display: block;
-}
-.about-tagline-to {
-  /* the same size bump the Home hero gives its second line */
-  font-size: 1.2em;
-  margin-top: 0.06em;
+  width: 100%;
+  max-width: 440px;
+  height: auto;
 }
 .about-tagline-lede {
   margin: 0;

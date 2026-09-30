@@ -109,6 +109,8 @@ export const media = {
     },
     markOutline: `${BASE}/brand/mark-outline.png`,
     markFilled: `${BASE}/brand/mark-filled.png`,
+    // "From The Name, to your Name" lettering — components/TaglineArt.
+    tagline: `${BASE}/brand/from-the-name-to-your-name.png`,
   },
 
   // Partner-brand logos for the Home logo strip — keys match data/brands.js

@@ -6,11 +6,12 @@ import './Logo.css';
 // ground the logo sits on, so its ink always contrasts with it: 'light'
 // grounds (the navbar) get the charcoal artwork, 'dark' grounds (the footer)
 // the yellow. On phones the wide main lockup gives way to the compact
-// secondary one (the N on its own) — unless `compact` is false, for the one
-// place the lockup has to stay readable as a word at every width: the Home
-// hero, where it stands in for the brand's name mid-sentence and an N alone
-// would not read. `size` 'inline' is that same case — it scales with the
-// surrounding type instead of a fixed pixel height.
+// secondary one (the N on its own) — unless `compact` is false, for a place
+// the lockup has to stay readable as a word at every width, e.g. standing in
+// for the brand's name mid-sentence, where an N alone would not read. `size`
+// 'inline' is that same case — it scales with the surrounding type instead of
+// a fixed pixel height. Neither is used at the moment: the Home hero and the
+// About tagline, which used them, now show components/TaglineArt instead.
 export default function Logo({ size = 'md', on = 'light', compact = true }) {
   const ink = on === 'dark' ? media.brand.logos.yellow : media.brand.logos.dark;
 

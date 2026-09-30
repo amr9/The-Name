@@ -1,6 +1,6 @@
 import ContactForm from '../../components/ContactForm/ContactForm.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
-import Logo from '../../components/Logo.jsx';
+import TaglineArt from '../../components/TaglineArt.jsx';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { storyChapters, takeovers } from './data.js';
@@ -51,20 +51,11 @@ export default function About() {
 
       {/* — the philosophy: the tagline, on a raised card rather than a
           full-bleed band, so it reads as the page's one pull-quote. The
-          first line ends on the brand lockup standing in for the name
-          itself, exactly as the Home hero does — it is the brand, so it is
-          artwork rather than translated copy, and `fromPrefix` is only the
-          word in front of it (the lockup reads "THE NAME", article
-          included). `compact={false}` keeps the full wordmark on phones;
-          the secondary N alone would leave the line reading "From N". — */}
+          tagline itself is artwork (components/TaglineArt), the same image
+          the Home hero uses as its title. — */}
       <section className="container about-tagline">
         <div className="about-tagline-card elev-md">
-          <p className="about-tagline-lines">
-            <span className="about-tagline-from">
-              {a.tagline.fromPrefix} <Logo size="inline" compact={false} />
-            </span>
-            <span className="about-tagline-to">{a.tagline.to}</span>
-          </p>
+          <TaglineArt className="about-tagline-art" />
           <div className="about-tagline-copy">
             <p className="about-tagline-lede">{a.tagline.lede}</p>
             <p className="about-tagline-body">{a.tagline.body}</p>
