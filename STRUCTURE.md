@@ -145,18 +145,28 @@ server/               — the contact-form service (its own package.json, run
 
 src/
   main.jsx            — ReactDOM root; wraps App in BrowserRouter + LanguageProvider
-  App.jsx             — route table (/, /kids, /shop, /customize, /business,
-                        /about, /policies, and `*`)
+  App.jsx             — route table (/, /kids, /shop, /business, /about,
+                        and `*`; /policies is PARKED — its import and route
+                        are commented out; /customize is only a redirect
+                        to /#customize, the Home section it became)
                         + global chrome
                          (Navbar, Footer, ChatLauncher — the floating button).
-                         Nav order (data/site.js navLinks): Home → The Name
-                         Store → Customize Yours → Business → Kids → About.
+                         Nav order (data/site.js navLinks): The Name (/) →
+                         Store (/shop) → Corporate gifts (/business) → Kids
+                         → About; Concept (the Agency page) is in the list
+                         but commented out until the page exists. Labels are
+                         i18n `nav`. The SAME navLinks list, with the same
+                         labels, drives the footer's Useful Links and the 404
+                         page, so the three never disagree. (Customize Yours
+                         left the nav when it became a Home section.)
                          Business is the
                          one emphasised entry (`highlight: true`); the rest
                          are plain.
-                         /policies is NOT in the bar — its three documents are
-                         linked from the Footer instead, off the
-                         `policySections` export in data/site.js.
+                         /policies is NOT in the bar, and the footer's policy
+                         list was dropped in the footer redesign (Terms &
+                         Privacy will link to the store's own pages), so
+                         nothing links to it. `policySections` in
+                         data/site.js is kept for that.
                          /cafe is PARKED, not deleted — its import and route
                          are commented out here, its nav entry in
                          data/site.js, its chat topic in data/chatbot.js and
@@ -174,7 +184,7 @@ src/
                          `location /` block before changing the hosting.
                          The footer is only the yellow logo, the social
                          links and the copyright line, on --gradient-footer
-                         (brownish black).
+                         (charcoal, darker to the right; no brown).
 
   pages/<PageName>/   — one folder per route
     <PageName>.jsx     — the page component
@@ -227,14 +237,19 @@ src/
                         makes a backdrop-filter on the panel a no-op — with no
                         blur available to soften what shows through, the panel
                         is opaque rather than translucent.
-      Footer/         — the dark band closing every page: a brand block (the
-                        `lg` Logo with the three legal documents listed
-                        BESIDE it, from `policySections` in data/site.js, labelled
-                        from i18n `nav.policyTabs`) on one side, SocialLinks
-                        on the other, and the copyright row beneath. This list
-                        is the ONLY route to /policies now that the navbar
-                        entry is gone, so do not remove it without giving the
-                        page another way in. Everything centres on one column
+      Footer/         — closes every page. Layout after the 3distica.com
+                        footer, colours the site's own: a FULL-WIDTH band on
+                        --gradient-footer holding the brand block (`lg` Logo
+                        + SocialLinks) and three columns — Useful Links
+                        (navLinks from data/site.js, i.e. exactly the navbar's
+                        pages and i18n `nav` labels, in two sub-columns), Address
+                        (`site.addressLines`, a Maps directions link) and Say
+                        Hello (`site.helloEmail` + `site.helloPhone`, which is
+                        a PLACEHOLDER and prints as plain text, not a tel:
+                        link, while it contains x's) — then the copyright row
+                        under a hairline. No Terms/Privacy links: those will
+                        point at the store's policy pages. Brand block goes
+                        above the columns below 980px; one centred column
                         below 700px.
         SocialLinks.jsx
                       — the footer's social icons, from `socials` in
@@ -318,7 +333,13 @@ src/
                         surrounding font-size onto the text baseline instead
                         of a fixed pixel height — see the comment in Logo.css
                         for why that height is 1.11em and not the cap height.
-      ContactForm/    — the enquiry form plus the contact details beside it.
+      ContactForm/    — the enquiry form plus the contact details beside it,
+                        and ContactSection.jsx: the whole #contact band
+                        (cream, white form panel; `.contact-section` in
+                        ContactForm.css). About AND the foot of Home both
+                        render ContactSection, so they are one thing — edit
+                        it once and both pages change. Never rebuild the band
+                        on a page.
                         This WAS the /contact page; when the form moved to the
                         foot of About it became a component, so the host page
                         owns the surrounding layout and its heading is an <h2>
@@ -334,9 +355,9 @@ src/
                         Do not thin it out without rehoming them.
                         The address is a link to `mapsLink` (data/site.js) —
                         a Google Maps DIRECTIONS url built by encoding
-                        `site.address`, opened in a new tab so a phone handing
-                        off to the Maps app does not tear down a half-typed
-                        enquiry. Underlining is on the "Get directions" cue
+                        `site.address`, opened in the SAME tab (the site opens
+                        no new tabs anywhere, so leaving it never looks like a
+                        third-party program stepping in). Underlining is on the "Get directions" cue
                         only, not the address lines.
       PackagesPanel/  — packages table + direct-line panel: Cafe (events)
                         and Business (catering). Only `content.placeholder`
@@ -354,8 +375,11 @@ src/
                         OverlayCardArrow for link actions.
       LogoMarquee/    — rolling, looping logo strip; a missing logo file
                         shows the name as a wordmark: Home (partner brands)
-                        and Cafe (delivery partners, commented out).
-      Bubbles/        — drifting, poppable bubble field + icons.jsx (icon
+                        and Cafe (delivery partners) — both commented out.
+      Bubbles/        — PARKED SITE-WIDE: every <Bubbles> and its imports
+                        are commented out on Home and Kids (Cafe is parked
+                        anyway). The component and data are kept.
+                        Drifting, poppable bubble field + icons.jsx (icon
                         sets: shopIcons for Home, kidsIcons for Kids,
                         foodIcons for Cafe). Each set also holds one
                         BRAND_MARK entry, drawn as the outline N mark
@@ -374,7 +398,7 @@ src/
                         and clips the field and lifts page content above it.
       ProductCard/    — one product from the store catalogue, as a card, plus
                         the `.product-grid` it sits in. SHARED by the Shop
-                        catalogue and Customize Yours — both render the same
+                        catalogue and Customize Yours (Home) — both render the same
                         object and must not drift, which is the whole reason
                         it is a component rather than markup in Shop.jsx.
                         Reads storeProducts (image, url) and storeBadges
@@ -698,7 +722,19 @@ src/
                           the autoplay hook. Wraps in both directions (a closed
                           loop) and is RTL-aware — card positions are
                           measured in the same coordinate space as
-                          scrollLeft, so track padding can't skew the step.
+                          scrollLeft, minus the track's inline padding, so a
+                          stepped-to card lands where the first one rests.
+                          That padding is the SHADOW BLEED (`--carousel-bleed`,
+                          20px, on `.carousel-track` in theme.css): the track
+                          is padded on every side so card shadows are not
+                          clipped, and pulled back out by an equal negative
+                          inline margin so cards still align with the
+                          container. The END edge fades out across the bleed
+                          (a mask-image, flipped in RTL) so the next hidden
+                          card's shadow never shows as a hard line; the start
+                          edge is unmasked. It lives on the shared track, so every
+                          carousel on the site gets it — never pad a single
+                          page's carousel instead.
 
   data/storeProducts.js  — the REAL store catalogue: 192 products GENERATED
                           from the Odoo export `Product
@@ -754,7 +790,7 @@ src/
                           lines and Tips, the same four with no store `url`.
                           Those fall back to <ImagePlaceholder>.
   data/storeCustomizable.js
-                         — which products the Customize Yours page lists, and
+                         — which products the Customize Yours section (Home) lists, and
                           the ids of its three steps. HAND-EDITED for the same
                           reason storeBadges.js is, plus one of its own: the
                           store's /customizable-products page builds its grid
@@ -805,16 +841,23 @@ src/
                           aliased to the survivor, so there is nothing left to
                           pick from; every former use now reads --radius-md,
                           and the multiplier calcs (* 1.15, * 1.25, * 0.75,
-                          2 *) were collapsed to the plain token. Only three
-                          things are exempt: capsules (999px — buttons, pills,
-                          the search field), circles (50% — carousel arrows,
-                          avatars, and .home-service-ring's decorative halo),
-                          and a surface nested in a rounded one, which takes
+                          2 *) were collapsed to the plain token. EVERYTHING rounded
+                          uses it: there are no 999px pills or 50% circles
+                          left — buttons, tags, kickers, inputs, the carousel
+                          arrows, the chat button, social icons, the play
+                          badge. Tiny dots still render
+                          round (the browser clamps the radius to half the
+                          box). The ONE exemption is a surface nested in a
+                          rounded one, which takes
                           `calc(var(--radius-md) - <the parent's padding>)`.
+                          Decorative CIRCLES keep 50% — .home-service-ring
+                          (the ring round each "What we do" image) and the
+                          parked Bubbles; squaring them makes a box in a box.
                           One deliberate hold-out: `.flag` keeps a 2px
                           hairline, being a 14px SVG rather than a surface.
                           Audited in the browser after the change — every page
-                          renders only 16px, 999px, 50% and that one 2px.
+                          renders only 16px and that one 2px (re-checked in code
+                          when the pills and circles went).
                           Plus
                           shared component classes (.btn* incl. .btn-light
                           for dark/coloured grounds and .btn-sparkle — the
@@ -862,7 +905,7 @@ src/
                           (the guideline's orange→gold panel, built from the
                           --color-panel-* stops), --gradient-panel-flow (its
                           seamless moving tile), --gradient-footer (--color-ink
-                          → --color-brown-*). --color-whatsapp is the one
+                          → --color-ink-900, darker to the right). --color-whatsapp is the one
                           third-party brand colour, for its own mark only. A page/
                           component CSS file should only ever add layout
                           rules that are specific to it — a rule used by
@@ -981,15 +1024,14 @@ placeholder instead, so partially-supplied media degrades cleanly.
 
 | Route | Folder | Notes |
 |---|---|---|
-| `/` | `pages/Home/` | Customization-led. Hero (the `<h1>` is the tagline ARTWORK, `components/TaglineArt`, not live type — `.home-hero-title-art` caps it at `clamp(300px, 46vw, 620px)` wide, because the hero is one screen tall and every pixel the title gives back is background VIDEO that can be seen. The old i18n keys `home.hero.titleLeadPrefix` / `titleScript` are no longer rendered but are kept; the "Browse the products" CTA is `.btn-sparkle`, beside it a plain `<a>` to the Matterport 3D walkthrough — an external tour, so not a router Link), `LogoMarquee` of the partner brands (`data/brands.js`, no heading), 2 services — B2C gifts, B2B branding; the cafe and catering rows were removed — (with the `Bubbles` ornament in shop icons plus the N mark: gutter fields above 1280px, left-to-right bands between the rows below it; tapping a bubble pops it with a Web Audio blip; hidden under `prefers-reduced-motion`), then "how it works": `ProcessSteps` plus a picker of customization methods (`customMethods` in `data.js`, copy under `i18n` home.howItWorks) |
+| `/` | `pages/Home/` | Customization-led. Hero (the `<h1>` is the tagline ARTWORK, `components/TaglineArt`, not live type — `.home-hero-title-art` caps it at `clamp(300px, 46vw, 620px)` wide, because the hero is one screen tall and every pixel the title gives back is background VIDEO that can be seen. The old i18n keys `home.hero.titleLeadPrefix` / `titleScript` are no longer rendered but are kept; the "Browse the products" CTA is `.btn-sparkle`, beside it a plain `<a>` to the Matterport 3D walkthrough — an external tour, so not a router Link), the partner-brand `LogoMarquee` under the hero is **PARKED** (commented out, with its imports), then "What we do": 4 service rows — 01 B2C gifts, 02 B2B branding, and **03/04 PLACEHOLDERS** (`serviceThree`/`serviceFour` in `data.js`; copy in en.js only, which the other languages fall through to; image slots `media.services.serviceThree/Four` have no files yet) — the `Bubbles` ornament there is PARKED. Then **Customize Yours** (`CustomizeSection.jsx` + `.css` in this folder; the old `/customize` page, which now redirects to `/#customize`: hero, the three steps as an `<ol>` from `customizeSteps`, the `customizableIds` pieces as showcase `ProductCard`s on the `Carousel`, and a CTA to `site.customizableUrl`; copy under i18n `customize`; headings start at `<h2>`). Then "how it works": `ProcessSteps` plus a picker of customization methods (`customMethods` in `data.js`, copy under `i18n` home.howItWorks). Then `ContactSection`, shared with /about. **Section colours ALTERNATE** — no two consecutive bands share a colour: What we do white → Customize cream (`--color-accent-100`, white tiles) → How it works white (cream tiles and panel, the reverse of before) → contact cream. Keep that when adding or moving a section. |
 | `/cafe` | `pages/Cafe/` | **PARKED — no route, no nav entry** (see App.jsx above); the folder and its copy are kept so it can be switched back on. Title block, then the delivery-partner `LogoMarquee` — **commented out** for now (ids/URLs in this page's `data.js`, names under i18n cafe.partners) — then the menu (List/Cards toggle; cards are `OverlayCard` with tag + price chips and an icon-only WhatsApp action; autoplaying carousels, 3 sections). Food `Bubbles` (plus the N mark) at 3× scale fill the gutters on wide screens (no narrow-screen bands). Plus the **events** section at its foot — nights held in our own room, rendered by `PackagesPanel`. Was `pages/Menu/`. |
 | `/shop` | `pages/Shop/` | Labelled "The Name Store" in the nav. "Make It Personal" — the real catalogue: **192 products from `data/storeProducts.js`**, generated from the Odoo export (see that file). Ten category filters from `storeCategories`, each showing the same products as the matching category page on store.thename.ae (counts verified equal: Bags & Travel 24, Desk & Stationery 19, Drinkware 35, Games 5, Home Accessories 61, Kids 60, Photo & Frames 8, Personalized Gift Sets 9, Technology 36). Rendered as WRAPPING PILLS (`.seg.shop-filters` in Shop.css) rather than the shared `.seg` capsule: ten options need ~1286px and the capsule had 1096px, so its `overflow: hidden` silently cut the last one off mid-word. The class exists so the List/Cards `ViewToggle` beside them, also a `.seg`, keeps the joined capsule. Note the selector is `.seg.shop-filters` — a single class loses to theme.css's `.seg`, which is equally specific and later in the bundle (All Products, Bags & Travel, Desk & Stationery, Drinkware, Games, Home Accessories, Kids, Photo & Frames, Personalized Gift Sets, Technology) — but the export carries no per-product category, so only "All Products" has anything in it and the rest show `shop.emptyCategory`. The catalogue is a SHOWCASE, not a listing, and it has TWO modes. A NAMED shelf renders its first `FEATURED_COUNT` products and nothing else, in `.product-grid-featured` — fixed columns across the full container. `FEATURED_COUNT` is not a number of its own: it IS `CARDS_IN_VIEW` (4, from ProductCard), so the row is full by construction and changing the layout can never leave a half-empty shelf behind. "ALL PRODUCTS" is the exception and is NOT cut to three: it is the whole catalogue on the shared `Carousel`, the same four cards in view and the rest a swipe away, because a sample of an unfiltered shelf is meaningless and a track of exactly three cards is just a row with dead arrows on it. Its cards carry `carousel-card`, whose flex-basis in theme.css is arithmetic off `--carousel-per-view` (n cards and n-1 gaps). That variable comes from the Carousel's `perView` prop and DEFAULTS TO 3, so asking for 4 here leaves the Kids track — and the parked Cafe one — exactly as they were. The narrow-screen steps override the width directly with `!important` rather than lowering the variable, and have to: it arrives as an inline style, which no stylesheet rule can outrank and reuse the `shop.prevPieces`/`nextPieces` labels that were already there from the page's earlier carousel. A SEARCH resets the filter to 'all', so results always land in the carousel and are never truncated to three. Both modes pass `product-card-showcase` and `SHOWCASE_RATIO` ('1 / 1') to ProductCard: the picture fills its frame edge to edge (`object-fit: cover`, no inset ground) rather than sitting as a stamp on a tint. The frame is SQUARE because the catalogue is mixed: 143 of the store's 187 photographs are 2:3 portrait and 44 are 3:2 landscape (the Message In The Bulb line, mostly). `cover` crops whatever does not fit, so a portrait 3:4 frame — which suits the majority beautifully — takes half the width off each of those 44. A square gives up a third of one axis either way, symmetric, and product photography carries enough white margin to afford it. The ratio must be passed as a PROP; ImagePlaceholder sets it as an inline style and a CSS rule for it loses silently (caught in the browser, not the build). Under either layout sits a `.btn-primary` that opens THAT CATEGORY on store.thename.ae via `categoryUrl(filter)` (pick Drinkware and you land on the store's Drinkware page, not its shop front) — the cards themselves still open one product each, unchanged. For a named shelf the rest of the products are not rendered at all; the button is where they went. Copy is `shop.shopCategory(label)`, which takes the category's own filter label — except on "All Products", which borrows the hero's `shop.openShop` rather than reading "Shop all All Products". The old PAGER is **PARKED** and commented out in Shop.jsx: `PAGE_SIZE` (24), the `visible` state, the `useEffect` that reset it on a filter/search change, and the "Load more" block, each marked PARKED, along with the now-unused `useEffect` import. Its copy (`shop.loadMore`, `shop.showing`) and CSS (`.shop-more-count`) are kept; `.shop-more` is reused as the wrapper for the new category button. Restoring the pager means uncommenting all four and putting `visible` back into the `page` slice. Why it was a window rather than numbered PAGES, if it ever comes back: growing it keeps every card already on screen exactly where it is, while pages replace the grid and throw away the visitor's place. It was not an inner scroll container either — nested scrollbars fight the page scroll, strand the footer and are poor on touch and with a keyboard. And not infinite scroll, which never lets you reach the footer. Note the result count beside the filters still reports the FULL size of the shelf, not the three on screen — that is deliberate, it is what makes the button under the grid worth pressing. Product images are `loading="lazy"` (opt-in on ImagePlaceholder, since lazy-loading a HERO image would delay the largest paint). A SEARCH field sits under the filters and overrides them: typing resets the category to 'all', because a search is meant to find a product wherever it lives rather than quietly searching inside one shelf and appearing to find nothing. It is NOT debounced — 192 objects in memory filter in well under a millisecond, so a timer would only add lag; what can be slow is re-rendering up to 192 cards per keystroke, and `useDeferredValue` handles that by keeping the input responsive and rendering the list at a lower priority. Query terms are ANDed against the name, so "lexon bag" finds "LEXON - Travel bag NEW AIRLINE". The field and its results are spaced as ONE group: the gap below the field is the same `--space-2` that sits under the field's own label, against the `--space-4` above it that breaks from the controls. It is set on the RESULTS, not as a margin under the field, because the two layouts arrive with different defaults — the grid inherits `.product-grid`'s `--space-6` (overridden in Shop.css, not changed in ProductCard.css, since that grid is shared) and the Carousel's track carries 4px of top padding that is shadow room rather than spacing, subtracted so the card's top edge lands level with the grid's. Measured 8.8px from field to first card in both. List/Cards toggle kept; Cards is a **grid** of `.shop-product` cards copied from the product tile on store.thename.ae so the two read as one shop — the LAYOUT is the store's — product on a tinted ground, centred name, a button across the foot (NO price on the card; it is on the product's own page and in the List view) — but the COLOURS are this site's: `--color-accent-100` under the picture, `--color-accent-700` on the price, and .btn-primary's brand yellow on the button. Equal card heights come from a flex chain that must stay intact: `align-self: stretch` fills the card to its row, `.product-card-body` takes the slack with `flex: 1`, and the button's `margin-top: auto` pins it to the floor — break any link and buttons sit at different heights. That first link used to be `height: 100%`, which is equivalent IN A GRID and so looked right for as long as the grid was the only layout — but in the Carousel `.carousel-track` has auto height, so a percentage height resolves against an indefinite size, falls back to `auto`, and by being set at all SUPPRESSES the stretch it was trying to express. Measured before the fix: 461px for a one-line card beside 486px for a two-line one, in the same row. Do not put it back. The card links to the PRODUCT's own page (`productUrl`), not the shop front. The depth cue is REVERSED from the usual: a card carries its shadow at REST (offset down and to the left) and loses it on hover, so it settles onto the page rather than lifting off it. The LIST view does the opposite — beige rows that lift on hover — because a row has no resting shadow to give up. Long names are clamped (two lines on a card, one in a list row) and carry the full string on `title`, the same tooltip pattern the footer's social icons use. Neither view shows a price; it is on the product's own page. A card may carry a BADGE — a ribbon strip OVER the card's top-left corner, from `data/storeBadges.js`. It is an absolute overlay, so it costs the card no height and a badged card keeps the same proportions as a plain one (names stay on one line across a row). It starts 10px OUTSIDE the card's left edge with a darker fold tucked under the overhang, which is what reads as a ribbon passing round the back of the card rather than a sticker on the front. **`.shop-product` therefore sets NO `overflow: hidden`** — clipping would cut exactly the part doing the work — so `.shop-product-media` rounds its own TOP corners instead of relying on the card to clip it. Do not re-add overflow to the card without moving the ribbon inside its bounds. A sparkle sits on the strip's trailing edge, built from the same vocabulary as `.btn-sparkle` and driven by theme.css's shared `sparkle-twinkle` keyframes rather than a redeclared copy; off under prefers-reduced-motion. The fold mirrors under RTL. Two earlier versions are worth not repeating: a 45deg corner ribbon (its length was the chord across the corner, so it silently clipped longer labels) and a full-width band in flow (it pushed the badged card's name below its neighbours'). CORNER RADII are no longer this page's rule — it became the whole site's and now lives with the `--radius-md` token in theme.css; Shop.css points at it rather than restating it. What that means here: the thumbnail inside a list row is `calc(var(--radius-md) - var(--space-3))`, i.e. 2.8px, because it is nested. The page's two gift-set overrides were DELETED: OverlayCard already carries the one radius, and its inset panel now steps down concentrically in OverlayCard.css, where it is true for every page using the component instead of being restated here. Deliberately NOT copied: the wishlist heart and the compare arrows on that tile, which both need a cart this site does not have. The whole card is ONE `<a>` and the button is a `<span>` dressed as one — a button or a second anchor inside a link is invalid, and three links to the same product is noise for a screen reader. The small-tile card uses `object-fit: contain`; the showcase variant both pages now render uses `cover` so the picture fills its frame (see `.product-card-showcase`). Product names are clamped to two lines AND reserved at two: the clamp alone gives equal card heights but leaves the button 25px higher under a one-line name, so `.product-card-name` carries `min-height: calc(1.35em * 2)` — in `em`, so each variant reserves two of its own lines (showcase on `--text-lg`, tiles on `--text-body`). Keep that multiplier and `line-height` in step. 14 of the 192 names actually truncate; all carry the full string on `title`. The gift-sets section ("Boxed, wrapped and ready to give") is **PARKED** — commented out in Shop.jsx along with the four imports/helpers only it used (`OverlayCard`, `giftSets`, `media`, `methodNames`), each marked PARKED. Its copy (`shop.giftSets.*`), its CSS (`.shop-gift-sets*`) and the curated TN-5xx pieces are all kept. **When parking JSX here, no `*/` may appear anywhere inside the wrapper** — including in your own explanatory prose: an end-of-comment marker closes the block early, the section silently goes live again, and the build still PASSES because the stray `*/}` is just JSX text. It fails at runtime instead (`giftSets is not defined`, blank page). Convert any inner comment's markers to plain dashes, as the About page does. Was `pages/VertexPieces/` (an interiors showroom) before the customization pivot. |
-| `/customize` | `pages/Customize/` | "Customize Yours", sitting right after The Name Store in the nav as it does on store.thename.ae. It is that store's `/customizable-products` page brought across: the hero ("You Choose & Design"), the three steps of the process as an `<ol>` (`customizeSteps` ids, copy under i18n `customize.steps`) and then the pieces you can actually run through it. The cards are the shared `components/ProductCard` at SHOWCASE size (`product-card-showcase` + `SHOWCASE_RATIO`), so a product looks identical here and in the Shop catalogue. They sit on the shared `Carousel`, four in view and the rest a swipe away, rather than the small-tile `.product-grid` they used before: fourteen pieces is Shop's "All Products" case in miniature — one unsegmented list longer than a row — so it gets the same treatment, and nothing page-specific had to be added for it (`.carousel-card` is theme.css's, shared with the Kids track, which keeps the default 3). Arrow labels are `customize.prevPieces`/`nextPieces`, following the per-page naming `cafe.prevDishes` and the Kids page's `prevShots` use. WHICH products it lists is `customizableIds` in `data/storeCustomizable.js` — hand-edited, because that store page renders its grid client-side and cannot be fetched like the category pages. Ids that no longer match a product are dropped rather than rendered as holes. The "Start designing" CTA goes to `site.customizableUrl` (the store's own `/customizable-products`, a CMS page and so NOT under `/shop/`), not the shop front — the same principle as the Shop page's per-category button. |
 | `/business` | `pages/Business/` | B2B: branded-goods offer cards ("Made for Business"), account terms ("How We Work With You"), and the **catering** section ("Catering, Wherever Business Takes You."), rendered by `PackagesPanel` as the image + direct-line enquiry only — **no packages table**: `business.catering` has no `title`, `intro`, `colOne` or `packages` left (deleted from all four translations) and `cateringPackageIds` is gone from this page's `data.js`. Earlier, the off-site event-catering row had been removed from that list. The page's English copy was rewritten wholesale in a later pass; **fr/es/ar still carry the previous wording** for everything under `business` except `catering.title`. |
 | `/kids` | `pages/Kids/` | A landing page, not a catalogue: hero (shop + WhatsApp CTAs), three offer blocks from `kidsOffers` in `data.js` (back to school / new baby / birthdays — the ids are unchanged; the display names are now "Back to School" / "Hello, Little One" / "Birthdays & Celebrations"), a "made for them" note on the accent band, then the **Little Creators activation** (`kids.activation`: copy, an opening `<VideoPlaceholder>`, and a `<Carousel>` gallery of one card per id in `activationShots` — caption from i18n `kids.activation.shots[id]`, picture from `media.kids.activation.shots[id]`), the **Two T's feature** on the accent band (`kids.twoTs`, copy beside the interviews film), and a closing CTA. Copy under i18n `kids`. Both beige bands (the note and the Two T's feature) carry `<Doodles />` from `Doodles.jsx` — a wobbly hand-drawn flower in the top-right corner and a sun in the bottom-left, stroked not filled, tucked past the band's padding and clipped by it. The whole page is a `bubbles-host`: `<Bubbles>` gutter fields at `scale={1.6}` with `kidsIcons`, plus a `side="row"` band before the note for narrow screens where the gutters are switched off. Took the nav slot the cafe page had. The page's English copy was rewritten in a later pass; **fr/es/ar still carry the previous wording** for the older sections, as on `/business` — the activation and Two T's copy is translated in all four. |
-| `/about` | `pages/About/` | Labelled just "About" in the nav, but titled **"Our story"** on the page. It runs: **hero** (`about.kicker` / `title` / `lede` / `heroSupport`, carrying the page's `<h1>`) -> **story** — a plain column of chapters, one per id in `storyChapters` (`legacy`, `evolution`, `today`), running from "1990 — where it started" to "Today — The Name". Copy comes from i18n `about.story[id]`. No artwork and no rail: it was a timeline with round thumbnails on a line down the left, and both were removed (`media.about.story` is kept but unrendered). Adding an id to `storyChapters` adds a chapter -> the **FROM THE NAME / TO YOUR NAME** card (`about.tagline`; a raised beige card with an accent left edge, not a full-bleed band — it is the page's one pull-quote; the tagline itself is `components/TaglineArt`, the same artwork as the Home hero title; `about.tagline.fromPrefix` / `to` now only feed its alt text) -> the **takeovers**, one card per entry in `takeovers` (names are proper nouns so they live in `pages/About/data.js`, art in `media.about.takeovers[id]`; copy in `about.takeover`) -> **built through collaboration** (`about.collab`) -> **what's next** (`about.future`, ending on the page's sign-off line) -> the **enquiry form** (`components/ContactForm/`) in a `#contact` section. **PARKED in one JSX comment**: the brand film (held back until the video is delivered - restoring it means moving the `<h1>` back to it and dropping it from the hero), the services (`aboutServices`), how-we-work (`ProcessSteps`), mission & vision (`purposeIds`) and the closing CTA. Their i18n keys and CSS are kept. Note the inner comments inside that block are written as plain dashed lines, not `{/* */}`: a nested end-of-comment marker would close the block early and break the build. |
+| `/about` | `pages/About/` | Labelled just "About" in the nav, but titled **"Our story"** on the page. It runs: **hero** (`about.kicker` / `title` / `lede` / `heroSupport`, carrying the page's `<h1>`) -> **story** — a plain column of chapters, one per id in `storyChapters` (`legacy`, `evolution`, `today`), running from "1990 — where it started" to "Today — The Name". Copy comes from i18n `about.story[id]`. No artwork and no rail: it was a timeline with round thumbnails on a line down the left, and both were removed (`media.about.story` is kept but unrendered). Adding an id to `storyChapters` adds a chapter -> the **FROM THE NAME / TO YOUR NAME** card (`about.tagline`; a raised beige card with an accent left edge, not a full-bleed band — it is the page's one pull-quote; the tagline itself is `components/TaglineArt`, the same artwork as the Home hero title; `about.tagline.fromPrefix` / `to` now only feed its alt text) -> the **takeovers**, one card per entry in `takeovers` (names are proper nouns so they live in `pages/About/data.js`, art in `media.about.takeovers[id]`; copy in `about.takeover`) -> **built through collaboration** (`about.collab`) -> **what's next** (`about.future`, ending on the page's sign-off line) -> the **enquiry form** — `components/ContactForm/ContactSection`, the same section that closes Home. **PARKED in one JSX comment**: the brand film (held back until the video is delivered - restoring it means moving the `<h1>` back to it and dropping it from the hero), the services (`aboutServices`), how-we-work (`ProcessSteps`), mission & vision (`purposeIds`) and the closing CTA. Their i18n keys and CSS are kept. Note the inner comments inside that block are written as plain dashed lines, not `{/* */}`: a nested end-of-comment marker would close the block early and break the build. |
 
-| `/policies` | `pages/Policies/` | All three legal documents on one page — Terms & Conditions, Delivery & Returns, Privacy Policy — each an `<section>` whose id (`#terms`, `#delivery`, `#privacy`) is the anchor the footer's policy list links to. `data.js` holds only the doc ids and the order of the sections inside each; every heading and paragraph is in `i18n` under `policies.docs.<docId>.sections.<sectionId>`, where a section is `{ heading, blocks }` and a block is either a string (a paragraph) or `{ list: [...] }`. Clause numbers come from the `<ol>`, never typed into a heading. `{legalName}`, `{licensedBy}` and `{address}` in the copy are filled from `data/site.js` at render time. The three source documents each ended with their own "Contact Us" clause; the page carries NONE of them — there is no `#contact` section here any more, and the entity, both email addresses and the location live in the ContactForm details at the foot of /about instead. Three clauses that used to say "at the foot of this page" were reworded to name the About page; if the contact block ever comes back, they have to be reworded again. The page closes on `policies.contactNote` + `contactNoteLink` — a beige footnote linking to `/about#contact`, which is the only route from the binding terms to the registered entity and the two addresses, and what makes those three reworded clauses followable. Two keys rather than one with a token, so the sentence and its linked clause are each whole strings. Its own "back to top" link is gone — `components/BackToTop/` now floats on every page. **The policy copy is translated in all four languages.** English is the CONTROLLING version, and every other locale says so in `policies.translationNote` — a line under `policies-updated` in the page header, rendered only when non-empty, which is why `en.js` holds that key as `''`. Because a key missing from a translation falls through to `en.js` via the deepMerge in LanguageContext, a gap here shows up as one clause in the wrong language rather than as an obvious bug: keep the key structure identical across the four files, and make any reviewed change to a clause in all four. The labels (`nav.policies` — now the footer list's heading — and `nav.policyTabs`) are translated too; both keys stay under `nav` even though the navbar no longer uses them. See `pendingReview` in `data.js`: several commercial figures in this copy are **not yet confirmed for publication**. |
+| `/policies` | `pages/Policies/` | **PARKED — no route, no footer link** (see App.jsx and Footer.jsx); the folder and its copy are kept so it can be switched back on. All three legal documents on one page — Terms & Conditions, Delivery & Returns, Privacy Policy — each an `<section>` whose id (`#terms`, `#delivery`, `#privacy`) is the anchor the footer's policy list links to. `data.js` holds only the doc ids and the order of the sections inside each; every heading and paragraph is in `i18n` under `policies.docs.<docId>.sections.<sectionId>`, where a section is `{ heading, blocks }` and a block is either a string (a paragraph) or `{ list: [...] }`. Clause numbers come from the `<ol>`, never typed into a heading. `{legalName}`, `{licensedBy}` and `{address}` in the copy are filled from `data/site.js` at render time. The three source documents each ended with their own "Contact Us" clause; the page carries NONE of them — there is no `#contact` section here any more, and the entity, both email addresses and the location live in the ContactForm details at the foot of /about instead. Three clauses that used to say "at the foot of this page" were reworded to name the About page; if the contact block ever comes back, they have to be reworded again. The page closes on `policies.contactNote` + `contactNoteLink` — a beige footnote linking to `/about#contact`, which is the only route from the binding terms to the registered entity and the two addresses, and what makes those three reworded clauses followable. Two keys rather than one with a token, so the sentence and its linked clause are each whole strings. Its own "back to top" link is gone — `components/BackToTop/` now floats on every page. **The policy copy is translated in all four languages.** English is the CONTROLLING version, and every other locale says so in `policies.translationNote` — a line under `policies-updated` in the page header, rendered only when non-empty, which is why `en.js` holds that key as `''`. Because a key missing from a translation falls through to `en.js` via the deepMerge in LanguageContext, a gap here shows up as one clause in the wrong language rather than as an obvious bug: keep the key structure identical across the four files, and make any reviewed change to a clause in all four. The labels (`nav.policies` — now the footer list's heading — and `nav.policyTabs`) are translated too; both keys stay under `nav` even though the navbar no longer uses them. See `pendingReview` in `data.js`: several commercial figures in this copy are **not yet confirmed for publication**. |
 | _anything else_ | `pages/NotFound/` | The custom 404, on the `*` route in App.jsx. A signpost rather than an apology: kicker, title, lede, the path that missed (echoed back so a visitor can see whether they mistyped — React escapes it), a Back-to-homepage button + WhatsApp, then **the whole navbar again as a list of pills**. That list is built from `navLinks` in `data/site.js`, the same array the bar reads, so a page added or parked there appears or disappears here too. Copy is i18n `notFound`, translated in all four languages. |
 
 ## Conventions (read before adding code)
@@ -1069,3 +1111,7 @@ placeholder instead, so partially-supplied media degrades cleanly.
    `lvh` are all stable during scroll; only `dvh` moves. Percentage heights
    (`html, body { height: 100% }`) resolve against the initial containing
    block and are stable too.
+8. **No link opens a new tab.** No `target="_blank"` anywhere — external
+   links (the store, WhatsApp, Maps, socials, Matterport) open in the
+   current tab, so leaving the site never looks like a third-party program
+   stepping in. Do not add one back.

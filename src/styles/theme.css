@@ -31,11 +31,10 @@
   --color-accent-700: #7a5900;
   --color-accent-800: #4d3900;
 
-  /* Warm darks for the footer: the logo artwork's charcoal, deepening into a
-     brown drawn from the accent ramp. */
+  /* Neutral darks for the footer: the logo artwork's charcoal, deepening to
+     near-black. No brown — the warm, yellowish end was removed on purpose. */
   --color-ink: #221f1f;
-  --color-brown-900: #2a1f14;
-  --color-brown-700: #3d2b17;
+  --color-ink-900: #0d0c0c;
 
   /* The three stops of the guideline's yellow panel (see --gradient-panel). */
   --color-panel-orange: #f7941d;
@@ -53,8 +52,8 @@
      for moving highlights: use it at background-size 200% with the
      gradient-flow animation below, and it streams left to right. */
   --gradient-panel-flow: linear-gradient(to right, var(--color-panel-orange) 0%, var(--color-panel-yellow) 27.5%, var(--color-panel-gold) 50%, var(--color-panel-yellow) 72.5%, var(--color-panel-orange) 100%);
-  /* The footer: brownish black, left to right. */
-  --gradient-footer: linear-gradient(to right, var(--color-ink) 0%, var(--color-brown-900) 55%, var(--color-brown-700) 100%);
+  /* The footer: charcoal on the left, getting DARKER to the right. */
+  --gradient-footer: linear-gradient(to right, var(--color-ink) 0%, var(--color-ink-900) 100%);
 
   /* The panel gradient's pale end of the ramp, on the same 135deg axis as
      --gradient-accent below. For small tinted surfaces that must not shout —
@@ -111,11 +110,20 @@
      --radius-lg have been removed rather than aliased, so there is nothing
      left to pick from and no way for the rule to quietly rot.
 
-     THREE exemptions, and only these:
-     1. CAPSULES — buttons, pills, the segmented controls, the search field —
-        stay 999px. They are not rounded rectangles; they are lozenges.
-     2. CIRCLES stay 50% (the carousel arrows, the avatars).
-     3. A surface NESTED INSIDE a rounded one takes the parent's radius minus
+     And it means EVERYTHING rounded: there are no pills (999px) and no
+     circles (50%) left. Buttons, tags, kickers, inputs, the carousel arrows,
+     the chat button, the social icons and the play badge all take
+     --radius-md, so every corner on the site is the same. Small dots (the
+     6–7px bullets) still render round — a radius larger than half the box is
+     clamped by the browser — so they need no exception. Do not add 999px or
+     50% back to anything that has a CORNER.
+
+     DECORATIVE CIRCLES are not corners and stay 50%: the ring drawn around
+     each "What we do" image (.home-service-ring) and the PARKED Bubbles.
+     Squaring a circle off turns it into a box around a box.
+
+     ONE exemption:
+     1. A surface NESTED INSIDE a rounded one takes the parent's radius minus
         the parent's padding: `calc(var(--radius-md) - <padding>)`. Concentric
         boxes only look concentric when the inner radius is the outer one minus
         the gap. The arithmetic is left unresolved on purpose, so the
@@ -234,7 +242,7 @@ button { font: inherit; }
   font-size: var(--text-sm); line-height: 1.2; color: var(--color-text);
   background: transparent; border: 1px solid transparent;
   padding: var(--space-2) calc(var(--space-3) * 1.2);
-  border-radius: 999px;
+  border-radius: var(--radius-md);
   min-height: 36px;
   white-space: nowrap;
 }
@@ -319,7 +327,7 @@ button { font: inherit; }
   font-weight: 600;
   color: var(--color-accent-700);
   border: 1px solid var(--color-accent-300);
-  border-radius: 999px;
+  border-radius: var(--radius-md);
   padding: 6px 14px;
 }
 .card-kicker::before {
@@ -327,7 +335,7 @@ button { font: inherit; }
   flex: none;
   width: 6px;
   height: 6px;
-  border-radius: 50%;
+  border-radius: var(--radius-md);
   background: var(--color-accent);
   animation: pulse 2.6s ease-in-out infinite;
 }
@@ -349,7 +357,7 @@ button { font: inherit; }
 .tag-accent { background: var(--color-accent-100); color: var(--color-accent-800); }
 
 /* — segmented control — */
-.seg { display: inline-flex; overflow: hidden; border-radius: 999px; border: 1px solid var(--color-divider); }
+.seg { display: inline-flex; overflow: hidden; border-radius: var(--radius-md); border: 1px solid var(--color-divider); }
 .seg-opt {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 9px 16px; font-size: var(--text-sm); cursor: pointer;
@@ -361,8 +369,8 @@ button { font: inherit; }
 .seg-opt[data-active="false"]:hover { background: var(--color-accent-100); }
 .view-toggle-opt { display: flex; align-items: center; gap: 8px; padding: 9px 16px; font-size: var(--text-sm); }
 /* A .seg whose options can't fit one pill row — they become individually
-   rounded blocks, two per row, instead of wrapping mid-pill (which looks
-   broken, since .seg clips to a single 999px radius). Used by the Home
+   rounded blocks, two per row, instead of wrapping mid-row (which looks
+   broken, since .seg clips to a single rounded outline). Used by the Home
    page's customization-method picker, which always sits in a narrow panel.
    The Shop page applies the same treatment inside its own <700px media
    query — reach for this class instead of writing a third copy. */
@@ -372,7 +380,7 @@ button { font: inherit; }
 }
 .seg-grid > .seg-opt {
   justify-content: center; text-align: center; white-space: normal;
-  border: 1px solid var(--color-divider); border-radius: 999px;
+  border: 1px solid var(--color-divider); border-radius: var(--radius-md);
 }
 
 /* — popover menu: a floating panel of options (language switcher, chat
@@ -420,7 +428,7 @@ button { font: inherit; }
 .nav a { color: inherit; text-decoration: none; font-size: var(--text-sm); }
 .nav a:hover, .nav a[aria-current='page'] { color: var(--color-accent-700); }
 
-/* — horizontal card carousels (Cafe menu sections, Shop and Customize Yours) —
+/* — horizontal card carousels (Shop, Customize Yours on Home, Kids, Cafe) —
 
    HOW MANY CARDS ARE IN VIEW is `--carousel-per-view`, set by the Carousel
    component from its `perView` prop and defaulting to 3 here. The product
@@ -428,19 +436,43 @@ button { font: inherit; }
    The gap is a variable for the same reason: the card's flex-basis is the
    container minus the gaps BETWEEN the cards, so the two numbers have to be
    derived from each other rather than both hand-maintained. */
+/* SHADOW BLEED. A scrolling track clips everything outside it, card shadows
+   included, so the track is padded by --carousel-bleed on EVERY side to give
+   the shadows room — the product card's resting shadow reaches ~22px left
+   and down. The inline padding is then cancelled by an equal negative
+   margin, so the cards still line up with the container edge and only the
+   shadows spill into the gutter. 20px is the container's SMALLEST side
+   padding (see .container), so the bleed never reaches past the page edge.
+   scroll-padding keeps snapping, and utils/carousel.js keeps stepping, on
+   the content box rather than the clipping edge. Every carousel on the site
+   is this one track, so this is the only place the fix lives. */
 .carousel-track {
   display: flex;
   --carousel-gap: 24px;
+  --carousel-bleed: 20px;
   gap: var(--carousel-gap);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  padding: 4px 4px 16px;
+  padding: var(--carousel-bleed);
+  margin-inline: calc(-1 * var(--carousel-bleed));
+  scroll-padding-inline: var(--carousel-bleed);
   scrollbar-width: thin;
   scrollbar-color: var(--color-accent-300) transparent;
+  /* The END edge fades out across the bleed. Without it the next, not-yet-
+     visible card's shadow (it is offset toward the start) pokes into the
+     bleed as a hard vertical line. The START edge is left unmasked so the
+     first card's shadow shows in full. Flipped for RTL, where the end is
+     the left. */
+  --carousel-fade: linear-gradient(to right, #000 calc(100% - var(--carousel-bleed)), transparent);
+  -webkit-mask-image: var(--carousel-fade);
+  mask-image: var(--carousel-fade);
+}
+[dir='rtl'] .carousel-track {
+  --carousel-fade: linear-gradient(to left, #000 calc(100% - var(--carousel-bleed)), transparent);
 }
 .carousel-track::-webkit-scrollbar { height: 6px; }
-.carousel-track::-webkit-scrollbar-thumb { background: var(--color-accent-300); border-radius: 999px; }
+.carousel-track::-webkit-scrollbar-thumb { background: var(--color-accent-300); border-radius: var(--radius-md); }
 @media (prefers-reduced-motion: reduce) { .carousel-track { scroll-behavior: auto; } }
 
 .carousel-card {

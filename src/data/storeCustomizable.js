@@ -1,4 +1,4 @@
-// Which products the Customize Yours page shows — HAND-EDITED, for the same
+// Which products the Customize Yours section on Home shows — HAND-EDITED, for the same
 // reason data/storeBadges.js is: storeProducts.js is generated from the Odoo
 // export, so a flag written there is wiped by the next import run.
 //

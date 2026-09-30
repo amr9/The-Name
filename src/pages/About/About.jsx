@@ -1,4 +1,4 @@
-import ContactForm from '../../components/ContactForm/ContactForm.jsx';
+import ContactSection from '../../components/ContactForm/ContactSection.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import TaglineArt from '../../components/TaglineArt.jsx';
 import { media } from '../../data/media.js';
@@ -218,12 +218,9 @@ export default function About() {
 
           ——————————————————————————————————————————————————————————— */}
 
-      {/* — the enquiry form, which used to be its own /contact page — */}
-      <section id="contact" className="about-contact">
-        <div className="container">
-          <ContactForm />
-        </div>
-      </section>
+      {/* — the enquiry form, which used to be its own /contact page. The
+          same ContactSection closes the Home page, so the two are one. — */}
+      <ContactSection />
     </div>
   );
 }

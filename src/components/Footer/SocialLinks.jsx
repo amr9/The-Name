@@ -29,16 +29,14 @@ export default function SocialLinks() {
     <div className="social-links">
       {socials.map((s) => (
         // Which element an icon is comes from the DATA, not from a list of
-        // exceptions here: an account with a `url` is a real profile and opens
-        // in a new tab; one with a `to` has no account published yet and stays
+        // exceptions here: an account with a `url` is a real profile, opened
+        // in the same tab like every link on the site; one with a `to` has no account published yet and stays
         // in the app, where the `*` route renders the 404. Adding the real
         // handle to data/site.js is the whole change — see the note there.
         s.url ? (
           <a
             key={s.key}
             href={s.url}
-            target="_blank"
-            rel="noopener noreferrer"
             className="social-link"
             aria-label={s.label}
             title={s.label}

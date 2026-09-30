@@ -24,7 +24,7 @@ video.video-slot {
   height: 76px;
   display: grid;
   place-items: center;
-  border-radius: 50%;
+  border-radius: var(--radius-md);
   background: var(--color-accent);
   color: var(--color-black);
   box-shadow: var(--shadow-lg);

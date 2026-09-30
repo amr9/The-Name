@@ -30,8 +30,6 @@ export default function LogoMarquee({ heading, items, logos }) {
                 <li key={`${item.id}-${i}`} className="logo-marquee-item">
                   <a
                     href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="logo-marquee-link"
                     style={item.logoScale ? { '--logo-scale': item.logoScale } : undefined}
                     tabIndex={copy === 1 ? -1 : undefined}

@@ -35,7 +35,7 @@
 /* The category filters WRAP, at every width.
 
    The shared `.seg` is one clipped capsule — `inline-flex` + `overflow:
-   hidden` + a 999px radius — which works for the four or five options it was
+   hidden` + one rounded outline — which works for the four or five options it was
    built for and breaks silently at ten: measured at 1240px the row wanted
    1286px inside a 1096px box, so `overflow: hidden` simply cut 190px off the
    end and "Technology" disappeared mid-word. Nothing warns you; it just
@@ -58,7 +58,7 @@
 }
 .shop-filters .seg-opt {
   border: 1px solid var(--color-divider);
-  border-radius: 999px;
+  border-radius: var(--radius-md);
 }
 /* theme.css drops the first option's leading border to butt it against the
    capsule's edge. There is no capsule any more, so it needs its own outline
@@ -109,7 +109,7 @@
   color: var(--color-text);
   background: var(--color-white);
   border: 1px solid var(--color-divider);
-  border-radius: 999px;
+  border-radius: var(--radius-md);
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
 }
 .shop-search-input::placeholder { color: color-mix(in srgb, var(--color-text) 45%, transparent); }
@@ -136,8 +136,8 @@
    the parent's radius minus the parent's padding. Equal radii make the inner
    corner look too round; a larger one makes it bulge out of the corner it sits
    in. The arithmetic is left unresolved so the relationship survives a change
-   to either value. Capsules (the pills, the search field) are 999px — a
-   different shape, not a different corner size. */
+   to either value. Everything here, the search field included, is --radius-md —
+   there are no capsules left. */
 
 
 /* The "load more" control under the catalogue. Centred and given room, so it

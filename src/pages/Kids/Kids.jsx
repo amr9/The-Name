@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
-import Bubbles from '../../components/Bubbles/Bubbles.jsx';
+// Bubbles are PARKED site-wide — uncomment these two imports and the three
+// <Bubbles> below to bring them back.
+// import Bubbles from '../../components/Bubbles/Bubbles.jsx';
 import Carousel from '../../components/Carousel.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import VideoPlaceholder from '../../components/VideoPlaceholder/VideoPlaceholder.jsx';
 import ShopIcon from '../../components/ShopIcon.jsx';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
-import { kidsIcons } from '../../components/Bubbles/icons.jsx';
+// import { kidsIcons } from '../../components/Bubbles/icons.jsx';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { activationShots, kidsOffers } from './data.js';
@@ -22,8 +24,8 @@ export default function Kids() {
     // field spreads over the whole page here (not one section, as on Home),
     // so the marks are scaled up to read at that spacing.
     <div className="bubbles-host kids-page">
-      <Bubbles side="left" icons={kidsIcons} scale={1.6} />
-      <Bubbles side="right" icons={kidsIcons} scale={1.6} />
+      {/* <Bubbles side="left" icons={kidsIcons} scale={1.6} /> */}
+      {/* <Bubbles side="right" icons={kidsIcons} scale={1.6} /> */}
 
       <header className="container kids-hero">
         <div className="kids-hero-text">
@@ -63,7 +65,7 @@ export default function Kids() {
 
       {/* on narrow screens there is no gutter, so the bubbles run in a band
           here instead of beside the page — see components/Bubbles */}
-      <Bubbles side="row" icons={kidsIcons} phase={37} />
+      {/* <Bubbles side="row" icons={kidsIcons} phase={37} /> */}
 
       {/* — safety / making note, then the closing call to action — */}
       <section className="kids-note">

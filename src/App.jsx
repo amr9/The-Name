@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import ChatLauncher from './components/ChatLauncher/ChatLauncher.jsx';
@@ -14,10 +14,11 @@ import Home from './pages/Home/Home.jsx';
 // import Cafe from './pages/Cafe/Cafe.jsx';
 import Kids from './pages/Kids/Kids.jsx';
 import Shop from './pages/Shop/Shop.jsx';
-import Customize from './pages/Customize/Customize.jsx';
 import Business from './pages/Business/Business.jsx';
 import About from './pages/About/About.jsx';
-import Policies from './pages/Policies/Policies.jsx';
+// The policies page is PARKED, not deleted — uncomment this import and its
+// route below — and link to it from somewhere: the footer no longer does.
+// import Policies from './pages/Policies/Policies.jsx';
 import NotFound from './pages/NotFound/NotFound.jsx';
 
 export default function App() {
@@ -37,14 +38,15 @@ export default function App() {
           {/* <Route path="/cafe" element={<Cafe />} /> */}
           <Route path="/kids" element={<Kids />} />
           <Route path="/shop" element={<Shop />} />
-          {/* The store's /customizable-products page, under The Name Store. */}
-          <Route path="/customize" element={<Customize />} />
+          {/* Customize Yours was its own page here; it is now a section of
+              Home, so old links land on it. */}
+          <Route path="/customize" element={<Navigate to="/#customize" replace />} />
           <Route path="/business" element={<Business />} />
           {/* The enquiry form now lives at the foot of /about. */}
           <Route path="/about" element={<About />} />
           {/* Terms, delivery/returns and privacy, all on one page; the
-              footer's policy list links to the #anchors within it. */}
-          <Route path="/policies" element={<Policies />} />
+              footer's policy list links to the #anchors within it. PARKED. */}
+          {/* <Route path="/policies" element={<Policies />} /> */}
           {/* Catch-all. It must stay LAST — Routes picks the best match, but
               keeping it last also keeps the list readable as "everything
               above, then anything else". Paths that used to exist land here

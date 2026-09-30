@@ -1,44 +1,69 @@
 import { Link } from 'react-router-dom';
 import Logo from '../Logo.jsx';
 import SocialLinks from './SocialLinks.jsx';
-import { site, policySections } from '../../data/site.js';
+import { mapsLink, navLinks, site } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import './Footer.css';
 
+// A full-width band: the brand block (logo + socials) on one side, then
+// three columns — Useful Links, Address, Contact — and a copyright row
+// under a hairline. Layout after the 3distica.com footer; colours and
+// gradient are the site's own. Useful Links IS the navbar's list (navLinks,
+// labelled from i18n `nav`), so the two always show the same pages and names.
+//
+// The Terms & Privacy links that used to sit here are NOT part of this
+// layout: they will point at the store's own policy pages, and /policies is
+// parked (see App.jsx). policySections in data/site.js is kept for that.
 export default function Footer() {
   const { t } = useLanguage();
+  const f = t.footer;
+  // A phone with x's in it is a placeholder, so it must not be dialable.
+  const phoneReady = !/x/i.test(site.helloPhone);
 
   return (
     <footer className="footer">
-      <div className="container footer-inner">
-        {/* The logo and the legal documents travel together as one block, so
-            the list reads as sitting beside the mark rather than as a third
-            column floating between it and the socials. */}
+      <div className="container footer-main">
         <div className="footer-brand">
           <Logo size="lg" on="dark" />
+          <SocialLinks />
+        </div>
 
-          <nav className="footer-policies" aria-label={t.nav.policies}>
-            <h2 className="footer-policies-heading">{t.nav.policies}</h2>
-            <ul className="footer-policies-list">
-              {policySections.map((id) => (
-                <li key={id}>
-                  {/* `to` carries the hash, so the jump goes through the router
-                      and hooks/useScrollToTop.js scrolls to that heading — a
-                      plain <a href="#id"> would bypass both. */}
-                  <Link to={`/policies#${id}`} className="footer-policies-link">
-                    {t.nav.policyTabs[id]}
-                  </Link>
+        <div className="footer-columns">
+          <nav className="footer-column" aria-label={f.linksHeading}>
+            <h2 className="footer-title">{f.linksHeading}</h2>
+            <ul className="footer-link-grid">
+              {navLinks.map((l) => (
+                <li key={l.key}>
+                  <Link to={l.to} className="footer-link">{t.nav[l.key]}</Link>
                 </li>
               ))}
             </ul>
           </nav>
-        </div>
 
-        <SocialLinks />
+          <div className="footer-column">
+            <h2 className="footer-title">{f.addressHeading}</h2>
+            {/* The same Maps directions link the contact section uses. */}
+            <a href={mapsLink} className="footer-link footer-address">
+              {site.addressLines.map((line) => (
+                <span key={line}>{line}</span>
+              ))}
+            </a>
+          </div>
+
+          <div className="footer-column">
+            <h2 className="footer-title">{f.helloHeading}</h2>
+            <a href={`mailto:${site.helloEmail}`} className="footer-link footer-email">{site.helloEmail}</a>
+            {phoneReady ? (
+              <a href={`tel:${site.helloPhone.replace(/\s/g, '')}`} className="footer-phone">{site.helloPhone}</a>
+            ) : (
+              <span className="footer-phone">{site.helloPhone}</span>
+            )}
+          </div>
+        </div>
       </div>
 
       <div className="container footer-bottom">
-        <span>© {new Date().getFullYear()} {site.name}. {t.footer.rights}</span>
+        <span>© {new Date().getFullYear()} {site.name}. {f.rights}</span>
       </div>
     </footer>
   );

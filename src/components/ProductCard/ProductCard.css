@@ -1,5 +1,5 @@
 /* The product card and the grid it sits in — shared by the Shop catalogue
-   and the Customize Yours page, which is why it lives here rather than in
+   and the Customize Yours section on Home, which is why it lives here rather than in
    either page's CSS. Both render the same object, so they must not drift.
    Page-specific spacing stays with the page; everything about the card itself
    is here. */
@@ -299,7 +299,7 @@
   width: 100%;
   margin-top: auto;
   padding: 9px 12px;
-  border-radius: 999px;
+  border-radius: var(--radius-md);
   background: var(--color-accent);
   color: var(--color-black);
   font-size: var(--text-sm);

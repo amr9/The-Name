@@ -7,6 +7,11 @@
 export const services = [
   { id: 'personalGifts', num: '01', to: '/shop', textOrder: 1, imgOrder: 2 },
   { id: 'businessBranding', num: '02', to: '/business', textOrder: 2, imgOrder: 1 },
+  // PLACEHOLDER rows — the copy under home.services.serviceThree/serviceFour
+  // (en.js only for now) and the `to` targets are stand-ins until the real
+  // services are decided. Rename the ids along with their i18n + media keys.
+  { id: 'serviceThree', num: '03', to: '/shop', textOrder: 1, imgOrder: 2 },
+  { id: 'serviceFour', num: '04', to: '/business', textOrder: 2, imgOrder: 1 },
 ];
 
 // The ways a name/logo can be put onto a product. Selectable in the panel

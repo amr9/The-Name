@@ -30,7 +30,7 @@
   display: inline-block;
   margin: var(--space-4) 0 0;
   padding: 6px 12px;
-  border-radius: 999px;
+  border-radius: var(--radius-md);
   background: var(--color-accent-100);
   border: 1px solid var(--color-accent-200);
   color: var(--color-accent-800);
@@ -77,7 +77,7 @@
 .not-found-link {
   display: inline-block;
   padding: 7px 14px;
-  border-radius: 999px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--color-accent-200);
   color: var(--color-text);
   font-size: var(--text-sm);

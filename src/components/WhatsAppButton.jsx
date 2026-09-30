@@ -13,8 +13,6 @@ export default function WhatsAppButton({ className = 'btn btn-primary', children
   return (
     <a
       href={waLink}
-      target="_blank"
-      rel="noopener noreferrer"
       className={className}
       style={style}
       aria-label={iconOnly ? label : undefined}

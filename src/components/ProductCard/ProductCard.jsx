@@ -36,7 +36,7 @@ export const CARDS_IN_VIEW = 4;
 /**
  * One product from the store catalogue, as a card.
  *
- * Shared by the Shop catalogue and the Customize Yours page, which is the
+ * Shared by the Shop catalogue and the Customize Yours section on Home, which is the
  * whole reason it is a component: both show the same object and must not
  * drift apart. Both now render it at showcase size — Shop as a three-column
  * grid for a named shelf and a Carousel for "All Products", Customize Yours
@@ -64,8 +64,6 @@ export default function ProductCard({ product, className = '', ratio = '4 / 3' }
     <a
       className={`product-card ${className}`.trim()}
       href={productUrl(product)}
-      target="_blank"
-      rel="noopener noreferrer"
       aria-label={t.shop.personaliseItem(product.name)}
     >
       {/* An optional corner ribbon — data/storeBadges.js decides which

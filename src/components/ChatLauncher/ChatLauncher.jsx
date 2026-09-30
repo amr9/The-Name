@@ -46,7 +46,7 @@ export default function ChatLauncher() {
       {mode === 'menu' && (
         <>
           <div className="chat-launcher-scrim" onClick={close} />
-          {/* WhatsApp opens in a new tab, so following it also closes the menu */}
+          {/* following the WhatsApp link also closes the menu */}
           <div
             className="popover chat-launcher-menu"
             role="menu"

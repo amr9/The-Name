@@ -93,7 +93,10 @@ export default function Shop() {
           <h1 className="page-title shop-hero-title">{t.shop.title}</h1>
           <p className="shop-hero-body">{t.shop.body}</p>
           <div className="shop-hero-actions">
-            <a className="btn btn-primary" href={site.shopUrl} target="_blank" rel="noopener noreferrer"><ShopIcon />{t.shop.openShop}</a>
+            {/* The same link as the "Shop the Collection" button under the
+                All Products carousel — the store's All Products page, not its
+                shop front — so the two identical buttons cannot disagree. */}
+            <a className="btn btn-primary" href={categoryUrl('all')}><ShopIcon />{t.shop.openShop}</a>
             <WhatsAppButton className="btn btn-secondary">{t.shop.askPersonal}</WhatsAppButton>
           </div>
         </div>
@@ -162,7 +165,7 @@ export default function Shop() {
                   </div>
                 </div>
                 <div className="shop-list-action-col">
-                  <a className="btn btn-secondary shop-view-btn" href={productUrl(p)} target="_blank" rel="noopener noreferrer">{t.shop.viewProduct}</a>
+                  <a className="btn btn-secondary shop-view-btn" href={productUrl(p)}>{t.shop.viewProduct}</a>
                 </div>
               </div>
             ))}
@@ -208,8 +211,6 @@ export default function Shop() {
             <a
               className="btn btn-primary"
               href={categoryUrl(filter)}
-              target="_blank"
-              rel="noopener noreferrer"
             >
               {/* "Shop all All Products" is nonsense, so the unfiltered view
                   borrows the hero's own wording instead of naming itself. */}
@@ -280,7 +281,7 @@ export default function Shop() {
                   title={info.name}
                   meta={`${info.finish} · ${info.lead}`}
                   action={
-                    <a href={site.shopUrl} target="_blank" rel="noopener noreferrer" aria-label={t.shop.personaliseItem(info.name)}>
+                    <a href={site.shopUrl} aria-label={t.shop.personaliseItem(info.name)}>
                       <OverlayCardArrow />
                     </a>
                   }

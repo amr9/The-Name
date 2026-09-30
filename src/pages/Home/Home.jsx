@@ -1,15 +1,21 @@
 import { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Bubbles from '../../components/Bubbles/Bubbles.jsx';
-import { shopIcons } from '../../components/Bubbles/icons.jsx';
+// Bubbles are PARKED site-wide — uncomment these two imports and the three
+// <Bubbles> below to bring them back.
+// import Bubbles from '../../components/Bubbles/Bubbles.jsx';
+// import { shopIcons } from '../../components/Bubbles/icons.jsx';
+import ContactSection from '../../components/ContactForm/ContactSection.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
-import LogoMarquee from '../../components/LogoMarquee/LogoMarquee.jsx';
+// The partner-brand strip under the hero is PARKED — uncomment these two
+// imports and the <LogoMarquee> below to bring it back.
+// import LogoMarquee from '../../components/LogoMarquee/LogoMarquee.jsx';
+// import { brands } from '../../data/brands.js';
 import ProcessSteps from '../../components/ProcessSteps/ProcessSteps.jsx';
 import ShopIcon from '../../components/ShopIcon.jsx';
 import TaglineArt from '../../components/TaglineArt.jsx';
-import { brands } from '../../data/brands.js';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
+import CustomizeSection from './CustomizeSection.jsx';
 import { customMethods, services } from './data.js';
 import './Home.css';
 
@@ -40,8 +46,6 @@ export default function Home() {
                 anchor rather than a router Link. */}
             <a
               href="https://my.matterport.com/show/?m=5rCPtmHS5iK"
-              target="_blank"
-              rel="noopener noreferrer"
               className="btn btn-secondary home-hero-secondary"
             >
               {t.home.hero.ctaTour}
@@ -50,15 +54,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* the brands we curate and personalise — a slow, rolling logo strip, no heading */}
-      <LogoMarquee items={brands} logos={media.brands} />
+      {/* the brands we curate and personalise — a slow, rolling logo strip,
+          no heading. PARKED (see the imports).
+      <LogoMarquee items={brands} logos={media.brands} /> */}
 
-      {/* what we do — services, one image each. The wrapper is only here to
-          anchor the decorative shop-item bubbles — up the gutters on wide
-          screens, in bands between the rows on narrow ones. */}
+      {/* what we do — services, one image each. The wrapper anchored the
+          decorative shop-item bubbles, which are PARKED. */}
       <div className="bubbles-host">
-        <Bubbles side="left" icons={shopIcons} />
-        <Bubbles side="right" icons={shopIcons} />
+        {/* <Bubbles side="left" icons={shopIcons} /> */}
+        {/* <Bubbles side="right" icons={shopIcons} /> */}
 
         <section className="container home-services-intro">
           <span className="card-kicker">{t.home.whatWeDo.kicker}</span>
@@ -72,7 +76,7 @@ export default function Home() {
             <Fragment key={s.id}>
             {/* on narrow screens the bubbles run between the rows instead of
                 beside them — see components/Bubbles */}
-            {i > 0 && <Bubbles side="row" icons={shopIcons} phase={i * 29} />}
+            {/* {i > 0 && <Bubbles side="row" icons={shopIcons} phase={i * 29} />} */}
               <section className="container home-service-row">
                 <div className="row-flip home-service-grid">
                   <div className="row-text home-service-text" style={{ order: s.textOrder }}>
@@ -108,6 +112,9 @@ export default function Home() {
           );
         })}
       </div>
+
+      {/* customize yours — the old /customize page, now a section here */}
+      <CustomizeSection />
 
       {/* how it works: the four steps of an order, then the ways we can put
           your artwork onto a product */}
@@ -157,6 +164,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* contact — the SAME section as the foot of the About page, one
+          component, so editing it changes both */}
+      <ContactSection />
     </div>
   );
 }

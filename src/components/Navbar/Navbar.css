@@ -24,7 +24,7 @@
 .navbar-link {
   font-size: var(--text-sm);
   padding: 7px 12px;
-  border-radius: 999px;
+  border-radius: var(--radius-md);
   transition: background 0.18s ease, color 0.18s ease;
 }
 

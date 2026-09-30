@@ -1,7 +1,7 @@
 export default {
   // يبقى `cafe` لصفحة المقهى المؤجّلة، و`contact` لنموذج التواصل الذي صار
   // في أسفل صفحة «من نحن».
-  nav: { home: 'الرئيسية', cafe: 'المقهى', kids: 'الأطفال', shop: 'متجر The Name', business: 'الشركات', about: 'من نحن', policies: 'السياسات', contact: 'تواصل معنا', customize: "خصّصها", menu: 'القائمة',
+  nav: { home: 'The Name', cafe: 'المقهى', kids: 'الأطفال', shop: 'المتجر', business: 'هدايا الشركات', concept: 'المفهوم', about: 'من نحن', policies: 'السياسات', contact: 'تواصل معنا', customize: "خصّصها", menu: 'القائمة',
          policyTabs: { terms: 'الشروط والأحكام', delivery: 'التوصيل والإرجاع', privacy: 'سياسة الخصوصية' } },
 
   common: { whatsapp: 'واتساب', chatOnWhatsapp: 'الدردشة عبر واتساب', backToTop: 'العودة إلى الأعلى' },
@@ -50,7 +50,7 @@ export default {
     tryInstead: "جرّب إحدى هذه الصفحات",
   },
 
-  // The Customize Yours page (pages/Customize/). WHICH products it lists is
+  // The Customize Yours section on Home (pages/Home/CustomizeSection.jsx). WHICH products it lists is
   // in data/storeCustomizable.js; the step ids are `customizeSteps` there.
   customize: {
     kicker: "خصّصها كما تريد",
@@ -71,6 +71,7 @@ export default {
 
   footer: {
     rights: 'جميع الحقوق محفوظة.',
+    linksHeading: 'روابط مفيدة', addressHeading: 'العنوان', helloHeading: 'اتصل بنا',
   },
   // ───────────────────────────────────────────────────────────────────────────
   // المستندات القانونية الثلاثة في صفحة /policies. البنية (أي مستند، وأي

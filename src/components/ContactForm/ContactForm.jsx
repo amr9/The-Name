@@ -151,14 +151,12 @@ export default function ContactForm() {
           <div className="contact-detail">
             <dt>{t.contact.locationHeading}</dt>
             <dd>
-              {/* Opens Google Maps with directions already asked for. A new
-                  tab, because on a phone this hands off to the Maps app and
-                  the enquiry form would otherwise be torn down mid-typing. */}
+              {/* Opens Google Maps with directions already asked for, in the
+                  same tab — the site never opens new tabs, so leaving it
+                  never looks like a third-party program stepping in. */}
               <a
                 className="contact-map-link"
                 href={mapsLink}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 {site.address}
                 <span className="contact-map-cue">{t.contact.directions}</span>

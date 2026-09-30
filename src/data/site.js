@@ -25,6 +25,15 @@ export const site = {
   // page's button hands you to a category page rather than the front. Not
   // under /shop/: it is a CMS page on the store, not a category.
   customizableUrl: 'https://store.thename.ae/customizable-products',
+  // The footer's "Address" column, one entry per printed line. Fuller than
+  // `address` above (which feeds Maps, the contact section and the policy
+  // copy); both are the same place.
+  addressLines: ['Building 3,', 'Umm Ramool, Dubai CommerCity,', 'Dubai - UAE'],
+  // The footer's "Contact" column. The phone is a PLACEHOLDER until the
+  // number is confirmed — it prints as plain text, not a tel: link, while it
+  // still has x's in it. Replace it here and the footer picks it up.
+  helloEmail: 'info@thename.me',
+  helloPhone: '+971 50 xxx xxxx',
 };
 
 // The address as a Google Maps DIRECTIONS link — `dir/?api=1&destination=` is
@@ -42,7 +51,7 @@ export const waLink = `https://wa.me/${site.phone.replace(/[^0-9]/g, '')}`;
 
 // Social profiles, shown as icon links in the footer.
 //
-// An entry carries EITHER `url` (a real profile — opened in a new tab) or `to`
+// An entry carries EITHER `url` (a real profile, opened in the same tab) or `to`
 // (an in-app route). Instagram is the only live account; Facebook and TikTok
 // are not published yet, so they point at paths no route matches and land on
 // the custom 404 instead. That is deliberate: they used to link to
@@ -62,11 +71,19 @@ export const socials = [
 // The cafe entry is parked rather than deleted — uncomment it here and its
 // import/route in App.jsx to bring the page back. Contact is gone for good:
 // the enquiry form now sits at the foot of /about.
+// The site's pages, in order. ONE list for the navbar, the footer's "Useful
+// Links" column and the 404 page's signpost, all labelled from i18n
+// `nav[key]` — so the three always show the same names (The Name, Store,
+// Corporate gifts, …). Change a page's name in `nav` and all three follow.
 export const navLinks = [
   { to: '/', key: 'home' },
   { to: '/shop', key: 'shop' },
-  // Sits right after the store, as it does on store.thename.ae.
-  { to: '/customize', key: 'customize' },
+  // Concept — the new Agency page. It does not exist yet, so the link is
+  // PARKED rather than pointing at the 404. Uncomment it (and fix `to`) once
+  // the page is up; its label, nav.concept, is already translated.
+  // { to: '/concept', key: 'concept' },
+  // Customize Yours used to sit here; it is now a section of Home
+  // (pages/Home/CustomizeSection.jsx), so it has no nav entry.
   // `highlight` is the one emphasised link in the bar: bold, in the accent,
   // and nothing else (Navbar.css). Only one entry should ever carry it — two
   // emphasised links emphasise nothing.
@@ -74,8 +91,8 @@ export const navLinks = [
   // { to: '/cafe', key: 'cafe' },
   { to: '/kids', key: 'kids' },
   { to: '/about', key: 'about' },
-  // /policies is deliberately NOT here — it lives in the footer instead, as
-  // the three documents themselves (see policySections below).
+  // /policies is deliberately NOT here — it is parked, and Terms & Privacy
+  // will link to the store's own pages (see policySections below).
 ];
 
 // The three legal documents, linked from the footer beside the logo rather

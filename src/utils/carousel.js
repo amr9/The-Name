@@ -3,8 +3,11 @@
 // wraps to the last.
 //
 // Card positions are measured in the same coordinate space as scrollLeft —
-// i.e. "the scroll offset at which this card sits flush against the start of
-// the track" — so the track's own padding can't skew the comparisons.
+// i.e. "the scroll offset at which this card sits at the start of the
+// track's CONTENT box". The track's inline padding (the shadow bleed in
+// theme.css) is subtracted, so a stepped-to card lands exactly where the
+// first card sits at rest, with room for its shadow, instead of flush against
+// the clipping edge.
 //
 // Direction-aware: in RTL the start edge is the right one and the scroll axis
 // runs 0 → -max, so everything is normalised onto a logical 0 → max axis and
@@ -22,9 +25,10 @@ export function stepCarousel(el, dir) {
   const here = rtl ? -el.scrollLeft : el.scrollLeft;
 
   const track = el.getBoundingClientRect();
+  const pad = parseFloat(getComputedStyle(el).paddingInlineStart) || 0;
   const positions = Array.from(cards, (card) => {
     const rect = card.getBoundingClientRect();
-    return here + (rtl ? track.right - rect.right : rect.left - track.left);
+    return here + (rtl ? track.right - rect.right : rect.left - track.left) - pad;
   });
 
   let target;

@@ -1,7 +1,7 @@
 export default {
   // `cafe` se conserva para la página de la cafetería aparcada; `contact`
   // para el formulario, ahora al pie de la página Acerca de.
-  nav: { home: 'Inicio', cafe: 'Cafetería', kids: 'Niños', shop: 'Tienda The Name', business: 'Empresas', about: 'Acerca de', policies: 'Políticas', contact: 'Contáctanos', customize: "Personalízalo", menu: 'Menú',
+  nav: { home: 'The Name', cafe: 'Cafetería', kids: 'Niños', shop: 'Tienda', business: 'Regalos corporativos', concept: 'Concepto', about: 'Acerca de', policies: 'Políticas', contact: 'Contáctanos', customize: "Personalízalo", menu: 'Menú',
          policyTabs: { terms: 'Términos y condiciones', delivery: 'Envíos y devoluciones', privacy: 'Política de privacidad' } },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chatear por WhatsApp', backToTop: 'Volver arriba' },
@@ -50,7 +50,7 @@ export default {
     tryInstead: "Prueba con una de estas",
   },
 
-  // The Customize Yours page (pages/Customize/). WHICH products it lists is
+  // The Customize Yours section on Home (pages/Home/CustomizeSection.jsx). WHICH products it lists is
   // in data/storeCustomizable.js; the step ids are `customizeSteps` there.
   customize: {
     kicker: "Personalízalo",
@@ -71,6 +71,7 @@ export default {
 
   footer: {
     rights: 'Todos los derechos reservados.',
+    linksHeading: 'Enlaces útiles', addressHeading: 'Dirección', helloHeading: 'Contacto',
   },
   // ───────────────────────────────────────────────────────────────────────────
   // Los tres documentos legales de /policies. La ESTRUCTURA (qué documentos,

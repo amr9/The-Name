@@ -1,7 +1,7 @@
 export default {
   // `cafe` is kept for the parked cafe page; `contact` for the enquiry form,
   // which now sits at the foot of About rather than on its own page.
-  nav: { home: 'Home', cafe: 'Cafe', kids: 'Kids', shop: 'The Name Store', business: 'Business', about: 'About', policies: 'Policies', contact: 'Contact us', customize: "Customize Yours", menu: 'Menu',
+  nav: { home: 'The Name', cafe: 'Cafe', kids: 'Kids', shop: 'Store', business: 'Corporate gifts', concept: 'Concept', about: 'About', policies: 'Policies', contact: 'Contact us', customize: "Customize Yours", menu: 'Menu',
          policyTabs: { terms: 'Terms & Conditions', delivery: 'Delivery & Returns', privacy: 'Privacy Policy' } },
 
   // `chatOnWhatsapp` is the label on ContactForm's WhatsApp button — today
@@ -52,7 +52,7 @@ export default {
     tryInstead: "Try one of these",
   },
 
-  // The Customize Yours page (pages/Customize/). WHICH products it lists is
+  // The Customize Yours section on Home (pages/Home/CustomizeSection.jsx). WHICH products it lists is
   // in data/storeCustomizable.js; the step ids are `customizeSteps` there.
   customize: {
     kicker: "Customize Yours",
@@ -75,6 +75,7 @@ export default {
 
   footer: {
     rights: 'All rights reserved.',
+    linksHeading: 'Useful Links', addressHeading: 'Address', helloHeading: 'Contact',
   },
 
   // ───────────────────────────────────────────────────────────────────────────
@@ -551,6 +552,23 @@ export default {
         body: 'Corporate gifting should do more than carry your logo. We create thoughtful, design-led gifts and branded collections that keep your identity visible, useful and remembered — from employee kits and client gifts to events, VIP gifting and large-scale orders.',
         points: ['Individual personalization at scale', 'Curated products, custom kits & premium packaging', 'Corporate, government & event orders', 'Creative concepts built around your brand'],
         cta: 'Start a Business Enquiry',
+      },
+      // PLACEHOLDER copy for rows 03 and 04 — English only on purpose: the
+      // other languages fall through to these via deepMerge until the real
+      // text is written, and then it goes into all four files.
+      serviceThree: {
+        kicker: 'Service three', title: 'Service Three Title',
+        placeholder: 'Service three image',
+        body: 'Placeholder text for the third service. Replace it with a short paragraph describing what this service offers and who it is for.',
+        points: ['First point about this service', 'Second point about this service', 'Third point about this service'],
+        cta: 'Learn More',
+      },
+      serviceFour: {
+        kicker: 'Service four', title: 'Service Four Title',
+        placeholder: 'Service four image',
+        body: 'Placeholder text for the fourth service. Replace it with a short paragraph describing what this service offers and who it is for.',
+        points: ['First point about this service', 'Second point about this service', 'Third point about this service'],
+        cta: 'Learn More',
       },
     },
     howItWorks: {

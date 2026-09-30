@@ -318,17 +318,8 @@
   gap: 12px;
 }
 
-/* — the enquiry form at the foot (components/ContactForm) — */
-.about-contact {
-  padding-block: clamp(48px, 5vw, 80px);
-  background: var(--color-accent-100);
-  /* the form panel is accent-100 too, so it goes white against this band */
-  scroll-margin-top: var(--navbar-h);
-}
-.about-contact .contact-form,
-.about-contact .contact-sent {
-  background: var(--color-white);
-}
+/* the enquiry form at the foot is components/ContactForm/ContactSection,
+   styled in ContactForm.css — shared with the foot of Home */
 
 @media (max-width: 980px) {
   .about-services { grid-template-columns: repeat(2, minmax(0, 1fr)); }

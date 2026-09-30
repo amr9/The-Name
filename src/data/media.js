@@ -19,6 +19,9 @@ export const media = {
   services: {
     personalGifts: `${BASE}/services/personal-gifts.jpg`,
     businessBranding: `${BASE}/services/business-branding.jpg`,
+    // placeholder rows 03 / 04 — no files yet, so they show the dashed slot
+    serviceThree: `${BASE}/services/service-three.jpg`,
+    serviceFour: `${BASE}/services/service-four.jpg`,
     cafe: `${BASE}/services/cafe.jpg`,
     catering: `${BASE}/services/catering.jpg`,
   },

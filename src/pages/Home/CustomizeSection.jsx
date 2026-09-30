@@ -6,7 +6,7 @@ import { customizableIds, customizeSteps } from '../../data/storeCustomizable.js
 import { storeProducts } from '../../data/storeProducts.js';
 import { site } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import './Customize.css';
+import './CustomizeSection.css';
 
 // Resolved once at module load, not per render: the id list and the catalogue
 // are both static, so there is nothing to recompute. Ids that no longer match
@@ -17,72 +17,67 @@ const products = customizableIds
   .filter(Boolean);
 
 /**
- * "Customize Yours" — the page the store keeps at /customizable-products,
- * living here under The Name Store. It is the three steps of the process and
- * then the pieces you can actually run through it; the cards are the same
+ * "Customize Yours" — the store's /customizable-products page, as a section
+ * of Home under "What we do". It used to be its own /customize page; that
+ * route now redirects here (#customize). It is the three steps of the process
+ * and then the pieces you can actually run through it; the cards are the same
  * components/ProductCard the Shop catalogue uses, so a product looks the same
- * wherever it appears.
+ * wherever it appears. Headings start at <h2>: Home already has the <h1>.
  */
-export default function Customize() {
+export default function CustomizeSection() {
   const { t } = useLanguage();
   const c = t.customize;
 
   return (
-    <div className="customize-page">
+    <section id="customize" className="home-customize">
       <header className="container customize-hero">
         <span className="card-kicker">{c.kicker}</span>
-        <h1 className="page-title customize-title">{c.title}</h1>
+        <h2 className="customize-title">{c.title}</h2>
         <p className="customize-lede">{c.lede}</p>
       </header>
 
       {/* The process, before the products: what you can do is the reason to
           look at the pieces, not the other way round. */}
-      <section className="container customize-steps">
+      <div className="container customize-steps">
         <ol className="customize-steps-list">
           {customizeSteps.map((id, i) => (
             <li key={id} className="customize-step">
               <span className="customize-step-num">{String(i + 1).padStart(2, '0')}</span>
-              <h2 className="customize-step-title">{c.steps[id].title}</h2>
+              <h3 className="customize-step-title">{c.steps[id].title}</h3>
               <p className="customize-step-body">{c.steps[id].body}</p>
             </li>
           ))}
         </ol>
-      </section>
+      </div>
 
-      <section className="container customize-catalogue">
+      <div className="container customize-catalogue">
         <div className="customize-catalogue-head">
-          <h2 className="customize-catalogue-title">{c.gridHeading}</h2>
+          <h3 className="customize-catalogue-title">{c.gridHeading}</h3>
           <span className="customize-count">{c.count(products.length)}</span>
         </div>
 
         {/* The same showcase cards the Shop catalogue uses, on the same
-            shared Carousel: `carousel-card` is theme.css's
-            `(100% - 48px) / 3` flex-basis, so three are in view and the rest
-            are a swipe away, stepping to two and then one on narrower
-            screens. Fourteen pieces is the Shop page's "All Products" case in
-            miniature — one unsegmented list longer than a row — so it gets
-            the same treatment rather than a grid of small tiles.
-
-            `product-card-showcase` and SHOWCASE_RATIO are what make the
-            picture fill the card edge to edge; both come from ProductCard,
-            so this page and the Shop page cannot drift. */}
+            shared Carousel, CARDS_IN_VIEW across. `product-card-showcase`
+            and SHOWCASE_RATIO are what make the picture fill the card edge to
+            edge; both come from ProductCard, so this section and the Shop page
+            cannot drift. */}
         <Carousel prevLabel={c.prevPieces} nextLabel={c.nextPieces} perView={CARDS_IN_VIEW}>
           {products.map((p) => (
             <ProductCard key={p.id} product={p} className="carousel-card product-card-showcase" ratio={SHOWCASE_RATIO} />
           ))}
         </Carousel>
-      </section>
+      </div>
 
-      <section className="container customize-cta">
+      <div className="container customize-cta">
         <p className="customize-cta-body">{c.ctaBody}</p>
         <div className="customize-cta-actions">
           {/* To the store's OWN customizable-products page, not its shop
-              front — this page mirrors that selection, so that is where
+              front — this section mirrors that selection, so that is where
               "start designing" actually leads. */}
-          <a className="btn btn-primary" href={site.customizableUrl} target="_blank" rel="noopener noreferrer"><ShopIcon />{c.ctaShop}</a>
+          <a className="btn btn-primary" href={site.customizableUrl}><ShopIcon />{c.ctaShop}</a>
           <WhatsAppButton className="btn btn-secondary">{t.common.chatOnWhatsapp}</WhatsAppButton>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }
