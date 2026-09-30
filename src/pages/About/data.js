@@ -1,12 +1,13 @@
 // Structural data for the About page — copy lives in i18n under about.*.
+import { routes } from '../../data/site.js';
 
 // The services, in the order they are listed. `to` is where each one's link
 // goes; `showBrands` lists the partner brands (data/brands.js) under it.
 export const aboutServices = [
-  { id: 'personalGifts', to: '/shop' },
-  { id: 'corporateGifting', to: '/business' },
-  { id: 'curatedBrands', to: '/shop', showBrands: true },
-  { id: 'packaging', to: '/business' },
+  { id: 'personalGifts', to: routes.shop },
+  { id: 'corporateGifting', to: routes.business },
+  { id: 'curatedBrands', to: routes.shop, showBrands: true },
+  { id: 'packaging', to: routes.business },
   // The enquiry form is now at the foot of this page, so this one is an anchor.
   { id: 'creative', to: '#contact' },
   // The cafe page is parked (see App.jsx) — restore this entry alongside it.

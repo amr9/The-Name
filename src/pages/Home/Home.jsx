@@ -18,6 +18,7 @@ import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import CustomizeSection from './CustomizeSection.jsx';
 import { customMethods, services } from './data.js';
 import './Home.css';
+import { routes } from '../../data/site.js';
 
 export default function Home() {
   const { t } = useLanguage();
@@ -41,7 +42,7 @@ export default function Home() {
           </h1>
           <p className="home-hero-body">{t.home.hero.body}</p>
           <div className="home-hero-actions">
-            <Link to="/shop" className="btn btn-sparkle">{t.home.hero.ctaShop}</Link>
+            <Link to={routes.shop} className="btn btn-sparkle">{t.home.hero.ctaShop}</Link>
             {/* The Matterport walkthrough — an external 3D tour, so a plain
                 anchor rather than a router Link. */}
             <a
@@ -96,7 +97,7 @@ export default function Home() {
                       ))}
                     </div>
                     <Link to={s.to} className="btn btn-secondary home-service-cta">
-                      {s.to === '/shop' && <ShopIcon />}
+                      {s.to === routes.shop && <ShopIcon />}
                       {info.cta}
                     </Link>
                   </div>
@@ -158,7 +159,7 @@ export default function Home() {
                 <span>{t.home.howItWorks.minimum} · {methodCopy.minimum}</span>
                 <span>{t.home.howItWorks.leadTime} · {methodCopy.lead}</span>
               </div>
-              <Link className="btn btn-primary btn-block" to="/shop">{t.home.howItWorks.ctaShop}</Link>
+              <Link className="btn btn-primary btn-block" to={routes.shop}>{t.home.howItWorks.ctaShop}</Link>
               <p className="card-meta home-how-panel-footnote">{t.home.howItWorks.footnote}</p>
             </div>
           </div>

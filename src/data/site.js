@@ -17,7 +17,7 @@ export const site = {
   privacyEmail: 'info@thename.me',
   // The online store, off-site. Everything that leaves for it reads this —
   // the Shop page's hero button and its per-item View/Personalise links. (The
-  // Kids and Home "shop" CTAs are router Links to /shop, not to the store.)
+  // Kids and Home "shop" CTAs are router Links to routes.shop, not to the store.)
   shopUrl: 'https://store.thename.ae',
   // The store's OWN page for the pieces it will personalise. The Customize
   // Yours page mirrors that selection (data/storeCustomizable.js) and its CTA
@@ -71,26 +71,43 @@ export const socials = [
 // The cafe entry is parked rather than deleted — uncomment it here and its
 // import/route in App.jsx to bring the page back. Contact is gone for good:
 // the enquiry form now sits at the foot of /about.
+// Every page's URL, in ONE place. The paths spell the page's name in the
+// navbar (i18n `nav`): Store → /store, Corporate gifts → /corporate-gifts.
+// The Name is the home page, so it stays at the root. Everything that links
+// to a page — routes, nav, footer, buttons, the chatbot — reads these, so
+// renaming a page's URL is a one-line change here (plus a redirect from the
+// old path in App.jsx, so existing links keep working).
+export const routes = {
+  home: '/',
+  shop: '/store',
+  business: '/corporate-gifts',
+  kids: '/kids',
+  about: '/about',
+  // Parked pages — not routed at the moment (see App.jsx).
+  cafe: '/cafe',
+  concept: '/concept',
+};
+
 // The site's pages, in order. ONE list for the navbar, the footer's "Useful
 // Links" column and the 404 page's signpost, all labelled from i18n
 // `nav[key]` — so the three always show the same names (The Name, Store,
 // Corporate gifts, …). Change a page's name in `nav` and all three follow.
 export const navLinks = [
-  { to: '/', key: 'home' },
-  { to: '/shop', key: 'shop' },
+  { to: routes.home, key: 'home' },
+  { to: routes.shop, key: 'shop' },
   // Concept — the new Agency page. It does not exist yet, so the link is
-  // PARKED rather than pointing at the 404. Uncomment it (and fix `to`) once
-  // the page is up; its label, nav.concept, is already translated.
-  // { to: '/concept', key: 'concept' },
+  // PARKED rather than pointing at the 404. Uncomment it once the page is up
+  // (and routed); its label, nav.concept, is already translated.
+  // { to: routes.concept, key: 'concept' },
   // Customize Yours used to sit here; it is now a section of Home
   // (pages/Home/CustomizeSection.jsx), so it has no nav entry.
   // `highlight` is the one emphasised link in the bar: bold, in the accent,
   // and nothing else (Navbar.css). Only one entry should ever carry it — two
   // emphasised links emphasise nothing.
-  { to: '/business', key: 'business', highlight: true },
-  // { to: '/cafe', key: 'cafe' },
-  { to: '/kids', key: 'kids' },
-  { to: '/about', key: 'about' },
+  { to: routes.business, key: 'business', highlight: true },
+  // { to: routes.cafe, key: 'cafe' },
+  { to: routes.kids, key: 'kids' },
+  { to: routes.about, key: 'about' },
   // /policies is deliberately NOT here — it is parked, and Terms & Privacy
   // will link to the store's own pages (see policySections below).
 ];

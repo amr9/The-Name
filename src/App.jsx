@@ -20,6 +20,7 @@ import About from './pages/About/About.jsx';
 // route below — and link to it from somewhere: the footer no longer does.
 // import Policies from './pages/Policies/Policies.jsx';
 import NotFound from './pages/NotFound/NotFound.jsx';
+import { routes } from './data/site.js';
 
 export default function App() {
   useCarouselAutoplay();
@@ -34,16 +35,24 @@ export default function App() {
           with it is hooks/useScrollToTop.js. */}
       <main key={pathname} className="page-enter">
         <Routes>
-          <Route path="/" element={<Home />} />
-          {/* <Route path="/cafe" element={<Cafe />} /> */}
-          <Route path="/kids" element={<Kids />} />
-          <Route path="/shop" element={<Shop />} />
+          {/* Paths come from `routes` in data/site.js — they spell the
+              page's navbar name (Store → /store, Corporate gifts →
+              /corporate-gifts), so a rename is made there, not here. */}
+          <Route path={routes.home} element={<Home />} />
+          {/* <Route path={routes.cafe} element={<Cafe />} /> */}
+          <Route path={routes.kids} element={<Kids />} />
+          <Route path={routes.shop} element={<Shop />} />
           {/* Customize Yours was its own page here; it is now a section of
               Home, so old links land on it. */}
           <Route path="/customize" element={<Navigate to="/#customize" replace />} />
-          <Route path="/business" element={<Business />} />
+          <Route path={routes.business} element={<Business />} />
           {/* The enquiry form now lives at the foot of /about. */}
-          <Route path="/about" element={<About />} />
+          <Route path={routes.about} element={<About />} />
+          {/* The OLD paths, from before the URLs were renamed to match the
+              navbar. They redirect rather than 404, so bookmarks and links
+              already shared keep working. */}
+          <Route path="/shop" element={<Navigate to={routes.shop} replace />} />
+          <Route path="/business" element={<Navigate to={routes.business} replace />} />
           {/* Terms, delivery/returns and privacy, all on one page; the
               footer's policy list links to the #anchors within it. PARKED. */}
           {/* <Route path="/policies" element={<Policies />} /> */}

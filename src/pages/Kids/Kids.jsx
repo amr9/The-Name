@@ -13,6 +13,7 @@ import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { activationShots, kidsOffers } from './data.js';
 import Doodles from './Doodles.jsx';
 import './Kids.css';
+import { routes } from '../../data/site.js';
 
 export default function Kids() {
   const { t } = useLanguage();
@@ -33,7 +34,7 @@ export default function Kids() {
           <h1 className="page-title kids-hero-title">{k.title}</h1>
           <p className="kids-hero-lede">{k.lede}</p>
           <div className="kids-hero-actions">
-            <Link to="/shop" className="btn btn-primary"><ShopIcon />{k.ctaShop}</Link>
+            <Link to={routes.shop} className="btn btn-primary"><ShopIcon />{k.ctaShop}</Link>
             <WhatsAppButton className="btn btn-secondary">{k.ctaAsk}</WhatsAppButton>
           </div>
         </div>
@@ -141,7 +142,7 @@ export default function Kids() {
         <h2 className="kids-section-title">{k.cta.heading}</h2>
         <p className="kids-section-lede">{k.cta.body}</p>
         <div className="kids-hero-actions">
-          <Link to="/shop" className="btn btn-primary"><ShopIcon />{k.cta.shop}</Link>
+          <Link to={routes.shop} className="btn btn-primary"><ShopIcon />{k.cta.shop}</Link>
           <WhatsAppButton className="btn btn-secondary">{k.cta.whatsapp}</WhatsAppButton>
         </div>
       </section>

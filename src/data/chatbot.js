@@ -6,11 +6,13 @@
 //   appendMethods — lists every customization method with its lead time and
 //                   minimum, read from the same i18n entries as the Home
 //                   "how it works" panel, so the two can never disagree
+import { routes } from './site.js';
+
 export const chatTopics = [
-  { id: 'products', to: '/shop' },
+  { id: 'products', to: routes.shop },
   { id: 'personalise', to: '/about' },
   { id: 'leadTimes', appendMethods: true },
-  { id: 'business', to: '/business' },
+  { id: 'business', to: routes.business },
   // The cafe page is parked (see App.jsx) — restore this topic alongside it.
   // { id: 'cafe', to: '/cafe' },
   { id: 'human', whatsapp: true },

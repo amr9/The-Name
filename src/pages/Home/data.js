@@ -4,14 +4,16 @@
 // rows were removed from the home page; catering still has its own section on
 // /business, and the cafe page itself is parked (see App.jsx).
 // `textOrder`/`imgOrder` alternate down the page so the rows zig-zag.
+import { routes } from '../../data/site.js';
+
 export const services = [
-  { id: 'personalGifts', num: '01', to: '/shop', textOrder: 1, imgOrder: 2 },
-  { id: 'businessBranding', num: '02', to: '/business', textOrder: 2, imgOrder: 1 },
+  { id: 'personalGifts', num: '01', to: routes.shop, textOrder: 1, imgOrder: 2 },
+  { id: 'businessBranding', num: '02', to: routes.business, textOrder: 2, imgOrder: 1 },
   // PLACEHOLDER rows — the copy under home.services.serviceThree/serviceFour
   // (en.js only for now) and the `to` targets are stand-ins until the real
   // services are decided. Rename the ids along with their i18n + media keys.
-  { id: 'serviceThree', num: '03', to: '/shop', textOrder: 1, imgOrder: 2 },
-  { id: 'serviceFour', num: '04', to: '/business', textOrder: 2, imgOrder: 1 },
+  { id: 'serviceThree', num: '03', to: routes.shop, textOrder: 1, imgOrder: 2 },
+  { id: 'serviceFour', num: '04', to: routes.business, textOrder: 2, imgOrder: 1 },
 ];
 
 // The ways a name/logo can be put onto a product. Selectable in the panel
