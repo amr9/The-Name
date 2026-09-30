@@ -8,8 +8,3 @@ export const brandingOffers = [
   { id: 'onboardingKits' },
   { id: 'eventGiveaways' },
 ];
-
-// Row order for the catering table. Catering is anything cooked for the
-// customer's own address. The off-site event row was removed — what is left
-// is the "at your address" offer only.
-export const cateringPackageIds = ['deskLunch', 'standingBuffet', 'breakfastTrolley'];

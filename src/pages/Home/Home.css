@@ -43,25 +43,30 @@
   pointer-events: none;
 }
 
+/* 62px at desktop, down from 86px. The point is the VIDEO: the hero is one
+   screen tall and the title sat at the bottom of it, so every pixel the type
+   gives back is background that can be seen. The clamp is kept because a flat
+   62px wraps badly on a phone — 62 is the ceiling, not a fixed size.
+
+   The brand lockup on the first line needs no rule of its own: .logo-inline is
+   1.11em, so it is sized BY this number and follows it down automatically.
+   That is also why it must stay em-based — a px height here would leave the
+   wordmark at its old size beside smaller text. */
 .home-hero-title {
-  font-size: clamp(42px, 6vw, 86px);
-  line-height: 1.02;
+  font-size: clamp(32px, 5vw, 62px);
   margin: 20px 0 0;
-  margin-left: -0.028em;
   max-width: 22ch;
 }
 .home-hero-title-lead,
 .home-hero-title-script {
   display: block;
 }
-/* the second line in the brand's signature script, a touch larger since
-   script faces run small for their size */
+/* Face, weight, tracking and leading all come from .page-title. The second
+   line keeps the size bump that sets it apart from the lead line above the
+   Logo. (The -script suffix is historical: the titles are no longer set in a
+   script face.) */
 .home-hero-title-script {
-  font-family: var(--font-script);
-  font-weight: 400;
   font-size: 1.2em;
-  line-height: 1.15;
-  letter-spacing: 0;
   margin-top: 0.06em;
 }
 
@@ -183,7 +188,7 @@
   pointer-events: none;
 }
 .home-service-image-wrap {
-  border-radius: calc(2 * var(--radius-lg));
+  border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-md);
 }
@@ -209,12 +214,6 @@
   margin: 14px 0 0;
   margin-left: -0.028em;
 }
-.home-how-lede {
-  margin: 0;
-  font-size: var(--text-body);
-  line-height: 28px;
-  max-width: 36ch;
-}
 
 /* the steps themselves are components/ProcessSteps */
 .home-how .process-steps {
@@ -228,14 +227,14 @@
   align-items: start;
 }
 .home-how-photo {
-  border-radius: calc(2 * var(--radius-lg));
+  border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-md);
   background: #fff;
 }
 .home-how-panel {
   background: #fff;
-  border-radius: calc(2 * var(--radius-lg));
+  border-radius: var(--radius-md);
   padding: clamp(22px, 2.5vw, 32px);
   box-shadow: var(--shadow-sm);
 }

@@ -15,9 +15,8 @@
 }
 .kids-hero-title {
   font-size: clamp(36px, 4.6vw, 60px);
-  line-height: 1.04;
-  margin: 14px 0 0;
-  margin-left: -0.028em;
+  /* Top margin comes from `.card-kicker + .page-title` in theme.css. */
+  margin: 0;
   max-width: 16ch;
   text-wrap: balance;
 }
@@ -34,7 +33,7 @@
   margin-top: 26px;
 }
 .kids-hero-image {
-  border-radius: calc(2 * var(--radius-lg));
+  border-radius: var(--radius-md);
   overflow: hidden;
 }
 
@@ -102,14 +101,129 @@
   background: var(--color-accent);
 }
 
+/* — the Little Creators activation: copy, the opening film, then the
+     gallery carousel from the day — */
+.kids-activation {
+  margin-top: clamp(56px, 6vw, 96px);
+}
+.kids-activation .kids-section-title {
+  margin-top: 14px;
+}
+/* the one-line hand-off into the gallery, set apart from the body above it */
+.kids-activation-support {
+  margin: 0;
+  padding-inline-start: 18px;
+  border-inline-start: 2px solid var(--color-accent);
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  font-size: clamp(18px, 1.8vw, 22px);
+  line-height: 1.35;
+  max-width: 44ch;
+  text-wrap: balance;
+}
+.kids-activation-gallery-heading {
+  font-size: clamp(20px, 2vw, 26px);
+  margin: clamp(32px, 4vw, 52px) 0 clamp(16px, 2vw, 24px);
+}
+/* the carousel cards: a picture with its caption under it */
+.kids-activation-shot {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+}
+.kids-activation-shot-image {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.kids-activation-shot-caption {
+  font-size: var(--text-sm);
+  line-height: 22px;
+  opacity: 0.8;
+}
+
+/* — the Two T's feature, on the pale accent band — */
+.kids-two-ts {
+  margin-top: clamp(56px, 6vw, 96px);
+  padding-block: clamp(48px, 5vw, 80px);
+  background: var(--color-accent-100);
+}
+
+/* — the kid-drawn ornament on both beige bands (Doodles.jsx). The bands
+     anchor and clip them, so a doodle can sit half off the edge without
+     ever adding scroll, and the content stays above them. — */
+.kids-note,
+.kids-two-ts {
+  position: relative;
+  overflow: hidden;
+}
+.kids-note > .container,
+.kids-two-ts > .container {
+  position: relative;
+  z-index: 1;
+}
+.kids-doodle {
+  position: absolute;
+  color: var(--color-accent-400);
+  /* ornament — it must never eat a tap meant for the copy */
+  pointer-events: none;
+  z-index: 0;
+}
+/* Both sit partly outside the band's padding, tucked into the corner and
+   tipped off-axis, so they read as dropped on the page rather than placed. */
+.kids-doodle-flower {
+  width: clamp(76px, 9vw, 124px);
+  top: clamp(-14px, -1vw, -8px);
+  inset-inline-end: clamp(16px, 4vw, 72px);
+  transform: rotate(13deg);
+}
+.kids-doodle-sun {
+  width: clamp(66px, 8vw, 104px);
+  bottom: clamp(-12px, -1vw, -6px);
+  inset-inline-start: clamp(12px, 3vw, 56px);
+  transform: rotate(-9deg);
+}
+
+/* Narrow screens have no room beside the copy, so the doodles shrink and
+   tuck further into the corners rather than crowding the text. */
+@media (max-width: 700px) {
+  .kids-doodle-flower { width: 62px; inset-inline-end: 8px; }
+  .kids-doodle-sun { width: 56px; inset-inline-start: 6px; }
+}
+.kids-two-ts-inner {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: clamp(24px, 4vw, 56px);
+}
+.kids-two-ts .kids-section-title {
+  margin-top: 14px;
+}
+/* her sign-off line — the beat the story ends on */
+.kids-two-ts-closing {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  font-size: clamp(19px, 2vw, 24px);
+  line-height: 1.35;
+  text-wrap: balance;
+}
+/* the film sits beside the copy here, so it loses the stacked top margin */
+.kids-two-ts-video {
+  margin-top: 0;
+}
+
 /* — closing call to action — */
 .kids-cta {
   padding-block: clamp(56px, 6vw, 96px) 80px;
 }
 
 @media (max-width: 980px) {
-  .kids-hero { grid-template-columns: minmax(0, 1fr); }
+  .kids-hero,
+  .kids-two-ts-inner { grid-template-columns: minmax(0, 1fr); }
   .kids-offer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* stacked again, so the film takes its standing gap back */
+  .kids-two-ts-video { margin-top: clamp(24px, 3vw, 40px); }
 }
 @media (max-width: 700px) {
   .kids-offer-grid,

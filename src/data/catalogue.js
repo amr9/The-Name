@@ -29,9 +29,15 @@ export const catalogue = [
   { code: 'TN-504', catKey: 'giftSets', brand: site.name, methods: ['engraving', 'print', 'embroidery'] },
 ];
 
-// Gift sets are no longer one of the filters — they have their own section on
-// the Shop page, so they come out of the filtered catalogue and are listed
-// separately below. Everything else stays behind the category filters.
+// Only the GIFT SETS are still rendered. The Shop page's catalogue grid now
+// reads data/storeProducts.js — the real 192-product Odoo export — and its
+// filters come from `storeCategories` there, so `filterKeys` and `pieces`
+// below have no caller. They are kept, with their eleven TN-1xx..TN-4xx
+// entries above and the matching i18n `shop.items` copy and media paths,
+// because they are the only curated, written-up product descriptions on the
+// site and the store export carries nothing like them: it has names, prices
+// and 128px pictures, and no note, finish, lead time or method. Delete them
+// only once something replaces that copy.
 export const giftSetKey = 'giftSets';
 export const filterKeys = ['all', 'drinkware', 'tech', 'desk', 'travel'];
 export const giftSets = catalogue.filter((p) => p.catKey === giftSetKey);

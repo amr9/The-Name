@@ -1,0 +1,309 @@
+/* The product card and the grid it sits in — shared by the Shop catalogue
+   and the Customize Yours page, which is why it lives here rather than in
+   either page's CSS. Both render the same object, so they must not drift.
+   Page-specific spacing stays with the page; everything about the card itself
+   is here. */
+
+/* — the product grid —
+
+   The BASE layout, and no page uses it on its own any more: the Shop page
+   pairs it with `.product-grid-featured` below, and Customize Yours moved to
+   the Carousel. Its auto-fill of 200px tiles is what both pages looked like
+   before the pictures got their real size, and it is kept as the base (and as
+   the small-tile option) rather than folded into the variant.
+
+   auto-fill, not auto-fit, so a nearly-empty shelf keeps the card width it
+   would have in a full one instead of stretching two cards across the page. */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+/* — the showcase treatment —
+
+   Two independent pieces, because they are needed in two combinations: a GRID
+   of three (a named shelf on Shop) and the shared Carousel track (Shop's "All
+   Products", and the whole of Customize Yours). Both put three cards across;
+   only the grid needs its own columns, so only the grid gets a rule here —
+   the carousel's three-across measure is theme.css's `.carousel-card`
+   flex-basis, shared with the Cafe and Kids tracks and not restated.
+
+   `.product-card-showcase` is the PICTURE, and rides on either. It is the one
+   thing all three layouts have in common and the reason it is a card class
+   rather than a descendant selector off the grid. */
+/* The column count comes from CARDS_IN_VIEW, which the page sets on the grid
+   as `--cards-in-view` — the same constant the Carousel gets as `perView` and
+   the Shop page slices its shelf by, so a grid row and a carousel row can
+   never show a different number of cards. The fallback keeps the rule honest
+   if the property is ever missing. */
+.product-grid-featured {
+  grid-template-columns: repeat(var(--cards-in-view, 4), 1fr);
+  gap: var(--space-6);
+}
+/* Cards this wide have nowhere to go on a narrow screen. The steps are the
+   same ones .carousel-card takes, at the same widths, so the two layouts stay
+   in lockstep. They are fixed counts rather than arithmetic on
+   --cards-in-view: what fits on a phone does not follow from what fits on a
+   desktop. */
+@media (max-width: 1200px) {
+  .product-grid-featured { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 1024px) {
+  .product-grid-featured { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+  .product-grid-featured { grid-template-columns: 1fr; }
+}
+
+/* The picture fills its box EDGE TO EDGE — no inset ground around it, and
+   `cover` rather than the small card's `contain`, so there is no letterbox
+   inside the frame. That is the whole difference between this and the tile:
+   at three-across the product is the card, not a stamp in the middle of one.
+
+   The frame's RATIO is square, and the reasoning is in Shop.jsx next to
+   SHOWCASE_RATIO — the catalogue holds both 2:3 portrait and 3:2 landscape
+   photographs, so a square is the only shape that does not gut one of them. */
+.product-card-showcase .product-card-media {
+  padding: 0;
+  background: var(--color-accent-100);
+}
+/* The 3/4 frame itself is NOT set here — ImagePlaceholder writes the ratio as
+   an inline style, which no stylesheet can override, so it comes in as
+   ProductCard's `ratio` prop (SHOWCASE_RATIO in Shop.jsx). Do not try to
+   restate it as a rule; it will silently lose. */
+.product-card-showcase .product-card-media .img-slot {
+  /* No padding to step down from now, so it takes the card's own radius. */
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+.product-card-showcase .product-card-media .img-slot img { object-fit: cover; }
+/* A product with no picture still falls back to <ImagePlaceholder>; it keeps
+   its dashed ground, which needs the inset back or the dashes sit on the
+   card's edge. */
+.product-card-showcase .product-card-media .img-slot-empty {
+  padding: var(--space-4);
+}
+
+/* The name has room for a full line at this width, so it reads at lede size
+   rather than at thumbnail size. */
+.product-card-showcase .product-card-body {
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+.product-card-showcase .product-card-name {
+  font-size: var(--text-lg);
+}
+
+/* The product card. Its LAYOUT is the tile on store.thename.ae — product on a
+   tinted ground, centred name, price beneath, a button across the foot —
+   but the colours are this site's, not the store's: the pale accent tint for
+   the picture's ground and the brand yellow for the button, so a card sits in
+   the same palette as every other surface on the site. Deliberately not
+   copied: the wishlist heart and the compare arrows on that tile, which both
+   need a cart this site does not have.
+
+   EQUAL HEIGHT is the point of the flex chain here: `align-self: stretch`
+   makes every card fill its row, `.product-card-body` takes the slack with
+   `flex: 1`, and the button's `margin-top: auto` pins itself to the floor.
+   Break any one of those links and a one-line name and a two-line name put
+   their buttons at different heights.
+
+   `align-self: stretch` and NOT `height: 100%`, which is what this used to
+   say. In a GRID the two are equivalent, so it looked correct for as long as
+   the grid was the only layout. In the Carousel it is not: `.carousel-track`
+   has auto height, so a percentage height on an item resolves against an
+   indefinite size, falls back to `auto` — and, by being set at all, suppresses
+   the very stretch it was trying to express. Measured before the fix: 461px
+   for a one-line card against 486px for a two-line one, in the same row.
+   `stretch` is the default in both layouts; it is written out because it is
+   load-bearing and was silently lost once already. */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  /* NO `overflow: hidden`. The badge strip hangs past the card's left edge on
+     purpose — that overhang and its fold are what make it read as a ribbon
+     wrapped around the card rather than a label printed on it — and clipping
+     would cut exactly the part that does the work. The media box below rounds
+     its own top corners instead of relying on the card to do it. */
+  /* The shadow is the RESTING state, cast down and to the LEFT — the offset is
+     negative on x and positive on y. Hovering takes it away, so the card
+     settles onto the page instead of lifting off it. That is the reverse of
+     the usual hover-to-raise, and it is why the transition names box-shadow
+     rather than transform: nothing moves, the depth just goes. */
+  box-shadow: -6px 6px 16px color-mix(in srgb, var(--color-black) 13%, transparent);
+  transition: box-shadow 0.18s ease;
+}
+.product-card:hover {
+  color: inherit;
+  box-shadow: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .product-card { transition: none; }
+}
+
+/* The best-seller strip: an EXTRA LAYER over the card, not a band in its
+   flow. Two things follow from that, and both are the point:
+
+   1. It costs the card no height, so a badged card and a plain one keep
+      identical proportions and their names sit on the same line across a row.
+      (The in-flow version pushed the badged card's name down.)
+   2. It can hang past the card's edge. The strip starts OUTSIDE the left edge
+      and a darker fold sits under that overhang, which is what sells it as a
+      ribbon passing around the back of the card rather than a sticker on the
+      front. The card sets no `overflow: hidden` for this reason.
+
+   z-index over the picture, which paints later in source order. */
+.product-card-badge {
+  position: absolute;
+  top: 18px;
+  inset-inline-start: -10px;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+
+  background: var(--color-accent);
+  color: var(--color-black);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  white-space: nowrap;
+  box-shadow: 2px 3px 8px color-mix(in srgb, var(--color-black) 18%, transparent);
+}
+
+/* The fold. A small darker triangle tucked under the overhang, angled back
+   toward the card — the shadow the ribbon would cast on itself where it turns
+   the corner. It is what makes the overhang read as thickness rather than as
+   a strip that has slipped out of place. */
+.product-card-badge::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  top: 100%;
+  border-style: solid;
+  border-width: 0 10px 7px 0;
+  border-color: transparent var(--color-accent-700) transparent transparent;
+}
+/* Mirrored, or the fold would point away from the card it wraps. */
+[dir="rtl"] .product-card-badge::before {
+  border-width: 0 0 7px 10px;
+  border-color: transparent transparent transparent var(--color-accent-700);
+}
+
+/* ...unless the card is in a Carousel. `.carousel-track` is an
+   `overflow-x: auto` box, so it CLIPS, and the 10px the ribbon hangs past the
+   card's start edge is cut off on the leftmost card — which is exactly where
+   the one badged product currently sits. In a track the strip goes flush and
+   the fold goes with it, since the fold exists only to give that overhang
+   thickness. The grid cards keep the ribbon: nothing clips them. */
+.carousel-card.product-card .product-card-badge { inset-inline-start: 0; }
+.carousel-card.product-card .product-card-badge::before { content: none; }
+
+/* The sparkle on the strip's trailing edge. Built from the same vocabulary as
+   .btn-sparkle in theme.css and driven by ITS keyframes — `sparkle-twinkle`
+   is defined there and shared, not redeclared here. Four points of different
+   sizes rather than one star: at this scale a single dot reads as a bullet,
+   a scatter reads as a glint. */
+.product-card-badge::after {
+  content: '';
+  flex: none;
+  width: 16px;
+  height: 16px;
+  background:
+    radial-gradient(circle at 26% 34%, var(--color-black) 0 1.6px, transparent 2.4px),
+    radial-gradient(circle at 66% 22%, var(--color-black) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 78% 68%, var(--color-black) 0 1.3px, transparent 2px),
+    radial-gradient(circle at 38% 78%, var(--color-black) 0 0.9px, transparent 1.6px);
+  animation: sparkle-twinkle 1.6s ease-in-out infinite alternate;
+}
+/* The twinkle is decoration on a label that reads perfectly well without it. */
+@media (prefers-reduced-motion: reduce) {
+  .product-card-badge::after { animation: none; opacity: 0.6; }
+}
+
+/* The picture's ground: the palest step of the accent ramp, the same tint the
+   cards and bands elsewhere on the site sit on. `flex: none` so it keeps its
+   aspect ratio instead of being stretched when a card is taller than its
+   content. */
+.product-card-media {
+  display: block;
+  flex: none;
+  padding: var(--space-3);
+  background: var(--color-accent-100);
+  /* Flush with the card's edge — inset 0, so it takes the card radius as-is.
+     TOP corners only: the card no longer clips (see above), so rounding the
+     bottom two would notch them out against the body beneath. */
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+/* `contain`, where the store uses `cover`. The store serves ~574x748
+   photographs and can afford to crop; these are the 128px thumbnails out of
+   the spreadsheet export, and cropping one cuts the ends off the product.
+   Swap to `cover` if the images are ever re-exported at full size. */
+/* Inset from the card edge by the media box's padding, so the radius steps
+   down by exactly that. */
+.product-card-media .img-slot {
+  background: transparent;
+  border-radius: calc(var(--radius-md) - var(--space-3));
+}
+.product-card-media .img-slot img { object-fit: contain; }
+
+/* The bottom padding is what keeps the button off the floor of the card — it
+   is the only thing between the two, since .product-card clips to its own
+   radius and nothing else pads that edge. */
+.product-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-2);
+  text-align: center;
+}
+/* Exactly two lines: clamped at two so a long name ends in an ellipsis rather
+   than running on, and RESERVED at two so a short one still occupies both.
+   The reservation is what the clamp alone does not give — with only the clamp
+   the cards come out the same height (the chain above sees to that) but the
+   button sits 25px higher under a one-line name than under a two-line one,
+   and a row of cards reads as ragged. `em`, so it tracks whatever font-size
+   the variant sets: the showcase cards are on --text-lg, the small tiles on
+   --text-body, and both reserve two of their OWN lines. Keep the multiplier
+   and `line-height` in step. */
+.product-card-name {
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: 1.35;
+  min-height: calc(1.35em * 2);
+  color: var(--color-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+/* A <span>, not a button or a link — the whole card is already one anchor and
+   nesting another interactive element inside it is invalid. It only has to
+   LOOK like one, so it borrows .btn-primary's colours rather than inventing a
+   third yellow. `margin-top: auto` is what puts it on the floor of every
+   card regardless of how long the name above it ran. */
+.product-card-cta {
+  display: block;
+  width: 100%;
+  margin-top: auto;
+  padding: 9px 12px;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: var(--color-black);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  transition: background 0.18s ease;
+}
+.product-card:hover .product-card-cta { background: var(--color-accent-600); }

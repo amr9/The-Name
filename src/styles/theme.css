@@ -1,6 +1,6 @@
 /* Design tokens + shared component classes — brand palette: primary
-   yellow #FFBD14 on black / gray / white, with Book Antiqua for display
-   headings and Montserrat for body text. Every color/font/spacing/
+   yellow #FFBD14 on black / gray / white, set throughout in Montserrat —
+   regular for body copy, bold for every title and heading. Every color/font/spacing/
    radius/shadow used across pages reads from the variables here — change
    the look by editing this file. */
 
@@ -56,17 +56,24 @@
   /* The footer: brownish black, left to right. */
   --gradient-footer: linear-gradient(to right, var(--color-ink) 0%, var(--color-brown-900) 55%, var(--color-brown-700) 100%);
 
+  /* The panel gradient's pale end of the ramp, on the same 135deg axis as
+     --gradient-accent below. For small tinted surfaces that must not shout —
+     the navbar's current-page pill is the first — where the full accent
+     gradient would fight the type sitting on it. */
+  --gradient-accent-soft: linear-gradient(135deg, var(--color-accent-100) 0%, var(--color-accent-300) 100%);
+
   --gradient-dark: linear-gradient(135deg, var(--color-gray), var(--color-black));
   --gradient-light: linear-gradient(135deg, var(--color-white), var(--color-surface));
   --gradient-accent: linear-gradient(135deg, var(--color-accent), var(--color-accent-400));
 
-  --font-heading: "Book Antiqua", "Palatino Linotype", Palatino, Georgia, serif;
-  --font-heading-weight: 700;
+  /* ONE face for the whole site. --font-heading is no longer a second family
+     — it is the same Montserrat, kept as its own token because ~30 rules name
+     it to mean "this is a title": they get the heading WEIGHT from
+     --font-heading-weight, and a future display face would drop in here
+     without touching any of them. */
   --font-body: "Montserrat", system-ui, sans-serif;
-  /* The signature script (the Home hero's "To Your Name."). Loaded by the
-     @font-face below from public/fonts/; until that file is there it falls
-     back to a system script face. */
-  --font-script: "Artisoul Signature", "Segoe Script", "Brush Script MT", cursive;
+  --font-heading: var(--font-body);
+  --font-heading-weight: 700;
 
   /* Body type scale. Every non-heading run of copy picks one of these —
      never a raw px value — so the whole site's reading size is tuned here.
@@ -88,63 +95,49 @@
      screen exactly. */
   --navbar-h: 64px;
 
-  --radius-sm: 8px;
+  /* How far the floating chat launcher sits from the viewport's corner. A
+     token because two pinned elements now measure off it: the launcher's own
+     button and the nudge bubble that points at it, which has to land beside
+     the button at both values below. */
+  --fab-inset: 24px;
+
+  /* — CORNER RADIUS: there is ONE, and this is it —
+
+     Every rounded surface on the site uses --radius-md, from a product card to
+     a hero panel to a form field. It is deliberately a single token and not a
+     scale: an sm/md/lg trio invites picking a size because it "looks nice
+     here", and that is exactly how the site drifted to six different radii
+     (8, 16, 20, 28, 32.2 and 56px) across its pages. The old --radius-sm and
+     --radius-lg have been removed rather than aliased, so there is nothing
+     left to pick from and no way for the rule to quietly rot.
+
+     THREE exemptions, and only these:
+     1. CAPSULES — buttons, pills, the segmented controls, the search field —
+        stay 999px. They are not rounded rectangles; they are lozenges.
+     2. CIRCLES stay 50% (the carousel arrows, the avatars).
+     3. A surface NESTED INSIDE a rounded one takes the parent's radius minus
+        the parent's padding: `calc(var(--radius-md) - <padding>)`. Concentric
+        boxes only look concentric when the inner radius is the outer one minus
+        the gap. The arithmetic is left unresolved on purpose, so the
+        relationship survives a change to either value.
+
+     One deliberate non-exemption worth knowing: .flag keeps its 2px. It is a
+     hairline on a 14px SVG, not a surface — 16px would turn a flag into a
+     blob. */
   --radius-md: 16px;
-  --radius-lg: 28px;
 
   --shadow-sm: 0 1px 2px color-mix(in srgb, #000000 14%, transparent);
   --shadow-md: 0 3px 10px color-mix(in srgb, #000000 16%, transparent);
   --shadow-lg: 0 12px 32px color-mix(in srgb, #000000 22%, transparent);
 }
 
-/* The guideline (p.14) names exactly three faces and no others: Book Antiqua
-   for display headings, Montserrat for body text, Artisoul Signature for the
-   script line. Montserrat is the only one on a web-font CDN — it loads from
-   Google Fonts in index.html. The other two are licensed faces that are NOT
-   on any CDN, so they render as specified ONLY where the visitor happens to
-   have them installed (Book Antiqua ships with MS Office, so Windows only) or
-   once their files are saved into public/fonts/.
-   Everywhere else the fallback chains below take over, which is why headings
-   can show as Georgia and the script line as a system handwriting face —
-   fonts the guideline never specified. Saving the two files under the names
-   below is the whole fix; no code change is needed.
-     public/fonts/book-antiqua.woff2        (+ -bold.woff2)
-     public/fonts/artisoul-signature.woff2
-   Each @font-face tries the locally installed copy first, then the self-hosted
-   file. Regular and bold are declared separately so an installed Book Antiqua
-   Bold is used as drawn rather than synthesised from the regular. */
-@font-face {
-  font-family: "Book Antiqua";
-  src: local("Book Antiqua"), local("BookAntiqua"),
-    url("/fonts/book-antiqua.woff2") format("woff2"),
-    url("/fonts/book-antiqua.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Book Antiqua";
-  src: local("Book Antiqua Bold"), local("BookAntiqua-Bold"),
-    url("/fonts/book-antiqua-bold.woff2") format("woff2"),
-    url("/fonts/book-antiqua-bold.otf") format("opentype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Artisoul Signature (--font-script) is a licensed script face, not on Google
-   Fonts — save it as public/fonts/artisoul-signature.woff2 (or .otf). A copy
-   installed on the visitor's machine is used first; with neither, the
-   --font-script fallbacks take over. */
-@font-face {
-  font-family: "Artisoul Signature";
-  src: local("Artisoul Signature"),
-    url("/fonts/artisoul-signature.woff2") format("woff2"),
-    url("/fonts/artisoul-signature.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+/* One face, Montserrat, loaded from Google Fonts in index.html — so it renders
+   as drawn on every machine, which is the point of the change: the two faces
+   this file used to carry (Book Antiqua for headings, and before it the script
+   Artisoul Signature) were both licensed, on no CDN, and so only ever appeared
+   on visitors who happened to own them. Everyone else saw Georgia. There are
+   no @font-face rules here any more and public/fonts/ is unused — add nothing
+   back without a webfont the site is licensed to serve. */
 
 *, *::before, *::after { box-sizing: border-box; }
 html, body { height: 100%; }
@@ -178,6 +171,37 @@ h3 { font-size: 25px; }
 h4 { font-size: 20px; }
 h5 { font-size: 16px; }
 h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* The page <h1> on every route. Same Montserrat as everything else, bold like
+   every other heading, and set in ITALIC — the one thing that still separates
+   a page title from the section headings under it. Montserrat's 700 italic is
+   requested in index.html, so it is a real cut, not a synthetic slant. Each
+   page keeps its own font-size clamp / margin / max-width in its own CSS —
+   only what is identical on every page lives here. */
+.page-title {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: var(--font-heading-weight);
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  margin-left: -0.04em;
+}
+/* Arabic has no italic cut, so RTL titles stand upright — and without the
+   slant there is no overhang to pull back with the optical margin. */
+[dir="rtl"] .page-title {
+  font-style: normal;
+  margin-left: 0;
+}
+/* The gap between a kicker and the page title under it, in ONE place. Every
+   page hero is the same pair — a .card-kicker then an h1.page-title — and each
+   used to set its own top margin, which had drifted to four different values
+   (0 on Business and Policies, 13.2 on the 404, 14 on About and Kids, 20 on
+   Shop). The adjacent-sibling selector carries two classes, so it outranks the
+   single-class rule each page uses for its own title and wins wherever the
+   bundle happens to order them. A new page gets the spacing for free; none
+   should set a top margin on its title again. */
+.card-kicker + .page-title { margin-top: var(--space-4); }
+
 p { margin: 0 0 var(--space-3); }
 a { color: var(--color-accent-700); text-decoration: none; text-underline-offset: 3px; }
 a:hover { color: var(--color-accent-800); }
@@ -190,9 +214,15 @@ button { font: inherit; }
 
 .washed { filter: saturate(0.6) contrast(0.85) brightness(1.1) opacity(0.94); }
 
+/* Centres a section and gives it the page gutter. `margin-inline`, NOT
+   `margin: 0 auto` — the shorthand also sets margin-top/bottom to 0, and at
+   equal specificity it silently beat the `margin-top` a section declared for
+   itself whenever that page's CSS was bundled before this file (which is why
+   the Kids offer section sat flush against the hero). Vertical rhythm is the
+   section's own business; this class only handles the horizontal. */
 .container {
   max-width: 1240px;
-  margin: 0 auto;
+  margin-inline: auto;
   padding-inline: clamp(20px, 5vw, 72px);
 }
 
@@ -271,9 +301,39 @@ button { font: inherit; }
 /* — cards — */
 .card {
   display: flex; flex-direction: column; gap: var(--space-2);
-  padding: var(--space-3); border-radius: calc(var(--radius-lg) * 1.15); background: var(--color-surface);
+  padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-surface);
 }
-.card-kicker { font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent-700); }
+/* The section kicker, on every page. It is the pill the Shop hero wore first:
+   an outlined capsule with a pulsing dot, rather than the bare uppercase line
+   it used to be. The dot is a ::before so no page has to add markup for it —
+   `.shop-hero-badge` is now just this class, its dot span deleted.
+   Inline-flex, so it sits on its own line above a heading without the pill
+   stretching to the column width. */
+.card-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-xs);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-accent-700);
+  border: 1px solid var(--color-accent-300);
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+.card-kicker::before {
+  content: '';
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  animation: pulse 2.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-kicker::before { animation: none; }
+}
 .card-title {
   font-family: var(--font-heading); font-weight: var(--font-heading-weight);
   font-size: 17px; line-height: 1.2; margin: 0;
@@ -285,7 +345,7 @@ button { font: inherit; }
 .elev-lg { box-shadow: var(--shadow-lg); }
 
 /* — tags — */
-.tag { display: inline-flex; align-items: center; font-size: var(--text-xs); letter-spacing: 0.02em; padding: 3px 10px; border-radius: calc(var(--radius-md) * 0.75); }
+.tag { display: inline-flex; align-items: center; font-size: var(--text-xs); letter-spacing: 0.02em; padding: 3px 10px; border-radius: var(--radius-md); }
 .tag-accent { background: var(--color-accent-100); color: var(--color-accent-800); }
 
 /* — segmented control — */
@@ -320,11 +380,11 @@ button { font: inherit; }
 .popover {
   display: flex; flex-direction: column; gap: 2px; padding: 8px;
   background: var(--color-white); border: 1px solid var(--color-accent-200);
-  border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-md); box-shadow: var(--shadow-lg);
 }
 .popover-option {
   display: flex; align-items: center; gap: 12px; width: 100%;
-  padding: 10px 12px; border: 0; border-radius: calc(var(--radius-lg) - 6px);
+  padding: 10px 12px; border: 0; border-radius: calc(var(--radius-md) - 6px);
   background: transparent; color: inherit; font-size: var(--text-sm);
   text-align: start; text-decoration: none; cursor: pointer;
 }
@@ -344,7 +404,7 @@ button { font: inherit; }
 /* — dialog — */
 .dialog {
   width: min(440px, 100%); display: flex; flex-direction: column; gap: var(--space-3);
-  padding: var(--space-4); border-radius: calc(var(--radius-lg) * 1.15);
+  padding: var(--space-4); border-radius: var(--radius-md);
   background: var(--color-surface); box-shadow: var(--shadow-lg);
 }
 
@@ -360,10 +420,18 @@ button { font: inherit; }
 .nav a { color: inherit; text-decoration: none; font-size: var(--text-sm); }
 .nav a:hover, .nav a[aria-current='page'] { color: var(--color-accent-700); }
 
-/* — horizontal card carousels (Cafe menu sections, Shop cards view) — */
+/* — horizontal card carousels (Cafe menu sections, Shop and Customize Yours) —
+
+   HOW MANY CARDS ARE IN VIEW is `--carousel-per-view`, set by the Carousel
+   component from its `perView` prop and defaulting to 3 here. The product
+   carousels ask for 4; the Cafe and Kids tracks pass nothing and stay at 3.
+   The gap is a variable for the same reason: the card's flex-basis is the
+   container minus the gaps BETWEEN the cards, so the two numbers have to be
+   derived from each other rather than both hand-maintained. */
 .carousel-track {
   display: flex;
-  gap: 24px;
+  --carousel-gap: 24px;
+  gap: var(--carousel-gap);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
@@ -376,12 +444,24 @@ button { font: inherit; }
 @media (prefers-reduced-motion: reduce) { .carousel-track { scroll-behavior: auto; } }
 
 .carousel-card {
-  flex: 0 0 calc((100% - 48px) / 3);
+  /* n cards and (n - 1) gaps fill the track exactly. */
+  --carousel-n: var(--carousel-per-view, 3);
+  flex: 0 0 calc((100% - var(--carousel-gap) * (var(--carousel-n) - 1)) / var(--carousel-n));
   scroll-snap-align: start;
   transition: transform 0.45s cubic-bezier(.22,.61,.36,1), box-shadow 0.45s ease;
 }
+/* The steps down. They override `flex` DIRECTLY rather than lowering
+   --carousel-per-view, and they have to: that variable arrives as an inline
+   style from the component, which no stylesheet rule can outrank. Hence the
+   !important, which was already here for the same reason.
+   A 4-up track steps through 3 before it reaches 2, or the cards jump from
+   cramped to enormous. For the 3-up tracks this first step is a no-op — it
+   asks for the width they already have. */
+@media (max-width: 1200px) {
+  .carousel-card { flex: 0 0 calc((100% - var(--carousel-gap) * 2) / 3) !important; }
+}
 @media (max-width: 1024px) {
-  .carousel-card { flex: 0 0 calc((100% - 24px) / 2) !important; }
+  .carousel-card { flex: 0 0 calc((100% - var(--carousel-gap)) / 2) !important; }
 }
 @media (max-width: 700px) {
   .carousel-card { flex: 0 0 88% !important; }
@@ -400,6 +480,12 @@ button { font: inherit; }
    Note the transform only exists while the animation runs and settles at
    `none`, so it never becomes a lasting containing block for any fixed-
    position descendant — do not give .page-enter a permanent transform. */
+/* Put this on anything a #hash link points at. The navbar is sticky, so a
+   target scrolled to its own top lands underneath the bar; this leaves the
+   bar's height plus a little air above it. hooks/useScrollToTop.js reads the
+   value back off the element, so the offset is set here and nowhere else. */
+.scroll-anchor { scroll-margin-top: calc(var(--navbar-h) + var(--space-6)); }
+
 .page-enter {
   animation: page-enter 260ms cubic-bezier(.22,.61,.36,1) both;
 }
@@ -418,7 +504,12 @@ button { font: inherit; }
   .row-text, .row-img { order: 0 !important; }
 }
 @media (max-width: 700px) {
-  .nav { flex-wrap: wrap; row-gap: 10px; padding-block: 12px; }
-  .nav-brand { width: 100%; }
+  /* The bar used to wrap to two rows here; the pages now fold into the
+     navbar's dropdown instead, so it stays a single row at every width. */
   .seg { flex-wrap: wrap; }
+}
+@media (max-width: 480px) {
+  /* Phones pull the floating launcher (and the bubble beside it) in to the
+     tighter corner inset. */
+  :root { --fab-inset: 16px; }
 }

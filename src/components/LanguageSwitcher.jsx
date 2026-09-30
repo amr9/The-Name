@@ -1,5 +1,6 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import Flag from './Flag.jsx';
 import { languages } from '../i18n/languages.js';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
 import './LanguageSwitcher.css';
@@ -10,7 +11,7 @@ const GAP = 10;
 const EDGE = 12;
 // First-pass width estimate, before the menu exists to measure. Keep in step
 // with min-width in LanguageSwitcher.css.
-const MIN_W = 232;
+const MIN_W = 262;
 
 /**
  * The language menu.
@@ -105,11 +106,12 @@ export default function LanguageSwitcher() {
         aria-expanded={open}
         aria-haspopup="listbox"
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.75" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="9" />
-          <path d="M3 12h18" />
-          <path d="M12 3c2.6 2.4 4 5.5 4 9s-1.4 6.6-4 9c-2.6-2.4-4-5.5-4-9s1.4-6.6 4-9z" />
-        </svg>
+        {/* The globe this replaced said "you can change language"; the flag
+            says which one you are reading, which is the thing a visitor who
+            has already switched needs to see. The code stays beside it — a
+            flag alone is a guess, and EN/FR/ES all fly a flag whose language
+            is not obvious from it. */}
+        <Flag code={lang} />
         {lang}
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.75" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }}>
           <path d="M6 9l6 6 6-6" />
@@ -131,6 +133,7 @@ export default function LanguageSwitcher() {
                 className="popover-option lang-switcher-option"
                 onClick={() => { setLang(l.code); setOpen(false); }}
               >
+                <Flag code={l.code} />
                 <span className="lang-switcher-code">{l.code}</span>
                 <span className="lang-switcher-name">{l.name}</span>
                 <span className="lang-switcher-check">{lang === l.code ? '✓' : ''}</span>

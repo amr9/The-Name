@@ -101,3 +101,46 @@ export const shopIcons = [
     <path d="M2 15.8h13.5c3 0 5.6.9 6.5 2.6H2v-2.6Z" />
   </>,
 ];
+
+// Kids: the squiggly, made-by-them things. A few of these carry a stroked
+// squiggle (a balloon string, a kite tail) rather than being pure fill —
+// those paths set their own stroke/fill, which overrides the <svg>'s
+// fill="currentColor" for that shape only.
+export const kidsIcons = [
+  BRAND_MARK,
+  // crayon
+  <>
+    <path d="M12 1.6 15.6 7H8.4L12 1.6Z" />
+    <rect x="8.4" y="8" width="7.2" height="14" rx="1.6" />
+    <rect x="8.4" y="12" width="7.2" height="1.6" fill="#fff" />
+  </>,
+  // balloon on a squiggly string
+  <>
+    <ellipse cx="12" cy="8.4" rx="5.4" ry="6.4" />
+    <path d="M10.8 14.8h2.4L12 16.8l-1.2-2Z" />
+    <path d="M12 17c-1.7 1.3 1.7 2.5 0 3.8s1.2 1.9 0 2.6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" fill="none" />
+  </>,
+  // star
+  <>
+    <path d="m12 2.6 2.7 5.9 6.4.7-4.8 4.3 1.3 6.3L12 16.6l-5.6 3.2 1.3-6.3L2.9 9.2l6.4-.7L12 2.6Z" />
+  </>,
+  // kite with a squiggly tail
+  <>
+    <path d="M12 1.8 19.2 9 12 16.2 4.8 9 12 1.8Z" />
+    <path d="M12 16.6c-1.5 1.1 1.5 2.2 0 3.3s1.5 2.2 0 3.3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" fill="none" />
+  </>,
+  // heart — the Hearts collection, and the shape every kid draws first
+  <>
+    <path d="M12 21.2S3.4 15.8 3.4 10.2A4.8 4.8 0 0 1 12 7.2a4.8 4.8 0 0 1 8.6 3c0 5.6-8.6 11-8.6 11Z" />
+  </>,
+  // pencil
+  <>
+    <path d="m16.8 2.6 4.6 4.6-2.2 2.2-4.6-4.6 2.2-2.2Z" />
+    <path d="M13.4 6 18 10.6 7.8 20.8l-5.4.8.8-5.4L13.4 6Z" />
+  </>,
+  // paper plane
+  <>
+    <path d="M22 2 2 11.4l7.8 2.8L22 2Z" />
+    <path d="M22 2 11.4 15.2l.4 6.8L22 2Z" fill="#fff" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+  </>,
+];

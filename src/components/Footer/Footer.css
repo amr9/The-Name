@@ -6,7 +6,8 @@
   color: var(--color-white);
 }
 
-/* Logo on one side, socials on the other; they stack and centre on phones. */
+/* Brand block (logo + the legal documents beside it) on one side, socials on
+   the other; they stack and centre on phones. */
 .footer-inner {
   display: flex;
   flex-wrap: wrap;
@@ -14,6 +15,47 @@
   justify-content: space-between;
   gap: var(--space-4) var(--space-6);
   padding-block: var(--space-8) var(--space-6);
+}
+
+/* The legal documents sit BESIDE the logo, not under it. `row` rather than a
+   left margin, so RTL mirrors it to the logo's other side for free. They wrap
+   onto their own line before the flex row squeezes either one. */
+.footer-brand {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4) var(--space-8);
+}
+
+.footer-policies-heading {
+  font-size: var(--text-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-white) 60%, transparent);
+  margin: 0 0 var(--space-2);
+}
+
+.footer-policies-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* On the dark ground the links are white, not the accent brown `a` carries on
+   white pages — and the accent is what the hover moves them toward. */
+.footer-policies-link {
+  color: color-mix(in srgb, var(--color-white) 88%, transparent);
+  font-size: var(--text-sm);
+  transition: color 0.16s ease;
+}
+.footer-policies-link:hover,
+.footer-policies-link:focus-visible {
+  color: var(--color-accent);
+  text-decoration: underline;
 }
 
 .footer ::selection {
@@ -31,8 +73,18 @@
 @media (max-width: 700px) {
   .footer-inner {
     flex-direction: column;
+    align-items: center;
     justify-content: center;
     padding-block: var(--space-6) var(--space-4);
   }
+  /* Phones have no room for the pair side by side, so the list goes back under
+     the logo — and everything centres, since a left-aligned list under a
+     centred logo reads as a mistake. */
+  .footer-brand {
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer-policies { text-align: center; }
+  .footer-policies-list { align-items: center; }
   .footer-bottom { text-align: center; }
 }

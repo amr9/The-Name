@@ -23,8 +23,11 @@
   line-height: 28px;
   max-width: 44ch;
 }
+/* Four details now rather than two, so they pair up on anything wide enough
+   instead of running as one tall column beside a short form. */
 .contact-details {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: var(--space-4);
   margin: var(--space-8) 0;
 }
@@ -44,12 +47,48 @@
   text-underline-offset: 3px;
 }
 
+/* The address link: the street line reads as text, and the cue under it is
+   what says the tap goes somewhere. Only the cue is underlined — underlining
+   a three-line address turns it into a wall of rules. */
+.contact-detail a.contact-map-link {
+  display: inline-block;
+  text-decoration: none;
+}
+.contact-map-cue {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-accent-700);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* The arrow points the way the line runs, so it flips with the direction. */
+.contact-map-cue::after {
+  content: ' →';
+  display: inline-block;
+}
+[dir="rtl"] .contact-map-cue::after { content: ' ←'; }
+.contact-map-link:hover .contact-map-cue { color: var(--color-accent-800); }
+
+/* The registered entity, in the small print under the WhatsApp button — it is
+   there to be findable, not read. */
+.contact-entity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: var(--space-4) 0 0;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--color-text) 62%, transparent);
+}
+
 /* — right column: the form — */
 .contact-form {
   display: grid;
   gap: var(--space-4);
   padding: clamp(20px, 3vw, 36px);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   background: var(--color-accent-100);
   border: 1px solid var(--color-divider);
 }
@@ -79,7 +118,7 @@
   color: var(--color-text);
   background: var(--color-white);
   border: 1px solid var(--color-divider);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .contact-input::placeholder {
@@ -112,7 +151,7 @@ textarea.contact-input {
   color: var(--color-danger);
   background: color-mix(in srgb, var(--color-danger) 8%, transparent);
   border: 1px solid color-mix(in srgb, var(--color-danger) 35%, transparent);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   padding: 10px 12px;
 }
 /* The bot trap: removed from layout without display:none, which some
@@ -133,7 +172,7 @@ textarea.contact-input {
   gap: var(--space-3);
   max-width: 52ch;
   padding: clamp(28px, 4vw, 56px);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   background: var(--color-accent-100);
   border: 1px solid var(--color-divider);
 }

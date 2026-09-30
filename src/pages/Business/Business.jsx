@@ -3,7 +3,7 @@ import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import PackagesPanel from '../../components/PackagesPanel/PackagesPanel.jsx';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import { brandingOffers, cateringPackageIds } from './data.js';
+import { brandingOffers } from './data.js';
 import './Business.css';
 
 export default function Business() {
@@ -12,8 +12,11 @@ export default function Business() {
   return (
     <div className="container business-page">
       <span className="card-kicker">{t.business.kicker}</span>
-      <h1 className="business-title">{t.business.title}</h1>
+      <h1 className="page-title business-title">{t.business.title}</h1>
       <p className="business-intro">{t.business.intro}</p>
+      <div className="business-hero-actions">
+        <WhatsAppButton className="btn btn-primary">{t.business.ctaEnquiry}</WhatsAppButton>
+      </div>
 
       {/* — what we brand for companies — */}
       <section className="business-offer">
@@ -52,15 +55,17 @@ export default function Business() {
       </section>
 
       {/* — catering: the kitchen at your address. Events held here are on /cafe — */}
-      <section id="catering" className="business-catering">
+      <section id="catering" className="scroll-anchor business-catering">
         <span className="card-kicker">{t.business.catering.kicker}</span>
         <h2 className="business-catering-title">{t.business.catering.heading}</h2>
         <p className="business-section-lede">{t.business.catering.lede}</p>
 
+        {/* No packageIds: the packages table was removed from this page, so
+            the panel is the image and the direct-line enquiry only. Cafe still
+            passes its own ids and gets the full panel. */}
         <PackagesPanel
           image={media.business.catering}
           content={t.business.catering}
-          packageIds={cateringPackageIds}
           labels={t.packages}
         />
       </section>

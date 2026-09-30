@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { socials } from '../../data/site.js';
 import './SocialLinks.css';
 
@@ -15,23 +16,46 @@ const ICONS = {
   tiktok: <path d="M9.5 13.2a3.9 3.9 0 1 0 3.9 3.9V2.8c.6 2.9 2.9 5 5.8 5.2" />,
 };
 
+function Glyph({ name }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      {ICONS[name]}
+    </svg>
+  );
+}
+
 export default function SocialLinks() {
   return (
     <div className="social-links">
       {socials.map((s) => (
-        <a
-          key={s.key}
-          href={s.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="social-link"
-          aria-label={s.label}
-          title={s.label}
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            {ICONS[s.key]}
-          </svg>
-        </a>
+        // Which element an icon is comes from the DATA, not from a list of
+        // exceptions here: an account with a `url` is a real profile and opens
+        // in a new tab; one with a `to` has no account published yet and stays
+        // in the app, where the `*` route renders the 404. Adding the real
+        // handle to data/site.js is the whole change — see the note there.
+        s.url ? (
+          <a
+            key={s.key}
+            href={s.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-link"
+            aria-label={s.label}
+            title={s.label}
+          >
+            <Glyph name={s.key} />
+          </a>
+        ) : (
+          <Link
+            key={s.key}
+            to={s.to}
+            className="social-link"
+            aria-label={s.label}
+            title={s.label}
+          >
+            <Glyph name={s.key} />
+          </Link>
+        )
       ))}
     </div>
   );
