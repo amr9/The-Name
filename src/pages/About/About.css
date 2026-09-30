@@ -58,50 +58,14 @@
   text-wrap: balance;
 }
 
-/* — the story timeline. Each chapter is copy + one image slot; the pair
-     swaps sides on every second chapter so the page zig-zags. The left
-     rule is the through-line that ties the chapters together. — */
-/* — the memory lane —
-
-   One rail down the whole section with the chapters hanging off it. The rail
-   is a ::before on the section rather than a border on each chapter, so it is
-   CONTINUOUS: a per-chapter line would break at every gap, which is the one
-   thing a timeline must not do.
-
-   It is inset by half the marker's width so it runs down the middle of the
-   chapters' gutter, and it stops short at both ends — the gradient fades it out over
-   the first and last few percent, so the line begins at 1990 and ends at
-   today rather than running off into the page. */
+/* — the story: 1990 → the next chapter → today, as a plain column of
+     chapters. It used to be a timeline with a rail down the left and a round
+     thumbnail per chapter on it; both were removed, so the chapters now sit
+     flush with the rest of the page. — */
 .about-story {
-  position: relative;
   display: flex;
   flex-direction: column;
   gap: clamp(40px, 5vw, 72px);
-}
-.about-story::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  inset-inline-start: calc(var(--about-marker) / 2 - 1px);
-  width: 2px;
-  background: linear-gradient(
-    to bottom,
-    transparent 0,
-    var(--color-accent-300) 6%,
-    var(--color-accent-300) 94%,
-    transparent 100%
-  );
-}
-
-/* The gutter the rail runs down: the rail is centred on it above, and the
-   copy starts after it. It used to hold a round thumbnail per chapter; those
-   were removed, so it is now just the rail's lane. */
-.about-story { --about-marker: 48px; }
-
-.about-chapter {
-  position: relative;
-  padding-inline-start: calc(var(--about-marker) + clamp(8px, 2vw, 24px));
 }
 .about-chapter-headline {
   font-size: clamp(26px, 3vw, 38px);
@@ -389,7 +353,4 @@
   /* one column: the image goes back under the copy in every chapter, so
      the zig-zag does not leave a stray picture above its own heading */
   .about-tagline-card { grid-template-columns: minmax(0, 1fr); }
-  /* The lane narrows rather than unstacking: a timeline that loses its rail on
-     a phone stops being a timeline. */
-  .about-story { --about-marker: 32px; }
 }

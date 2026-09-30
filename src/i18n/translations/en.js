@@ -155,7 +155,7 @@ export default {
               'Please review your personalization carefully before placing your order. You are responsible for checking the accuracy of all information you submit, including spelling, names, initials, dates, messages and uploaded artwork.',
               'If an item is produced correctly according to the personalization submitted and approved by you, THE NAME is not responsible for errors contained in the information you provided. Any requested remake in such circumstances may be subject to additional charges.',
               'If THE NAME produces an item incorrectly or differently from the personalization approved by you, please contact us and we will arrange an appropriate replacement, remake or other remedy.',
-              'Requests to amend personalization after an order has been submitted may be accommodated only where production has not yet started. Once production has begun, changes may no longer be possible.',
+              'Changes after checkout: Any changes should be received within 24 hours of receiving the order/checkout.',
             ],
           },
           artwork: {
@@ -178,10 +178,10 @@ export default {
             heading: 'Delivery',
             blocks: [
               'THE NAME currently delivers within the United Arab Emirates only, covering all seven Emirates.',
-              'The standard UAE delivery fee is AED 30 per order. Orders are normally delivered 1–2 business days after production is completed.',
+              'Standard UAE delivery fee: AED 30. For orders more than AED 200, delivery is free.',
+              'Estimated delivery timeframe: 1–2 business days after production is completed. For customized products, it will take 3–4 days.',
               "Delivery estimates are provided in good faith and may be affected by circumstances outside THE NAME's reasonable control.",
-              'A minimum order value for free delivery will be confirmed and published here.',
-              'Customers may have the option to collect their completed order free of charge from THE NAME at Dubai CommerCity, Dubai.',
+              'Collection: Customers may have the option to collect their completed order free of charge from THE NAME at Dubai CommerCity, Dubai.',
               'Full delivery information is in the Delivery & Returns Policy below.',
             ],
           },
@@ -301,9 +301,14 @@ export default {
             heading: 'Delivery Across the UAE',
             blocks: [
               'We currently deliver within the UAE only, covering all seven Emirates.',
-              'Delivery is AED 30 per order, and your order normally arrives approximately 1–2 business days after production is completed.',
+              'Delivery fee: AED 30 per order.',
+              'Delivery timeframe:',
+              { list: [
+                'Approximately 1–2 business days after production is completed.',
+                '3–4 days for customized products.',
+              ] },
               'Delivery estimates are provided in good faith and may occasionally be affected by circumstances outside our reasonable control.',
-              'A minimum order value for free delivery will be confirmed and published here.',
+              'Free delivery: Orders of AED 200 and above qualify for free delivery.',
             ],
           },
           collection: {

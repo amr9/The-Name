@@ -30,15 +30,9 @@ export default function About() {
         <p className="about-hero-support">{a.heroSupport}</p>
       </header>
 
-      {/* — the timeline: 1990 → the next chapter → today, walked as a memory
-          lane rather than read as three blocks. A single rail runs down the
-          whole section and every chapter's copy hangs off it. There is no
-          artwork on the line: the round thumbnails that sat on it were
-          removed, so the rail alone carries the journey.
-
-          The rail is drawn by CSS on the section and the markers, so the
-          markup is just chapters in order — nothing here knows it is first or
-          last, and adding a chapter to storyChapters extends the line. — */}
+      {/* — the story: 1990 → the next chapter → today, one chapter per id
+          in storyChapters. It used to be a timeline with a rail and round
+          thumbnails; both were removed, so it is now plain copy in order. — */}
       <section className="container about-story">
         {storyChapters.map((id) => {
           const c = a.story[id];

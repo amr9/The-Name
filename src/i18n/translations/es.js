@@ -131,7 +131,7 @@ export default {
               'Revisa tu personalización con atención antes de realizar el pedido. Es tu responsabilidad comprobar la exactitud de toda la información que envías, incluidas la ortografía, los nombres, las iniciales, las fechas, los mensajes y las imágenes cargadas.',
               'Si un artículo se produce correctamente conforme a la personalización enviada y aprobada por ti, THE NAME no es responsable de los errores contenidos en la información que facilitaste. Cualquier repetición solicitada en esas circunstancias puede conllevar cargos adicionales.',
               'Si THE NAME produce un artículo de forma incorrecta o distinta de la personalización que aprobaste, contáctanos y gestionaremos la sustitución, la repetición u otra solución adecuada.',
-              'Las solicitudes de modificar la personalización después de enviar un pedido solo pueden atenderse si la producción aún no ha comenzado. Una vez iniciada la producción, los cambios pueden dejar de ser posibles.',
+              'Cambios después del pago: cualquier cambio debe recibirse dentro de las 24 horas siguientes a la recepción del pedido o al pago.',
             ],
           },
           artwork: {
@@ -154,10 +154,10 @@ export default {
             heading: 'Envíos',
             blocks: [
               'Actualmente THE NAME solo realiza envíos dentro de los Emiratos Árabes Unidos, cubriendo los siete emiratos.',
-              'La tarifa de envío estándar en los EAU es de 30 AED por pedido. Los pedidos se entregan normalmente entre 1 y 2 días laborables después de finalizada la producción.',
+              'Tarifa de envío estándar en los EAU: 30 AED. Para pedidos de más de 200 AED, el envío es gratuito.',
+              'Plazo de entrega estimado: entre 1 y 2 días laborables después de finalizada la producción. Para los productos personalizados, el plazo es de 3 a 4 días.',
               'Las estimaciones de entrega se facilitan de buena fe y pueden verse afectadas por circunstancias ajenas al control razonable de THE NAME.',
-              'El importe mínimo de pedido para el envío gratuito se confirmará y se publicará aquí.',
-              'Los clientes pueden tener la opción de recoger gratuitamente su pedido terminado en THE NAME, en Dubai CommerCity, Dubái.',
+              'Recogida: los clientes pueden tener la opción de recoger gratuitamente su pedido terminado en THE NAME, en Dubai CommerCity, Dubái.',
               'Toda la información de envío está en la Política de envíos y devoluciones que figura más abajo.',
             ],
           },
@@ -277,9 +277,14 @@ export default {
             heading: 'Envíos a todos los Emiratos',
             blocks: [
               'Actualmente enviamos solo dentro de los EAU, cubriendo los siete emiratos.',
-              'El envío cuesta 30 AED por pedido y tu pedido llega normalmente entre 1 y 2 días laborables después de finalizada la producción.',
+              'Tarifa de envío: 30 AED por pedido.',
+              'Plazo de entrega:',
+              { list: [
+                'Aproximadamente entre 1 y 2 días laborables después de finalizada la producción.',
+                'De 3 a 4 días para los productos personalizados.',
+              ] },
               'Las estimaciones de entrega se facilitan de buena fe y en ocasiones pueden verse afectadas por circunstancias ajenas a nuestro control razonable.',
-              'El importe mínimo de pedido para el envío gratuito se confirmará y se publicará aquí.',
+              'Envío gratuito: los pedidos de 200 AED o más tienen envío gratuito.',
             ],
           },
           collection: {

@@ -130,7 +130,7 @@ export default {
               "Veuillez vérifier attentivement votre personnalisation avant de passer commande. Il vous appartient de contrôler l'exactitude de toutes les informations que vous transmettez, y compris l'orthographe, les noms, les initiales, les dates, les messages et les visuels envoyés.",
               "Si un article est produit conformément à la personnalisation que vous avez transmise et approuvée, THE NAME n'est pas responsable des erreurs contenues dans les informations que vous avez fournies. Toute refabrication demandée dans ces circonstances peut faire l'objet de frais supplémentaires.",
               "Si THE NAME produit un article de manière incorrecte ou différente de la personnalisation que vous avez approuvée, contactez-nous : nous organiserons un remplacement, une refabrication ou une autre solution appropriée.",
-              "Les demandes de modification de la personnalisation après l'envoi d'une commande ne peuvent être satisfaites que si la production n'a pas encore commencé. Une fois la production lancée, les modifications ne sont plus nécessairement possibles.",
+              "Modifications après le paiement : toute modification doit nous parvenir dans les 24 heures suivant la réception de la commande ou le paiement.",
             ],
           },
           artwork: {
@@ -153,10 +153,10 @@ export default {
             heading: 'Livraison',
             blocks: [
               "THE NAME livre actuellement uniquement au sein des Émirats arabes unis, dans les sept émirats.",
-              "Les frais de livraison standard aux Émirats arabes unis sont de 30 AED par commande. Les commandes sont normalement livrées 1 à 2 jours ouvrés après la fin de la production.",
-              "Les estimations de livraison sont fournies de bonne foi et peuvent être affectées par des circonstances échappant au contrôle raisonnable de THE NAME.",
-              "Un montant minimum de commande donnant droit à la livraison gratuite sera confirmé et publié ici.",
-              "Les clients peuvent avoir la possibilité de retirer gratuitement leur commande terminée auprès de THE NAME à Dubai CommerCity, Dubaï.",
+              'Frais de livraison standard aux Émirats arabes unis : 30 AED. Pour les commandes de plus de 200 AED, la livraison est gratuite.',
+              'Délai de livraison estimé : 1 à 2 jours ouvrés après la fin de la production. Pour les produits personnalisés, il faut compter 3 à 4 jours.',
+              'Les estimations de livraison sont fournies de bonne foi et peuvent être affectées par des circonstances échappant au contrôle raisonnable de THE NAME.',
+              'Retrait : les clients peuvent avoir la possibilité de retirer gratuitement leur commande terminée auprès de THE NAME à Dubai CommerCity, Dubaï.',
               "L'ensemble des informations de livraison figure dans la Politique de livraison et de retours ci-dessous.",
             ],
           },
@@ -276,9 +276,14 @@ export default {
             heading: 'Livraison dans tous les Émirats',
             blocks: [
               "Nous livrons actuellement uniquement aux Émirats arabes unis, dans les sept émirats.",
-              "La livraison coûte 30 AED par commande et votre commande arrive normalement 1 à 2 jours ouvrés environ après la fin de la production.",
-              "Les estimations de livraison sont fournies de bonne foi et peuvent occasionnellement être affectées par des circonstances échappant à notre contrôle raisonnable.",
-              "Un montant minimum de commande donnant droit à la livraison gratuite sera confirmé et publié ici.",
+              'Frais de livraison : 30 AED par commande.',
+              'Délai de livraison :',
+              { list: [
+                'Environ 1 à 2 jours ouvrés après la fin de la production.',
+                '3 à 4 jours pour les produits personnalisés.',
+              ] },
+              'Les estimations de livraison sont fournies de bonne foi et peuvent occasionnellement être affectées par des circonstances échappant à notre contrôle raisonnable.',
+              'Livraison gratuite : les commandes de 200 AED et plus bénéficient de la livraison gratuite.',
             ],
           },
           collection: {
