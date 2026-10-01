@@ -10,8 +10,8 @@
 // also its image filename) with a badge key. To remove one: delete the line.
 // A product with no entry here simply has no badge, which is the default.
 //
-// Badge keys map to i18n `shop.badges.<key>`, so the label is translated in all
-// four languages rather than typed in here.
+// Badge keys map to i18n `shop.badges.<key>`, so the label is translated in both
+// languages rather than typed in here.
 export const productBadges = {
   'castelli-milano-1938-a5-appeel': 'bestSeller',
 };

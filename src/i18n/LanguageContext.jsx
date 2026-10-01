@@ -1,11 +1,11 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { languages } from './languages.js';
 import en from './translations/en.js';
-import fr from './translations/fr.js';
-import es from './translations/es.js';
 import ar from './translations/ar.js';
 
-const DICTS = { EN: en, FR: fr, ES: es, AR: ar };
+// French and Spanish were removed. A visitor who had saved FR or ES falls
+// back to English, because the stored code is checked against DICTS below.
+const DICTS = { EN: en, AR: ar };
 const DIRS = Object.fromEntries(languages.map((l) => [l.code, l.dir]));
 const STORAGE_KEY = 'the-name.lang';
 const DEFAULT_LANG = 'EN';

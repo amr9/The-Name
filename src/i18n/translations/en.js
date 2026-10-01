@@ -111,15 +111,15 @@ export default {
   // entity, the two addresses and the location now live in the enquiry block
   // at the foot of /about (components/ContactForm/), under `contact` above.
   //
-  // TRANSLATED IN ALL FOUR LANGUAGES (fr.js, es.js, ar.js). Because these are
-  // binding consumer terms and four versions can be read against each other,
-  // ENGLISH IS THE CONTROLLING VERSION and every other locale says so in
-  // `translationNote` — which is why that key is EMPTY here: the note is only
-  // rendered where it is non-empty, so it appears in fr/es/ar and not on the
-  // English page. Keep the key structure identical across the four files; a key
-  // missing from a translation falls back to this English text silently, which
-  // on a legal page reads as a clause in the wrong language rather than as a
-  // bug — so a reviewed change to any clause has to be made in all four files.
+  // TRANSLATED INTO ARABIC (ar.js). Because these are binding consumer terms
+  // and the two versions can be read against each other, ENGLISH IS THE
+  // CONTROLLING VERSION and the Arabic says so in `translationNote` — which is
+  // why that key is EMPTY here: the note is only rendered where it is
+  // non-empty, so it appears in Arabic and not on the English page. Keep the
+  // key structure identical across both files; a key missing from ar.js falls
+  // back to this English text silently, which on a legal page reads as a
+  // clause in the wrong language rather than as a bug — so a reviewed change
+  // to any clause has to be made in both files.
   // ───────────────────────────────────────────────────────────────────────────
   policies: {
     kicker: 'Legal',
@@ -128,7 +128,7 @@ export default {
     updated: 'Last updated: September 2026',
     tocHeading: 'On this page',
     // Empty on purpose — English IS the controlling version, so it carries no
-    // "this is a translation" note. fr/es/ar fill it in, and the page only
+    // "this is a translation" note. ar.js fills it in, and the page only
     // renders the line when it is non-empty.
     translationNote: '',
     // The line that closes the page, in place of the contact block that used
@@ -572,7 +572,7 @@ export default {
       },
       // PLACEHOLDER copy for rows 03 and 04 — English only on purpose: the
       // other languages fall through to these via deepMerge until the real
-      // text is written, and then it goes into all four files.
+      // text is written, and then it goes into both files.
       serviceThree: {
         kicker: 'Service three', title: 'Service Three Title',
         placeholder: 'Service three image',

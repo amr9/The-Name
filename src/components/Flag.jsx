@@ -1,5 +1,5 @@
 /**
- * The four language flags, drawn inline.
+ * The two language flags, drawn inline.
  *
  * They are SVG and not emoji on purpose: Windows ships no flag glyphs, so
  * "🇦🇪" renders there as the bare letters "AE" — the one place a flag has to
@@ -13,7 +13,7 @@
  * the Arabic reader rather than any pan-Arab alternative.
  */
 
-// 60×40 (3:2) for all four, so they line up in the menu at one size.
+// 60×40 (3:2) for both, so they line up in the menu at one size.
 const FLAGS = {
   EN: (
     <>
@@ -34,19 +34,6 @@ const FLAGS = {
       <rect y="0" width="60" height="13.34" fill="#00732F" />
       <rect y="26.66" width="60" height="13.34" fill="#000" />
       <rect width="15" height="40" fill="#FF0000" />
-    </>
-  ),
-  FR: (
-    <>
-      <rect width="60" height="40" fill="#fff" />
-      <rect width="20" height="40" fill="#002395" />
-      <rect x="40" width="20" height="40" fill="#ED2939" />
-    </>
-  ),
-  ES: (
-    <>
-      <rect width="60" height="40" fill="#AA151B" />
-      <rect y="10" width="60" height="20" fill="#F1BF00" />
     </>
   ),
 };

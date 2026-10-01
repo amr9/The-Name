@@ -102,6 +102,10 @@
    added or a label renamed — a sixth link cost ~110px and pushed the
    hamburger breakpoint up by 100px.
 
+   NOTE: French (the widest set) and Spanish have since been removed, and the
+   bar is now seven UPPERCASE links, so the figures above are historical —
+   re-measure in EN and AR before tuning these breakpoints.
+
    The range is bounded at BOTH ends on purpose: below 801px the row is a
    dropdown with room to spare, and it should keep the full-size type and the
    full-size logo rather than inherit a squeeze meant for a cramped row. */

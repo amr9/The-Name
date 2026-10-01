@@ -26,8 +26,8 @@ import { mailTo, verifyTransport, closeMailer } from './mailer.js';
 import { startWorker, wakeWorker, stopWorker } from './queue.js';
 
 // — messages for the error keys the validators return —
-// The browser has its own translated copy of each (contact.errors.*, in all
-// four languages) and prefers it; these are for anyone calling the API
+// The browser has its own translated copy of each (contact.errors.*, in both
+// languages) and prefers it; these are for anyone calling the API
 // directly, and are the reason the response carries both.
 const ERROR_TEXT = {
   required: 'This field is required.',

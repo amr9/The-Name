@@ -23,7 +23,7 @@ across two pages). This skill exists so that doesn't keep happening.
    - A hardcoded color/font/spacing value → use the existing CSS custom
      property from `theme.css`, or add a new token there if genuinely new.
    - Display text (any string a user reads) → belongs in
-     `src/i18n/translations/{en,fr,es,ar}.js`, never inline in JSX or in a
+     `src/i18n/translations/{en,ar}.js`, never inline in JSX or in a
      page's `data.js`.
    If you find an existing match, reuse or extend it. Only write a new
    version when nothing close already exists.

@@ -109,8 +109,8 @@ export default function LanguageSwitcher() {
         {/* The globe this replaced said "you can change language"; the flag
             says which one you are reading, which is the thing a visitor who
             has already switched needs to see. The code stays beside it — a
-            flag alone is a guess, and EN/FR/ES all fly a flag whose language
-            is not obvious from it. */}
+            flag alone is a guess, and the Union Jack does not say "English"
+            to everyone. */}
         <Flag code={lang} />
         {lang}
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.75" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }}>

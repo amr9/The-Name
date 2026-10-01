@@ -8,6 +8,4 @@
 export const languages = [
   { code: 'EN', name: 'English', dir: 'ltr' },
   { code: 'AR', name: 'العربية', dir: 'rtl' },
-  { code: 'FR', name: 'Français', dir: 'ltr' },
-  { code: 'ES', name: 'Español', dir: 'ltr' },
 ];

@@ -73,7 +73,7 @@
 
 /* Two short lines under a 20px glyph in a 56px column, so the label has to be
    small and tight. It is allowed to wrap — "Back to the top" does not fit on
-   one line at this width in any of the four languages. */
+   one line at this width in either language. */
 .back-to-top-label {
   font-size: 9.5px;
   line-height: 1.15;
