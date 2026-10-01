@@ -3,8 +3,13 @@
 //   node scripts/submissions.js                 latest 20
 //   node scripts/submissions.js --status held   only held ones
 //   node scripts/submissions.js --limit 100 --full     whole message bodies
-//   node scripts/submissions.js --retry 42      put a failed one back on the queue
+//   node scripts/submissions.js --retry 42      put a failed one back on the queue (an
+//                                               UNCONFIRMED one gets a fresh confirmation
+//                                               email, not delivery — see confirm.js)
 //   node scripts/submissions.js --stats         counts by status
+//
+// Statuses: queued, sending, awaiting (confirmation emailed, waiting for the
+// click), sent, failed, held, expired (never confirmed in time).
 //
 // In Docker:  docker compose exec contact node scripts/submissions.js
 //

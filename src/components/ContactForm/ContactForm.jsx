@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import WhatsAppButton from '../WhatsAppButton.jsx';
 import { site, mapsLink } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
@@ -19,8 +19,11 @@ const ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT || '/api/contact';
  * so the page that hosts it owns the surrounding layout. The heading is an
  * <h2>: the host page already has the <h1>.
  */
+// The outcomes the confirmation link can land with (server/confirm.js).
+const LANDINGS = ['confirmed', 'expired', 'invalid'];
+
 export default function ContactForm() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [values, setValues] = useState(EMPTY);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | sending | sent | failed | rateLimited
@@ -31,6 +34,29 @@ export default function ContactForm() {
   // near-instant one is a strong bot signal. A ref, not state — it must not
   // be reset by a re-render, and nothing renders from it.
   const openedAt = useRef(Date.now());
+
+  // Arriving from the confirmation email: the server redirects here with
+  // ?enquiry=confirmed|expired|invalid#contact. Read AFTER mount — the page
+  // is pre-rendered without a query string, so reading it during render would
+  // make the HTML and the browser disagree. The query is then dropped from the
+  // address bar, so a refresh or a shared link does not replay the message.
+  const [landing, setLanding] = useState(null);
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const outcome = url.searchParams.get('enquiry');
+    if (!LANDINGS.includes(outcome)) return;
+    setLanding(outcome);
+    url.searchParams.delete('enquiry');
+    window.history.replaceState(window.history.state, '', url.pathname + url.search + url.hash);
+  }, []);
+
+  const reset = () => {
+    setValues(EMPTY);
+    setHoneypot('');
+    setStatus('idle');
+    setLanding(null);
+    openedAt.current = Date.now(); // a fresh form, so a fresh timer
+  };
 
   const set = (id) => (e) => {
     setValues((v) => ({ ...v, [id]: e.target.value }));
@@ -60,6 +86,9 @@ export default function ContactForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...values,
+          // Not a form field: the language the visitor is reading in, so the
+          // confirmation email and the page it links back to match it.
+          lang,
           [honeypotField]: honeypot,
           [timingField]: Date.now() - openedAt.current,
         }),
@@ -99,22 +128,20 @@ export default function ContactForm() {
     }
   };
 
-  if (status === 'sent') {
+  // One panel for both happy endings: "check your inbox" right after
+  // sending, and "it's with us" after clicking the emailed link.
+  const done = status === 'sent'
+    ? { title: t.contact.sentTitle, body: t.contact.sentBody }
+    : landing === 'confirmed'
+      ? t.contact.confirmed
+      : null;
+  if (done) {
     return (
-      <div className="contact-sent">
+      <div className="contact-sent" role="status">
         <span className="card-kicker">{t.contact.kicker}</span>
-        <h2 className="contact-sent-title">{t.contact.sentTitle}</h2>
-        <p className="contact-sent-body">{t.contact.sentBody}</p>
-        <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={() => {
-            setValues(EMPTY);
-            setHoneypot('');
-            setStatus('idle');
-            openedAt.current = Date.now(); // a fresh form, so a fresh timer
-          }}
-        >
+        <h2 className="contact-sent-title">{done.title}</h2>
+        <p className="contact-sent-body">{done.body}</p>
+        <button type="button" className="btn btn-secondary" onClick={reset}>
           {t.contact.sendAnother}
         </button>
       </div>
@@ -220,6 +247,14 @@ export default function ContactForm() {
             onChange={(e) => setHoneypot(e.target.value)}
           />
         </div>
+
+        {/* A dead confirmation link: say why the earlier message never
+            arrived, right where they can send it again. */}
+        {(landing === 'expired' || landing === 'invalid') && status === 'idle' && (
+          <p className="contact-failed" role="alert">
+            {landing === 'expired' ? t.contact.confirmExpired : t.contact.confirmInvalid}
+          </p>
+        )}
 
         {(status === 'failed' || status === 'rateLimited') && (
           <p className="contact-failed" role="alert">

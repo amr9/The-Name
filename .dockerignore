@@ -22,3 +22,4 @@ docker-compose.yml
 *.md
 *.pdf
 .DS_Store
+dist-ssr

@@ -16,7 +16,20 @@ docs, so keep this in sync rather than letting it drift.
 - **react-router-dom** for routing (`src/App.jsx` defines the routes).
 - No CSS framework — plain CSS files, one per component/page, reading from
   design tokens in `src/styles/theme.css`.
-- No i18n library — a small hand-rolled context in `src/i18n/`.
+- No i18n library — a small hand-rolled context in `src/i18n/`. The
+  LANGUAGE IS IN THE URL: English at the root, Arabic under `/ar`
+  (`src/i18n/locale.js`), passed to the router as its `basename`.
+- **PRE-RENDERED for SEO.** `npm run build` is three steps: the normal Vite
+  build, a second `vite build --ssr src/entry-server.jsx` (a Node renderer,
+  never shipped), then `node scripts/prerender.mjs`, which writes every page,
+  in both languages, as real HTML with its own <head> into dist/. The browser
+  HYDRATES that HTML (main.jsx) rather than drawing the page from scratch.
+  Consequences for any code: nothing may touch window/document/localStorage
+  DURING RENDER (effects are fine — they do not run on the server), and the
+  first render must produce the same markup at build time as in the browser
+  — anything per-visitor (the current URL on the 404, the date) is filled in
+  after mount. `dev` is unchanged: it renders from scratch. What is done and
+  what is left is in `SEO-TODO.md` at the root.
 
 ## Folder layout
 
@@ -33,8 +46,20 @@ shared/
                         rules. Structural only — it returns error KEYS, and
                         each side turns them into its own copy.
 
-scripts/              — build-time tools, run by hand, never imported by the
-                        site. Today one:
+scripts/              — build-time tools, never imported by the site.
+  prerender.mjs       — the last step of `npm run build` (see Stack): imports
+                        dist-ssr/entry-server.js, renders every navLinks page
+                        in every language plus a 404 per language, and writes
+                        dist/<path>/index.html, dist/404.html, dist/ar/404.html
+                        and dist/robots.txt. Once `site.siteUrl` is set it also
+                        writes sitemap.xml (with hreflang alternates) and
+                        llms.txt; until then it prints TODO reminders. It
+                        injects into the BUILT index.html by replacing three
+                        exact markers (`<html lang="en">`, `<title>The
+                        Name</title>`, `<div id="root"></div>`) and fails
+                        loudly if one disappears — keep them in index.html.
+                        Deletes dist-ssr/ when done.
+  The rest are run by hand:
   import-store-categories.mjs
                       — fills in each product's `cats` AND its `url` by
                         reading the LIVE
@@ -107,20 +132,38 @@ server/               — the contact-form service (its own package.json, run
                         STATEFUL: submissions are stored in SQLite and emailed
                         by a background worker, so the request never waits for
                         SMTP and nothing is lost when SMTP is down.
-  index.js            — the HTTP layer: POST /api/contact + GET /api/health,
-                        CORS allowlist, and the order the checks run in
-                        (abuse ceiling → honeypot → shared validation → email
-                        verification → message limit → spam score → INSERT).
+                        EMAIL CONFIRMATION (double opt-in): an enquiry reaches
+                        the business inbox ONLY after the visitor clicks a
+                        link emailed to the address they typed — so a fake or
+                        someone else's address never gets through. Full
+                        details: server/README.md, "Email confirmation".
+  index.js            — the HTTP layer: POST /api/contact, GET
+                        /api/contact/confirm/:token (the emailed link — 303
+                        redirect back to /about?enquiry=…#contact), GET
+                        /api/health; CORS allowlist; the order the checks run
+                        in (abuse ceiling → honeypot → shared validation →
+                        email verification → message limit → spam score →
+                        INSERT, unconfirmed).
+  confirm.js          — the confirmation token (256-bit, only its SHA-256
+                        stored), the link, the click (confirmed / already /
+                        expired / invalid) and the hourly expiry sweep.
   config.js           — every environment variable, read and validated once at
                         boot. Nothing else reads process.env.
   db.js               — the SQLite connection, the schema (migrations gated by
                         PRAGMA user_version — append, never edit) and every
                         prepared statement. The `submissions` table doubles as
                         the send queue: `status` is the job state.
-  queue.js            — the send worker. Claims a due row atomically, sends it,
-                        retries with backoff (1m→6h), then marks it 'failed'.
-  mailer.js           — the SMTP transport and the message it builds. Strips
-                        CR/LF from anything reaching a mail header.
+  queue.js            — the send worker. Claims a due row atomically and runs
+                        ONE of two jobs: unconfirmed → mint a token and email
+                        the visitor the confirmation link ('awaiting');
+                        confirmed → email the enquiry to the business
+                        ('sent'). Retries with backoff (1m→6h), then 'failed'.
+  mailer.js           — the SMTP transport and its two messages: the enquiry
+                        (to MAIL_TO, reply-to the visitor) and the visitor's
+                        confirmation, EN or AR, which deliberately carries
+                        NOTHING the visitor typed (else the form could mail
+                        arbitrary text to strangers). Strips CR/LF from
+                        anything reaching a mail header.
   emailCheck.js       — syntax → disposable blocklist → MX lookup. Fails OPEN
                         on DNS trouble, closed only on a definitive answer.
   disposableDomains.js— the throwaway-mailbox blocklist; append to it.
@@ -144,7 +187,14 @@ server/               — the contact-form service (its own package.json, run
                         every env var, deployment shapes.
 
 src/
-  main.jsx            — ReactDOM root; wraps App in BrowserRouter + LanguageProvider
+  main.jsx            — browser entry: reads the language off the URL, wraps
+                        App in BrowserRouter (basename '/ar' for Arabic) +
+                        LanguageProvider, and HYDRATES the pre-rendered HTML
+                        (createRoot only when #root is empty, i.e. in dev).
+  entry-server.jsx    — the build-time twin of main.jsx: render(url) returns
+                        the page's HTML (StaticRouter, same basename, waits
+                        for every lazy page via onAllReady) plus its <head>
+                        tags. Used only by scripts/prerender.mjs.
   App.jsx             — route table (/, /store, /brands, /corporate-gifts,
                         /agency, /events, /about,
                         and `*`; /policies is PARKED — its import and route
@@ -188,10 +238,10 @@ src/
                          The LAST route is `*` -> pages/NotFound/, the custom
                          404. Every path that matches nothing lands there,
                          including the ones that used to work: /contact and
-                         /cafe. nginx.conf already falls back to index.html for
-                         any unmatched path, so a deep link reaches this page
-                         rather than nginx's own error page — check that
-                         `location /` block before changing the hosting.
+                         /cafe. In production nginx serves the PRE-RENDERED
+                         dist/404.html (dist/ar/404.html under /ar) for any
+                         unmatched path, WITH a 404 status, and it hydrates
+                         into this same page.
                          The footer is only the yellow logo, the social
                          links and the copyright line, on --gradient-footer
                          (charcoal, darker to the right; no brown).
@@ -376,7 +426,13 @@ src/
                         owns the surrounding layout and its heading is an <h2>
                         (About already has the <h1>).
                         Imports shared/contactForm.js directly and POSTs to
-                        VITE_CONTACT_ENDPOINT or same-origin /api/contact.
+                        VITE_CONTACT_ENDPOINT or same-origin /api/contact,
+                        with the page's `lang`. After sending it says "check
+                        your inbox" (the enquiry is not delivered until the
+                        emailed link is clicked). Where that link lands it
+                        reads ?enquiry=confirmed|expired|invalid AFTER mount
+                        (pre-rendered pages have no query), shows the matching
+                        message, and drops the query from the address bar.
                         Its copy still lives under the i18n `contact` key.
                         The details column is the site's ONLY copy of the
                         contact facts, since /policies lost its own contact
@@ -494,6 +550,11 @@ src/
                         site-wide (fetched only as it nears the viewport); a
                         HERO passes loading="eager" — Home's hero and the
                         Events hero do — so the first paint is not delayed.
+                        A missing file falls back to the dashed slot via
+                        onError AND a post-hydration check (complete with
+                        naturalWidth 0): in pre-rendered HTML the image can
+                        fail before React attaches onError, and that event is
+                        lost — caught by a full-site style diff.
       AutoplayVideo.jsx/.css — a film that behaves like a GIF: always
                         muted, always looping, and the visitor CANNOT take it
                         over — no controls, no picture-in-picture or casting,
@@ -573,7 +634,15 @@ src/
   data/
     site.js            — cross-page structural facts (phone, contact email,
                           shop URL,
-                          nav link routes+keys, social profile URLs).
+                          nav link routes+keys, social profile URLs), and the
+                          two SEO settings, both TODO and empty for now:
+                          `siteUrl` (the public origin — switches on canonical,
+                          hreflang, og:url, sitemap.xml, llms.txt) and
+                          `shareImage` (the 1200x630 link-preview picture).
+                          navLinks is ALSO the list of pages the pre-render
+                          writes and the sitemap lists — a page added there
+                          is indexed automatically, but needs an `seo` entry
+                          in both translation files.
                           No display text. `waLink` is derived from
                           `site.phone` here and is the ONLY WhatsApp URL in
                           the codebase — every trigger goes through
@@ -617,11 +686,20 @@ src/
                           customization methods read from home.howItWorks).
 
   i18n/
-    LanguageContext.jsx — LanguageProvider + useLanguage() hook. Persists
-                          choice to localStorage, sets <html lang>/<html dir>
+    LanguageContext.jsx — LanguageProvider (takes `lang` from the URL) +
+                          useLanguage() hook. Sets <html lang>/<html dir>
                           (Arabic is RTL), deep-merges the active language
                           over English so a missing key never breaks.
-    languages.js        — the 2 supported languages, English and Arabic (code, native name, dir). French and Spanish were REMOVED (fr.js/es.js deleted); a saved FR/ES choice falls back to English.
+                          setLang() NAVIGATES to the same page under the other
+                          prefix (a full load, so the visitor gets that
+                          language's pre-rendered HTML). The old localStorage
+                          choice is gone — invisible to search engines.
+                          Also exports dictionaryFor(lang) / dirFor(lang) for
+                          code outside React (the pre-render).
+    locale.js           — the language <-> URL mapping: LOCALE_PREFIX
+                          ({ EN: '', AR: '/ar' }), langFromPath, stripLocale,
+                          localizePath. A new language = a prefix here.
+    languages.js        — the 2 supported languages, English and Arabic (code, native name, dir). French and Spanish were REMOVED (fr.js/es.js deleted).
                           No flag field: components/Flag.jsx draws one per
                           language code, so the two cannot drift apart.
     translations/{en,ar}.js
@@ -706,6 +784,22 @@ src/
 
   hooks/useCarouselAutoplay.js — global effect that auto-advances every
                           `.carousel-track` on screen every 4.2s.
+  hooks/useDocumentHead.js — global effect (App.jsx): on every client-side
+                          navigation, swaps the `[data-page-head]` tags in
+                          <head> for the new page's (title, description,
+                          robots, canonical, hreflang, Open Graph, Twitter,
+                          JSON-LD). The first page already has them from the
+                          pre-render; this keeps them right afterwards.
+  utils/pageHead.js     — the ONE source of those <head> tags, used by both
+                          the pre-render and useDocumentHead, so they cannot
+                          disagree. pageHead(path, lang, t) -> data;
+                          headTags(head) -> HTML string. Copy comes from i18n
+                          `seo[pageKey]` (pageKey = navLinks key, or notFound
+                          — which is `noindex`). The business's schema.org
+                          LocalBusiness JSON-LD is built from data/site.js.
+                          Everything needing an ABSOLUTE URL (canonical,
+                          hreflang, og:url, og:image, JSON-LD url/logo) is
+                          emitted only once `site.siteUrl` is set — TODO.
   hooks/useSectionReveal.js — global effect (App.jsx): each TOP-LEVEL
                           <section>/<header> in <main> that starts BELOW the
                           first screen gets `.reveal` (opacity 0) and then
@@ -985,8 +1079,16 @@ Dockerfile            — the site: stage 1 runs `npm run build`, stage 2 serves
                         (Vite bakes it in) — leave it empty for same-origin.
 nginx.conf            — served as a TEMPLATE (${CONTACT_UPSTREAM} is filled in
                         at container start, so the API host can change without
-                        a rebuild). SPA fallback to index.html, /assets/ cached
-                        forever, /media/ a day, /api/ proxied to the service.
+                        a rebuild). Serves the PRE-RENDERED pages: /store ->
+                        store/index.html, /ar/store -> ar/store/index.html;
+                        anything else gets 404.html (ar/404.html under /ar)
+                        with a REAL 404 status — no more SPA fallback serving
+                        index.html as "200 OK" for every typo. Old addresses
+                        (/shop, /business, /kids, /customize, and /ar/…) are
+                        301 redirects, mirroring the <Navigate> routes in
+                        App.jsx. HTML no-cache, /assets/ cached forever,
+                        /media/ a day, /api/ proxied to the service.
+                        NOT yet run in a real container — see SEO-TODO.md.
 server/Dockerfile     — the contact service. MUST be built from the repo root
                         (`docker build -f server/Dockerfile .`): index.js
                         imports ../shared/ and ../src/data/site.js. Runs
@@ -1098,7 +1200,7 @@ placeholder instead, so partially-supplied media degrades cleanly.
 | `/about` | `pages/About/` | Labelled just "About" in the nav, but titled **"Our story"** on the page. It runs: **hero** (`about.kicker` / `title` / `lede` / `heroSupport`, carrying the page's `<h1>`) -> **story** — a plain column of chapters, one per id in `storyChapters` (`legacy`, `evolution`, `today`), running from "1990 — where it started" to "Today — The Name". Copy comes from i18n `about.story[id]`. No artwork and no rail: it was a timeline with round thumbnails on a line down the left, and both were removed (`media.about.story` is kept but unrendered). Adding an id to `storyChapters` adds a chapter -> the **FROM THE NAME / TO YOUR NAME** card (`about.tagline`; a raised beige card with an accent left edge, not a full-bleed band — it is the page's one pull-quote; the tagline itself is `components/TaglineArt`, the same artwork as the Home hero title; `about.tagline.fromPrefix` / `to` now only feed its alt text) -> the **takeovers**, one card per entry in `takeovers` (names are proper nouns so they live in `pages/About/data.js`, art in `media.about.takeovers[id]`; copy in `about.takeover`) -> **built through collaboration** (`about.collab`) -> **what's next** (`about.future`, ending on the page's sign-off line) -> the **enquiry form** — `components/ContactForm/ContactSection`, the same section that closes Home. **PARKED in one JSX comment**: the brand film (held back until the video is delivered - restoring it means moving the `<h1>` back to it and dropping it from the hero), the services (`aboutServices`), how-we-work (`ProcessSteps`), mission & vision (`purposeIds`) and the closing CTA. Their i18n keys and CSS are kept. Note the inner comments inside that block are written as plain dashed lines, not `{/* */}`: a nested end-of-comment marker would close the block early and break the build. |
 
 | `/policies` | `pages/Policies/` | **PARKED — no route, no footer link** (see App.jsx and Footer.jsx); the folder and its copy are kept so it can be switched back on. All three legal documents on one page — Terms & Conditions, Delivery & Returns, Privacy Policy — each an `<section>` whose id (`#terms`, `#delivery`, `#privacy`) is the anchor the footer's policy list links to. `data.js` holds only the doc ids and the order of the sections inside each; every heading and paragraph is in `i18n` under `policies.docs.<docId>.sections.<sectionId>`, where a section is `{ heading, blocks }` and a block is either a string (a paragraph) or `{ list: [...] }`. Clause numbers come from the `<ol>`, never typed into a heading. `{legalName}`, `{licensedBy}` and `{address}` in the copy are filled from `data/site.js` at render time. The three source documents each ended with their own "Contact Us" clause; the page carries NONE of them — there is no `#contact` section here any more, and the entity, both email addresses and the location live in the ContactForm details at the foot of /about instead. Three clauses that used to say "at the foot of this page" were reworded to name the About page; if the contact block ever comes back, they have to be reworded again. The page closes on `policies.contactNote` + `contactNoteLink` — a beige footnote linking to `/about#contact`, which is the only route from the binding terms to the registered entity and the two addresses, and what makes those three reworded clauses followable. Two keys rather than one with a token, so the sentence and its linked clause are each whole strings. Its own "back to top" link is gone — `components/BackToTop/` now floats on every page. **The policy copy is translated into Arabic.** English is the CONTROLLING version, and every other locale says so in `policies.translationNote` — a line under `policies-updated` in the page header, rendered only when non-empty, which is why `en.js` holds that key as `''`. Because a key missing from a translation falls through to `en.js` via the deepMerge in LanguageContext, a gap here shows up as one clause in the wrong language rather than as an obvious bug: keep the key structure identical across en.js and ar.js, and make any reviewed change to a clause in both. The labels (`nav.policies` — now the footer list's heading — and `nav.policyTabs`) are translated too; both keys stay under `nav` even though the navbar no longer uses them. See `pendingReview` in `data.js`: several commercial figures in this copy are **not yet confirmed for publication**. |
-| _anything else_ | `pages/NotFound/` | The custom 404, on the `*` route in App.jsx. A signpost rather than an apology: kicker, title, lede, the path that missed (echoed back so a visitor can see whether they mistyped — React escapes it), a Back-to-homepage button + WhatsApp, then **the whole navbar again as a list of pills**. That list is built from `navLinks` in `data/site.js`, the same array the bar reads, so a page added or parked there appears or disappears here too. Copy is i18n `notFound`, translated in all four languages. |
+| _anything else_ | `pages/NotFound/` | The custom 404, on the `*` route in App.jsx. A signpost rather than an apology: kicker, title, lede, the path that missed (echoed back so a visitor can see whether they mistyped — React escapes it; filled in AFTER hydration, because one pre-rendered 404.html serves every unknown URL and printing the path during render made hydration fail), a Back-to-homepage button + WhatsApp, then **the whole navbar again as a list of pills**. That list is built from `navLinks` in `data/site.js`, the same array the bar reads, so a page added or parked there appears or disappears here too. Copy is i18n `notFound`, translated in all four languages. |
 
 ## Conventions (read before adding code)
 

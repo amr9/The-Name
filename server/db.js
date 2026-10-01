@@ -40,7 +40,7 @@ const MIGRATIONS = [
         message         TEXT    NOT NULL,
         ip              TEXT,                      -- public IP of the submitter
         user_agent      TEXT,
-        status          TEXT    NOT NULL,          -- queued|sending|sent|failed|held
+        status          TEXT    NOT NULL,          -- queued|sending|sent|failed|held (+ awaiting|expired, migration 2)
         attempts        INTEGER NOT NULL DEFAULT 0,
         next_attempt_at INTEGER NOT NULL DEFAULT 0,-- epoch ms
         last_error      TEXT,
@@ -64,6 +64,29 @@ const MIGRATIONS = [
       CREATE INDEX idx_rate_events ON rate_events(scope, key, created_at);
     `);
   },
+
+  // 2 — email confirmation (double opt-in)
+  //
+  // A new submission is stored with confirmed_at NULL. The worker's first job
+  // for it is the CONFIRMATION email to the visitor (status queued ->
+  // awaiting); only the click on its link sets confirmed_at and re-queues
+  // the row, and only then does the worker send the enquiry to the business.
+  // Rows that already existed predate confirmation — they were real
+  // deliveries — so they are marked confirmed, or the worker would mail
+  // their senders a confirmation for a message already delivered.
+  () => {
+    db.exec(`
+      ALTER TABLE submissions ADD COLUMN lang               TEXT NOT NULL DEFAULT 'EN';
+      ALTER TABLE submissions ADD COLUMN confirm_token_hash TEXT;    -- sha256 of the emailed token
+      ALTER TABLE submissions ADD COLUMN confirm_expires_at INTEGER; -- epoch ms
+      ALTER TABLE submissions ADD COLUMN confirm_sent_at    TEXT;
+      ALTER TABLE submissions ADD COLUMN confirmed_at       TEXT;
+
+      UPDATE submissions SET confirmed_at = created_at;
+
+      CREATE UNIQUE INDEX idx_submissions_confirm ON submissions(confirm_token_hash);
+    `);
+  },
 ];
 
 function migrate() {
@@ -85,10 +108,10 @@ const statements = {
   insert: db.prepare(`
     INSERT INTO submissions
       (created_at, name, email, phone, message, ip, user_agent,
-       status, next_attempt_at, spam_score, spam_reasons, fill_ms)
+       status, next_attempt_at, spam_score, spam_reasons, fill_ms, lang)
     VALUES
       (@created_at, @name, @email, @phone, @message, @ip, @user_agent,
-       @status, @next_attempt_at, @spam_score, @spam_reasons, @fill_ms)
+       @status, @next_attempt_at, @spam_score, @spam_reasons, @fill_ms, @lang)
   `),
 
   // Claim one due job. The status check inside the UPDATE is what makes
@@ -105,6 +128,48 @@ const statements = {
        AND status = 'queued'
     RETURNING *
   `),
+
+  // — confirmation —
+  // The token is minted by the worker at the moment the email goes out, so
+  // a retry after an SMTP failure simply mints a fresh one. Only its hash is
+  // stored: a copy of the database cannot be used to confirm anything.
+  setConfirmToken: db.prepare(`
+    UPDATE submissions
+       SET confirm_token_hash = @hash, confirm_expires_at = @expires_at
+     WHERE id = @id
+  `),
+
+  // The confirmation email is out: wait for the click. The attempt counter
+  // is reset, because it counts SMTP failures for the NEXT send — the
+  // enquiry itself — which has not been tried yet.
+  markAwaiting: db.prepare(`
+    UPDATE submissions
+       SET status = 'awaiting', confirm_sent_at = @sent_at,
+           attempts = 0, next_attempt_at = 0, last_error = NULL
+     WHERE id = @id
+  `),
+
+  findByConfirmToken: db.prepare(`
+    SELECT id, status, lang, confirmed_at, confirm_expires_at
+      FROM submissions WHERE confirm_token_hash = @hash
+  `),
+
+  // The click. Guarded on status, so a double click (or two tabs) confirms
+  // once and queues the enquiry once.
+  confirm: db.prepare(`
+    UPDATE submissions
+       SET status = 'queued', confirmed_at = @confirmed_at,
+           attempts = 0, next_attempt_at = 0, last_error = NULL
+     WHERE id = @id AND status = 'awaiting' AND confirmed_at IS NULL
+  `),
+
+  // Links nobody clicked in time. Swept hourly and checked again on click.
+  expireUnconfirmed: db.prepare(`
+    UPDATE submissions SET status = 'expired'
+     WHERE status = 'awaiting' AND confirmed_at IS NULL AND confirm_expires_at < @now
+  `),
+
+  markExpired: db.prepare(`UPDATE submissions SET status = 'expired' WHERE id = @id AND status = 'awaiting'`),
 
   markSent: db.prepare(`
     UPDATE submissions
@@ -151,7 +216,7 @@ const statements = {
   pruneRateEvents: db.prepare(`DELETE FROM rate_events WHERE created_at < @before`),
 
   pruneSubmissions: db.prepare(`
-    DELETE FROM submissions WHERE created_at < @before AND status IN ('sent', 'failed', 'held')
+    DELETE FROM submissions WHERE created_at < @before AND status IN ('sent', 'failed', 'held', 'expired')
   `),
 };
 
@@ -167,13 +232,14 @@ export function insertSubmission(row) {
     spam_score: 0,
     spam_reasons: null,
     fill_ms: null,
+    lang: 'EN',
     ...row,
   });
   return Number(info.lastInsertRowid);
 }
 
 export function queueStats() {
-  const out = { queued: 0, sending: 0, sent: 0, failed: 0, held: 0 };
+  const out = { queued: 0, sending: 0, awaiting: 0, sent: 0, failed: 0, held: 0, expired: 0 };
   for (const { status, n } of statements.countByStatus.all()) out[status] = n;
   return out;
 }

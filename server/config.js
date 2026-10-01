@@ -20,18 +20,40 @@ const num = (v, fallback) => {
 };
 
 const MINUTE = 60 * 1000;
-const DAY = 24 * 60 * MINUTE;
+const HOUR = 60 * MINUTE;
+const DAY = 24 * HOUR;
+
+// Comma-separated origins allowed to post from a browser. Note that a
+// browser sends Origin even on a same-origin POST, so the site's own
+// origin belongs in here too.
+const allowedOrigins = (process.env.ALLOWED_ORIGINS ?? '')
+  .split(',')
+  .map((o) => o.trim())
+  .filter(Boolean);
+
+// The site's public address. The confirmation email links back to it
+// (<publicUrl>/api/contact/confirm/<token>), and the link then lands the
+// visitor on <publicUrl>/about. Defaults to the first allowed origin, which
+// must already be the site itself for the form to work at all.
+const publicUrl = (process.env.PUBLIC_SITE_URL || allowedOrigins[0] || '').replace(/\/+$/, '');
+if (!publicUrl) {
+  console.error('[contact] set PUBLIC_SITE_URL (or ALLOWED_ORIGINS) — the confirmation email needs a link back to the site');
+  process.exit(1);
+}
 
 export const config = {
   port: num(process.env.PORT, 8787),
 
-  // Comma-separated origins allowed to post from a browser. Note that a
-  // browser sends Origin even on a same-origin POST, so the site's own
-  // origin belongs in here too.
-  allowedOrigins: (process.env.ALLOWED_ORIGINS ?? '')
-    .split(',')
-    .map((o) => o.trim())
-    .filter(Boolean),
+  allowedOrigins,
+  publicUrl,
+
+  // EMAIL CONFIRMATION: an enquiry reaches the business inbox only after
+  // the visitor clicks the link emailed to the address they typed. This is
+  // how long that link works; after it, the enquiry is marked 'expired' and
+  // never delivered.
+  confirm: {
+    ttlMs: num(process.env.CONFIRM_TTL_HOURS, 48) * HOUR,
+  },
 
   smtp: {
     host: process.env.SMTP_HOST,

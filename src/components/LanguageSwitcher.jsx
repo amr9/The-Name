@@ -1,9 +1,14 @@
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Flag from './Flag.jsx';
 import { languages } from '../i18n/languages.js';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
 import './LanguageSwitcher.css';
+
+// useLayoutEffect in the browser (pre-paint, so the menu never jumps), plain
+// useEffect during the build-time pre-render, where layout effects cannot run
+// and React warns about them. The menu is closed in pre-rendered HTML anyway.
+const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
 // Distance from the trigger to the menu, and the smallest margin we will ever
 // leave between the menu and the edge of the screen.
@@ -78,7 +83,7 @@ export default function LanguageSwitcher() {
     setOpen(true);
   };
 
-  useLayoutEffect(() => {
+  useIsoLayoutEffect(() => {
     if (!open) return undefined;
     // Runs after the portal mounts, so the menu can now be measured — this is
     // the pass that gets the width right. useLayoutEffect, not useEffect, so

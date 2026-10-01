@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import { navLinks } from '../../data/site.js';
@@ -18,6 +19,13 @@ export default function NotFound() {
   const { t } = useLanguage();
   const { pathname } = useLocation();
   const n = t.notFound;
+  // The missed path is filled in AFTER hydration. This page is pre-rendered
+  // once at build time (dist/404.html) and then served for EVERY unknown URL,
+  // so the build cannot know the path; printing it during render would make
+  // the server HTML and the browser disagree, and React would throw the page
+  // away and redraw it. The chip is simply absent until then.
+  const [missed, setMissed] = useState('');
+  useEffect(() => setMissed(pathname), [pathname]);
 
   return (
     <div className="container not-found">
@@ -28,9 +36,11 @@ export default function NotFound() {
       {/* The path that missed. React escapes it, so echoing it back is safe,
           and it is what tells someone whether they mistyped or followed a
           stale link. <bdi> because a URL stays left-to-right under Arabic. */}
-      <p className="not-found-path">
-        <bdi dir="ltr">{pathname}</bdi>
-      </p>
+      {missed && (
+        <p className="not-found-path">
+          <bdi dir="ltr">{missed}</bdi>
+        </p>
+      )}
 
       <div className="not-found-actions">
         <Link className="btn btn-primary" to="/">{n.home}</Link>

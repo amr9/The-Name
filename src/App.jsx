@@ -10,6 +10,7 @@ import ChatLauncher from './components/ChatLauncher/ChatLauncher.jsx';
 import useCarouselAutoplay from './hooks/useCarouselAutoplay.js';
 import useScrollToTop from './hooks/useScrollToTop.js';
 import useSectionReveal from './hooks/useSectionReveal.js';
+import useDocumentHead from './hooks/useDocumentHead.js';
 import { routes } from './data/site.js';
 // Home is the landing page, so it ships in the main bundle — splitting it
 // would only add a second round trip before the first paint. Every other page
@@ -36,6 +37,7 @@ export default function App() {
   useCarouselAutoplay();
   useScrollToTop();
   useSectionReveal();
+  useDocumentHead();
   const { pathname } = useLocation();
 
   return (

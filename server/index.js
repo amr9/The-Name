@@ -1,14 +1,20 @@
 // The Name — contact form service.
 //
-// One endpoint: POST /api/contact. What happens to a submission:
+// Two endpoints. POST /api/contact — what happens to a submission:
 //
 //   rate limit (IP) → honeypot → shared validation → email verification
 //   → rate limit (address) → spam scoring → WRITE TO DATABASE → respond
 //
 // The response is sent as soon as the row is on disk; a background worker
-// (queue.js) does the SMTP send and retries it with backoff. So a slow or
+// (queue.js) does the SMTP sends and retries them with backoff. So a slow or
 // broken mail server costs the visitor nothing, and no enquiry is ever lost
 // to one — it is in the database either way.
+//
+// EMAIL CONFIRMATION (confirm.js): the worker's first send is NOT the
+// enquiry — it is a link to the address the visitor typed. The enquiry
+// reaches the business only when that link is clicked, which is the second
+// endpoint, GET /api/contact/confirm/:token. An address that is not real, or
+// not theirs, never gets past this.
 //
 // Run it with `npm start` in this folder; see .env for the config it
 // expects and README.md for deployment notes.
@@ -24,6 +30,7 @@ import { record, overLimit, tooManyAttempts, pruneOldData } from './rateLimit.js
 import { scoreSubmission } from './spam.js';
 import { mailTo, verifyTransport, closeMailer } from './mailer.js';
 import { startWorker, wakeWorker, stopWorker } from './queue.js';
+import { confirmByToken, expireUnconfirmed, landingUrl } from './confirm.js';
 
 // — messages for the error keys the validators return —
 // The browser has its own translated copy of each (contact.errors.*, in both
@@ -49,7 +56,7 @@ app.use(
       if (!origin || config.allowedOrigins.includes(origin)) return cb(null, true);
       cb(new Error(`origin not allowed: ${origin}`));
     },
-    methods: ['POST', 'OPTIONS'],
+    methods: ['GET', 'POST', 'OPTIONS'],
   })
 );
 
@@ -145,6 +152,10 @@ app.post('/api/contact', async (req, res) => {
     spam_score: spam.score,
     spam_reasons: spam.reasons.join(',') || null,
     fill_ms: Number.isFinite(fillMs) ? fillMs : null,
+    // The language the visitor wrote in: their confirmation email is in it,
+    // and the link lands them back on that language's page. Not a form
+    // field, so it is whitelisted rather than validated.
+    lang: body.lang === 'AR' ? 'AR' : 'EN',
   });
 
   // Spend the message budget now that one is actually stored. Held ones
@@ -156,11 +167,33 @@ app.post('/api/contact', async (req, res) => {
   if (spam.held) {
     console.warn(`[contact] #${id} held — score ${spam.score} (${spam.reasons.join(', ')})`);
   } else {
-    console.log(`[contact] #${id} queued from ${values.email}`);
+    console.log(`[contact] #${id} stored from ${values.email} — emailing them a confirmation link`);
     wakeWorker(); // don't wait for the next poll
   }
 
-  res.json({ ok: true });
+  // `confirm: true` tells the site to say "check your inbox" rather than
+  // "sent". Held submissions answer identically, so a bot learns nothing.
+  res.json({ ok: true, confirm: true });
+});
+
+// — the confirmation link —
+// Opened from the visitor's email client, so it answers with a REDIRECT to
+// the site (the contact section on About, in their language) carrying the
+// outcome, which ContactForm turns into a message — never a bare JSON page.
+// It is a GET, so a mail scanner that pre-fetches links can confirm on the
+// visitor's behalf; that still proves the mailbox exists and received our
+// email, which is the point, and the visitor's own click then lands on
+// "confirmed" (outcome 'already').
+app.get('/api/contact/confirm/:token', (req, res) => {
+  const { outcome, lang, id } = confirmByToken(req.params.token);
+  if (outcome === 'confirmed') {
+    console.log(`[contact] #${id} confirmed by the visitor — queued for the business`);
+    wakeWorker();
+  } else if (outcome !== 'already') {
+    console.warn(`[contact] confirmation link ${outcome}${id ? ` (#${id})` : ''}`);
+  }
+  res.set('Cache-Control', 'no-store');
+  res.redirect(303, landingUrl(lang, outcome === 'already' ? 'confirmed' : outcome));
 });
 
 // CORS rejections arrive here as errors; answer 403 instead of a 500 stack.
@@ -176,14 +209,19 @@ app.use((err, req, res, next) => {
 startWorker();
 verifyTransport(); // logs the result; failures are not fatal, the queue holds
 
-const pruneTimer = setInterval(pruneOldData, 60 * 60 * 1000);
+const housekeeping = () => {
+  pruneOldData();
+  expireUnconfirmed();
+};
+const pruneTimer = setInterval(housekeeping, 60 * 60 * 1000);
 pruneTimer.unref();
-pruneOldData();
+housekeeping();
 
 const server = app.listen(config.port, () => {
   const stats = queueStats();
   console.log(`[contact] listening on :${config.port} — delivering to ${mailTo}`);
-  console.log(`[contact] database ${config.dbPath} — ${stats.queued} queued, ${stats.sent} sent, ${stats.held} held`);
+  console.log(`[contact] database ${config.dbPath} — ${stats.queued} queued, ${stats.awaiting} awaiting confirmation, ${stats.sent} sent, ${stats.held} held, ${stats.expired} expired`);
+  console.log(`[contact] confirmation links point at ${config.publicUrl}`);
 });
 
 // Finish what is in flight before the process goes away, so a deploy never

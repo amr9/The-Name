@@ -32,18 +32,24 @@ export const media = {
   },
   // A service row with an entry here shows this VIDEO instead of its image
   // above. `ratio` is the film's own shape, so nothing is cropped. The films
-  // live in public/media/home/ (they belong to the Home page), remuxed with
-  // +faststart so they start playing before they have fully downloaded; each
-  // poster is a frame from 2s in.
+  // live in public/media/home/ (they belong to the Home page), COMPRESSED for
+  // page speed — H.264 High, full resolution, no audio, +faststart so they
+  // start playing before they have fully downloaded:
+  //   ffmpeg -i in.mp4 -an -c:v libx264 -preset slow -crf <N> -profile:v high
+  //          -pix_fmt yuv420p -movflags +faststart out.mp4
+  // CRF was chosen per film to keep SSIM vs the original above 0.99 (visually
+  // identical): 30.2 MB -> 15.7 MB for the pair. The uncompressed originals are
+  // in git history (commit 176ea44). Each poster is a frame from 2s in.
   serviceVideos: {
-    // "Brand Communication" — H.264, 1024x1280, 92s. Its audio track was
-    // stripped: the films play like GIFs and can never be unmuted.
+    // "Brand Communication" — 1024x1280, 92s, CRF 28: 18.8 -> 9.3 MB, SSIM
+    // 0.993. Audio stripped: the films play like GIFs and can never be unmuted.
     serviceThree: {
       src: `${BASE}/home/brand-communication.mp4`,
       poster: `${BASE}/home/brand-communication-poster.jpg`,
       ratio: '4 / 5',
     },
-    // "Marketing strategy & Consultancy" — H.264, no audio, 1080x1350, 26s.
+    // "Marketing strategy & Consultancy" — 1080x1350, 26s, camera footage so a
+    // gentler CRF 24: 10.4 -> 6.4 MB, SSIM 0.991.
     serviceFour: {
       src: `${BASE}/home/marketing-strategy.mp4`,
       poster: `${BASE}/home/marketing-strategy-poster.jpg`,

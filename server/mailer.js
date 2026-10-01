@@ -59,6 +59,60 @@ export function sendEnquiry(row) {
   return transport.sendMail(buildEnquiry(row));
 }
 
+// — the confirmation email, to the VISITOR —
+//
+// Deliberately contains NOTHING the visitor typed — not their name, not
+// their message. Anyone can type someone else's address into the form; if
+// their text were echoed here, the form would become a way to send arbitrary
+// content to strangers from our mail server. This way the worst a stranger
+// receives is one short, fixed note they can ignore (and the per-address
+// rate limit caps how many).
+const CONFIRM_COPY = {
+  EN: {
+    dir: 'ltr',
+    subject: `Please confirm your message to ${site.name}`,
+    lead: 'Thanks for getting in touch.',
+    body: 'To make sure this email address is really yours, please confirm your message:',
+    button: 'Confirm my message',
+    after: (hours) => `We only receive your message once you confirm. The link works for ${hours} hours.`,
+    ignore: 'If you did not write to us, you can ignore this email — nothing will be sent.',
+  },
+  AR: {
+    dir: 'rtl',
+    subject: `يرجى تأكيد رسالتك إلى ${site.name}`,
+    lead: 'شكرًا لتواصلك معنا.',
+    body: 'للتأكد من أن عنوان البريد الإلكتروني هذا يخصّك، يرجى تأكيد رسالتك:',
+    button: 'تأكيد رسالتي',
+    after: (hours) => `لن تصلنا رسالتك إلا بعد التأكيد. يعمل الرابط لمدة ${hours} ساعة.`,
+    ignore: 'إذا لم تراسلنا، يمكنك تجاهل هذه الرسالة — لن يُرسَل أي شيء.',
+  },
+};
+
+export function buildConfirmation(row, link) {
+  const c = CONFIRM_COPY[row.lang] ?? CONFIRM_COPY.EN;
+  const hours = Math.round(config.confirm.ttlMs / 3600000);
+  return {
+    from: config.smtp.from,
+    to: headerSafe(row.email, 200),
+    subject: c.subject,
+    text: [c.lead, '', c.body, '', link, '', c.after(hours), '', c.ignore, '', `— ${site.name}`].join('\n'),
+    // A plain button for mail clients that show HTML. Every string in it is
+    // ours (the link is our origin + a base64url token), so nothing needs
+    // escaping — keep it that way if this ever gains a visitor field.
+    html: `<!doctype html><html dir="${c.dir}"><body style="font-family:Arial,sans-serif;color:#000;line-height:1.6;max-width:520px;margin:0 auto;padding:24px">
+<p>${c.lead}</p>
+<p>${c.body}</p>
+<p style="margin:28px 0"><a href="${link}" style="background:#ffbd14;color:#000;text-decoration:none;font-weight:bold;padding:12px 22px;border-radius:12px;display:inline-block">${c.button}</a></p>
+<p style="font-size:13px;color:#4c4c4c">${c.after(hours)}<br>${c.ignore}</p>
+<p style="font-size:13px;color:#4c4c4c">— ${site.name}</p>
+</body></html>`,
+  };
+}
+
+export function sendConfirmation(row, link) {
+  return transport.sendMail(buildConfirmation(row, link));
+}
+
 // Proves the credentials at boot instead of at the first enquiry. A failure
 // is logged, not fatal — the queue holds submissions safely either way, and
 // a contact form that still accepts messages during an SMTP outage is worth

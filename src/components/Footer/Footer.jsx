@@ -63,7 +63,9 @@ export default function Footer() {
       </div>
 
       <div className="container footer-bottom">
-        <span>© {new Date().getFullYear()} {site.name}. {f.rights}</span>
+        {/* The year is baked in at build time by the pre-render and recomputed
+            in the browser; on a new year the two differ, which is expected. */}
+        <span suppressHydrationWarning>© {new Date().getFullYear()} {site.name}. {f.rights}</span>
       </div>
     </footer>
   );

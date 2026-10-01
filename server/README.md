@@ -37,13 +37,47 @@ POST /api/contact
   4. email verification syntax → disposable blocklist → MX lookup
   5. message limit      stored messages per IP and per address
   6. spam scoring       content heuristics; at/above SPAM_THRESHOLD → held
-  7. INSERT             status 'queued' (or 'held'), then 200 to the visitor
+  7. INSERT             status 'queued' (or 'held'), unconfirmed, then 200
                 ↓
-  queue worker  claims a due row, sends it, marks it 'sent'
-                on failure: retry at 1m, 5m, 15m, 1h, 6h, then 'failed'
+  queue worker  1st job: emails the VISITOR a confirmation link → 'awaiting'
+                ↓
+GET /api/contact/confirm/:token      (the visitor clicks the link)
+                confirmed → re-queued → redirect to <site>/about?enquiry=confirmed#contact
+                ↓
+  queue worker  2nd job: emails the enquiry to the BUSINESS → 'sent'
+
+  every send:   on failure retry at 1m, 5m, 15m, 1h, 6h, then 'failed'
+  no click within CONFIRM_TTL_HOURS (48h) → 'expired', never delivered
 ```
 
 Nothing on the request path waits for SMTP.
+
+## Email confirmation
+
+Checking an address's syntax and MX record proves the DOMAIN takes mail —
+not that the mailbox exists, and not that it belongs to whoever typed it. So
+an enquiry reaches the business inbox only after the visitor clicks a link
+we email to the address they gave (`confirm.js`).
+
+- **The token** is 256 random bits, minted by the worker at the moment the
+  confirmation email is sent (a retry mints a fresh one). Only its SHA-256
+  hash is stored, so a copy of the database confirms nothing.
+- **The confirmation email contains nothing the visitor typed** — no name,
+  no message. Anyone can enter someone else's address; echoing their text
+  would turn the form into a way to mail arbitrary content to strangers. A
+  stranger gets one short fixed note at most (and `RATE_PER_EMAIL` caps it).
+  It is in the visitor's language (`lang`: EN or AR).
+- **The link** is `<PUBLIC_SITE_URL>/api/contact/confirm/<token>` and answers
+  with a 303 redirect to the contact section on About, in the visitor's
+  language, with `?enquiry=confirmed|expired|invalid` for the page to show.
+  Clicking twice is safe — it confirms once and still says "confirmed".
+- **It is a GET**, so a corporate mail scanner that pre-opens links may
+  confirm before the person does. That still proves the mailbox exists and
+  received our email, which is the point.
+- **Held (spam/honeypot) submissions get no confirmation email** — they are
+  never mailed anywhere.
+- **Rows from before this existed** were marked confirmed by migration 2, so
+  they deliver normally and their senders get no surprise email.
 
 ## Files
 
@@ -52,8 +86,9 @@ Nothing on the request path waits for SMTP.
 | `index.js` | The HTTP layer: routes, middleware, and the order above |
 | `config.js` | Every environment variable, read and validated once at boot |
 | `db.js` | SQLite connection, schema migrations, prepared statements |
-| `queue.js` | The send worker — claim, send, retry with backoff |
-| `mailer.js` | The SMTP transport and the message it builds |
+| `queue.js` | The send worker — claim, send (confirmation or enquiry), retry with backoff |
+| `confirm.js` | Email confirmation: token, link, the click, expiry |
+| `mailer.js` | The SMTP transport and the two messages: the enquiry, and the visitor's confirmation |
 | `emailCheck.js` | Syntax, disposable blocklist, MX lookup |
 | `disposableDomains.js` | The blocklist itself — append to it as needed |
 | `spam.js` | Content heuristics and the score |
@@ -102,7 +137,7 @@ a year.
 ### `POST /api/contact`
 
 ```json
-{ "name": "…", "email": "…", "phone": "…", "message": "…", "fillMs": 18342 }
+{ "name": "…", "email": "…", "phone": "…", "message": "…", "fillMs": 18342, "lang": "EN" }
 ```
 
 `fillMs` is how long the form was on screen before it was submitted. The
@@ -110,7 +145,7 @@ browser sends it; a submission faster than `MIN_FILL_MS` scores as a bot.
 
 | Status | Body | Meaning |
 |---|---|---|
-| 200 | `{ "ok": true }` | Stored and queued — or held (honeypot/spam), which looks identical from outside |
+| 200 | `{ "ok": true, "confirm": true }` | Stored; a confirmation email is on its way to the visitor — or held (honeypot/spam), which looks identical from outside |
 | 400 | `{ "ok": false, "error": "…", "fieldKeys": {…}, "fields": {…} }` | Validation failed |
 | 403 | `{ "ok": false, "error": "Origin not allowed." }` | Origin missing from `ALLOWED_ORIGINS` |
 | 429 | `{ "ok": false, "key": "rateLimited", "error": "…" }` | Over one of the three budgets |
@@ -125,9 +160,15 @@ to English text for anyone calling the API directly. The site prefers
 There is no longer a 502 — SMTP failures happen after the response, and are
 retried.
 
+### `GET /api/contact/confirm/:token`
+
+The link in the confirmation email. Always a 303 redirect to
+`<PUBLIC_SITE_URL>[/ar]/about?enquiry=<outcome>#contact`, outcome being
+`confirmed` (also for a repeat click), `expired` or `invalid`.
+
 ### `GET /api/health`
 
-`{ "ok": true, "queue": { "queued": 0, "sending": 0, "sent": 12, "failed": 0, "held": 3 } }`
+`{ "ok": true, "queue": { "queued": 0, "sending": 0, "awaiting": 2, "sent": 12, "failed": 0, "held": 3, "expired": 1 } }`
 
 ## Email verification
 
@@ -186,6 +227,8 @@ nationality.
 | `MAIL_TO` | `site.email` | Where enquiries land |
 | `PORT` | 8787 | |
 | `ALLOWED_ORIGINS` | — | Comma-separated; must include the site's own origin |
+| `PUBLIC_SITE_URL` | first `ALLOWED_ORIGINS` entry | The site's public address, for the confirmation link. The service exits at boot if neither is set |
+| `CONFIRM_TTL_HOURS` | 48 | How long a confirmation link works; after it the enquiry is `expired` |
 | `DB_PATH` | `./data/contact.db` | The SQLite file |
 | `RATE_WINDOW_MS` | 15 min | The window all three budgets count in |
 | `RATE_PER_IP` / `RATE_PER_EMAIL` | 5 / 3 | Stored messages per window |

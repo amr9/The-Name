@@ -8,6 +8,46 @@ export default {
   // that form appears only at the foot of /about.
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chat with us', backToTop: 'Back to the top' },
 
+  // Search-result and link-preview copy, one entry per page (keys = navLinks
+  // keys in data/site.js, plus notFound) — read by utils/pageHead.js. A title
+  // shows as the blue link in Google (keep it under ~60 characters, the page's
+  // subject first, the brand last); a description is the grey snippet under
+  // it (~150-160 characters, written to be clicked, not stuffed).
+  seo: {
+    home: {
+      title: 'The Name — Personalised & Corporate Gifts in Dubai',
+      description: 'Design-led gifts personalised with a name, a message or your brand. Curated pieces, custom engraving and corporate gifting, made in Dubai for the UAE.',
+    },
+    shop: {
+      title: 'Store — Personalised Gifts & Designer Pieces | The Name',
+      description: 'Shop design-led objects from brands like Lexon, Pantone and Kreafunk, then make them yours with a name, initials or a message. Delivered across the UAE.',
+    },
+    brands: {
+      title: 'Our Brands — Lexon, Pantone, Kreafunk & More | The Name',
+      description: 'The design brands we curate, personalise and gift: Lexon, Lund London, Pantone, Korin, Kreafunk and Gingko — chosen for pieces worth keeping.',
+    },
+    business: {
+      title: 'Corporate Gifts in Dubai — Branded & Personalised | The Name',
+      description: 'Thoughtful, branded corporate gifts in Dubai: employee kits, client gifts, events, VIP gifting and large orders, designed and personalised by The Name.',
+    },
+    agency: {
+      title: 'Agency — Brand Communication & Marketing | The Name',
+      description: 'Campaigns, activations and branded pieces — planned, designed and produced by The Name Agency in Dubai for the brands we work with.',
+    },
+    events: {
+      title: 'Events & Kids Activations in Dubai | The Name',
+      description: 'Personalised gifts, back-to-school pieces, birthdays and hands-on creative activations for children — their name, their drawings, their story.',
+    },
+    about: {
+      title: 'About The Name — Our Story Since 1990',
+      description: 'From customisation and corporate gifting in 1990 to a design-led gifting brand in Dubai: the story behind The Name and the people who make it.',
+    },
+    notFound: {
+      title: 'Page Not Found | The Name',
+      description: 'The page you were looking for does not exist. Find personalised gifts, corporate gifting and more on The Name.',
+    },
+  },
+
   contact: {
     kicker: 'Contact',
     title: 'Tell us what you need.',
@@ -22,9 +62,19 @@ export default {
     send: 'Send message',
     sending: 'Sending…',
     privacy: 'We use your details to answer this enquiry and nothing else.',
-    sentTitle: 'Thank you — that is with us.',
-    sentBody: 'The operations desk replies within one working day. For anything urgent during service, WhatsApp is faster.',
+    // After submitting: the message is NOT with us yet — it reaches the
+    // business only once the visitor clicks the link we email them
+    // (server/confirm.js). So this asks them to check their inbox.
+    sentTitle: 'Almost there — check your inbox.',
+    sentBody: 'We have emailed you a link to confirm your address. Your message reaches us as soon as you click it. Nothing there? Check your spam folder, or reach us on WhatsApp.',
     sendAnother: 'Send another message',
+    // Where the confirmation link lands (/about?enquiry=…#contact).
+    confirmed: {
+      title: 'Thank you — your message is with us.',
+      body: 'Your email address is confirmed and your message is on its way to our team. We reply within one working day; for anything urgent, WhatsApp is faster.',
+    },
+    confirmExpired: 'That confirmation link has expired, so your earlier message was not sent. Please send it again below.',
+    confirmInvalid: 'That confirmation link is not valid — it may be incomplete. Please send your message again below.',
     fields: {
       name: { label: 'Name', placeholder: 'Your name' },
       email: { label: 'Email', placeholder: 'you@example.com' },

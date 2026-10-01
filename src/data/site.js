@@ -34,6 +34,20 @@ export const site = {
   // still has x's in it. Replace it here and the footer picks it up.
   helloEmail: 'info@thename.me',
   helloPhone: '+971 50 xxx xxxx',
+
+  // — SEO (read by utils/pageHead.js and scripts/prerender.mjs) —
+  //
+  // TODO(SEO): the site's public origin, no trailing slash — e.g.
+  // 'https://thename.me'. Search engines require ABSOLUTE addresses for
+  // canonical links, hreflang alternates, og:url, the sitemap and the
+  // structured data's url/logo, so while this is empty ALL of those are
+  // simply left out (the build prints a reminder). Filling it in switches
+  // them on, and makes the build also write sitemap.xml and llms.txt.
+  siteUrl: '',
+  // TODO(SEO): the image shown when a page is shared on WhatsApp, LinkedIn,
+  // X… — 1200x630px, saved under public/ (e.g. '/media/brand/share.jpg').
+  // Needs `siteUrl` too: og:image must be absolute.
+  shareImage: '',
 };
 
 // The address as a Google Maps DIRECTIONS link — `dir/?api=1&destination=` is

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './ImagePlaceholder.css';
 
 /**
@@ -9,9 +9,19 @@ import './ImagePlaceholder.css';
  */
 export default function ImagePlaceholder({ label, src, ratio = '4 / 3', className = '', loading = 'lazy' }) {
   const [failed, setFailed] = useState(false);
+  const imgRef = useRef(null);
 
-  // A new src deserves a fresh attempt (e.g. the selected hotspot changes).
-  useEffect(() => { setFailed(false); }, [src]);
+  useEffect(() => {
+    // A new src deserves a fresh attempt (e.g. the selected hotspot changes).
+    setFailed(false);
+    // Pages are PRE-RENDERED (scripts/prerender.mjs), so the <img> is in the
+    // HTML and the browser starts loading it before React hydrates. A missing
+    // file can fail in that gap, before onError is attached, and the event is
+    // simply lost — leaving a broken-image icon instead of the dashed slot.
+    // So check once React is in charge: complete with no pixels = it failed.
+    const img = imgRef.current;
+    if (img && img.complete && img.naturalWidth === 0) setFailed(true);
+  }, [src]);
 
   if (src && !failed) {
     return (
@@ -20,7 +30,7 @@ export default function ImagePlaceholder({ label, src, ratio = '4 / 3', classNam
             the viewport. A HERO must pass loading="eager" (Home, Events) —
             lazy-loading the first screen's picture delays the largest paint,
             which is the opposite of the point. */}
-        <img src={src} alt={label || ''} loading={loading} decoding="async" onError={() => setFailed(true)} />
+        <img ref={imgRef} src={src} alt={label || ''} loading={loading} decoding="async" onError={() => setFailed(true)} />
       </div>
     );
   }

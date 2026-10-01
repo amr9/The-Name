@@ -16,6 +16,9 @@ COPY index.html vite.config.js ./
 COPY public ./public
 COPY src ./src
 COPY shared ./shared
+# `npm run build` ends with scripts/prerender.mjs, which writes every page's
+# HTML (React's server renderer — plain Node, no browser needed here).
+COPY scripts ./scripts
 
 # Vite substitutes this at build time, so it is an ARG rather than a runtime
 # env var. Leave it empty to keep the form posting to the same-origin

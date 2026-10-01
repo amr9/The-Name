@@ -28,6 +28,13 @@ services:
       # be in it. Set ALLOWED_ORIGINS to the public origin when this is not
       # running on localhost.
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:${WEB_PORT:-8080}}
+      # The site's public address — the confirmation email's link points at
+      # it. Defaults to the first ALLOWED_ORIGINS entry, so setting that to
+      # the real domain covers both. TODO: the real domain (see SEO-TODO.md).
+      PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:-}
+      # An enquiry reaches MAIL_TO only after the visitor clicks the link
+      # emailed to them; this is how long that link works.
+      CONFIRM_TTL_HOURS: ${CONFIRM_TTL_HOURS:-48}
       # Optional tuning — the defaults in config.js are sensible; these
       # are here so they can be changed without editing code.
       RATE_PER_IP: ${RATE_PER_IP:-5}                 # stored messages per IP / 15 min

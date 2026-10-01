@@ -11,7 +11,32 @@
 
 import { config } from './config.js';
 import { statements } from './db.js';
-import { sendEnquiry } from './mailer.js';
+import { confirmLink, hashToken, mintToken } from './confirm.js';
+import { sendConfirmation, sendEnquiry } from './mailer.js';
+
+// A queued row is one of two jobs, decided by whether it is confirmed yet:
+//   not confirmed -> email the VISITOR the confirmation link, then 'awaiting'
+//   confirmed     -> email the BUSINESS the enquiry, then 'sent'
+// Both share the claim, the retries and the backoff below.
+async function run(row) {
+  if (!row.confirmed_at) {
+    // A fresh token per attempt: one that was minted for a send that then
+    // failed was never delivered, so nothing is lost by replacing it.
+    const token = mintToken();
+    statements.setConfirmToken.run({
+      id: row.id,
+      hash: hashToken(token),
+      expires_at: Date.now() + config.confirm.ttlMs,
+    });
+    await sendConfirmation(row, confirmLink(token));
+    statements.markAwaiting.run({ id: row.id, sent_at: new Date().toISOString() });
+    console.log(`[contact] #${row.id} confirmation emailed to the visitor — awaiting the click`);
+    return;
+  }
+  await sendEnquiry(row);
+  statements.markSent.run({ id: row.id, sent_at: new Date().toISOString() });
+  console.log(`[contact] #${row.id} sent to the operations inbox`);
+}
 
 let timer = null;
 let running = false;   // a tick is in flight
@@ -32,9 +57,7 @@ async function drain() {
     if (!row) return;
 
     try {
-      await sendEnquiry(row);
-      statements.markSent.run({ id: row.id, sent_at: new Date().toISOString() });
-      console.log(`[contact] #${row.id} sent to the operations inbox`);
+      await run(row);
     } catch (err) {
       const attempts = row.attempts + 1;
       const message = String(err?.message ?? err).slice(0, 500);
