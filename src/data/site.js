@@ -80,33 +80,36 @@ export const socials = [
 export const routes = {
   home: '/',
   shop: '/store',
+  brands: '/brands',
   business: '/corporate-gifts',
-  kids: '/kids',
+  agency: '/agency',
+  // The Kids page under its new name, Events (/kids redirects here). Its
+  // files are still pages/Kids/ and its copy is still i18n `kids`.
+  events: '/events',
   about: '/about',
   // Parked pages — not routed at the moment (see App.jsx).
   cafe: '/cafe',
-  concept: '/concept',
 };
 
 // The site's pages, in order. ONE list for the navbar, the footer's "Useful
 // Links" column and the 404 page's signpost, all labelled from i18n
-// `nav[key]` — so the three always show the same names (The Name, Store,
-// Corporate gifts, …). Change a page's name in `nav` and all three follow.
+// `nav[key]` — so the three always show the same names (Home, Store,
+// Brands, …). Change a page's name in `nav` and all three follow. The bar and
+// the footer print them in CAPITALS via CSS text-transform, so the copy itself
+// stays in normal case.
 export const navLinks = [
   { to: routes.home, key: 'home' },
   { to: routes.shop, key: 'shop' },
-  // Concept — the new Agency page. It does not exist yet, so the link is
-  // PARKED rather than pointing at the 404. Uncomment it once the page is up
-  // (and routed); its label, nav.concept, is already translated.
-  // { to: routes.concept, key: 'concept' },
+  { to: routes.brands, key: 'brands' },
   // Customize Yours used to sit here; it is now a section of Home
   // (pages/Home/CustomizeSection.jsx), so it has no nav entry.
   // `highlight` is the one emphasised link in the bar: bold, in the accent,
   // and nothing else (Navbar.css). Only one entry should ever carry it — two
   // emphasised links emphasise nothing.
   { to: routes.business, key: 'business', highlight: true },
+  { to: routes.agency, key: 'agency' },
   // { to: routes.cafe, key: 'cafe' },
-  { to: routes.kids, key: 'kids' },
+  { to: routes.events, key: 'events' },
   { to: routes.about, key: 'about' },
   // /policies is deliberately NOT here — it is parked, and Terms & Privacy
   // will link to the store's own pages (see policySections below).

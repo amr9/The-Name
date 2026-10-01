@@ -39,7 +39,7 @@ export default function Kids() {
           </div>
         </div>
         <div className="washed kids-hero-image">
-          <ImagePlaceholder src={media.kids.hero} label={k.heroPlaceholder} ratio="5 / 4" />
+          <ImagePlaceholder src={media.kids.hero} label={k.heroPlaceholder} ratio="5 / 4" loading="eager" />
         </div>
       </header>
 

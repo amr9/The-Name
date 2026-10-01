@@ -1,7 +1,7 @@
 export default {
   // `cafe` est conservé pour la page café mise de côté ; `contact` pour le
   // formulaire, désormais au bas de la page À propos.
-  nav: { home: 'The Name', cafe: 'Café', kids: 'Enfants', shop: 'Boutique', business: "Cadeaux d'entreprise", concept: 'Concept', about: 'À propos', policies: 'Politiques', contact: 'Nous contacter', customize: "Personnalisez", menu: 'Menu',
+  nav: { home: 'Accueil', cafe: 'Café', events: 'Événements', shop: 'Boutique', brands: 'Marques', business: "Cadeaux d'entreprise", agency: 'Agence', about: 'À propos', policies: 'Politiques', contact: 'Nous contacter', customize: "Personnalisez", menu: 'Menu',
          policyTabs: { terms: 'Conditions générales', delivery: 'Livraison et retours', privacy: 'Politique de confidentialité' } },
 
   common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Discuter sur WhatsApp', backToTop: 'Haut de page' },
@@ -42,6 +42,23 @@ export default {
 
   // The catch-all page (pages/NotFound/). `tryInstead` heads a list built
   // from `navLinks`, so the page names themselves come from `nav` above.
+  // The Brands page (pages/Brands/). The brand names themselves are proper
+  // nouns and live in data/brands.js, not here.
+  brandsPage: {
+    kicker: "Nos marques",
+    title: "Les marques que nous sélectionnons.",
+    lede: "Des créateurs au design affirmé que nous proposons, personnalisons et offrons — chacun choisi pour des pièces qui se gardent.",
+    visit: "Visiter",
+  },
+
+  // The Agency page (pages/Agency/).
+  agency: {
+    kicker: "Agence",
+    title: "Des idées faites pour porter votre nom.",
+    lede: "Campagnes, activations et objets de marque — imaginés, conçus et produits par The Name pour les marques avec lesquelles nous travaillons.",
+    cta: "Parlons-en",
+  },
+
   notFound: {
     kicker: "Page introuvable",
     title: "Cette page n’existe plus.",

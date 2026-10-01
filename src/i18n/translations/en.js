@@ -1,7 +1,7 @@
 export default {
   // `cafe` is kept for the parked cafe page; `contact` for the enquiry form,
   // which now sits at the foot of About rather than on its own page.
-  nav: { home: 'The Name', cafe: 'Cafe', kids: 'Kids', shop: 'Store', business: 'Corporate gifts', concept: 'Concept', about: 'About', policies: 'Policies', contact: 'Contact us', customize: "Customize Yours", menu: 'Menu',
+  nav: { home: 'Home', cafe: 'Cafe', events: 'Events', shop: 'Store', brands: 'Brands', business: 'Corporate Gifts', agency: 'Agency', about: 'About', policies: 'Policies', contact: 'Contact us', customize: "Customize Yours", menu: 'Menu',
          policyTabs: { terms: 'Terms & Conditions', delivery: 'Delivery & Returns', privacy: 'Privacy Policy' } },
 
   // `chatOnWhatsapp` is the label on ContactForm's WhatsApp button — today
@@ -44,6 +44,23 @@ export default {
 
   // The catch-all page (pages/NotFound/). `tryInstead` heads a list built
   // from `navLinks`, so the page names themselves come from `nav` above.
+  // The Brands page (pages/Brands/). The brand names themselves are proper
+  // nouns and live in data/brands.js, not here.
+  brandsPage: {
+    kicker: "Our brands",
+    title: "The brands we curate.",
+    lede: "Design-led makers we stock, personalise and gift — each one chosen for pieces worth keeping.",
+    visit: "Visit",
+  },
+
+  // The Agency page (pages/Agency/).
+  agency: {
+    kicker: "Agency",
+    title: "Ideas, made to carry your name.",
+    lede: "Campaigns, activations and branded pieces — planned, designed and produced by The Name for the brands we work with.",
+    cta: "Talk to us",
+  },
+
   notFound: {
     kicker: "Page not found",
     title: "That page has moved on.",

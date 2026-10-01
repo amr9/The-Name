@@ -1,7 +1,7 @@
 export default {
   // يبقى `cafe` لصفحة المقهى المؤجّلة، و`contact` لنموذج التواصل الذي صار
   // في أسفل صفحة «من نحن».
-  nav: { home: 'The Name', cafe: 'المقهى', kids: 'الأطفال', shop: 'المتجر', business: 'هدايا الشركات', concept: 'المفهوم', about: 'من نحن', policies: 'السياسات', contact: 'تواصل معنا', customize: "خصّصها", menu: 'القائمة',
+  nav: { home: 'الرئيسية', cafe: 'المقهى', events: 'الفعاليات', shop: 'المتجر', brands: 'العلامات التجارية', business: 'هدايا الشركات', agency: 'الوكالة', about: 'من نحن', policies: 'السياسات', contact: 'تواصل معنا', customize: "خصّصها", menu: 'القائمة',
          policyTabs: { terms: 'الشروط والأحكام', delivery: 'التوصيل والإرجاع', privacy: 'سياسة الخصوصية' } },
 
   common: { whatsapp: 'واتساب', chatOnWhatsapp: 'الدردشة عبر واتساب', backToTop: 'العودة إلى الأعلى' },
@@ -42,6 +42,23 @@ export default {
 
   // The catch-all page (pages/NotFound/). `tryInstead` heads a list built
   // from `navLinks`, so the page names themselves come from `nav` above.
+  // The Brands page (pages/Brands/). The brand names themselves are proper
+  // nouns and live in data/brands.js, not here.
+  brandsPage: {
+    kicker: "علاماتنا التجارية",
+    title: "العلامات التي نختارها بعناية.",
+    lede: "صنّاع يقودهم التصميم، نوفّر قطعهم ونخصّصها ونقدّمها هدايا — اخترنا كلًّا منهم لقطع تستحق الاحتفاظ بها.",
+    visit: "زيارة",
+  },
+
+  // The Agency page (pages/Agency/).
+  agency: {
+    kicker: "الوكالة",
+    title: "أفكار صُنعت لتحمل اسمك.",
+    lede: "حملات وفعاليات وقطع تحمل هوية العلامة — يخطط لها ويصممها وينتجها فريق The Name للعلامات التي نعمل معها.",
+    cta: "تحدّث إلينا",
+  },
+
   notFound: {
     kicker: "الصفحة غير موجودة",
     title: "هذه الصفحة لم تعد هنا.",

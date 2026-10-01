@@ -74,7 +74,7 @@ export default function ProductCard({ product, className = '', ratio = '4 / 3' }
       <span className="product-card-media">
         {/* Lazy: a full catalogue is ~190 of these, and only a couple of
             rows are ever on screen. */}
-        <ImagePlaceholder src={storeImage(product)} label={product.name} ratio={ratio} loading="lazy" />
+        <ImagePlaceholder src={storeImage(product)} label={product.name} ratio={ratio} />
       </span>
       <span className="product-card-body">
         {/* `title` for the same reason the footer's social icons carry one:

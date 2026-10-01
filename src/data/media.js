@@ -15,15 +15,40 @@ export const media = {
   // products being made, not a restaurant service shot. A video loop goes here.
   hero: `${BASE}/hero/hero.jpg`,
 
+  // The picture in Home's "Customize Yours" section (CustomizeSection.jsx),
+  // shown wide at 16:7.
+  customize: `${BASE}/customize/customize.jpg`,
+
   // Home page service rows — keys match pages/Home/data.js `services` id.
   services: {
     personalGifts: `${BASE}/services/personal-gifts.jpg`,
     businessBranding: `${BASE}/services/business-branding.jpg`,
-    // placeholder rows 03 / 04 — no files yet, so they show the dashed slot
+    // rows 03 / 04 show films instead (serviceVideos below); these image
+    // paths are only used if a video entry is removed
     serviceThree: `${BASE}/services/service-three.jpg`,
     serviceFour: `${BASE}/services/service-four.jpg`,
     cafe: `${BASE}/services/cafe.jpg`,
     catering: `${BASE}/services/catering.jpg`,
+  },
+  // A service row with an entry here shows this VIDEO instead of its image
+  // above. `ratio` is the film's own shape, so nothing is cropped. The films
+  // live in public/media/home/ (they belong to the Home page), remuxed with
+  // +faststart so they start playing before they have fully downloaded; each
+  // poster is a frame from 2s in.
+  serviceVideos: {
+    // "Brand Communication" — H.264, 1024x1280, 92s. Its audio track was
+    // stripped: the films play like GIFs and can never be unmuted.
+    serviceThree: {
+      src: `${BASE}/home/brand-communication.mp4`,
+      poster: `${BASE}/home/brand-communication-poster.jpg`,
+      ratio: '4 / 5',
+    },
+    // "Marketing strategy & Consultancy" — H.264, no audio, 1080x1350, 26s.
+    serviceFour: {
+      src: `${BASE}/home/marketing-strategy.mp4`,
+      poster: `${BASE}/home/marketing-strategy-poster.jpg`,
+      ratio: '4 / 5',
+    },
   },
 
   // Customization methods shown in the Home page "how it works" panel —
@@ -103,8 +128,8 @@ export const media = {
   // Each lockup comes in two inks so it always contrasts with its ground —
   // `dark` (charcoal) for light grounds, `yellow` for dark ones; the
   // choice is made in components/Logo.jsx. The N mark comes as an outline
-  // (inside the Home/Cafe bubbles) and a filled tile (the chat button and the
-  // browser tab icon in index.html).
+  // (inside the Home/Cafe bubbles) and a filled tile (the browser tab icon in
+  // index.html). The chat button uses the bare dark secondary logo instead.
   brand: {
     logos: {
       dark: { main: `${BASE}/brand/logo-main-dark.png`, secondary: `${BASE}/brand/logo-secondary-dark.png` },

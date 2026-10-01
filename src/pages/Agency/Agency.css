@@ -1,0 +1,22 @@
+/* The Agency page — one centred introduction block for now. */
+.agency-page {
+  padding-block: calc(var(--space-8) * 2) calc(var(--space-8) * 2.5);
+  max-width: 62ch;
+  text-align: center;
+}
+.agency-title {
+  font-size: clamp(36px, 4.6vw, 60px);
+  /* Top margin comes from `.card-kicker + .page-title` in theme.css. */
+  margin: 0;
+}
+.agency-lede {
+  font-size: var(--text-lg);
+  line-height: 1.6;
+  margin: var(--space-4) 0 0;
+  color: color-mix(in srgb, var(--color-text) 72%, transparent);
+}
+.agency-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-6);
+}

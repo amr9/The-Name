@@ -31,23 +31,28 @@
   grid-template-columns: repeat(3, auto);
   justify-content: space-between;
   gap: var(--space-6) clamp(24px, 3vw, 48px);
+  /* Everything in the three columns — titles, links, address, email, phone —
+     prints in capitals, like the navbar. */
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 .footer-title {
   font-size: var(--text-sm);
   font-weight: var(--font-heading-weight);
   color: var(--color-accent);
-  margin: 0 0 var(--space-4);
+  margin: 0 0 var(--space-2);
 }
 
-/* Useful Links: two sub-columns of three, filled top to bottom. */
+/* Useful Links: two sub-columns (four, then three), filled top to bottom.
+   Rows sit tight (2px) so each column reads as one compact list. */
 .footer-link-grid {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-rows: repeat(3, auto);
+  grid-template-rows: repeat(4, auto);
   grid-auto-flow: column;
-  gap: var(--space-2) var(--space-6);
+  gap: 2px var(--space-6);
   justify-content: start;
 }
 
@@ -67,17 +72,20 @@
 .footer-address {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
   white-space: nowrap;
 }
-.footer-email {
+/* No underline, at rest or on hover — the colour change alone marks it. */
+.footer-email,
+.footer-email:hover,
+.footer-email:focus-visible {
   display: inline-block;
-  text-decoration: underline;
+  text-decoration: none;
 }
 /* The phone is the column's one large line, as in the reference layout. */
 .footer-phone {
   display: block;
-  margin-top: var(--space-2);
+  margin-top: 2px;
   font-family: var(--font-heading);
   font-size: clamp(18px, 1.6vw, 22px);
   color: var(--color-white);

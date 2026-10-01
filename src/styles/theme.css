@@ -48,10 +48,6 @@
      sit a shade off the documented FFBD14/F7C25C swatches — this is what the
      artwork actually uses. */
   --gradient-panel: linear-gradient(to right, var(--color-panel-orange) 0%, var(--color-panel-yellow) 55%, var(--color-panel-gold) 100%);
-  /* The same panel as a seamless tile (it ends on the colour it starts with)
-     for moving highlights: use it at background-size 200% with the
-     gradient-flow animation below, and it streams left to right. */
-  --gradient-panel-flow: linear-gradient(to right, var(--color-panel-orange) 0%, var(--color-panel-yellow) 27.5%, var(--color-panel-gold) 50%, var(--color-panel-yellow) 72.5%, var(--color-panel-orange) 100%);
   /* The footer: charcoal on the left, getting DARKER to the right. */
   --gradient-footer: linear-gradient(to right, var(--color-ink) 0%, var(--color-ink-900) 100%);
 
@@ -111,9 +107,9 @@
      left to pick from and no way for the rule to quietly rot.
 
      And it means EVERYTHING rounded: there are no pills (999px) and no
-     circles (50%) left. Buttons, tags, kickers, inputs, the carousel arrows,
+     circles (50%) left. Tags, inputs, the carousel arrows,
      the chat button, the social icons and the play badge all take
-     --radius-md, so every corner on the site is the same. Small dots (the
+     --radius-md (buttons are the one exception: --radius-button, below). Small dots (the
      6–7px bullets) still render round — a radius larger than half the box is
      clamped by the browser — so they need no exception. Do not add 999px or
      50% back to anything that has a CORNER.
@@ -133,6 +129,10 @@
      hairline on a 14px SVG, not a surface — 16px would turn a flag into a
      blob. */
   --radius-md: 16px;
+  /* The ONE deliberate exception to the single radius above: every `.btn`
+     takes 12px, by request. Only .btn reads it — other rounded controls
+     (chips, inputs, the chat button) stay on --radius-md. */
+  --radius-button: 12px;
 
   --shadow-sm: 0 1px 2px color-mix(in srgb, #000000 14%, transparent);
   --shadow-md: 0 3px 10px color-mix(in srgb, #000000 16%, transparent);
@@ -242,7 +242,7 @@ button { font: inherit; }
   font-size: var(--text-sm); line-height: 1.2; color: var(--color-text);
   background: transparent; border: 1px solid transparent;
   padding: var(--space-2) calc(var(--space-3) * 1.2);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-button);
   min-height: 36px;
   white-space: nowrap;
 }
@@ -251,45 +251,8 @@ button { font: inherit; }
 .btn-primary { background: var(--color-accent); color: var(--color-black); }
 .btn-primary:hover { background: var(--color-accent-600); }
 .btn-primary:active { background: var(--color-accent-700); color: #fff; }
-/* sparkle: the call to action that should draw the eye (the Home hero's
-   "Browse the products"). The guideline's panel gradient flows left to right
-   under a light sweep and a scatter of twinkling sparkles. Use it INSTEAD of
-   .btn-primary — that variant's hover sets the `background` shorthand, which
-   would wipe the gradient. */
-.btn-sparkle {
-  position: relative; isolation: isolate; overflow: hidden;
-  color: var(--color-black);
-  background-color: var(--color-accent);
-  background-image: var(--gradient-panel-flow);
-  background-size: 200% 100%;
-  animation: gradient-flow 5s linear infinite;
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.15s ease;
-}
-.btn-sparkle:hover, .btn-sparkle:active { color: var(--color-black); box-shadow: var(--shadow-md); }
-.btn-sparkle::before, .btn-sparkle::after {
-  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-}
-.btn-sparkle::before {
-  background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--color-white) 70%, transparent) 50%, transparent 70%);
-  transform: translateX(-120%);
-  animation: sparkle-sweep 3.4s ease-in-out infinite;
-}
-.btn-sparkle::after {
-  background:
-    radial-gradient(circle at 10% 30%, var(--color-white) 0 1.2px, transparent 2.2px),
-    radial-gradient(circle at 28% 78%, var(--color-white) 0 1px, transparent 2px),
-    radial-gradient(circle at 50% 20%, var(--color-white) 0 1.4px, transparent 2.4px),
-    radial-gradient(circle at 70% 74%, var(--color-white) 0 1px, transparent 2px),
-    radial-gradient(circle at 90% 34%, var(--color-white) 0 1.2px, transparent 2.2px);
-  animation: sparkle-twinkle 1.6s ease-in-out infinite alternate;
-}
-@keyframes sparkle-sweep { 0%, 35% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+/* Shared twinkle — the Shop product badge's sparkle (ProductCard.css). */
 @keyframes sparkle-twinkle { from { opacity: 0.15; } to { opacity: 1; } }
-@media (prefers-reduced-motion: reduce) {
-  .btn-sparkle, .btn-sparkle::after { animation: none; }
-  .btn-sparkle::before { display: none; }
-}
 .btn-secondary { border-color: var(--color-divider); }
 .btn-secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
 .btn-secondary:active { background: color-mix(in srgb, var(--color-text) 14%, transparent); }
@@ -311,12 +274,11 @@ button { font: inherit; }
   display: flex; flex-direction: column; gap: var(--space-2);
   padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-surface);
 }
-/* The section kicker, on every page. It is the pill the Shop hero wore first:
-   an outlined capsule with a pulsing dot, rather than the bare uppercase line
-   it used to be. The dot is a ::before so no page has to add markup for it —
-   `.shop-hero-badge` is now just this class, its dot span deleted.
-   Inline-flex, so it sits on its own line above a heading without the pill
-   stretching to the column width. */
+/* The section kicker, on every page: a pulsing dot and an uppercase label,
+   with NO outline — the border it used to wear was removed site-wide, and its
+   padding with it, so the kicker lines up with the heading under it. The dot
+   is a ::before so no page has to add markup for it. Inline-flex, so it sits
+   on its own line above a heading. */
 .card-kicker {
   display: inline-flex;
   align-items: center;
@@ -326,9 +288,6 @@ button { font: inherit; }
   text-transform: uppercase;
   font-weight: 600;
   color: var(--color-accent-700);
-  border: 1px solid var(--color-accent-300);
-  border-radius: var(--radius-md);
-  padding: 6px 14px;
 }
 .card-kicker::before {
   content: '';
@@ -500,9 +459,6 @@ button { font: inherit; }
 }
 
 @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.35; transform: scale(0.82); } }
-/* Pairs with --gradient-panel-flow at background-size 200%: moves the tile
-   one full width to the right per cycle, which lands on an identical frame. */
-@keyframes gradient-flow { from { background-position: 0% 0; } to { background-position: -200% 0; } }
 @keyframes kenburns { 0% { transform: scale(1.04) translate3d(0,0,0); } 100% { transform: scale(1.14) translate3d(-1.5%,-1%,0); } }
 
 /* — page transition — carried by <main>, which App.jsx keys on the pathname
@@ -529,6 +485,21 @@ button { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .page-enter { animation: none; }
 }
+
+/* Section fade-in on scroll — the classes are added by
+   hooks/useSectionReveal.js, never in markup, so without JS nothing is
+   hidden. OPACITY ONLY: no transform, so #hash jumps measure true positions
+   and no section becomes a containing block for position: fixed. The hook
+   skips reduced-motion visitors entirely. */
+.reveal {
+  opacity: 0;
+  transition: opacity 700ms cubic-bezier(.22,.61,.36,1);
+}
+.reveal.reveal-in { opacity: 1; }
+
+/* Holds the page open while a lazy page's chunk downloads (App.jsx), so the
+   footer is not pulled up under the navbar for a frame. */
+.page-loading { min-height: 100vh; }
 
 /* — responsive: tablet / mobile (shared layout breakpoints) — */
 @media (max-width: 1024px) {

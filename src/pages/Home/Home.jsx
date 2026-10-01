@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 // <Bubbles> below to bring them back.
 // import Bubbles from '../../components/Bubbles/Bubbles.jsx';
 // import { shopIcons } from '../../components/Bubbles/icons.jsx';
+import AutoplayVideo from '../../components/AutoplayVideo.jsx';
 import ContactSection from '../../components/ContactForm/ContactSection.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 // The partner-brand strip under the hero is PARKED — uncomment these two
@@ -31,7 +32,7 @@ export default function Home() {
       {/* hero: video loop / still, full width */}
       <section className="home-hero">
         <div className="home-hero-media">
-          <ImagePlaceholder src={media.hero} label={t.home.hero.mediaLabel} ratio="auto" className="home-hero-media-slot" />
+          <ImagePlaceholder src={media.hero} label={t.home.hero.mediaLabel} ratio="auto" className="home-hero-media-slot" loading="eager" />
         </div>
         <div className="home-hero-scrim" />
         <div className="container home-hero-content">
@@ -42,7 +43,7 @@ export default function Home() {
           </h1>
           <p className="home-hero-body">{t.home.hero.body}</p>
           <div className="home-hero-actions">
-            <Link to={routes.shop} className="btn btn-sparkle">{t.home.hero.ctaShop}</Link>
+            <Link to={routes.shop} className="btn btn-primary">{t.home.hero.ctaShop}</Link>
             {/* The Matterport walkthrough — an external 3D tour, so a plain
                 anchor rather than a router Link. */}
             <a
@@ -103,9 +104,22 @@ export default function Home() {
                   </div>
                   <figure className="row-img home-service-figure" style={{ order: s.imgOrder }}>
                     <div className="home-service-ring" />
-                    <div className="washed home-service-image-wrap">
-                      <ImagePlaceholder src={media.services[s.id]} label={info.placeholder} ratio="5 / 4" />
-                    </div>
+                    {media.serviceVideos[s.id] ? (
+                      // A film in place of the photo, playing like a GIF —
+                      // lazy-loaded, no controls (components/AutoplayVideo). Not
+                      // `.washed` — the film's own colours are the brand's.
+                      <div className="home-service-image-wrap">
+                        <AutoplayVideo
+                          className="home-service-video"
+                          {...media.serviceVideos[s.id]}
+                          label={info.title}
+                        />
+                      </div>
+                    ) : (
+                      <div className="washed home-service-image-wrap">
+                        <ImagePlaceholder src={media.services[s.id]} label={info.placeholder} ratio="5 / 4" />
+                      </div>
+                    )}
                   </figure>
                 </div>
               </section>

@@ -96,7 +96,7 @@ export default function ChatLauncher() {
         onClick={() => setMode(mode === 'closed' ? 'menu' : 'closed')}
       >
         {mode === 'closed'
-          ? <img className="chat-launcher-fab-mark" src={media.brand.markFilled} alt="" />
+          ? <img className="chat-launcher-fab-mark" src={media.brand.logos.dark.secondary} alt="" />
           : <CloseIcon size={24} />}
       </button>
     </>

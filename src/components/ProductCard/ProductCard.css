@@ -209,9 +209,8 @@
 .carousel-card.product-card .product-card-badge { inset-inline-start: 0; }
 .carousel-card.product-card .product-card-badge::before { content: none; }
 
-/* The sparkle on the strip's trailing edge. Built from the same vocabulary as
-   .btn-sparkle in theme.css and driven by ITS keyframes — `sparkle-twinkle`
-   is defined there and shared, not redeclared here. Four points of different
+/* The sparkle on the strip's trailing edge, driven by the `sparkle-twinkle`
+   keyframes in theme.css — defined there and shared, not redeclared here. Four points of different
    sizes rather than one star: at this scale a single dot reads as a bullet,
    a scatter reads as a glint. */
 .product-card-badge::after {

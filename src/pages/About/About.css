@@ -170,7 +170,7 @@
 .about-collab {
   margin-top: clamp(56px, 6vw, 96px);
   padding-block: clamp(48px, 5vw, 80px);
-  background: var(--color-accent-100);
+  background: var(--color-bg);
 }
 .about-collab .about-section-title {
   margin-top: 14px;
@@ -257,7 +257,7 @@
 .about-how {
   margin-top: clamp(56px, 6vw, 96px);
   padding-block: clamp(48px, 5vw, 80px);
-  background: var(--color-accent-100);
+  background: var(--color-bg);
 }
 .about-methods {
   display: flex;
@@ -272,8 +272,6 @@
   text-transform: uppercase;
   color: var(--color-accent-700);
 }
-/* the band is already accent-100, so the chips go white to stay visible */
-.about-methods .tag { background: var(--color-white); }
 
 /* — mission & vision — */
 .about-purpose {

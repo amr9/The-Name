@@ -1,0 +1,7 @@
+/* A GIF-like film (AutoplayVideo.jsx): clicks, double-clicks and long-presses
+   pass straight through, so nothing can pause it or open it full-screen. */
+.autoplay-video {
+  pointer-events: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}

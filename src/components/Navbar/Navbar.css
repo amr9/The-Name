@@ -21,8 +21,11 @@
 /* Every link is a pill-shaped box, whether or not it is lit — the padding has
    to be on all of them, or the row would reflow each time the current page
    changed. Only the background differs. */
+/* Page names print in capitals; the i18n copy stays in normal case. */
 .navbar-link {
   font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   padding: 7px 12px;
   border-radius: var(--radius-md);
   transition: background 0.18s ease, color 0.18s ease;

@@ -7,6 +7,8 @@ import scrollToElement from '../utils/scrollToElement.js';
 // the scroll a little before it finishes reads as one continuous movement —
 // the page arrives, then carries you down — rather than two separate beats.
 const PAGE_ENTER_SETTLE_MS = 180;
+// How long to wait for a lazy page to mount the #hash target before giving up.
+const WAIT_FOR_TARGET_MS = 4000;
 
 /**
  * Puts every new page at the top — unless the link asked for a section.
@@ -44,12 +46,6 @@ export default function useScrollToTop() {
       return undefined;
     }
 
-    const target = document.getElementById(decodeURIComponent(hash.slice(1)));
-    // A hash that matches nothing on this page is left alone rather than
-    // forced to the top — the visitor may have arrived on a stale link, and
-    // silently yanking them somewhere is worse than doing nothing.
-    if (!target) return undefined;
-
     // Arriving from another page: put the new page at its top first, so the
     // visitor sees where they have landed and the scroll that follows reads as
     // travelling down this page rather than continuing the last one's offset.
@@ -57,19 +53,47 @@ export default function useScrollToTop() {
     // are, which is what makes it look like one continuous scroll.
     if (changedPage) window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
-    // The gap to leave above the heading is the target's own scroll-margin-top,
-    // so the sticky navbar's height stays a CSS concern (Policies.css) rather
-    // than being duplicated as a number here. utils/scrollToElement.js animates
-    // it frame by frame — see the note there on why not scrollIntoView.
-    const offset = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
-
     let cancelScroll = () => {};
-    const id = window.setTimeout(() => {
-      cancelScroll = scrollToElement(target, offset);
-    }, PAGE_ENTER_SETTLE_MS);
+    let scrollTimer = 0;
+    const go = (target) => {
+      // The gap to leave above the heading is the target's own
+      // scroll-margin-top, so the sticky navbar's height stays a CSS concern
+      // rather than being duplicated as a number here.
+      // utils/scrollToElement.js animates it frame by frame — see the note
+      // there on why not scrollIntoView.
+      const offset = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+      scrollTimer = window.setTimeout(() => {
+        cancelScroll = scrollToElement(target, offset);
+      }, PAGE_ENTER_SETTLE_MS);
+    };
+
+    // Pages are lazy-loaded (App.jsx), so on a page change the target may not
+    // exist yet: watch the DOM until it mounts. A hash that matches nothing
+    // within WAIT_FOR_TARGET_MS is left alone rather than forced anywhere —
+    // the visitor may have arrived on a stale link, and silently yanking them
+    // somewhere is worse than doing nothing.
+    const find = () => document.getElementById(decodeURIComponent(hash.slice(1)));
+    let observer = null;
+    let giveUpTimer = 0;
+    const found = find();
+    if (found) {
+      go(found);
+    } else {
+      observer = new MutationObserver(() => {
+        const target = find();
+        if (!target) return;
+        observer.disconnect();
+        window.clearTimeout(giveUpTimer);
+        go(target);
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+      giveUpTimer = window.setTimeout(() => observer.disconnect(), WAIT_FOR_TARGET_MS);
+    }
 
     return () => {
-      window.clearTimeout(id);
+      observer?.disconnect();
+      window.clearTimeout(giveUpTimer);
+      window.clearTimeout(scrollTimer);
       cancelScroll();
     };
   }, [pathname, hash]);

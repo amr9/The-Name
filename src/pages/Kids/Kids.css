@@ -72,11 +72,11 @@
   margin-bottom: var(--space-2);
 }
 
-/* — the making note, on the pale accent band — */
+/* — the making note (white, like every section) — */
 .kids-note {
   margin-top: clamp(56px, 6vw, 96px);
   padding-block: clamp(48px, 5vw, 80px);
-  background: var(--color-accent-100);
+  background: var(--color-bg);
 }
 .kids-note-points {
   list-style: none;
@@ -142,14 +142,14 @@
   opacity: 0.8;
 }
 
-/* — the Two T's feature, on the pale accent band — */
+/* — the Two T's feature (white, like every section) — */
 .kids-two-ts {
   margin-top: clamp(56px, 6vw, 96px);
   padding-block: clamp(48px, 5vw, 80px);
-  background: var(--color-accent-100);
+  background: var(--color-bg);
 }
 
-/* — the kid-drawn ornament on both beige bands (Doodles.jsx). The bands
+/* — the kid-drawn ornament on both of these sections (Doodles.jsx). The bands
      anchor and clip them, so a doodle can sit half off the edge without
      ever adding scroll, and the content stays above them. — */
 .kids-note,
