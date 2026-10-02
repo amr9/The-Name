@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { site } from '../../data/site.js';
+import { addressLine, site } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { policyDocs } from './data.js';
 import './Policies.css';
@@ -11,7 +11,7 @@ import './Policies.css';
 const FIELDS = {
   legalName: site.legalName,
   licensedBy: site.licensedBy,
-  address: site.address,
+  address: addressLine,
   name: site.name,
 };
 

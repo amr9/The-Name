@@ -55,6 +55,7 @@
   height: auto;
 }
 
+/* PARKED with the paragraph in Home.jsx — kept for when it comes back. */
 .home-hero-body {
   font-size: var(--text-lg);
   line-height: 28px;
@@ -73,6 +74,18 @@
 .home-hero-secondary {
   background: color-mix(in srgb, #fff 82%, transparent);
   backdrop-filter: blur(6px);
+}
+
+/* Everything below large desktops — phones, tablets, small and short laptop
+   screens: the title sits OVER the video, but compact — a smaller title and
+   tighter spacing — so only the bottom-left corner is covered. At full size
+   the block covered 57-78% of the hero's height on 1024x768 to 1366x768
+   screens, and the middle of the video on a phone. (The paragraph is PARKED
+   in Home.jsx on every screen, so there is nothing else to fit here.) */
+@media (max-width: 1366px), (max-height: 820px) {
+  .home-hero-title { margin-top: 0; }
+  .home-hero-title-art { width: clamp(200px, 26vw, 360px); }
+  .home-hero-actions { margin-top: 16px; }
 }
 
 /* — services intro — */

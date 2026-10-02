@@ -30,7 +30,7 @@ services:
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:${WEB_PORT:-8080}}
       # The site's public address — the confirmation email's link points at
       # it. Defaults to the first ALLOWED_ORIGINS entry, so setting that to
-      # the real domain covers both. TODO: the real domain (see SEO-TODO.md).
+      # the real domain (https://thename.ae, set in .env) covers both.
       PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:-}
       # An enquiry reaches MAIL_TO only after the visitor clicks the link
       # emailed to them; this is how long that link works.

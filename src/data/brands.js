@@ -16,6 +16,9 @@ export const brands = [
   { id: 'korin', name: 'Korin', url: 'https://www.korin-design.com' },
   { id: 'kreafunk', name: 'Kreafunk', url: 'https://kreafunk.com' },
   { id: 'gingko', name: 'Gingko', url: 'https://gingkodesign.com', logoScale: 1.6 },
+  // Swiss pens and accessories, from the Prodir Novelties 2026 catalogue.
+  // No logo file yet, so it shows as a wordmark.
+  { id: 'prodir', name: 'Prodir', url: 'https://www.prodir.com' },
 ];
 
 export const brandsById = Object.fromEntries(brands.map((b) => [b.id, b]));

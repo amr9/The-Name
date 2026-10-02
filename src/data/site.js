@@ -7,14 +7,36 @@ export const site = {
   // name is required rather than the trading name above.
   legalName: 'THE NAME CONCEPT RESTAURANT FZCO',
   licensedBy: 'Dubai Integrated Economic Zones Authority (DIEZ)',
-  address: 'Dubai CommerCity, Dubai, United Arab Emirates',
+
+  // — CONTACT DETAILS: the ONE place they are written —
+  //
+  // The footer, the contact form's details list, the WhatsApp buttons, the
+  // search engines' business data (utils/pageHead.js), llms.txt, the policy
+  // copy and the contact service all read these, directly or through the
+  // derived exports below this object (addressLine, addressLines, mapsLink,
+  // telLink, waLink). Change a number or an inbox here and every one follows.
+  //
+  // The one phone line: printed in the footer and the form, dialled by
+  // telLink, and the WhatsApp number (waLink).
   phone: '+971 54 344 4565',
-  // Orders, delivery, returns, complaints — and where the contact form's
-  // submissions are meant to land.
+  // Orders, delivery, returns, complaints — the form's "Email" line, and
+  // where the contact service sends submissions unless MAIL_TO overrides it.
   email: 'operations@thename.me',
-  // Privacy and personal-data requests go to a separate inbox; the policies
-  // page and the Privacy Policy both point here.
-  privacyEmail: 'info@thename.me',
+  // General enquiries AND privacy / personal-data requests: the footer's
+  // Contact column, the form's Privacy line and the business data.
+  infoEmail: 'info@thename.me',
+  // The address, in parts, so each place can print the form it needs (see
+  // addressLine / addressLines below) without the place being retyped.
+  address: {
+    building: 'Building 3',
+    area: 'Umm Ramool',
+    district: 'Dubai CommerCity',
+    city: 'Dubai',
+    country: 'United Arab Emirates',
+    countryShort: 'UAE',
+    countryCode: 'AE',
+  },
+
   // The online store, off-site. Everything that leaves for it reads this —
   // the Shop page's hero button and its per-item View/Personalise links. (The
   // Kids and Home "shop" CTAs are router Links to routes.shop, not to the store.)
@@ -25,42 +47,47 @@ export const site = {
   // page's button hands you to a category page rather than the front. Not
   // under /shop/: it is a CMS page on the store, not a category.
   customizableUrl: 'https://store.thename.ae/customizable-products',
-  // The footer's "Address" column, one entry per printed line. Fuller than
-  // `address` above (which feeds Maps, the contact section and the policy
-  // copy); both are the same place.
-  addressLines: ['Building 3,', 'Umm Ramool, Dubai CommerCity,', 'Dubai - UAE'],
-  // The footer's "Contact" column. The phone is a PLACEHOLDER until the
-  // number is confirmed — it prints as plain text, not a tel: link, while it
-  // still has x's in it. Replace it here and the footer picks it up.
-  helloEmail: 'info@thename.me',
-  helloPhone: '+971 50 xxx xxxx',
 
   // — SEO (read by utils/pageHead.js and scripts/prerender.mjs) —
   //
-  // TODO(SEO): the site's public origin, no trailing slash — e.g.
-  // 'https://thename.me'. Search engines require ABSOLUTE addresses for
-  // canonical links, hreflang alternates, og:url, the sitemap and the
-  // structured data's url/logo, so while this is empty ALL of those are
-  // simply left out (the build prints a reminder). Filling it in switches
-  // them on, and makes the build also write sitemap.xml and llms.txt.
-  siteUrl: '',
+  // The site's public origin, no trailing slash. Search engines require
+  // ABSOLUTE addresses for canonical links, hreflang alternates, og:url, the
+  // sitemap and the structured data's url/logo — all built from this. Left
+  // empty, every one of them is dropped (the build prints a reminder); set,
+  // the build also writes sitemap.xml and llms.txt.
+  siteUrl: 'https://thename.ae',
   // TODO(SEO): the image shown when a page is shared on WhatsApp, LinkedIn,
   // X… — 1200x630px, saved under public/ (e.g. '/media/brand/share.jpg').
   // Needs `siteUrl` too: og:image must be absolute.
   shareImage: '',
 };
 
+// — Derived from the contact details above. Never retype these elsewhere. —
+const { building, area, district, city, country, countryShort } = site.address;
+
+// The address on ONE line — the contact form, the policy copy ({address}),
+// llms.txt.
+export const addressLine = `${building}, ${area}, ${district}, ${city}, ${country}`;
+
+// The address as the footer prints it, one entry per line.
+export const addressLines = [`${building},`, `${area}, ${district},`, `${city} - ${countryShort}`];
+
 // The address as a Google Maps DIRECTIONS link — `dir/?api=1&destination=` is
 // Maps' documented URL form, and it opens the app already asking "how do I get
 // there", with the origin left to the visitor's own location rather than
-// guessed. Built from `site.address` so the two can never disagree; if a
-// precise pin is ever needed, replace the destination with "lat,lng" and add
+// guessed. Used by the footer's address AND the form's "Find us" link. The
+// destination is the district, not the building: that is what Maps resolves
+// reliably. If a precise pin is ever needed, replace it with "lat,lng" and add
 // `&destination_place_id=`.
-export const mapsLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(site.address)}`;
+export const mapsLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${district}, ${city}, ${country}`)}`;
+
+// Dialling the phone (footer and form). Null while the number is still a
+// placeholder with x's in it, so a fake number is never dialable — callers
+// print it as plain text then.
+export const telLink = /x/i.test(site.phone) ? null : `tel:${site.phone.replace(/[^+0-9]/g, '')}`;
 
 // Every WhatsApp trigger on the site links here (WhatsAppButton, the chat
-// launcher's WhatsApp option, the footer), and the footer prints
-// `site.phone` itself — so the number above is the single place to change it.
+// launcher's WhatsApp option) — the same number as `site.phone`.
 export const waLink = `https://wa.me/${site.phone.replace(/[^0-9]/g, '')}`;
 
 // Social profiles, shown as icon links in the footer.

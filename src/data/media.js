@@ -162,6 +162,20 @@ export const media = {
     korin: `${BASE}/brands/korin.png`,
     kreafunk: `${BASE}/brands/kreafunk.png`,
     gingko: `${BASE}/brands/gingko.png`,
+    prodir: `${BASE}/brands/prodir.svg`,
+  },
+
+  // Brands page — one photo per featured product (keys match
+  // pages/Brands/data.js `featuredBrands[].products`). Taken from the brands'
+  // own 2025/26 catalogues (Copenhagen Design's PANTONE Lifestyle Collection,
+  // Lund Design House, Prodir Novelties 2026), resized to 900px WebP.
+  brandProducts: {
+    pantoneOriginalMug: `${BASE}/brands/products/pantone-original-mug.webp`,
+    pantoneGatefoldNotebook: `${BASE}/brands/products/pantone-gatefold-notebook.webp`,
+    skittleWaterBottle: `${BASE}/brands/products/skittle-water-bottle.webp`,
+    lundWirelessLamp: `${BASE}/brands/products/lund-wireless-lamp.webp`,
+    prodirMs8: `${BASE}/brands/products/prodir-ms8.webp`,
+    prodirMc01: `${BASE}/brands/products/prodir-mc01.webp`,
   },
 
   // Delivery partner logos for the Cafe logo strip (currently commented out)

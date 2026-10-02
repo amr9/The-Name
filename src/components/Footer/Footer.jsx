@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Logo from '../Logo.jsx';
 import SocialLinks from './SocialLinks.jsx';
-import { mapsLink, navLinks, site } from '../../data/site.js';
+import { addressLines, mapsLink, navLinks, site, telLink } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import './Footer.css';
 
@@ -17,8 +17,6 @@ import './Footer.css';
 export default function Footer() {
   const { t } = useLanguage();
   const f = t.footer;
-  // A phone with x's in it is a placeholder, so it must not be dialable.
-  const phoneReady = !/x/i.test(site.helloPhone);
 
   return (
     <footer className="footer">
@@ -42,9 +40,10 @@ export default function Footer() {
 
           <div className="footer-column">
             <h2 className="footer-title">{f.addressHeading}</h2>
-            {/* The same Maps directions link the contact section uses. */}
+            {/* The address, its Maps link, the email and the phone all come
+                from data/site.js — the same values the contact form prints. */}
             <a href={mapsLink} className="footer-link footer-address">
-              {site.addressLines.map((line) => (
+              {addressLines.map((line) => (
                 <span key={line}>{line}</span>
               ))}
             </a>
@@ -52,11 +51,11 @@ export default function Footer() {
 
           <div className="footer-column">
             <h2 className="footer-title">{f.helloHeading}</h2>
-            <a href={`mailto:${site.helloEmail}`} className="footer-link footer-email">{site.helloEmail}</a>
-            {phoneReady ? (
-              <a href={`tel:${site.helloPhone.replace(/\s/g, '')}`} className="footer-phone">{site.helloPhone}</a>
+            <a href={`mailto:${site.infoEmail}`} className="footer-link footer-email">{site.infoEmail}</a>
+            {telLink ? (
+              <a href={telLink} className="footer-phone">{site.phone}</a>
             ) : (
-              <span className="footer-phone">{site.helloPhone}</span>
+              <span className="footer-phone">{site.phone}</span>
             )}
           </div>
         </div>

@@ -9,7 +9,7 @@ import { headTags, pageHead } from './utils/pageHead.js';
 export { navLinks } from './data/site.js';
 export { languages } from './i18n/languages.js';
 export { localizePath } from './i18n/locale.js';
-export { site } from './data/site.js';
+export { addressLine, site } from './data/site.js';
 export { dictionaryFor };
 
 /**

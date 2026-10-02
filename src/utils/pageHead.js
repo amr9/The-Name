@@ -1,4 +1,6 @@
 import { mapsLink, navLinks, site, socials } from '../data/site.js';
+
+const { building, area, district, city, country, countryCode } = site.address;
 import { languages } from '../i18n/languages.js';
 import { DEFAULT_LANG, localizePath } from '../i18n/locale.js';
 
@@ -45,16 +47,16 @@ function businessJsonLd(description) {
     name: site.name,
     legalName: site.legalName,
     description,
-    email: site.helloEmail,
+    email: site.infoEmail,
     telephone: site.phone,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Building 3, Umm Ramool, Dubai CommerCity',
-      addressLocality: 'Dubai',
-      addressCountry: 'AE',
+      streetAddress: `${building}, ${area}, ${district}`,
+      addressLocality: city,
+      addressCountry: countryCode,
     },
     hasMap: mapsLink,
-    areaServed: { '@type': 'Country', name: 'United Arab Emirates' },
+    areaServed: { '@type': 'Country', name: country },
     // Only real profiles: the ones still pointing at an in-app placeholder
     // route (`to`) are not accounts yet.
     sameAs: socials.filter((s) => s.url).map((s) => s.url),

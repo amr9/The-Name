@@ -27,18 +27,13 @@ open**. Each item says exactly where it goes.
 
 ## ⏳ TODO — needs you
 
-### 1. Your domain → `src/data/site.js`, `siteUrl`
-Set it to the public address, e.g. `siteUrl: 'https://thename.me'` (no
-trailing slash), then rebuild. That one line switches on:
-canonical links, hreflang (English ↔ Arabic), `og:url`, the structured
-data's `url`/`logo`, the `Sitemap:` line in `robots.txt`, and generates
-**`sitemap.xml`** and **`llms.txt`** (a summary written for AI assistants).
-All of this was tested with a placeholder domain and works.
-
-Also set **`ALLOWED_ORIGINS`** for the contact service to the same domain
-(see `docker-compose.yml`), or the form will reject submissions. The
-**confirmation email's link** uses it too (or `PUBLIC_SITE_URL`, if set):
-with the localhost default, visitors would receive a link that does not work.
+### 1. ✅ Your domain — done: `https://thename.ae`
+`siteUrl` in `src/data/site.js` is set, which switches on canonical links,
+hreflang, `og:url`, the structured data's `url`/`logo`, the `Sitemap:` line
+in `robots.txt`, `sitemap.xml` and `llms.txt`. `ALLOWED_ORIGINS` in the root
+`.env` is `https://thename.ae,https://www.thename.ae` (the confirmation
+email's link uses the first). If the server's `.env` is a separate copy, set
+it there too.
 
 ### 2. A share image → `src/data/site.js`, `shareImage`
 A 1200×630px image (logo + a product photo works well), saved under
@@ -50,7 +45,8 @@ WhatsApp, LinkedIn, X. Needs `siteUrl` too.
 - **Home rows 03 and 04** still say "Service Three Title" / "Placeholder
   text…" → `home.services.serviceThree` / `serviceFour` in `en.js` and
   `ar.js`. (The videos are real; the text beside them is not.)
-- **Phone number** `+971 50 xxx xxxx` → `helloPhone` in `src/data/site.js`.
+- ✅ **Phone number** — the footer now shows the real number (`phone` in
+  `src/data/site.js`, the one place every contact detail is written).
 - **Agency page** is a short placeholder (72 words) → `agency` in the
   translation files, plus real sections in `src/pages/Agency/`.
 - **Brands page** is thin (64 words) — a sentence per brand would help it

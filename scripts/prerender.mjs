@@ -33,7 +33,7 @@ const ssrDir = path.join(root, 'dist-ssr');
 // React's production build: same HTML, faster, and without dev-only warnings.
 process.env.NODE_ENV ??= 'production';
 
-const { render, navLinks, languages, localizePath, site, dictionaryFor } = await import(
+const { render, navLinks, languages, localizePath, site, addressLine, dictionaryFor } = await import(
   pathToFileURL(path.join(ssrDir, 'entry-server.js')).href
 );
 
@@ -107,7 +107,7 @@ if (site.siteUrl) {
     '',
     `> ${en.seo.home.description}`,
     '',
-    `${site.name} (${site.legalName}) is based in ${site.address}. Contact: ${site.helloEmail}, ${site.phone}. Online store: ${site.shopUrl}.`,
+    `${site.name} (${site.legalName}) is based in ${addressLine}. Contact: ${site.infoEmail}, ${site.phone}. Online store: ${site.shopUrl}.`,
     'The site is available in English and Arabic (Arabic pages are under /ar/).',
     '',
     '## Pages',

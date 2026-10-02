@@ -101,6 +101,57 @@ export default {
     title: "The brands we curate.",
     lede: "Design-led makers we stock, personalise and gift — each one chosen for pieces worth keeping.",
     visit: "Visit",
+    // The featured sections (pages/Brands/data.js). `visitSite` is the link
+    // under each intro; `more` heads the logo row of the remaining brands.
+    visitSite: (name) => `Visit ${name}`,
+    more: "Also in our collection",
+    brands: {
+      pantone: {
+        intro: "The official PANTONE Lifestyle Collection by Copenhagen Design, sole licensee in over 70 countries. Every piece is matched to its PANTONE colour chip — so your brand can carry its exact colour.",
+        products: {
+          pantoneOriginalMug: {
+            name: "Original Mug",
+            line: "The classic chip-shaped mug in fine china, marked with its official colour code.",
+            facts: ["375 ml", "Fine china", "29 colours"],
+          },
+          pantoneGatefoldNotebook: {
+            name: "Gatefold Notebook",
+            line: "A hardbound notebook that opens like a colour chip, with a printed ruler inside the cover.",
+            facts: ["160 pages", "FSC-certified paper", "11 colours"],
+          },
+        },
+      },
+      lundLondon: {
+        intro: "Lund Design House pairs good looks with a light footprint — Skittle drinkware and Lund Living home pieces in soft pastels and bold tones, all made to be reused.",
+        products: {
+          skittleWaterBottle: {
+            name: "Skittle Water Bottle",
+            line: "The iconic stainless-steel bottle with a ball top — keeps drinks cold or hot for hours.",
+            facts: ["300 / 500 / 750 ml", "Cold 24 h · hot 12 h", "BPA-free"],
+          },
+          lundWirelessLamp: {
+            name: "Wireless Lamp",
+            line: "A cordless lamp with a soft silicone bulb — touch to change colour; its charging base also charges your phone.",
+            facts: ["8 colour settings", "Up to 45 h battery", "Wireless charger"],
+          },
+        },
+      },
+      prodir: {
+        intro: "Swiss-designed pens and everyday accessories, built to carry a brand — precise, colourful and made to be personalised.",
+        products: {
+          prodirMs8: {
+            name: "MS8",
+            line: "Prodir's smooth writer in lightweight, endlessly recyclable aluminium, with a new elegant finish.",
+            facts: ["Recyclable aluminium", "Swiss design", "Min. order 150"],
+          },
+          prodirMc01: {
+            name: "MC01",
+            line: "An aluminium carabiner for keys, badges and anything worth keeping within reach.",
+            facts: ["Aluminium", "Brandable", "Min. order 150"],
+          },
+        },
+      },
+    },
   },
 
   // The Agency page (pages/Agency/).
@@ -249,7 +300,7 @@ export default {
               'Standard UAE delivery fee: AED 30. For orders more than AED 200, delivery is free.',
               'Estimated delivery timeframe: 1–2 business days after production is completed. For customized products, it will take 3–4 days.',
               "Delivery estimates are provided in good faith and may be affected by circumstances outside THE NAME's reasonable control.",
-              'Collection: Customers may have the option to collect their completed order free of charge from THE NAME at Dubai CommerCity, Dubai.',
+              'Collection: Customers may have the option to collect their completed order free of charge from THE NAME at {address}.',
               'Full delivery information is in the Delivery & Returns Policy below.',
             ],
           },
@@ -382,7 +433,7 @@ export default {
           collection: {
             heading: 'Collection from THE NAME',
             blocks: [
-              'Customers may also have the option to collect their completed order free of charge from THE NAME at Dubai CommerCity, Dubai.',
+              'Customers may also have the option to collect their completed order free of charge from THE NAME at {address}.',
               'Collection details will be provided once the order is ready.',
             ],
           },

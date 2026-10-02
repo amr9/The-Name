@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import WhatsAppButton from '../WhatsAppButton.jsx';
-import { site, mapsLink } from '../../data/site.js';
+import { addressLine, mapsLink, site, telLink } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { contactFields, honeypotField, timingField, validateContact } from '../../../shared/contactForm.js';
 import './ContactForm.css';
@@ -159,7 +159,8 @@ export default function ContactForm() {
             used to end with its own contact block and no longer does, so the
             orders address, the separate privacy address and the registered
             entity all landed here. Do not thin this list out without putting
-            them somewhere else first. */}
+            them somewhere else first. Every value comes from data/site.js —
+            the same ones the footer prints. */}
         <dl className="contact-details">
           <div className="contact-detail">
             <dt>{t.contact.emailHeading}</dt>
@@ -169,11 +170,17 @@ export default function ContactForm() {
             <dt>{t.contact.phoneHeading}</dt>
             {/* <bdi dir="ltr"> keeps the + and the digit groups in order
                 under Arabic without dragging the line's alignment with it. */}
-            <dd><bdi dir="ltr">{site.phone}</bdi></dd>
+            <dd>
+              {telLink ? (
+                <a href={telLink}><bdi dir="ltr">{site.phone}</bdi></a>
+              ) : (
+                <bdi dir="ltr">{site.phone}</bdi>
+              )}
+            </dd>
           </div>
           <div className="contact-detail">
             <dt>{t.contact.privacyHeading}</dt>
-            <dd><a href={`mailto:${site.privacyEmail}`}>{site.privacyEmail}</a></dd>
+            <dd><a href={`mailto:${site.infoEmail}`}>{site.infoEmail}</a></dd>
           </div>
           <div className="contact-detail">
             <dt>{t.contact.locationHeading}</dt>
@@ -185,7 +192,7 @@ export default function ContactForm() {
                 className="contact-map-link"
                 href={mapsLink}
               >
-                {site.address}
+                {addressLine}
                 <span className="contact-map-cue">{t.contact.directions}</span>
               </a>
             </dd>

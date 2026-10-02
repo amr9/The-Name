@@ -41,7 +41,10 @@ export default function Home() {
           <h1 className="home-hero-title">
             <TaglineArt className="home-hero-title-art" />
           </h1>
-          <p className="home-hero-body">{t.home.hero.body}</p>
+          {/* PARKED on every screen size — the paragraph under the title. Its
+              copy (home.hero.body) and CSS (.home-hero-body) are kept;
+              uncomment this line to bring it back.
+          <p className="home-hero-body">{t.home.hero.body}</p> */}
           <div className="home-hero-actions">
             <Link to={routes.shop} className="btn btn-primary">{t.home.hero.ctaShop}</Link>
             {/* The Matterport walkthrough — an external 3D tour, so a plain

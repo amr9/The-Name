@@ -20,9 +20,153 @@
   color: color-mix(in srgb, var(--color-text) 72%, transparent);
 }
 
+/* — featured brands: one section each, intro beside two product cards — */
+.brand-features {
+  margin-top: calc(var(--space-8) * 1.5);
+}
+.brand-feature {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) minmax(0, 2fr);
+  gap: clamp(var(--space-6), 4vw, calc(var(--space-8) * 2));
+  padding-block: calc(var(--space-8) * 1.5);
+  border-top: 1px solid color-mix(in srgb, var(--color-text) 12%, transparent);
+}
+/* Alternate sides down the page, so three sections don't read as one long
+   column. `order`, not a mirrored template, keeps the DOM (and the reading
+   order for a screen reader) intro-first in every section. */
+.brand-feature:nth-child(even) {
+  grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr);
+}
+.brand-feature:nth-child(even) .brand-feature-intro { order: 2; }
+
+/* The intro stays in view while the taller product column scrolls past. */
+.brand-feature-intro {
+  position: sticky;
+  top: calc(var(--navbar-h) + var(--space-6));
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+.brand-feature-index {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-accent-700);
+}
+.brand-feature-name {
+  margin: 0;
+  width: 100%;
+}
+/* Left-aligned, unlike the centred logo cards below. */
+.brand-feature-name .brands-logo {
+  width: calc(min(100%, 200px) * var(--logo-scale, 1));
+}
+.brand-feature-name .brands-logo img { object-position: left center; }
+[dir="rtl"] .brand-feature-name .brands-logo img { object-position: right center; }
+.brand-feature-name .brands-logo.img-slot-empty { align-items: flex-start; text-align: start; }
+.brand-feature-text {
+  margin: 0;
+  font-size: var(--text-body);
+  line-height: 1.65;
+  color: color-mix(in srgb, var(--color-text) 78%, transparent);
+}
+.brand-feature-intro .btn { margin-top: var(--space-2); }
+
+.brand-feature-products {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+/* A product: beige card (site-wide rule — white sections, beige cards), the
+   photo inset with a concentric radius, then name, one line and the facts. */
+.brand-product {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-accent-100);
+}
+.brand-product-media {
+  border-radius: calc(var(--radius-md) - var(--space-3));
+  overflow: hidden;
+}
+.brand-product-media img {
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.brand-product:hover .brand-product-media img { transform: scale(1.04); }
+@media (prefers-reduced-motion: reduce) {
+  .brand-product-media img { transition: none; }
+  .brand-product:hover .brand-product-media img { transform: none; }
+}
+.brand-product-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1;
+  padding: var(--space-4) var(--space-1) var(--space-1);
+}
+.brand-product-name {
+  margin: 0;
+  font-size: var(--text-lg);
+  line-height: 1.25;
+}
+.brand-product-line {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--color-text) 75%, transparent);
+}
+/* Facts as small white chips, pinned to the card's foot so a row of cards
+   lines its chips up whatever the length of the line above. */
+.brand-product-facts {
+  list-style: none;
+  margin: auto 0 0;
+  padding: var(--space-2) 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+.brand-product-facts li {
+  font-size: var(--text-xs);
+  line-height: 1.3;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-md);
+  background: #fff;
+}
+
+@media (max-width: 980px) {
+  .brand-feature,
+  .brand-feature:nth-child(even) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .brand-feature:nth-child(even) .brand-feature-intro { order: 0; }
+  .brand-feature-intro { position: static; }
+}
+@media (max-width: 560px) {
+  .brand-feature-products { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* — the remaining brands, as logo cards — */
+.brands-more {
+  padding-top: calc(var(--space-8) * 1.5);
+  border-top: 1px solid color-mix(in srgb, var(--color-text) 12%, transparent);
+}
+.brands-more-title {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(22px, 2.2vw, 30px);
+}
+
 .brands-grid {
   list-style: none;
-  margin: calc(var(--space-8) * 1.5) 0 0;
+  margin: var(--space-8) 0 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
