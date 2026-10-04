@@ -177,9 +177,15 @@
 .home-service-figure {
   margin: 0;
   position: relative;
+  /* own stacking context, so the ring's z-index: -1 stays inside the figure */
+  isolation: isolate;
 }
+/* Always BEHIND the figure's media, whatever that media is (photo, film, or
+   anything later) — an absolute element otherwise paints over unpositioned
+   siblings, which put the ring on top of the service videos. */
 .home-service-ring {
   position: absolute;
+  z-index: -1;
   inset: -20px;
   /* a decorative CIRCLE, not a corner — it stays 50% (see theme.css) */
   border-radius: 50%;
