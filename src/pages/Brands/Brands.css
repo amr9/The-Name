@@ -83,14 +83,15 @@
   gap: var(--space-6);
 }
 
-/* A product: beige card (site-wide rule — white sections, beige cards), the
+/* A product: white bordered card (site-wide rule — no beige on cards), the
    photo inset with a concentric radius, then name, one line and the facts. */
 .brand-product {
   display: flex;
   flex-direction: column;
   padding: var(--space-3);
   border-radius: var(--radius-md);
-  background: var(--color-accent-100);
+  background: var(--color-bg);
+  border: 1px solid var(--color-divider);
 }
 .brand-product-media {
   border-radius: calc(var(--radius-md) - var(--space-3));
@@ -138,7 +139,8 @@
   line-height: 1.3;
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-md);
-  background: #fff;
+  background: var(--color-bg);
+  border: 1px solid var(--color-divider);
 }
 
 @media (max-width: 980px) {
@@ -178,8 +180,9 @@
   justify-content: center;
   align-items: center;
   padding: var(--space-8) var(--space-6);
-  /* Beige cards on the white page, like every card on the site. */
-  background: var(--color-accent-100);
+  /* White bordered card, like every card on the site. */
+  background: var(--color-bg);
+  border: 1px solid var(--color-divider);
   color: var(--color-text);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }

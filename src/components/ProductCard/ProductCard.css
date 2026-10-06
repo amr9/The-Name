@@ -67,7 +67,7 @@
    photographs, so a square is the only shape that does not gut one of them. */
 .product-card-showcase .product-card-media {
   padding: 0;
-  background: var(--color-accent-100);
+  background: var(--color-bg);
 }
 /* The 3/4 frame itself is NOT set here — ImagePlaceholder writes the ratio as
    an inline style, which no stylesheet can override, so it comes in as
@@ -230,15 +230,15 @@
   .product-card-badge::after { animation: none; opacity: 0.6; }
 }
 
-/* The picture's ground: the palest step of the accent ramp, the same tint the
-   cards and bands elsewhere on the site sit on. `flex: none` so it keeps its
+/* The picture's ground: white, like the card around it (cards carry no
+   beige site-wide). `flex: none` so it keeps its
    aspect ratio instead of being stretched when a card is taller than its
    content. */
 .product-card-media {
   display: block;
   flex: none;
   padding: var(--space-3);
-  background: var(--color-accent-100);
+  background: var(--color-bg);
   /* Flush with the card's edge — inset 0, so it takes the card radius as-is.
      TOP corners only: the card no longer clips (see above), so rounding the
      bottom two would notch them out against the body beneath. */

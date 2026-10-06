@@ -1,6 +1,5 @@
 import ContactSection from '../../components/ContactForm/ContactSection.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
-import TaglineArt from '../../components/TaglineArt.jsx';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { storyChapters, takeovers } from './data.js';
@@ -50,12 +49,11 @@ export default function About() {
       </section>
 
       {/* — the philosophy: the tagline, on a raised card rather than a
-          full-bleed band, so it reads as the page's one pull-quote. The
-          tagline itself is artwork (components/TaglineArt), the same image
-          the Home hero uses as its title. — */}
+          full-bleed band, so it reads as the page's one pull-quote. The line
+          is live type in the Home hero title's style (.display-title). — */}
       <section className="container about-tagline">
         <div className="about-tagline-card elev-md">
-          <TaglineArt className="about-tagline-art" />
+          <h2 className="display-title about-tagline-title">{a.tagline.title}</h2>
           <div className="about-tagline-copy">
             <p className="about-tagline-lede">{a.tagline.lede}</p>
             <p className="about-tagline-body">{a.tagline.body}</p>

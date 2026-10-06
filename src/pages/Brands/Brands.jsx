@@ -1,11 +1,19 @@
+import { Link } from 'react-router-dom';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
-import { brands, brandsById } from '../../data/brands.js';
+import { brandLink, brands, brandsById } from '../../data/brands.js';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { featuredBrands } from './data.js';
 import './Brands.css';
 
 const featuredIds = new Set(featuredBrands.map((f) => f.brandId));
+
+// A brand's link (data/brands.js brandLink): a full URL is a plain <a>, an
+// in-app path a router Link — so it keeps the /ar prefix in Arabic.
+function BrandLink({ brand, ...props }) {
+  const to = brandLink(brand);
+  return /^https?:/.test(to) ? <a href={to} {...props} /> : <Link to={to} {...props} />;
+}
 
 /**
  * The partner brands. Each brand in `featuredBrands` (./data.js) gets a
@@ -41,7 +49,7 @@ export default function Brands() {
                   <ImagePlaceholder src={media.brands[brandId]} label={brand.name} ratio="3 / 1" className="brands-logo" />
                 </h2>
                 <p className="brand-feature-text">{copy.intro}</p>
-                <a href={brand.url} className="btn btn-secondary">{b.visitSite(brand.name)}</a>
+                <BrandLink brand={brand} className="btn btn-secondary">{b.visitSite(brand.name)}</BrandLink>
               </div>
 
               <ul className="brand-feature-products">
@@ -72,14 +80,14 @@ export default function Brands() {
           <ul className="brands-grid">
             {others.map((brand) => (
               <li key={brand.id}>
-                <a
-                  href={brand.url}
+                <BrandLink
+                  brand={brand}
                   className="card elev-sm brands-card"
                   style={brand.logoScale ? { '--logo-scale': brand.logoScale } : undefined}
                   aria-label={`${b.visit} ${brand.name}`}
                 >
                   <ImagePlaceholder src={media.brands[brand.id]} label={brand.name} ratio="3 / 1" className="brands-logo" />
-                </a>
+                </BrandLink>
               </li>
             ))}
           </ul>

@@ -1,4 +1,4 @@
-/* The four order steps — see ProcessSteps.jsx. Beige (accent-100) tiles on
+/* The four order steps — see ProcessSteps.jsx. White tiles (shadow-sm) on
    the site's white sections. */
 .process-steps {
   list-style: none;
@@ -10,7 +10,7 @@
 }
 .process-step {
   position: relative;
-  background: var(--color-accent-100);
+  background: var(--color-bg);
   border-radius: var(--radius-md);
   padding: clamp(18px, 2vw, 26px);
   box-shadow: var(--shadow-sm);

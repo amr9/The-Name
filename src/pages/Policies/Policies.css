@@ -47,7 +47,7 @@
   padding: var(--space-4);
   border: 1px solid var(--color-accent-200);
   border-radius: var(--radius-md);
-  background: var(--color-accent-100);
+  background: var(--color-bg);
 }
 
 .policies-toc-heading {
@@ -136,13 +136,13 @@
 /* — the shared contact block that closes the page — */
 
 /* The closing pointer to /about#contact. Set off from the last clause above
-   it by a rule and its own beige ground, so it reads as the page's footnote
+   it by a rule and its own bordered box, so it reads as the page's footnote
    rather than as one more term. */
 .policies-contact-note {
   margin-top: calc(var(--space-8) * 1.4);
   padding: var(--space-4);
   border-radius: var(--radius-md);
-  background: var(--color-accent-100);
+  background: var(--color-bg);
   border: 1px solid var(--color-divider);
   font-size: var(--text-sm);
   line-height: 1.6;

@@ -3,7 +3,7 @@
 
 /* The band around it (ContactSection.jsx), shared by About and Home so the
    two cannot drift. Every section on the site is white; the form panel
-   keeps its own beige (accent-100) so it still reads as a card. */
+   is a white card set off by its divider border. */
 .contact-section {
   padding-block: clamp(48px, 5vw, 80px);
   background: var(--color-bg);
@@ -49,15 +49,21 @@
   margin: var(--space-1) 0 0;
   font-size: var(--text-body);
 }
+/* NO underlines on any link here (emails, phone, the directions cue): a link
+   shows itself by changing colour on hover, the same accent-800 the
+   "Get directions" cue turns to. */
 .contact-detail a {
   color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration: none;
+  transition: color 0.16s ease;
+}
+.contact-detail a:hover,
+.contact-detail a:focus-visible {
+  color: var(--color-accent-800);
 }
 
-/* The address link: the street line reads as text, and the cue under it is
-   what says the tap goes somewhere. Only the cue is underlined — underlining
-   a three-line address turns it into a wall of rules. */
+/* The address link: the street line reads as text, and the accent-coloured
+   cue under it is what says the tap goes somewhere. */
 .contact-detail a.contact-map-link {
   display: inline-block;
   text-decoration: none;
@@ -68,8 +74,7 @@
   font-size: var(--text-sm);
   font-weight: 600;
   color: var(--color-accent-700);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  transition: color 0.16s ease;
 }
 /* The arrow points the way the line runs, so it flips with the direction. */
 .contact-map-cue::after {
@@ -97,7 +102,7 @@
   gap: var(--space-4);
   padding: clamp(20px, 3vw, 36px);
   border-radius: var(--radius-md);
-  background: var(--color-accent-100);
+  background: var(--color-bg);
   border: 1px solid var(--color-divider);
 }
 .contact-field {
@@ -181,7 +186,7 @@ textarea.contact-input {
   max-width: 52ch;
   padding: clamp(28px, 4vw, 56px);
   border-radius: var(--radius-md);
-  background: var(--color-accent-100);
+  background: var(--color-bg);
   border: 1px solid var(--color-divider);
 }
 .contact-sent-title {

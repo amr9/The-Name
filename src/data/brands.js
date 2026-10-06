@@ -22,3 +22,11 @@ export const brands = [
 ];
 
 export const brandsById = Object.fromEntries(brands.map((b) => [b.id, b]));
+
+// Where the Brands page's "Visit <brand>" buttons and logo cards lead.
+// PARKED on the 404 for now: each goes to /brands/<id>, a path no route
+// matches, so it lands on the custom 404 (the same trick as the unpublished
+// socials in data/site.js). To send a brand somewhere real, give its entry
+// above a `link` — an in-app path ('/store') or a full URL — and that wins.
+// `url` (the brand's own site) is deliberately NOT used here.
+export const brandLink = (brand) => brand.link ?? `/brands/${brand.id}`;

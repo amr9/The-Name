@@ -13,7 +13,7 @@ export const site = {
   // The footer, the contact form's details list, the WhatsApp buttons, the
   // search engines' business data (utils/pageHead.js), llms.txt, the policy
   // copy and the contact service all read these, directly or through the
-  // derived exports below this object (addressLine, addressLines, mapsLink,
+  // derived exports below this object (addressLine, mapsLink,
   // telLink, waLink). Change a number or an inbox here and every one follows.
   //
   // The one phone line: printed in the footer and the form, dialled by
@@ -26,7 +26,7 @@ export const site = {
   // Contact column, the form's Privacy line and the business data.
   infoEmail: 'info@thename.me',
   // The address, in parts, so each place can print the form it needs (see
-  // addressLine / addressLines below) without the place being retyped.
+  // addressLine below) without the place being retyped.
   address: {
     building: 'Building 3',
     area: 'Umm Ramool',
@@ -63,19 +63,17 @@ export const site = {
 };
 
 // — Derived from the contact details above. Never retype these elsewhere. —
-const { building, area, district, city, country, countryShort } = site.address;
+const { building, area, district, city, country } = site.address;
 
 // The address on ONE line — the contact form, the policy copy ({address}),
 // llms.txt.
 export const addressLine = `${building}, ${area}, ${district}, ${city}, ${country}`;
 
-// The address as the footer prints it, one entry per line.
-export const addressLines = [`${building},`, `${area}, ${district},`, `${city} - ${countryShort}`];
 
 // The address as a Google Maps DIRECTIONS link — `dir/?api=1&destination=` is
 // Maps' documented URL form, and it opens the app already asking "how do I get
 // there", with the origin left to the visitor's own location rather than
-// guessed. Used by the footer's address AND the form's "Find us" link. The
+// guessed. Used by the form's "Find us" link and the business data. The
 // destination is the district, not the building: that is what Maps resolves
 // reliably. If a precise pin is ever needed, replace it with "lat,lng" and add
 // `&destination_place_id=`.
@@ -90,10 +88,12 @@ export const telLink = /x/i.test(site.phone) ? null : `tel:${site.phone.replace(
 // launcher's WhatsApp option) — the same number as `site.phone`.
 export const waLink = `https://wa.me/${site.phone.replace(/[^0-9]/g, '')}`;
 
-// Social profiles, shown as icon links in the footer.
+// Social profiles — Instagram and LinkedIn are listed by name in the footer's
+// Connect column (Footer.jsx picks them by key); all of them feed the business data's
+// sameAs (utils/pageHead.js).
 //
 // An entry carries EITHER `url` (a real profile, opened in the same tab) or `to`
-// (an in-app route). Instagram is the only live account; Facebook and TikTok
+// (an in-app route). Instagram is the only live account; LinkedIn, Facebook and TikTok
 // are not published yet, so they point at paths no route matches and land on
 // the custom 404 instead. That is deliberate: they used to link to
 // facebook.com and tiktok.com, which sent a visitor off the site to a network
@@ -104,6 +104,8 @@ export const waLink = `https://wa.me/${site.phone.replace(/[^0-9]/g, '')}`;
 // makes the icon an external link again, no component change needed.
 export const socials = [
   { key: 'instagram', label: 'Instagram', url: 'https://www.instagram.com/thename.me/' },
+  // TODO: the real LinkedIn company page URL.
+  { key: 'linkedin', label: 'LinkedIn', to: '/social/linkedin' },
   { key: 'facebook', label: 'Facebook', to: '/social/facebook' },
   { key: 'tiktok', label: 'TikTok', to: '/social/tiktok' },
 ];
@@ -132,28 +134,58 @@ export const routes = {
   cafe: '/cafe',
 };
 
-// The site's pages, in order. ONE list for the navbar, the footer's "Useful
-// Links" column and the 404 page's signpost, all labelled from i18n
-// `nav[key]` — so the three always show the same names (Home, Store,
-// Brands, …). Change a page's name in `nav` and all three follow. The bar and
-// the footer print them in CAPITALS via CSS text-transform, so the copy itself
-// stays in normal case.
+// Every routed page, flat. Read by the 404 page's signpost and by
+// utils/pageHead.js (which pages are indexable) — NOT by the navbar or the
+// footer, which group the pages differently (navMenu, footerExplore below).
+// All are labelled from i18n `nav[key]`, so a page has one name everywhere;
+// the bar and the footer print them in CAPITALS via CSS text-transform.
 export const navLinks = [
   { to: routes.home, key: 'home' },
   { to: routes.shop, key: 'shop' },
   { to: routes.brands, key: 'brands' },
-  // Customize Yours used to sit here; it is now a section of Home
-  // (pages/Home/CustomizeSection.jsx), so it has no nav entry.
-  // `highlight` is the one emphasised link in the bar: bold, in the accent,
-  // and nothing else (Navbar.css). Only one entry should ever carry it — two
-  // emphasised links emphasise nothing.
-  { to: routes.business, key: 'business', highlight: true },
+  { to: routes.business, key: 'business' },
   { to: routes.agency, key: 'agency' },
   // { to: routes.cafe, key: 'cafe' },
   { to: routes.events, key: 'events' },
   { to: routes.about, key: 'about' },
   // /policies is deliberately NOT here — it is parked, and Terms & Privacy
   // will link to the store's own pages (see policySections below).
+];
+
+// The enquiry form, at the foot of /about. Every "contact" link reads this.
+export const contactLink = `${routes.about}#contact`;
+
+// The Home page's "What we do" section — the footer's Explore column lands
+// on it.
+export const whatWeDoLink = `${routes.home}#what-we-do`;
+
+// The five pillars, in the brief's order: the navbar's "What we do" dropdown
+// AND the footer's "What we do" column. Labels from i18n `nav[key]`.
+// F&B points at the enquiry form while /cafe is PARKED — switch it to
+// routes.cafe when that page returns.
+export const whatWeDoLinks = [
+  { to: routes.business, key: 'business' },
+  { to: routes.brands, key: 'brands' },
+  { to: routes.agency, key: 'agency' },
+  { to: routes.events, key: 'events' },
+  { to: contactLink, key: 'fnb' },
+];
+
+// The navbar, top level. An entry with `children` is a DROPDOWN instead of a
+// link: its label is a button that opens the list (Navbar.jsx).
+export const navMenu = [
+  { to: routes.home, key: 'home' },
+  { to: routes.shop, key: 'shop' },
+  { key: 'whatWeDo', children: whatWeDoLinks },
+  { to: routes.about, key: 'about' },
+];
+
+// The footer's Explore column.
+export const footerExplore = [
+  { to: routes.home, key: 'home' },
+  { to: routes.shop, key: 'shop' },
+  { to: whatWeDoLink, key: 'whatWeDo' },
+  { to: routes.about, key: 'about' },
 ];
 
 // The three legal documents, linked from the footer beside the logo rather

@@ -1,7 +1,7 @@
 export default {
   // `cafe` is kept for the parked cafe page; `contact` for the enquiry form,
   // which now sits at the foot of About rather than on its own page.
-  nav: { home: 'Home', cafe: 'Cafe', events: 'Events', shop: 'Store', brands: 'Brands', business: 'Corporate Gifts', agency: 'Agency', about: 'About', policies: 'Policies', contact: 'Contact us', customize: "Customize Yours", menu: 'Menu',
+  nav: { home: 'Home', cafe: 'Cafe', events: 'Events & Experiences', shop: 'Shop', brands: 'The Brands', business: 'Corporate Gifts', agency: 'The Agency', fnb: 'F&B & Concept Store', whatWeDo: 'What We Do', about: 'Our Story', policies: 'Policies', contact: 'Contact us', customize: "Customize Yours", menu: 'Menu',
          policyTabs: { terms: 'Terms & Conditions', delivery: 'Delivery & Returns', privacy: 'Privacy Policy' } },
 
   // `chatOnWhatsapp` is the label on ContactForm's WhatsApp button — today
@@ -193,7 +193,8 @@ export default {
 
   footer: {
     rights: 'All rights reserved.',
-    linksHeading: 'Useful Links', addressHeading: 'Address', helloHeading: 'Contact',
+    exploreHeading: 'Explore', whatWeDoHeading: 'What We Do', connectHeading: 'Connect',
+    contact: 'Contact', location: 'Dubai, UAE',
   },
 
   // ───────────────────────────────────────────────────────────────────────────
@@ -644,51 +645,69 @@ export default {
 
   home: {
     hero: {
-      titleLeadPrefix: 'From',
-      titleScript: 'To Your Name.',
-      body: 'We curate design-forward objects and make them personal — with your name, your message, your story or your brand. From one meaningful gift to a full corporate collection, every piece is made to carry an identity.',
-      mediaLabel: 'Customization video loop or still — engraving, printing, finished gifts',
+      title: 'More than just a name.',
+      body: 'A 360° ecosystem bringing creativity, brands, products and experiences together to help you communicate, connect and explore possibilities.',
+      cta: 'Explore what we do',
       ctaTour: 'Virtual Store',
-      ctaShop: 'Make It Personal',
+      mediaLabel: 'Hero film or still — The Name across gifts, brands, agency, events and F&B',
     },
     whatWeDo: {
       kicker: 'What we do',
-      heading: 'Objects With Your Story',
-      body: 'We find objects worth keeping — then make them mean something more. A name. An initial. A message. A brand. A story that turns something beautifully designed into something unmistakably yours.',
+      heading: 'Everything connects.',
+      body: 'Our expertise comes together across five specialised pillars, working collectively to strengthen brand positioning, communication, visibility and awareness.',
     },
-    services: {
-      personalGifts: {
-        kicker: 'For you', title: 'Make It Personal',
-        placeholder: 'A personalised gift being wrapped',
-        body: 'For birthdays, milestones, thank-yous, little celebrations — or simply because it should have your name on it. Choose from our curated collection and make it yours with a name, initials, date or message.',
-        points: ['One piece? Absolutely.', 'Personalize it your way', 'Beautifully finished and ready to gift.'],
-        cta: 'Shop & Personalize',
+    // The five pillar rows — ids match pages/Home/data.js `pillars`.
+    // `ctas` labels the row's buttons, keyed by each link's `key`. `body` may
+    // be empty; the paragraph is then not rendered.
+    pillars: {
+      corporateGifts: {
+        title: 'Corporate Gifts',
+        lead: 'We create gifting solutions that go beyond putting a logo on a product.',
+        body: 'From carefully curated collections and premium branded merchandise to fully customised creative concepts, every gift is designed to tell a story, communicate a message and reflect your brand identity.',
+        tags: ['Curated Gifting', 'Creative Concepts', 'Branded Merchandise', 'Customisation', 'Packaging', 'Production'],
+        ctas: { explore: 'Explore Corporate Gifts' },
+        placeholder: 'Curated corporate gift collection',
       },
-      businessBranding: {
-        kicker: 'For your business', title: 'Make Your Brand the Gift',
-        placeholder: 'Branded corporate gift boxes',
-        body: 'Corporate gifting should do more than carry your logo. We create thoughtful, design-led gifts and branded collections that keep your identity visible, useful and remembered — from employee kits and client gifts to events, VIP gifting and large-scale orders.',
-        points: ['Individual personalization at scale', 'Curated products, custom kits & premium packaging', 'Corporate, government & event orders', 'Creative concepts built around your brand'],
-        cta: 'Start a Business Enquiry',
+      brands: {
+        title: 'The Brands',
+        lead: 'A curated portfolio of premium international lifestyle and office brands, brought to the GCC for both individuals and businesses.',
+        body: 'From design-led essentials to high-end collections, we connect our brands with the right people, businesses and spaces.',
+        tags: ['Lifestyle', 'Office', 'Design', 'Corporate', 'Premium Brands'],
+        ctas: { explore: 'Explore the Brands', shop: 'Shop the Brands' },
+        placeholder: 'Premium lifestyle and office brands',
       },
-      // PLACEHOLDER copy for rows 03 and 04 — English only on purpose: the
-      // other languages fall through to these via deepMerge until the real
-      // text is written, and then it goes into both files.
-      serviceThree: {
-        kicker: 'Service three', title: 'Service Three Title',
-        placeholder: 'Service three image',
-        body: 'Placeholder text for the third service. Replace it with a short paragraph describing what this service offers and who it is for.',
-        points: ['First point about this service', 'Second point about this service', 'Third point about this service'],
-        cta: 'Learn More',
+      agency: {
+        title: 'The Agency',
+        lead: 'From strategic brand communication planning and creative CSR campaigns to sustainability initiatives and OOH media, we build strong brand positioning, awareness, and presence across every touchpoint.',
+        body: '',
+        tags: ['Brand Positioning', 'Brand Communication', 'Brand Awareness', 'Brand Exposure', 'CSR & Sustainability Campaigns', 'OOH Media'],
+        ctas: { explore: 'Explore the Agency' },
+        placeholder: 'Brand communication campaign',
       },
-      serviceFour: {
-        kicker: 'Service four', title: 'Service Four Title',
-        placeholder: 'Service four image',
-        body: 'Placeholder text for the fourth service. Replace it with a short paragraph describing what this service offers and who it is for.',
-        points: ['First point about this service', 'Second point about this service', 'Third point about this service'],
-        cta: 'Learn More',
+      events: {
+        title: 'Events & Experiences',
+        lead: 'We turn brand ideas into experiences people can see, feel and remember.',
+        body: 'From intimate gatherings and corporate events to launches, activations and large-scale experiences, we take every project from concept and creative direction through to production and execution — ensuring every detail reflects the brand behind it.',
+        tags: ['Events', 'Activations', 'Launches', 'Creative Concepts', 'Event Branding', 'Production', 'Experiences'],
+        ctas: { explore: 'Explore Events & Experiences' },
+        placeholder: 'A brand event or activation',
+      },
+      fnb: {
+        title: 'F&B & Concept Store',
+        lead: 'Our F&B and Concept Store brings The Name into a physical, social space where food, retail, creativity and community come together.',
+        body: 'More than a restaurant or a store, it is a destination for discovery and connection — from dining and catering to curated products, pop-ups, collaborations and experiences that bring people together.',
+        tags: ['F&B', 'Catering', 'Concept Store', 'Retail', 'Pop-Ups', 'Collaborations', 'Community Experiences'],
+        ctas: { explore: 'Explore F&B & Concept Store' },
+        placeholder: 'The concept store and café',
       },
     },
+    finalCta: {
+      heading: 'Let’s create something worth remembering.',
+      body: 'Whether you have a brief, an idea or simply a starting point, let’s explore what we can create together.',
+      cta: 'Start a conversation',
+    },
+    // NOT shown on Home any more (the "how it works" panel is PARKED), but
+    // still read by the chatbot, the About page and the Shop — keep it.
     howItWorks: {
       kicker: 'How it works',
       heading: 'Four steps from blank to boxed.',
@@ -1014,12 +1033,10 @@ export default {
       },
     },
 
-    // — the philosophy panel. `fromPrefix` is only the word before the
-    //   brand lockup: the logo artwork supplies "THE NAME" itself, article
-    //   included, exactly as it does in the Home hero. —
+    // — the philosophy panel. `title` is the big line, in the Home hero
+    //   title's style. —
     tagline: {
-      fromPrefix: 'From',
-      to: 'To Your Name.',
+      title: 'More than just a name.',
       lede: 'It\'s more than our tagline. It\'s how we think.',
       body: 'When a brand walks through our doors, THE NAME can become their name. When an individual chooses something, it becomes their name. Their identity. Their moment. Their story.',
     },

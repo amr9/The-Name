@@ -19,41 +19,29 @@ export const media = {
   // shown wide at 16:7.
   customize: `${BASE}/customize/customize.jpg`,
 
-  // Home page service rows — keys match pages/Home/data.js `services` id.
+  // Home page "What we do" pillar rows — keys match pages/Home/data.js
+  // `pillars` id. The dashed ImagePlaceholder shows until each file exists.
   services: {
-    personalGifts: `${BASE}/services/personal-gifts.jpg`,
-    businessBranding: `${BASE}/services/business-branding.jpg`,
-    // rows 03 / 04 show films instead (serviceVideos below); these image
-    // paths are only used if a video entry is removed
-    serviceThree: `${BASE}/services/service-three.jpg`,
-    serviceFour: `${BASE}/services/service-four.jpg`,
-    cafe: `${BASE}/services/cafe.jpg`,
-    catering: `${BASE}/services/catering.jpg`,
+    corporateGifts: `${BASE}/services/corporate-gifts.jpg`,
+    brands: `${BASE}/services/brands.jpg`,
+    agency: `${BASE}/services/agency.jpg`,
+    events: `${BASE}/services/events.jpg`,
+    fnb: `${BASE}/services/fnb.jpg`,
   },
-  // A service row with an entry here shows this VIDEO instead of its image
-  // above. `ratio` is the film's own shape, so nothing is cropped. The films
-  // live in public/media/home/ (they belong to the Home page), COMPRESSED for
-  // page speed — H.264 High, full resolution, no audio, +faststart so they
-  // start playing before they have fully downloaded:
+  // A pillar row with an entry here shows this VIDEO instead of its image
+  // above, shown whole inside the row's landscape frame (ROW_RATIO in Home.jsx). The films
+  // live in public/media/home/, COMPRESSED for page speed — H.264 High, no
+  // audio, +faststart so they start playing before they have fully downloaded:
   //   ffmpeg -i in.mp4 -an -c:v libx264 -preset slow -crf <N> -profile:v high
   //          -pix_fmt yuv420p -movflags +faststart out.mp4
-  // CRF was chosen per film to keep SSIM vs the original above 0.99 (visually
-  // identical): 30.2 MB -> 15.7 MB for the pair. The uncompressed originals are
-  // in git history (commit 176ea44). Each poster is a frame from 2s in.
+  // The uncompressed originals are in git history (commit 176ea44). Each
+  // poster is a frame from 2s in. public/media/home/marketing-strategy.mp4 is
+  // currently unused — add it here under a pillar id to show it.
   serviceVideos: {
-    // "Brand Communication" — 1024x1280, 92s, CRF 28: 18.8 -> 9.3 MB, SSIM
-    // 0.993. Audio stripped: the films play like GIFs and can never be unmuted.
-    serviceThree: {
+    // "Brand Communication" — 1024x1280, 92s, CRF 28, SSIM 0.993.
+    agency: {
       src: `${BASE}/home/brand-communication.mp4`,
       poster: `${BASE}/home/brand-communication-poster.jpg`,
-      ratio: '4 / 5',
-    },
-    // "Marketing strategy & Consultancy" — 1080x1350, 26s, camera footage so a
-    // gentler CRF 24: 10.4 -> 6.4 MB, SSIM 0.991.
-    serviceFour: {
-      src: `${BASE}/home/marketing-strategy.mp4`,
-      poster: `${BASE}/home/marketing-strategy-poster.jpg`,
-      ratio: '4 / 5',
     },
   },
 
@@ -143,7 +131,8 @@ export const media = {
     },
     markOutline: `${BASE}/brand/mark-outline.png`,
     markFilled: `${BASE}/brand/mark-filled.png`,
-    // "From The Name, to your Name" lettering — components/TaglineArt.
+    // "From The Name, to your Name" lettering — UNUSED since the Home hero
+    // and About tagline became live type; kept for reuse.
     tagline: `${BASE}/brand/from-the-name-to-your-name.png`,
   },
 

@@ -180,6 +180,17 @@ h4 { font-size: 20px; }
 h5 { font-size: 16px; }
 h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
 
+/* The big uppercase statement line — the Home hero title ("More than just a
+   name.") and the same line on the About page's tagline card. Size and
+   spacing only; each caller sets its own width cap and margins. */
+.display-title {
+  font-size: clamp(36px, 6vw, 88px);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
 /* The page <h1> on every route. Same Montserrat as everything else, bold like
    every other heading, and set in ITALIC — the one thing that still separates
    a page title from the section headings under it. Montserrat's 700 italic is
@@ -229,7 +240,10 @@ button { font: inherit; }
    the Kids offer section sat flush against the hero). Vertical rhythm is the
    section's own business; this class only handles the horizontal. */
 .container {
-  max-width: 1240px;
+  /* NO max-width: sections span the whole window, edge to edge, with only
+     the gutter below. (It was 1240px, which left every page in a centred
+     column with empty bands either side on wide screens.) Long text keeps a
+     readable measure through its own ch-based max-width. */
   margin-inline: auto;
   padding-inline: clamp(20px, 5vw, 72px);
 }

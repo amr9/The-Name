@@ -11,7 +11,7 @@ import './Logo.css';
 // for the brand's name mid-sentence, where an N alone would not read. `size`
 // 'inline' is that same case — it scales with the surrounding type instead of
 // a fixed pixel height. Neither is used at the moment: the Home hero and the
-// About tagline, which used them, now show components/TaglineArt instead.
+// About tagline, which used them, are now live type (.display-title).
 export default function Logo({ size = 'md', on = 'light', compact = true }) {
   const ink = on === 'dark' ? media.brand.logos.yellow : media.brand.logos.dark;
 

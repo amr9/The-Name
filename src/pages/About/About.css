@@ -94,7 +94,7 @@
    first, then the round thumbnails that replaced them. The media slots in
    data/media.js about.story are kept, but nothing renders them. */
 
-/* — From [THE NAME lockup]. To Your Name. On a raised beige card rather
+/* — From [THE NAME lockup]. To Your Name. On a raised white card rather
      than a full-bleed band: it is the one pull-quote on the page, so it is
      lifted off the ground instead of blending into it. The section carries
      the rhythm on both sides; the card carries the look. — */
@@ -108,17 +108,15 @@
   gap: clamp(24px, 4vw, 56px);
   padding: clamp(32px, 4vw, 64px);
   border-radius: var(--radius-md);
-  background: var(--color-accent-100);
+  background: var(--color-bg);
   /* the accent edge is what makes it read as lifted rather than just tinted */
   border-inline-start: 4px solid var(--color-accent);
 }
-/* The tagline artwork (components/TaglineArt) fills its half of the card,
-   up to the width the two lines of type it replaced used to take. */
-.about-tagline-art {
-  display: block;
-  width: 100%;
-  max-width: 440px;
-  height: auto;
+/* The tagline line — type from .display-title (theme.css), scaled down to
+   fit its half of the card. */
+.about-tagline-title {
+  font-size: clamp(32px, 4.2vw, 64px);
+  max-width: 12ch;
 }
 .about-tagline-lede {
   margin: 0;

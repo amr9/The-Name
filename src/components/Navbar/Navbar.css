@@ -61,26 +61,66 @@
 .navbar-menu { display: contents; }
 .navbar-toggle { display: none; }
 
-/* — the emphasised link (today: Business) — */
+/* — the "What we do" dropdown —
 
-/* One link in the bar is meant to be noticed. It used to be noticed by moving
-   — a travelling glint and a field of twinkling stars, flaring on click. That
-   is gone: the emphasis is now weight and colour, nothing else. Bold against
-   five links at 400 is what the eye lands on first, and the accent is what
-   says the difference is deliberate rather than a rendering accident.
-   Nothing here animates, so there is no reduced-motion case to answer. */
-.navbar .navbar-link-highlight {
-  font-weight: 700;
-  color: var(--color-accent-700);
+   The trigger is a <button> wearing .navbar-link, so it takes the same pill,
+   type and hover as the links beside it; this only resets the button chrome.
+   The list opens on click/keyboard (data-open, set by Navbar.jsx) and, on a
+   desktop pointer, on hover as well. */
+.navbar-dropdown { position: relative; }
+.navbar-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
 }
-/* Nothing else is declared here on purpose. The hover pill and the
-   current-page gradient come from the .navbar .navbar-link rules above, which
-   are a class more specific than this one, so they apply to this link exactly
-   as they do to every other and the bold rides along on top of them.
-   An earlier version set `background: none` here to keep the emphasis
-   "clean": it cancelled this link's hover pill AND, since that rule also won
-   on the current page, wiped the orange gradient whenever the pointer was
-   over it. Do not reintroduce a background rule for this link. */
+.navbar-chevron { transition: transform 0.18s ease; }
+.navbar-dropdown[data-open='true'] .navbar-chevron { transform: rotate(180deg); }
+/* Lit like a current page while one of ITS pages is the one open. */
+.navbar .navbar-dropdown-trigger[data-current='true'] {
+  background: var(--gradient-accent-soft);
+  color: var(--color-accent-800);
+}
+
+.navbar-sub {
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+  position: absolute;
+  top: calc(100% + 10px);
+  inset-inline-start: 0;
+  min-width: 240px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-accent-200);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 1;
+}
+/* Invisible bridge over the 10px gap, so moving the pointer from the trigger
+   down to the list does not end the hover and snap it shut. */
+.navbar-sub::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: -11px;
+  height: 11px;
+}
+.navbar-sub .navbar-link {
+  display: block;
+  white-space: nowrap;
+}
+.navbar-dropdown[data-open='true'] .navbar-sub { display: flex; }
+@media (min-width: 801px) and (hover: hover) {
+  .navbar-dropdown:hover .navbar-sub { display: flex; }
+  .navbar-dropdown:hover .navbar-chevron { transform: rotate(180deg); }
+}
 
 /* Every page sits in one of these — an inert wrapper that keeps all the pages
    equal flex children of the bar. (It used to also anchor a hover submenu for
@@ -168,6 +208,20 @@
 
   /* One page per row in the dropdown. */
   .navbar-item { display: block; }
+
+  /* Inside the phone menu the What-we-do list opens IN PLACE, indented under
+     its trigger, rather than as a second floating panel. */
+  .navbar-dropdown-trigger { width: 100%; justify-content: space-between; }
+  .navbar-sub {
+    position: static;
+    min-width: 0;
+    padding: 2px 0 4px;
+    padding-inline-start: 12px;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+  }
+  .navbar-sub::before { content: none; }
 
   .navbar-menu .navbar-link {
     padding: 10px 12px;

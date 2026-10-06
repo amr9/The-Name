@@ -43,19 +43,11 @@
   pointer-events: none;
 }
 
-/* The title is the tagline artwork (components/TaglineArt). Its width is
-   capped because the hero is one screen tall with the title at the bottom,
-   so every pixel the title takes is background VIDEO that cannot be seen. */
+/* Type is the shared .display-title (theme.css); only the width cap here. */
 .home-hero-title {
-  margin: 20px 0 0;
-}
-.home-hero-title-art {
-  display: block;
-  width: clamp(300px, 46vw, 620px);
-  height: auto;
+  max-width: 14ch;
 }
 
-/* PARKED with the paragraph in Home.jsx — kept for when it comes back. */
 .home-hero-body {
   font-size: var(--text-lg);
   line-height: 28px;
@@ -76,25 +68,26 @@
   backdrop-filter: blur(6px);
 }
 
-/* Everything below large desktops — phones, tablets, small and short laptop
-   screens: the title sits OVER the video, but compact — a smaller title and
-   tighter spacing — so only the bottom-left corner is covered. At full size
-   the block covered 57-78% of the hero's height on 1024x768 to 1366x768
-   screens, and the middle of the video on a phone. (The paragraph is PARKED
-   in Home.jsx on every screen, so there is nothing else to fit here.) */
-@media (max-width: 1366px), (max-height: 820px) {
-  .home-hero-title { margin-top: 0; }
-  .home-hero-title-art { width: clamp(200px, 26vw, 360px); }
+/* Short or small screens: tighter, so the block keeps to the bottom of the
+   hero and the video stays visible above it. */
+@media (max-width: 700px), (max-height: 820px) {
+  .home-hero-title { font-size: clamp(32px, 5vw, 56px); }
+  .home-hero-body { font-size: var(--text-body); line-height: 24px; margin-top: 12px; }
   .home-hero-actions { margin-top: 16px; }
 }
 
-/* — services intro — */
+/* The "→" after each call to action — points the reading direction. */
+.home-arrow { display: inline-block; }
+[dir='rtl'] .home-arrow { transform: scaleX(-1); }
+
+/* — what we do: intro — */
 .home-services-intro {
   padding-block: clamp(48px, 6vw, 96px) 24px;
 }
 .home-services-heading {
   font-size: clamp(30px, 3.4vw, 44px);
   line-height: 1.1;
+  text-transform: uppercase;
   margin: 16px 0 0;
   margin-left: -0.028em;
   max-width: 26ch;
@@ -102,18 +95,18 @@
 .home-services-body {
   font-size: var(--text-lg);
   line-height: 28px;
-  max-width: 56ch;
+  max-width: 64ch;
   margin: 18px 0 0;
 }
 
-/* — services rows — */
+/* — what we do: one row per pillar — */
 .home-service-row {
   padding-block: clamp(28px, 4vw, 56px);
 }
 .home-service-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(28px, 5vw, 72px);
+  gap: clamp(28px, 5vw, 96px);
   align-items: center;
 }
 .home-service-kicker-row {
@@ -133,45 +126,47 @@
   height: 1px;
   background: var(--color-accent-300);
 }
-.home-service-kicker {
-  font-size: var(--text-xs);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-accent-700);
-}
 .home-service-title {
-  font-size: clamp(26px, 2.8vw, 36px);
+  font-size: clamp(26px, 2.8vw, 38px);
   line-height: 1.12;
+  text-transform: uppercase;
   margin: 16px 0 0;
   margin-left: -0.028em;
+}
+.home-service-lead {
+  font-size: var(--text-lg);
+  line-height: 28px;
+  font-weight: 600;
+  max-width: 56ch;
+  margin: 16px 0 0;
 }
 .home-service-body {
   font-size: var(--text-body);
   line-height: 28px;
-  max-width: 48ch;
-  margin: 16px 0 0;
+  max-width: 56ch;
+  margin: 12px 0 0;
 }
-.home-service-points {
+/* The pillar's specialities, a bullet-separated line ("A • B • C") that
+   wraps cleanly — the separator belongs to the item after it. */
+.home-service-tags {
+  list-style: none;
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 6px 0;
+  padding: 0;
   margin: 20px 0 0;
+  font-size: var(--text-sm);
+  color: var(--color-accent-700);
 }
-.home-service-point {
+.home-service-tags li + li::before {
+  content: '•';
+  margin-inline: 10px;
+  color: var(--color-accent-400);
+}
+.home-service-ctas {
   display: flex;
-  gap: 10px;
-  align-items: center;
-  font-size: var(--text-body);
-  line-height: 24px;
-}
-.home-service-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: var(--radius-md);
-  background: var(--color-accent-400);
-  flex: none;
-}
-.home-service-cta {
+  gap: 12px;
+  flex-wrap: wrap;
   margin-top: 24px;
 }
 .home-service-figure {
@@ -197,92 +192,34 @@
   overflow: hidden;
   box-shadow: var(--shadow-md);
 }
-/* A row's film (media.serviceVideos) — fills the frame at its own ratio. */
+/* A row's film (media.serviceVideos). The frame is the row's landscape
+   ROW_RATIO, and the film is shown WHOLE inside it (contain, never cropped):
+   a portrait film sits centred with dark bands either side. */
 .home-service-video {
   display: block;
   width: 100%;
   height: auto;
-  object-fit: cover;
-  background: var(--color-bg);
+  object-fit: contain;
+  background: var(--color-black);
 }
 
-
-/* — how it works —
-   WHITE like every section on the site; the tiles and panel inside are the
-   beige (accent-100) so they read as cards. */
-.home-how {
-  background: var(--color-bg);
-  padding-block: clamp(48px, 5vw, 80px);
+/* — final CTA — white like every section; a hairline sets it off the rows. */
+.home-final {
+  text-align: center;
+  padding-block: clamp(64px, 8vw, 128px);
+  margin-top: clamp(28px, 4vw, 56px);
+  border-top: 1px solid var(--color-divider);
 }
-.home-how-heading {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
-  margin-bottom: 32px;
-}
-.home-how-heading h2 {
-  font-size: clamp(28px, 3.2vw, 40px);
-  line-height: 1.1;
-  margin: 14px 0 0;
-  margin-left: -0.028em;
-}
-
-/* the steps themselves are components/ProcessSteps */
-.home-how .process-steps {
-  margin-bottom: clamp(28px, 3vw, 44px);
-}
-
-.home-how-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
-  gap: clamp(24px, 3vw, 44px);
-  align-items: start;
-}
-.home-how-photo {
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-  background: var(--color-accent-100);
-}
-.home-how-panel {
-  background: var(--color-accent-100);
-  border-radius: var(--radius-md);
-  padding: clamp(22px, 2.5vw, 32px);
-  box-shadow: var(--shadow-sm);
-}
-.home-how-panel-meta {
-  display: block;
-  font-size: var(--text-xs);
-  letter-spacing: 0.18em;
+.home-final-heading {
+  font-size: clamp(30px, 4vw, 56px);
+  line-height: 1.08;
   text-transform: uppercase;
-  color: var(--color-accent-700);
+  max-width: 22ch;
+  margin: 0 auto;
 }
-.home-how-methods {
-  margin: 14px 0 18px;
-}
-.home-how-panel-note {
-  margin: 0;
-  font-size: var(--text-body);
-  line-height: 24px;
-  opacity: 0.8;
-}
-.home-how-panel-specs {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin: 16px 0;
-  padding-top: 14px;
-  border-top: 1px solid var(--color-accent-200);
-  font-size: var(--text-sm);
-  opacity: 0.8;
-}
-.home-how-panel-footnote {
-  justify-content: center;
-  margin-top: 12px;
-}
-
-@media (max-width: 700px) {
-  .home-how-grid { grid-template-columns: minmax(0, 1fr); }
+.home-final-body {
+  font-size: var(--text-lg);
+  line-height: 28px;
+  max-width: 56ch;
+  margin: 18px auto 28px;
 }

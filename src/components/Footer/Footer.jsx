@@ -1,15 +1,43 @@
 import { Link } from 'react-router-dom';
 import Logo from '../Logo.jsx';
 import SocialLinks from './SocialLinks.jsx';
-import { addressLines, mapsLink, navLinks, site, telLink } from '../../data/site.js';
+import { contactLink, footerExplore, site, socials, waLink, whatWeDoLinks } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import './Footer.css';
 
-// A full-width band: the brand block (logo + socials) on one side, then
-// three columns — Useful Links, Address, Contact — and a copyright row
-// under a hairline. Layout after the 3distica.com footer; colours and
-// gradient are the site's own. Useful Links IS the navbar's list (navLinks,
-// labelled from i18n `nav`), so the two always show the same pages and names.
+// The socials named in the Connect column, in this order. Each entry in
+// data/site.js `socials` is either a live profile (`url`) or a not-yet-
+// published one (`to`, an in-app path that lands on the 404).
+const CONNECT_SOCIALS = ['instagram', 'linkedin'];
+
+// One footer link. Every link in the footer — in-app or external — wears the
+// same `.footer-link` style; only the element differs.
+function FooterLink({ to, href, children }) {
+  return (
+    <li>
+      {href ? (
+        <a href={href} className="footer-link">{children}</a>
+      ) : (
+        <Link to={to} className="footer-link">{children}</Link>
+      )}
+    </li>
+  );
+}
+
+function Column({ heading, children }) {
+  return (
+    <nav className="footer-column" aria-label={heading}>
+      <h2 className="footer-title">{heading}</h2>
+      <ul className="footer-link-grid">{children}</ul>
+    </nav>
+  );
+}
+
+// A full-width band: the brand block (logo + social icons) on one side, then
+// three columns — Explore, What We Do, Connect — and a copyright row under a
+// hairline with the location on the end side. Page names come from i18n
+// `nav`, so they match the navbar; the What We Do column IS the navbar's
+// dropdown list (whatWeDoLinks).
 //
 // The Terms & Privacy links that used to sit here are NOT part of this
 // layout: they will point at the store's own policy pages, and /policies is
@@ -17,6 +45,7 @@ import './Footer.css';
 export default function Footer() {
   const { t } = useLanguage();
   const f = t.footer;
+  const connectSocials = CONNECT_SOCIALS.map((key) => socials.find((s) => s.key === key));
 
   return (
     <footer className="footer">
@@ -27,37 +56,25 @@ export default function Footer() {
         </div>
 
         <div className="footer-columns">
-          <nav className="footer-column" aria-label={f.linksHeading}>
-            <h2 className="footer-title">{f.linksHeading}</h2>
-            <ul className="footer-link-grid">
-              {navLinks.map((l) => (
-                <li key={l.key}>
-                  <Link to={l.to} className="footer-link">{t.nav[l.key]}</Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <Column heading={f.exploreHeading}>
+            {footerExplore.map((l) => (
+              <FooterLink key={l.key} to={l.to}>{t.nav[l.key]}</FooterLink>
+            ))}
+          </Column>
 
-          <div className="footer-column">
-            <h2 className="footer-title">{f.addressHeading}</h2>
-            {/* The address, its Maps link, the email and the phone all come
-                from data/site.js — the same values the contact form prints. */}
-            <a href={mapsLink} className="footer-link footer-address">
-              {addressLines.map((line) => (
-                <span key={line}>{line}</span>
-              ))}
-            </a>
-          </div>
+          <Column heading={f.whatWeDoHeading}>
+            {whatWeDoLinks.map((l) => (
+              <FooterLink key={l.key} to={l.to}>{t.nav[l.key]}</FooterLink>
+            ))}
+          </Column>
 
-          <div className="footer-column">
-            <h2 className="footer-title">{f.helloHeading}</h2>
-            <a href={`mailto:${site.infoEmail}`} className="footer-link footer-email">{site.infoEmail}</a>
-            {telLink ? (
-              <a href={telLink} className="footer-phone">{site.phone}</a>
-            ) : (
-              <span className="footer-phone">{site.phone}</span>
-            )}
-          </div>
+          <Column heading={f.connectHeading}>
+            <FooterLink to={contactLink}>{f.contact}</FooterLink>
+            {connectSocials.map((s) => (
+              <FooterLink key={s.key} to={s.to} href={s.url}>{s.label}</FooterLink>
+            ))}
+            <FooterLink href={waLink}>{t.common.whatsapp}</FooterLink>
+          </Column>
         </div>
       </div>
 
@@ -65,6 +82,7 @@ export default function Footer() {
         {/* The year is baked in at build time by the pre-render and recomputed
             in the browser; on a new year the two differ, which is expected. */}
         <span suppressHydrationWarning>© {new Date().getFullYear()} {site.name}. {f.rights}</span>
+        <span>{f.location}</span>
       </div>
     </footer>
   );

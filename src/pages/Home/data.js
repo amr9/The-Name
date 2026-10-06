@@ -1,30 +1,34 @@
-// Structural service-row data only — display copy lives in
-// src/i18n/translations/*.js under home.services[id], keyed by `id`.
-// Customization only — personal first, then business. The cafe and catering
-// rows were removed from the home page; catering still has its own section on
-// /business, and the cafe page itself is parked (see App.jsx).
-// `textOrder`/`imgOrder` alternate down the page so the rows zig-zag.
-import { routes } from '../../data/site.js';
+// Structural pillar-row data only — display copy lives in
+// src/i18n/translations/*.js under home.pillars[id], keyed by `id`.
+// The five "What we do" pillars, in the order the brief lists them. Rows
+// zig-zag by index (Home.jsx), so reordering here needs nothing else.
+// `links` are the row's buttons; `key` picks the label from
+// home.pillars[id].ctas. F&B points at the enquiry form because its own page
+// (/cafe) is PARKED — swap in routes.cafe when that route comes back.
+import { contactLink, routes } from '../../data/site.js';
 
-export const services = [
-  { id: 'personalGifts', num: '01', to: routes.shop, textOrder: 1, imgOrder: 2 },
-  { id: 'businessBranding', num: '02', to: routes.business, textOrder: 2, imgOrder: 1 },
-  // PLACEHOLDER rows — the copy under home.services.serviceThree/serviceFour
-  // (en.js only for now) and the `to` targets are stand-ins until the real
-  // services are decided. Rename the ids along with their i18n + media keys.
-  { id: 'serviceThree', num: '03', to: routes.shop, textOrder: 1, imgOrder: 2 },
-  { id: 'serviceFour', num: '04', to: routes.business, textOrder: 2, imgOrder: 1 },
+export const pillars = [
+  { id: 'corporateGifts', num: '01', links: [{ key: 'explore', to: routes.business }] },
+  {
+    id: 'brands',
+    num: '02',
+    links: [
+      { key: 'explore', to: routes.brands },
+      { key: 'shop', to: routes.shop },
+    ],
+  },
+  { id: 'agency', num: '03', links: [{ key: 'explore', to: routes.agency }] },
+  { id: 'events', num: '04', links: [{ key: 'explore', to: routes.events }] },
+  { id: 'fnb', num: '05', links: [{ key: 'explore', to: contactLink }] },
 ];
 
-// The ways a name/logo can be put onto a product. Selectable in the panel
-// under the steps; copy lives in i18n under home.howItWorks.methods[id] and
-// the image in data/media.js under media.methods[id].
+// The ways a name/logo can be put onto a product. No longer shown on Home
+// (the "how it works" panel is PARKED), but still read by data/catalogue.js;
+// copy lives in i18n under home.howItWorks.methods[id] and the image in
+// data/media.js under media.methods[id].
 export const customMethods = [
   { id: 'engraving' },
   { id: 'print' },
   { id: 'embroidery' },
   { id: 'emboss' },
 ];
-
-// The partner-brand logo strip reads data/brands.js, and the bubble layouts
-// live in data/bubbles.js — both are shared with other pages.

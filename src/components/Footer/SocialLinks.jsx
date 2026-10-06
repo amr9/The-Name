@@ -12,6 +12,12 @@ const ICONS = {
       <path d="M17.6 6.4h.01" />
     </>
   ),
+  linkedin: (
+    <>
+      <rect x="2.5" y="2.5" width="19" height="19" rx="3" />
+      <path d="M8 10.5V16M8 7.5v.01M12 16v-5.5M12 13a2.5 2.5 0 0 1 5 0v3" />
+    </>
+  ),
   facebook: <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />,
   tiktok: <path d="M9.5 13.2a3.9 3.9 0 1 0 3.9 3.9V2.8c.6 2.9 2.9 5 5.8 5.2" />,
 };

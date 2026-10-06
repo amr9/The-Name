@@ -1,191 +1,127 @@
-import { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
-// Bubbles are PARKED site-wide — uncomment these two imports and the three
-// <Bubbles> below to bring them back.
-// import Bubbles from '../../components/Bubbles/Bubbles.jsx';
-// import { shopIcons } from '../../components/Bubbles/icons.jsx';
 import AutoplayVideo from '../../components/AutoplayVideo.jsx';
-import ContactSection from '../../components/ContactForm/ContactSection.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
-// The partner-brand strip under the hero is PARKED — uncomment these two
-// imports and the <LogoMarquee> below to bring it back.
-// import LogoMarquee from '../../components/LogoMarquee/LogoMarquee.jsx';
-// import { brands } from '../../data/brands.js';
-import ProcessSteps from '../../components/ProcessSteps/ProcessSteps.jsx';
-import ShopIcon from '../../components/ShopIcon.jsx';
-import TaglineArt from '../../components/TaglineArt.jsx';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import CustomizeSection from './CustomizeSection.jsx';
-import { customMethods, services } from './data.js';
+import { contactLink, routes } from '../../data/site.js';
+import { pillars } from './data.js';
 import './Home.css';
-import { routes } from '../../data/site.js';
+
+// PARKED on Home when the page moved to the five-pillar brief — the partner
+// LogoMarquee, the decorative Bubbles, CustomizeSection (/customize still
+// redirects to /#customize, which now just lands at the top), the "how it
+// works" method picker + ProcessSteps, and the ContactSection at the foot
+// (the final CTA links to the same form on /about instead). Their components and
+// i18n are kept (the how-it-works copy is still read by the chatbot, About
+// and Shop); see git history (d6f9561) for the old JSX and Home.css rules.
+
+// Every pillar row's picture or film is LANDSCAPE at this ratio — wide and
+// short. A film of another shape is shown WHOLE inside it (object-fit:
+// contain in Home.css), with dark bands filling the rest.
+const ROW_RATIO = '16 / 9';
+
+// The "→" after every call to action. Decorative, so hidden from screen
+// readers; mirrored under RTL in Home.css.
+function Arrow() {
+  return <span className="home-arrow" aria-hidden="true">→</span>;
+}
 
 export default function Home() {
   const { t } = useLanguage();
-  const [methodIdx, setMethodIdx] = useState(0);
-  const method = customMethods[methodIdx];
-  const methodCopy = t.home.howItWorks.methods[method.id];
+  const h = t.home;
 
   return (
     <div className="home">
-      {/* hero: video loop / still, full width */}
+      {/* 01 — hero: video loop / still, full width */}
       <section className="home-hero">
         <div className="home-hero-media">
-          <ImagePlaceholder src={media.hero} label={t.home.hero.mediaLabel} ratio="auto" className="home-hero-media-slot" loading="eager" />
+          <ImagePlaceholder src={media.hero} label={h.hero.mediaLabel} ratio="auto" className="home-hero-media-slot" loading="eager" />
         </div>
         <div className="home-hero-scrim" />
         <div className="container home-hero-content">
-          {/* the title is the tagline artwork, not live type — its alt text is
-              the heading's accessible name. See components/TaglineArt. */}
-          <h1 className="home-hero-title">
-            <TaglineArt className="home-hero-title-art" />
-          </h1>
-          {/* PARKED on every screen size — the paragraph under the title. Its
-              copy (home.hero.body) and CSS (.home-hero-body) are kept;
-              uncomment this line to bring it back.
-          <p className="home-hero-body">{t.home.hero.body}</p> */}
+          <h1 className="display-title home-hero-title">{h.hero.title}</h1>
+          <p className="home-hero-body">{h.hero.body}</p>
           <div className="home-hero-actions">
-            <Link to={routes.shop} className="btn btn-primary">{t.home.hero.ctaShop}</Link>
+            {/* Labelled "Explore what we do" but opens the SHOP page — as
+                asked; the What-we-do section is linked from the footer. */}
+            <Link to={routes.shop} className="btn btn-primary">
+              {h.hero.cta} <Arrow />
+            </Link>
             {/* The Matterport walkthrough — an external 3D tour, so a plain
                 anchor rather than a router Link. */}
             <a
               href="https://my.matterport.com/show/?m=5rCPtmHS5iK"
               className="btn btn-secondary home-hero-secondary"
             >
-              {t.home.hero.ctaTour}
+              {h.hero.ctaTour}
             </a>
           </div>
         </div>
       </section>
 
-      {/* the brands we curate and personalise — a slow, rolling logo strip,
-          no heading. PARKED (see the imports).
-      <LogoMarquee items={brands} logos={media.brands} /> */}
-
-      {/* what we do — services, one image each. The wrapper anchored the
-          decorative shop-item bubbles, which are PARKED. */}
-      <div className="bubbles-host">
-        {/* <Bubbles side="left" icons={shopIcons} /> */}
-        {/* <Bubbles side="right" icons={shopIcons} /> */}
-
-        <section className="container home-services-intro">
-          <span className="card-kicker">{t.home.whatWeDo.kicker}</span>
-          <h2 className="home-services-heading">{t.home.whatWeDo.heading}</h2>
-          <p className="home-services-body">{t.home.whatWeDo.body}</p>
-        </section>
-
-        {services.map((s, i) => {
-          const info = t.home.services[s.id];
-          return (
-            <Fragment key={s.id}>
-            {/* on narrow screens the bubbles run between the rows instead of
-                beside them — see components/Bubbles */}
-            {/* {i > 0 && <Bubbles side="row" icons={shopIcons} phase={i * 29} />} */}
-              <section className="container home-service-row">
-                <div className="row-flip home-service-grid">
-                  <div className="row-text home-service-text" style={{ order: s.textOrder }}>
-                    <div className="home-service-kicker-row">
-                      <span className="home-service-num">{s.num}</span>
-                      <span className="home-service-rule" />
-                      <span className="home-service-kicker">{info.kicker}</span>
-                    </div>
-                    <h3 className="home-service-title">{info.title}</h3>
-                    <p className="home-service-body">{info.body}</p>
-                    <div className="home-service-points">
-                      {info.points.map((pt) => (
-                        <div key={pt} className="home-service-point">
-                          <span className="home-service-dot" />
-                          <span>{pt}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <Link to={s.to} className="btn btn-secondary home-service-cta">
-                      {s.to === routes.shop && <ShopIcon />}
-                      {info.cta}
-                    </Link>
-                  </div>
-                  <figure className="row-img home-service-figure" style={{ order: s.imgOrder }}>
-                    <div className="home-service-ring" />
-                    {media.serviceVideos[s.id] ? (
-                      // A film in place of the photo, playing like a GIF —
-                      // lazy-loaded, no controls (components/AutoplayVideo). Not
-                      // `.washed` — the film's own colours are the brand's.
-                      <div className="home-service-image-wrap">
-                        <AutoplayVideo
-                          className="home-service-video"
-                          {...media.serviceVideos[s.id]}
-                          label={info.title}
-                        />
-                      </div>
-                    ) : (
-                      <div className="washed home-service-image-wrap">
-                        <ImagePlaceholder src={media.services[s.id]} label={info.placeholder} ratio="5 / 4" />
-                      </div>
-                    )}
-                  </figure>
-                </div>
-              </section>
-            </Fragment>
-          );
-        })}
-      </div>
-
-      {/* customize yours — the old /customize page, now a section here */}
-      <CustomizeSection />
-
-      {/* how it works: the four steps of an order, then the ways we can put
-          your artwork onto a product */}
-      <section className="home-how">
-        <div className="container">
-          <div className="home-how-heading">
-            <div>
-              <span className="card-kicker">{t.home.howItWorks.kicker}</span>
-              <h2>{t.home.howItWorks.heading}</h2>
-            </div>
-          </div>
-
-          <ProcessSteps />
-
-          <div className="split home-how-grid">
-            <div className="washed home-how-photo">
-              <ImagePlaceholder src={media.methods[method.id]} label={methodCopy.placeholder} ratio="16 / 10" />
-            </div>
-
-            <div className="home-how-panel">
-              <span className="home-how-panel-meta">{t.home.howItWorks.methodsKicker}</span>
-
-              <div className="seg seg-grid home-how-methods">
-                {customMethods.map((m, i) => (
-                  <button
-                    key={m.id}
-                    type="button"
-                    className="seg-opt view-toggle-opt"
-                    data-active={methodIdx === i}
-                    aria-pressed={methodIdx === i}
-                    onClick={() => setMethodIdx(i)}
-                  >
-                    {t.home.howItWorks.methods[m.id].name}
-                  </button>
-                ))}
-              </div>
-
-              <p className="home-how-panel-note">{methodCopy.note}</p>
-              <div className="home-how-panel-specs">
-                <span>{t.home.howItWorks.suits} · {methodCopy.suits}</span>
-                <span>{t.home.howItWorks.minimum} · {methodCopy.minimum}</span>
-                <span>{t.home.howItWorks.leadTime} · {methodCopy.lead}</span>
-              </div>
-              <Link className="btn btn-primary btn-block" to={routes.shop}>{t.home.howItWorks.ctaShop}</Link>
-              <p className="card-meta home-how-panel-footnote">{t.home.howItWorks.footnote}</p>
-            </div>
-          </div>
-        </div>
+      {/* 02 — what we do: the intro, then one row per pillar */}
+      <section id="what-we-do" className="container scroll-anchor home-services-intro">
+        <span className="card-kicker">{h.whatWeDo.kicker}</span>
+        <h2 className="home-services-heading">{h.whatWeDo.heading}</h2>
+        <p className="home-services-body">{h.whatWeDo.body}</p>
       </section>
 
-      {/* contact — the SAME section as the foot of the About page, one
-          component, so editing it changes both */}
-      <ContactSection />
+      {pillars.map((p, i) => {
+        const info = h.pillars[p.id];
+        const video = media.serviceVideos[p.id];
+        // Rows zig-zag: text first on even rows, picture first on odd ones.
+        const textOrder = i % 2 === 0 ? 1 : 2;
+        return (
+          <section key={p.id} className="container home-service-row">
+            <div className="row-flip home-service-grid">
+              <div className="row-text home-service-text" style={{ order: textOrder }}>
+                <div className="home-service-kicker-row">
+                  <span className="home-service-num">{p.num}</span>
+                  <span className="home-service-rule" />
+                </div>
+                <h3 className="home-service-title">{info.title}</h3>
+                <p className="home-service-lead">{info.lead}</p>
+                {info.body && <p className="home-service-body">{info.body}</p>}
+                <ul className="home-service-tags">
+                  {info.tags.map((tag) => (
+                    <li key={tag}>{tag}</li>
+                  ))}
+                </ul>
+                <div className="home-service-ctas">
+                  {p.links.map((l, j) => (
+                    <Link key={l.key} to={l.to} className={j === 0 ? 'btn btn-primary' : 'btn btn-secondary'}>
+                      {info.ctas[l.key]} <Arrow />
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              <figure className="row-img home-service-figure" style={{ order: 3 - textOrder }}>
+                <div className="home-service-ring" />
+                {video ? (
+                  // A film in place of the photo, playing like a GIF —
+                  // lazy-loaded, no controls (components/AutoplayVideo).
+                  <div className="home-service-image-wrap">
+                    <AutoplayVideo className="home-service-video" {...video} ratio={ROW_RATIO} label={info.title} />
+                  </div>
+                ) : (
+                  <div className="washed home-service-image-wrap">
+                    <ImagePlaceholder src={media.services[p.id]} label={info.placeholder} ratio={ROW_RATIO} />
+                  </div>
+                )}
+              </figure>
+            </div>
+          </section>
+        );
+      })}
+
+      {/* final CTA — opens the enquiry form at the foot of /about */}
+      <section className="container home-final">
+        <h2 className="home-final-heading">{h.finalCta.heading}</h2>
+        <p className="home-final-body">{h.finalCta.body}</p>
+        <Link to={contactLink} className="btn btn-primary">
+          {h.finalCta.cta} <Arrow />
+        </Link>
+      </section>
     </div>
   );
 }
