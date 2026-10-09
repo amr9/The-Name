@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AutoplayVideo from '../../components/AutoplayVideo.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
@@ -16,14 +17,52 @@ import './Home.css';
 // and Shop); see git history (d6f9561) for the old JSX and Home.css rules.
 
 // Every pillar row's picture or film is LANDSCAPE at this ratio — wide and
-// short. A film of another shape is shown WHOLE inside it (object-fit:
-// contain in Home.css), with dark bands filling the rest.
+// short. A film of another shape FILLS it (object-fit: cover in Home.css),
+// cropped at the edges rather than letterboxed.
 const ROW_RATIO = '16 / 9';
+
+// How long each name in the hero title stays before the next drops in —
+// longer on names[0], the slogan's own "a name." / "اسم.".
+const NAME_HOLD_MS = 1500;
+const SLOGAN_HOLD_MS = 3000;
 
 // The "→" after every call to action. Decorative, so hidden from screen
 // readers; mirrored under RTL in Home.css.
 function Arrow() {
   return <span className="home-arrow" aria-hidden="true">→</span>;
+}
+
+// The hero title's last line: each of `names` (per language, from i18n
+// home.hero.names) drops in from above while the one before falls away.
+// The first render is names[0] — on the server and in the browser alike, so
+// hydration matches — and the cycle only starts after mount. Reduced-motion
+// visitors keep names[0]. Keys are the running count, so the outgoing word
+// keeps its element (and switches to the leave animation) while the incoming
+// one mounts fresh (and plays the enter one).
+function RotatingName({ names }) {
+  const [count, setCount] = useState(0);
+
+  // A language switch starts the list over.
+  useEffect(() => setCount(0), [names]);
+
+  // One timeout per name rather than an interval, since names[0] holds longer.
+  useEffect(() => {
+    if (names.length < 2) return undefined;
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const hold = count % names.length === 0 ? SLOGAN_HOLD_MS : NAME_HOLD_MS;
+    const id = setTimeout(() => setCount((n) => n + 1), hold);
+    return () => clearTimeout(id);
+  }, [count, names]);
+
+  const at = (n) => names[n % names.length];
+  return (
+    <span className="home-hero-name">
+      {count > 0 && (
+        <span key={count - 1} className="home-hero-name-word is-leaving">{at(count - 1)}</span>
+      )}
+      <span key={count} className={`home-hero-name-word${count > 0 ? ' is-entering' : ''}`}>{at(count)}</span>
+    </span>
+  );
 }
 
 export default function Home() {
@@ -39,7 +78,14 @@ export default function Home() {
         </div>
         <div className="home-hero-scrim" />
         <div className="container home-hero-content">
-          <h1 className="display-title home-hero-title">{h.hero.title}</h1>
+          <h1 className="display-title home-hero-title">
+            {/* The full line for screen readers and crawlers; the drawn
+                version below rotates the name, so it is hidden from them. */}
+            <span className="sr-only">{h.hero.title}</span>
+            <span aria-hidden="true">
+              {h.hero.titleLead} <RotatingName names={h.hero.names} />
+            </span>
+          </h1>
           <p className="home-hero-body">{h.hero.body}</p>
           <div className="home-hero-actions">
             {/* Labelled "Explore what we do" but opens the SHOP page — as

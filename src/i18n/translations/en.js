@@ -646,6 +646,12 @@ export default {
   home: {
     hero: {
       title: 'More than just a name.',
+      // The title as the hero DRAWS it: `titleLead`, then a slot that drops
+      // in each of `names` in turn. The first entry is what renders on the
+      // server and what reduced-motion visitors keep; `title` above is the
+      // full line screen readers and crawlers get.
+      titleLead: 'More than just',
+      names: ['a name.', 'Sarah.', 'Omar.', 'Emily.', 'James.'],
       body: 'A 360° ecosystem bringing creativity, brands, products and experiences together to help you communicate, connect and explore possibilities.',
       cta: 'Explore what we do',
       ctaTour: 'Virtual Store',

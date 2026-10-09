@@ -33,8 +33,8 @@
 
   /* Neutral darks for the footer: the logo artwork's charcoal, deepening to
      near-black. No brown — the warm, yellowish end was removed on purpose. */
-  --color-ink: #221f1f;
-  --color-ink-900: #0d0c0c;
+  --color-ink: #161414;
+  --color-ink-900: #000000;
 
   /* The three stops of the guideline's yellow panel (see --gradient-panel). */
   --color-panel-orange: #f7941d;
@@ -189,6 +189,20 @@ h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
   letter-spacing: -0.01em;
   text-transform: uppercase;
   margin: 0;
+}
+
+/* Read by screen readers and crawlers, never drawn — for text whose visible
+   form is decorative (e.g. the Home hero's rotating name). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* The page <h1> on every route. Same Montserrat as everything else, bold like

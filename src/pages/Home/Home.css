@@ -48,6 +48,43 @@
   max-width: 14ch;
 }
 
+/* The rotating name (RotatingName in Home.jsx). Always its OWN line, so a
+   long name never re-wraps the title and nudges the buttons below. The
+   clip-path cuts top and bottom only — the word drops in from behind the
+   line's top edge and falls out through its bottom — while the negative
+   side insets leave italic overhang and wide names undrawn-on. */
+.home-hero-name {
+  position: relative;
+  display: block;
+  white-space: nowrap;
+  color: var(--color-accent-700);
+  padding-block: 0.06em;
+  margin-block: -0.06em;
+  clip-path: inset(0 -1em);
+}
+.home-hero-name-word { display: inline-block; }
+/* The outgoing word sits over the incoming one rather than beside it. */
+.home-hero-name-word.is-leaving {
+  position: absolute;
+  inset-inline-start: 0;
+  animation: home-name-leave 0.2s ease-in forwards;
+}
+.home-hero-name-word.is-entering {
+  animation: home-name-drop 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.25) both;
+}
+@keyframes home-name-drop {
+  from { transform: translateY(-105%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes home-name-leave {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(70%); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-hero-name-word.is-leaving { display: none; }
+  .home-hero-name-word.is-entering { animation: none; }
+}
+
 .home-hero-body {
   font-size: var(--text-lg);
   line-height: 28px;
@@ -193,13 +230,14 @@
   box-shadow: var(--shadow-md);
 }
 /* A row's film (media.serviceVideos). The frame is the row's landscape
-   ROW_RATIO, and the film is shown WHOLE inside it (contain, never cropped):
-   a portrait film sits centred with dark bands either side. */
+   ROW_RATIO, and the film FILLS the whole card (cover): a film of another
+   shape is cropped at its edges, centred, never letterboxed. */
 .home-service-video {
   display: block;
   width: 100%;
   height: auto;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center;
   background: var(--color-black);
 }
 
