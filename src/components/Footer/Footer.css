@@ -76,6 +76,8 @@
   color: var(--color-accent);
   text-decoration: none;
 }
+/* The Connect column's icon row sits a step below the Contact link. */
+.footer-connect-icons { margin-top: var(--space-2); }
 .footer-address {
   display: flex;
   flex-direction: column;

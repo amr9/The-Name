@@ -655,12 +655,14 @@ export default {
       body: 'A 360° ecosystem bringing creativity, brands, products and experiences together to help you communicate, connect and explore possibilities.',
       cta: 'Explore what we do',
       ctaTour: 'Virtual Store',
-      mediaLabel: 'Hero film or still — The Name across gifts, brands, agency, events and F&B',
+      mediaLabel: 'Showreel — The Name across gifts, brands, agency, events and F&B',
     },
     whatWeDo: {
       kicker: 'What we do',
       heading: 'Everything connects.',
       body: 'Our expertise comes together across five specialised pillars, working collectively to strengthen brand positioning, communication, visibility and awareness.',
+      // The bouncing hint under the first pillar on the phone stage.
+      scrollHint: 'Scroll',
     },
     // The five pillar rows — ids match pages/Home/data.js `pillars`.
     // `ctas` labels the row's buttons, keyed by each link's `key`. `body` may

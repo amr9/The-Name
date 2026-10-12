@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
-import { socials } from '../../data/site.js';
+import WhatsAppIcon from '../WhatsAppIcon.jsx';
+import { socials, waLink } from '../../data/site.js';
+import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import './SocialLinks.css';
 
 // Outline glyphs, matching the stroke style used by the rest of the site's
@@ -30,10 +32,16 @@ function Glyph({ name }) {
   );
 }
 
-export default function SocialLinks() {
+// `keys` picks (and orders) which `socials` entries to show — all of them by
+// default. `whatsapp` appends a WhatsApp icon to `waLink` in the same style
+// (it is not in `socials`: the number lives in site.phone / waLink).
+export default function SocialLinks({ keys, whatsapp = false, className = '' }) {
+  const { t } = useLanguage();
+  const list = keys ? keys.map((key) => socials.find((s) => s.key === key)) : socials;
+
   return (
-    <div className="social-links">
-      {socials.map((s) => (
+    <div className={`social-links ${className}`.trim()}>
+      {list.map((s) =>
         // Which element an icon is comes from the DATA, not from a list of
         // exceptions here: an account with a `url` is a real profile, opened
         // in the same tab like every link on the site; one with a `to` has no account published yet and stays
@@ -60,7 +68,17 @@ export default function SocialLinks() {
             <Glyph name={s.key} />
           </Link>
         )
-      ))}
+      )}
+      {whatsapp && (
+        <a
+          href={waLink}
+          className="social-link"
+          aria-label={t.common.whatsapp}
+          title={t.common.whatsapp}
+        >
+          <WhatsAppIcon size={18} strokeWidth={2} />
+        </a>
+      )}
     </div>
   );
 }

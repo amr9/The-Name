@@ -16,30 +16,51 @@ import './AutoplayVideo.css';
  * pauses again once it leaves (no point decoding a film nobody can see) —
  * invisible to the visitor, who only ever sees it running. Under
  * prefers-reduced-motion it never starts: the poster shows as a still.
+ *
+ * `active` (optional) is a second condition for films that share one spot on
+ * screen — the Home "What we do" stage on phones stacks all five rows, so
+ * every film counts as in view. Pass `active={false}` and it pauses even
+ * while visible; left undefined, only visibility decides.
  */
-export default function AutoplayVideo({ src, poster, ratio, label, className = '' }) {
+export default function AutoplayVideo({ src, poster, ratio, label, className = '', active }) {
   const ref = useRef(null);
+  const visible = useRef(false);
+  const activeRef = useRef(active);
+  const reduced = useRef(false);
+
+  const sync = () => {
+    const video = ref.current;
+    if (!video || reduced.current) return;
+    if (visible.current && activeRef.current !== false) {
+      // play() rejects if the browser still refuses (e.g. data saver) —
+      // the poster is the fallback, so swallow it.
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  };
 
   useEffect(() => {
     const video = ref.current;
     if (!video || !('IntersectionObserver' in window)) return undefined;
-    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return undefined;
+    reduced.current = !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (reduced.current) return undefined;
 
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          // play() rejects if the browser still refuses (e.g. data saver) —
-          // the poster is the fallback, so swallow it.
-          video.play().catch(() => {});
-        } else {
-          video.pause();
-        }
+        visible.current = entry.isIntersecting;
+        sync();
       },
       { threshold: 0.25 },
     );
     io.observe(video);
     return () => io.disconnect();
   }, []);
+
+  useEffect(() => {
+    activeRef.current = active;
+    sync();
+  }, [active]);
 
   return (
     <video

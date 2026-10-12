@@ -11,9 +11,16 @@
 const BASE = '/media';
 
 export const media = {
-  // Full-bleed hero on the Home page — the customization reel: personalised
-  // products being made, not a restaurant service shot. A video loop goes here.
-  hero: `${BASE}/hero/hero.jpg`,
+  // Full-bleed hero film on the Home page — the R Investments showreel, its
+  // first 1:55 (3450 frames; the logo end card after that was cut, so the
+  // loop restarts on a scene cut from the "Let's forge a path…" card).
+  // 1600x900, CRF 31, no audio, +faststart (the command under
+  // serviceVideos, plus -vf scale=1600:-2); 16 MB. The poster IS frame 0, so
+  // the swap from poster to playing film is invisible.
+  hero: {
+    src: `${BASE}/hero/hero.mp4`,
+    poster: `${BASE}/hero/hero-poster.jpg`,
+  },
 
   // The picture in Home's "Customize Yours" section (CustomizeSection.jsx),
   // shown wide at 16:7.
@@ -29,7 +36,7 @@ export const media = {
     fnb: `${BASE}/services/fnb.jpg`,
   },
   // A pillar row with an entry here shows this VIDEO instead of its image
-  // above, shown whole inside the row's landscape frame (ROW_RATIO in Home.jsx). The films
+  // above, in the same 4:5 frame every row uses (ROW_RATIO in Home.jsx). The films
   // live in public/media/home/, COMPRESSED for page speed — H.264 High, no
   // audio, +faststart so they start playing before they have fully downloaded:
   //   ffmpeg -i in.mp4 -an -c:v libx264 -preset slow -crf <N> -profile:v high
@@ -38,7 +45,24 @@ export const media = {
   // poster is a frame from 2s in. public/media/home/marketing-strategy.mp4 is
   // currently unused — add it here under a pillar id to show it.
   serviceVideos: {
-    // "Brand Communication" — 1024x1280, 92s, CRF 28, SSIM 0.993.
+    // Vertex showroom + workshop reel (from "Vertex IPAD", 1080x1920), the
+    // first 2:45 — the last seconds after that were cut. Pre-cropped to the
+    // centre 4:5 (crop=1080:1350,scale=768:960) so the file holds only what
+    // the frame shows; CRF 28, 18 MB, SSIM 0.985.
+    corporateGifts: {
+      src: `${BASE}/home/vertex.mp4`,
+      poster: `${BASE}/home/vertex-poster.jpg`,
+    },
+    // "The Name Events IPAD" (1080x1920, 5:59) with two cuts: 4:26 to the
+    // end of the NAJ Academy contact card (frames 7980-8128, through 4:30.97
+    // where the next shot starts), and 5:45 to the end. 5:40 left. Same 4:5
+    // centre crop as Vertex; CRF 30 for its length, 33 MB.
+    events: {
+      src: `${BASE}/home/events.mp4`,
+      poster: `${BASE}/home/events-poster.jpg`,
+    },
+    // "Brand Communication" — 1024x1280 (already 4:5, shown uncropped), 92s,
+    // CRF 28, SSIM 0.993.
     agency: {
       src: `${BASE}/home/brand-communication.mp4`,
       poster: `${BASE}/home/brand-communication-poster.jpg`,

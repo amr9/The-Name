@@ -22,10 +22,14 @@
   position: absolute;
   inset: 0;
 }
-.home-hero-media-slot {
+/* The film fills the hero edge to edge, cropped rather than letterboxed. No
+   Ken Burns drift — it was there to bring a still to life; the film moves. */
+.home-hero-video {
+  display: block;
+  width: 100%;
   height: 100%;
-  border-radius: 0;
-  animation: kenburns 26s ease-in-out infinite alternate;
+  object-fit: cover;
+  object-position: center;
 }
 
 .home-hero-scrim {
@@ -183,23 +187,31 @@
   max-width: 56ch;
   margin: 12px 0 0;
 }
-/* The pillar's specialities, a bullet-separated line ("A • B • C") that
-   wraps cleanly — the separator belongs to the item after it. */
+/* The pillar's specialities as small outline chips — thin accent border,
+   a wash of cream, uppercase. They wrap here; on the phone stage (below)
+   they become one line that swipes sideways instead. */
 .home-service-tags {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 0;
+  gap: 8px;
   padding: 0;
   margin: 20px 0 0;
-  font-size: var(--text-sm);
   color: var(--color-accent-700);
 }
-.home-service-tags li + li::before {
-  content: '•';
-  margin-inline: 10px;
-  color: var(--color-accent-400);
+.home-service-tags li {
+  padding: 6px 13px;
+  border: 1px solid var(--color-accent-200);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-accent-100) 45%, transparent);
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
+/* No tracking in Arabic: letter-spacing pulls its joined letters apart. */
+[dir="rtl"] .home-service-tags li { letter-spacing: 0; }
 .home-service-ctas {
   display: flex;
   gap: 12px;
@@ -211,6 +223,11 @@
   position: relative;
   /* own stacking context, so the ring's z-index: -1 stays inside the figure */
   isolation: isolate;
+  /* Capped and centred in its column, so the 4:5 frame (ROW_RATIO in
+     Home.jsx) stays about 600px tall instead of growing with the
+     full-width column. The ring is on the figure, so it follows. */
+  width: min(100%, 480px);
+  justify-self: center;
 }
 /* Always BEHIND the figure's media, whatever that media is (photo, film, or
    anything later) — an absolute element otherwise paints over unpositioned
@@ -229,7 +246,7 @@
   overflow: hidden;
   box-shadow: var(--shadow-md);
 }
-/* A row's film (media.serviceVideos). The frame is the row's landscape
+/* A row's film (media.serviceVideos). The frame is the shared 4:5
    ROW_RATIO, and the film FILLS the whole card (cover): a film of another
    shape is cropped at its edges, centred, never letterboxed. */
 .home-service-video {
@@ -239,6 +256,255 @@
   object-fit: cover;
   object-position: center;
   background: var(--color-black);
+}
+
+/* — pillar stage (phones) —
+   On phones the five "What we do" rows share ONE screen. .home-pillars is a
+   tall track; .home-pillars-stage inside it is sticky under the navbar, so
+   it stays put while the page scrolls through the track, and Home.jsx
+   (usePillarStage) marks one row data-pos="active" from how far in the
+   scroll is. The rows are stacked in the stage and cross-fade; each row
+   slides in sideways (before = off to the left, after = off to the right).
+   Wider screens ignore all of this: the track and stage are plain blocks
+   and the rows stack as before. Keep the breakpoint in step with
+   STAGE_QUERY in Home.jsx. */
+.home-pillars-dots,
+.home-service-tags-bar,
+.home-pillars-hint { display: none; }
+
+@media (max-width: 760px) {
+  .home-pillars {
+    /* The stage fills the screen under the navbar (svh, like the hero, so
+       the mobile address bar never resizes it), and each row owns one
+       --stage-step of scrolling. Home.jsx measures these back from the
+       layout, so change them only here. */
+    --stage-h: calc(100vh - var(--navbar-h));
+    --stage-h: calc(100svh - var(--navbar-h));
+    --stage-step: 75vh;
+    --stage-step: 75svh;
+    position: relative;
+    height: calc(var(--stage-h) + (var(--pillar-count) - 0.5) * var(--stage-step));
+  }
+
+  .home-pillars-stage {
+    position: sticky;
+    top: var(--navbar-h);
+    height: var(--stage-h);
+    overflow: hidden;
+  }
+
+  /* Every row, stacked in the stage. Its fade is SCRUBBED by the scroll:
+     usePillarStage writes --o (opacity), --vis, --d (signed distance from
+     the scroll position, -1..1), --ad (its size) and --ot (the text's own
+     opacity, which hands over at halfway rather than cross-fading, so two
+     blocks of copy never overlap) on every frame, so a
+     row fades exactly as far as the finger has moved — no timed
+     transitions here, they would lag behind the finger. The extra
+     .home-pillars outranks useSectionReveal's `.reveal.reveal-in`
+     (theme.css), which the rows also pick up as top-level sections —
+     otherwise its opacity and 700ms transition win. */
+  .home-pillars .home-pillars-stage .home-service-row {
+    position: absolute;
+    inset: 0;
+    padding-block: 12px 20px;
+    /* the row itself stays opaque; its media and text fade instead */
+    opacity: 1;
+    visibility: var(--vis);
+    transition: none;
+  }
+  .home-pillars .home-pillars-stage .home-service-figure { opacity: var(--o); }
+  .home-pillars .home-pillars-stage .home-service-text { opacity: var(--ot); }
+
+  /* Media on top at a FIXED size, so every row’s film or photo is exactly
+     the same whatever its text: all of the stage but a 316px band kept for
+     the text (the longest row — Brands, two buttons, now with the chip
+     scroll bar — needs about 300px on a 360x640 phone), never under 40%.
+     Text sits below it,
+     top-aligned. */
+  .home-pillars-stage .home-service-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+  }
+  .home-pillars-stage .row-img { order: -1 !important; }
+  .home-pillars-stage .home-service-figure {
+    flex: none;
+    height: max(40%, calc(100% - 316px));
+    width: 100%;
+    transform: scale(calc(1 + var(--ad) * 0.04));
+  }
+  .home-pillars-stage .home-service-ring { display: none; }
+  .home-pillars-stage .home-service-image-wrap { height: 100%; }
+  /* The films and photos carry their row ratio inline; here they fill the
+     media box instead (cropped, centred). */
+  .home-pillars-stage .home-service-video,
+  .home-pillars-stage .img-slot {
+    width: 100%;
+    height: 100% !important;
+    aspect-ratio: auto !important;
+  }
+  .home-pillars-stage .img-slot img { height: 100%; object-fit: cover; }
+
+  .home-pillars-stage .home-service-text {
+    flex: 1 1 auto;
+    min-height: 0;
+    /* min-width 0 so the one-line tag row (below) scrolls inside the
+       column instead of widening it past the screen. */
+    min-width: 0;
+    width: 100%;
+    transform: translateX(calc(var(--d) * 48px));
+  }
+  /* Rows still to come (d > 0) wait off to the RIGHT, rows already passed
+     (d < 0) leave to the LEFT — so scrolling down the text slides in from
+     the right and out to the left, scrolling up the reverse, the media
+     easing from a slight zoom. Physical directions, the same in Arabic. */
+
+  /* Tighter type so a whole row fits one screen; the second paragraph is
+     dropped here (it stays on wider screens) and the lead is clamped. */
+  .home-pillars-stage .home-service-title { font-size: 24px; margin-top: 8px; }
+  .home-pillars-stage .home-service-lead {
+    font-size: var(--text-body);
+    line-height: 22px;
+    margin-top: 8px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+  .home-pillars-stage .home-service-body { display: none; }
+  /* The specialities' chips on ONE line that swipes
+     sideways — always one chip-row tall, whether a pillar has five or
+     seven, so they never push the buttons around. The trailing edge fades
+     out to hint at more (the leading one under RTL). */
+  .home-pillars-stage .home-service-tags {
+    flex-wrap: nowrap;
+    gap: 6px;
+    margin: 12px calc(-1 * clamp(20px, 5vw, 72px)) 0;
+    padding-inline: clamp(20px, 5vw, 72px);
+    overflow-x: auto;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+  }
+  [dir="rtl"] .home-pillars-stage .home-service-tags {
+    -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 40px), transparent);
+    mask-image: linear-gradient(to left, #000 calc(100% - 40px), transparent);
+  }
+  .home-pillars-stage .home-service-tags::-webkit-scrollbar { display: none; }
+
+  /* The chip row's scroll bar (TagRow in Home.jsx): a hairline track with a
+     gold thumb as wide as the visible share of the row (--thumb-size) and
+     placed by how far it is swiped (--thumb-pos). From the reading start,
+     so it runs right-to-left under RTL. Hidden when every chip fits. */
+  .home-pillars-stage .home-service-tags-bar {
+    display: block;
+    position: relative;
+    height: 3px;
+    margin-top: 8px;
+    border-radius: 999px;
+    background: var(--color-accent-100);
+    overflow: hidden;
+  }
+  .home-pillars-stage .home-service-tags-bar[data-fits] { visibility: hidden; }
+  .home-pillars-stage .home-service-tags-bar::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    inset-inline-start: calc(var(--thumb-pos, 0) * (100% - var(--thumb-size, 1) * 100%));
+    width: calc(var(--thumb-size, 1) * 100%);
+    border-radius: inherit;
+    background: var(--color-accent);
+  }
+  /* The chips themselves are the shared ones above, a step smaller. */
+  .home-pillars-stage .home-service-tags li {
+    flex: none;
+    padding: 5px 11px;
+    font-size: 11px;
+  }
+  /* The floating chat button sits over the stage's bottom RIGHT corner in
+     both languages (physical, not logical), so the button row keeps clear
+     of it — matters under RTL, where the buttons start at the right. */
+  .home-pillars-stage .home-service-ctas { margin-top: 14px; padding-right: 72px; }
+
+  /* Progress dots, a column over the top end corner of the media. Each
+     scrolls to its row (goTo in Home.jsx). */
+  .home-pillars-dots {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    position: absolute;
+    z-index: 2;
+    top: 22px;
+    inset-inline-end: calc(clamp(20px, 5vw, 72px) + 8px);
+    padding: 4px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-black) 35%, transparent);
+  }
+  .home-pillars-dot {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+  }
+  .home-pillars-dot::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--color-white) 55%, transparent);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .home-pillars-dot.is-active::before {
+    background: var(--color-accent);
+    transform: scale(1.35);
+  }
+}
+
+@media (max-width: 760px) {
+  /* "Scroll ⌄" hint, centred at the foot of the stage, only while the
+     visitor is still at the start of the stage (data-at-start). It fades out
+     as soon as they scroll on. */
+  .home-pillars-hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    position: absolute;
+    z-index: 2;
+    bottom: 10px;
+    left: 50%;
+    translate: -50% 0;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent-700);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  [dir="rtl"] .home-pillars-hint { letter-spacing: 0; font-size: 12px; }
+  .home-pillars-stage[data-at-start] .home-pillars-hint { opacity: 1; }
+  .home-pillars-hint svg { animation: home-hint-bob 1.4s ease-in-out infinite; }
+}
+@keyframes home-hint-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  .home-pillars-hint svg { animation: none; }
+  .home-pillars-stage .home-service-row,
+  .home-pillars-stage .home-service-text,
+  .home-pillars-stage .home-service-figure { transition: none !important; }
+  .home-pillars-stage .home-service-row .home-service-text,
+  .home-pillars-stage .home-service-row .home-service-figure { transform: none !important; }
 }
 
 /* — final CTA — white like every section; a hairline sets it off the rows. */

@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
 import Logo from '../Logo.jsx';
 import SocialLinks from './SocialLinks.jsx';
-import { contactLink, footerExplore, site, socials, waLink, whatWeDoLinks } from '../../data/site.js';
+import { contactLink, footerExplore, site, whatWeDoLinks } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import './Footer.css';
 
-// The socials named in the Connect column, in this order. Each entry in
-// data/site.js `socials` is either a live profile (`url`) or a not-yet-
-// published one (`to`, an in-app path that lands on the 404).
+// The socials shown as icons in the Connect column, in this order (WhatsApp
+// follows them). Each entry in data/site.js `socials` is either a live
+// profile (`url`) or a not-yet-published one (`to`, an in-app path that
+// lands on the 404).
 const CONNECT_SOCIALS = ['instagram', 'linkedin'];
 
 // One footer link. Every link in the footer — in-app or external — wears the
@@ -33,7 +34,7 @@ function Column({ heading, children }) {
   );
 }
 
-// A full-width band: the brand block (logo + social icons) on one side, then
+// A full-width band: the brand block (the logo alone) on one side, then
 // three columns — Explore, What We Do, Connect — and a copyright row under a
 // hairline with the location on the end side. Page names come from i18n
 // `nav`, so they match the navbar; the What We Do column IS the navbar's
@@ -45,14 +46,12 @@ function Column({ heading, children }) {
 export default function Footer() {
   const { t } = useLanguage();
   const f = t.footer;
-  const connectSocials = CONNECT_SOCIALS.map((key) => socials.find((s) => s.key === key));
 
   return (
     <footer className="footer">
       <div className="container footer-main">
         <div className="footer-brand">
           <Logo size="lg" on="dark" />
-          <SocialLinks />
         </div>
 
         <div className="footer-columns">
@@ -70,10 +69,10 @@ export default function Footer() {
 
           <Column heading={f.connectHeading}>
             <FooterLink to={contactLink}>{f.contact}</FooterLink>
-            {connectSocials.map((s) => (
-              <FooterLink key={s.key} to={s.to} href={s.url}>{s.label}</FooterLink>
-            ))}
-            <FooterLink href={waLink}>{t.common.whatsapp}</FooterLink>
+            {/* The socials and WhatsApp as icons — the footer's only social links */}
+            <li>
+              <SocialLinks keys={CONNECT_SOCIALS} whatsapp className="footer-connect-icons" />
+            </li>
           </Column>
         </div>
       </div>

@@ -88,12 +88,12 @@ export const telLink = /x/i.test(site.phone) ? null : `tel:${site.phone.replace(
 // launcher's WhatsApp option) — the same number as `site.phone`.
 export const waLink = `https://wa.me/${site.phone.replace(/[^0-9]/g, '')}`;
 
-// Social profiles — Instagram and LinkedIn are listed by name in the footer's
+// Social profiles — Instagram and LinkedIn are shown as icons in the footer's
 // Connect column (Footer.jsx picks them by key); all of them feed the business data's
 // sameAs (utils/pageHead.js).
 //
 // An entry carries EITHER `url` (a real profile, opened in the same tab) or `to`
-// (an in-app route). Instagram is the only live account; LinkedIn, Facebook and TikTok
+// (an in-app route). Instagram and LinkedIn are live; Facebook and TikTok
 // are not published yet, so they point at paths no route matches and land on
 // the custom 404 instead. That is deliberate: they used to link to
 // facebook.com and tiktok.com, which sent a visitor off the site to a network
@@ -104,8 +104,7 @@ export const waLink = `https://wa.me/${site.phone.replace(/[^0-9]/g, '')}`;
 // makes the icon an external link again, no component change needed.
 export const socials = [
   { key: 'instagram', label: 'Instagram', url: 'https://www.instagram.com/thename.me/' },
-  // TODO: the real LinkedIn company page URL.
-  { key: 'linkedin', label: 'LinkedIn', to: '/social/linkedin' },
+  { key: 'linkedin', label: 'LinkedIn', url: 'https://www.linkedin.com/company/the-name-me/' },
   { key: 'facebook', label: 'Facebook', to: '/social/facebook' },
   { key: 'tiktok', label: 'TikTok', to: '/social/tiktok' },
 ];
