@@ -245,6 +245,12 @@
     border-radius: 50%;
     background: var(--color-accent-300);
   }
+  /* The What-we-do trigger is NOT lit here: its list opens in place, and the
+     page open inside it already carries the dot. */
+  .navbar .navbar-menu .navbar-dropdown-trigger[data-current='true'] {
+    background: none;
+    color: inherit;
+  }
 
   /* The switcher sits below the pages, off the same divider that separates it
      from them, and fills the panel's width. */

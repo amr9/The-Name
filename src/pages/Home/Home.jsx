@@ -49,9 +49,9 @@ function RotatingName({ names }) {
   return (
     <span className="home-hero-name">
       {count > 0 && (
-        <span key={count - 1} className="home-hero-name-word is-leaving">{at(count - 1)}</span>
+        <span key={count - 1} className="home-hero-name-word gold-leaf is-leaving">{at(count - 1)}</span>
       )}
-      <span key={count} className={`home-hero-name-word${count > 0 ? ' is-entering' : ''}`}>{at(count)}</span>
+      <span key={count} className={`home-hero-name-word gold-leaf${count > 0 ? ' is-entering' : ''}`}>{at(count)}</span>
     </span>
   );
 }

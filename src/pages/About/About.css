@@ -118,6 +118,8 @@
   font-size: clamp(32px, 4.2vw, 64px);
   max-width: 12ch;
 }
+/* The name on its own line, as in the Home hero. */
+.about-tagline-title .about-tagline-name { display: block; width: fit-content; }
 .about-tagline-lede {
   margin: 0;
   font-size: var(--text-lg);

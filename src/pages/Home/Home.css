@@ -81,7 +81,6 @@
 /* Type is the shared .display-title (theme.css); only the width cap here. */
 .home-hero-title {
   max-width: 14ch;
-  color: var(--color-ink);
 }
 
 /* The rotating name (RotatingName in Home.jsx). Always its OWN line, so a
@@ -98,17 +97,9 @@
   clip-path: inset(0 -1em);
 }
 
-/* "Gold leaf": each word is filled with the guideline's yellow panel
-   gradient (orange → yellow → gold), clipped to the letters. It is on the
-   word, not the line, so the gradient spans each name however long it is and
-   travels with it as it drops in and falls out. */
-.home-hero-name-word {
-  display: inline-block;
-  background: var(--gradient-panel);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
+/* Each word is .gold-leaf (theme.css) — on the word, not the line, so the
+   gradient spans each name however long it is and travels with it as it
+   drops in and falls out. */
 
 /* The outgoing word sits over the incoming one rather than beside it. */
 .home-hero-name-word.is-leaving {

@@ -50,10 +50,15 @@ export default function About() {
 
       {/* — the philosophy: the tagline, on a raised card rather than a
           full-bleed band, so it reads as the page's one pull-quote. The line
-          is live type in the Home hero title's style (.display-title). — */}
+          is the Home hero title itself — its words (home.hero) and its look
+          (.display-title, the name in .gold-leaf on its own line) — but
+          still: always names[0], "a name.", never the rotating names. — */}
       <section className="container about-tagline">
         <div className="about-tagline-card elev-md">
-          <h2 className="display-title about-tagline-title">{a.tagline.title}</h2>
+          <h2 className="display-title about-tagline-title">
+            {t.home.hero.titleLead}{' '}
+            <span className="about-tagline-name gold-leaf">{t.home.hero.names[0]}</span>
+          </h2>
           <div className="about-tagline-copy">
             <p className="about-tagline-lede">{a.tagline.lede}</p>
             <p className="about-tagline-body">{a.tagline.body}</p>

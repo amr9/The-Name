@@ -1055,7 +1055,7 @@ export default {
     // — the philosophy panel. `title` is the big line, in the Home hero
     //   title's style. —
     tagline: {
-      title: 'More than just a name.',
+      // The line itself is home.hero (titleLead + names[0]).
       lede: 'It\'s more than our tagline. It\'s how we think.',
       body: 'When a brand walks through our doors, THE NAME can become their name. When an individual chooses something, it becomes their name. Their identity. Their moment. Their story.',
     },

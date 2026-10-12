@@ -181,14 +181,28 @@ h5 { font-size: 16px; }
 h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
 
 /* The big uppercase statement line — the Home hero title ("More than just a
-   name.") and the same line on the About page's tagline card. Size and
-   spacing only; each caller sets its own width cap and margins. */
+   name.") and the same line on the About page's tagline card, in charcoal
+   with the name in .gold-leaf. Each caller sets its own width cap and
+   margins. */
 .display-title {
+  color: var(--color-ink);
   font-size: clamp(36px, 6vw, 88px);
   line-height: 1.02;
   letter-spacing: -0.01em;
   text-transform: uppercase;
   margin: 0;
+}
+
+/* "Gold leaf": text filled with the guideline's yellow panel gradient
+   (orange → yellow → gold), clipped to the letters — the name in a
+   .display-title. inline-block so the gradient spans the word itself, not
+   the whole line. */
+.gold-leaf {
+  display: inline-block;
+  background: var(--gradient-panel);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* Read by screen readers and crawlers, never drawn — for text whose visible
