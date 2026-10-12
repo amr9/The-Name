@@ -22,6 +22,7 @@
   position: absolute;
   inset: 0;
 }
+
 /* The film fills the hero edge to edge, cropped rather than letterboxed. No
    Ken Burns drift — it was there to bring a still to life; the film moves. */
 .home-hero-video {
@@ -32,24 +33,55 @@
   object-position: center;
 }
 
-.home-hero-scrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, #fff 2%, color-mix(in srgb, #fff 55%, transparent) 34%, color-mix(in srgb, #fff 8%, transparent) 72%);
-  pointer-events: none;
-}
-
+/* The type block runs to the hero's bottom edge and carries the white wash
+   itself, so the wash starts exactly at the top of the title (at any width or
+   language) and ends in the page background — the film fades into the page
+   below with no edge. Above the title the film is untouched. */
 .home-hero-content {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: clamp(36px, 6vh, 80px);
+  bottom: 0;
+  /* The wash starts right above the title (the text is anchored to the
+     bottom, so this only sets where the gradient begins). */
+  padding-top: clamp(30px, 18vh, 180px);
+  padding-bottom: clamp(40px, 6vh, 80px);
+  /* A smootherstep ramp in 25 stops — flat at both ends, so it eases out
+     of nothing at the top and settles into the page background at the
+     bottom with no visible line at either end. */
+  background: linear-gradient(to bottom,
+      transparent 0%,
+      color-mix(in srgb, var(--color-bg) 0.1%, transparent) 4.2%,
+      color-mix(in srgb, var(--color-bg) 0.5%, transparent) 8.3%,
+      color-mix(in srgb, var(--color-bg) 1.6%, transparent) 12.5%,
+      color-mix(in srgb, var(--color-bg) 3.5%, transparent) 16.7%,
+      color-mix(in srgb, var(--color-bg) 6.5%, transparent) 20.8%,
+      color-mix(in srgb, var(--color-bg) 10.4%, transparent) 25%,
+      color-mix(in srgb, var(--color-bg) 15.2%, transparent) 29.2%,
+      color-mix(in srgb, var(--color-bg) 21%, transparent) 33.3%,
+      color-mix(in srgb, var(--color-bg) 27.5%, transparent) 37.5%,
+      color-mix(in srgb, var(--color-bg) 34.7%, transparent) 41.7%,
+      color-mix(in srgb, var(--color-bg) 42.2%, transparent) 45.8%,
+      color-mix(in srgb, var(--color-bg) 50%, transparent) 50%,
+      color-mix(in srgb, var(--color-bg) 57.8%, transparent) 54.2%,
+      color-mix(in srgb, var(--color-bg) 65.3%, transparent) 58.3%,
+      color-mix(in srgb, var(--color-bg) 72.5%, transparent) 62.5%,
+      color-mix(in srgb, var(--color-bg) 79%, transparent) 66.7%,
+      color-mix(in srgb, var(--color-bg) 84.8%, transparent) 70.8%,
+      color-mix(in srgb, var(--color-bg) 89.6%, transparent) 75%,
+      color-mix(in srgb, var(--color-bg) 93.5%, transparent) 79.2%,
+      color-mix(in srgb, var(--color-bg) 96.5%, transparent) 83.3%,
+      color-mix(in srgb, var(--color-bg) 98.4%, transparent) 87.5%,
+      color-mix(in srgb, var(--color-bg) 99.5%, transparent) 91.7%,
+      color-mix(in srgb, var(--color-bg) 99.9%, transparent) 95.8%,
+      var(--color-bg) 100%);
   pointer-events: none;
 }
 
 /* Type is the shared .display-title (theme.css); only the width cap here. */
 .home-hero-title {
   max-width: 14ch;
+  color: var(--color-ink);
 }
 
 /* The rotating name (RotatingName in Home.jsx). Always its OWN line, so a
@@ -61,32 +93,66 @@
   position: relative;
   display: block;
   white-space: nowrap;
-  color: var(--color-accent-700);
   padding-block: 0.06em;
   margin-block: -0.06em;
   clip-path: inset(0 -1em);
 }
-.home-hero-name-word { display: inline-block; }
+
+/* "Gold leaf": each word is filled with the guideline's yellow panel
+   gradient (orange → yellow → gold), clipped to the letters. It is on the
+   word, not the line, so the gradient spans each name however long it is and
+   travels with it as it drops in and falls out. */
+.home-hero-name-word {
+  display: inline-block;
+  background: var(--gradient-panel);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 /* The outgoing word sits over the incoming one rather than beside it. */
 .home-hero-name-word.is-leaving {
   position: absolute;
   inset-inline-start: 0;
   animation: home-name-leave 0.2s ease-in forwards;
 }
+
 .home-hero-name-word.is-entering {
   animation: home-name-drop 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.25) both;
 }
+
 @keyframes home-name-drop {
-  from { transform: translateY(-105%); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(-105%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
+
 @keyframes home-name-leave {
-  from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(70%); opacity: 0; }
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(70%);
+    opacity: 0;
+  }
 }
+
 @media (prefers-reduced-motion: reduce) {
-  .home-hero-name-word.is-leaving { display: none; }
-  .home-hero-name-word.is-entering { animation: none; }
+  .home-hero-name-word.is-leaving {
+    display: none;
+  }
+
+  .home-hero-name-word.is-entering {
+    animation: none;
+  }
 }
 
 .home-hero-body {
@@ -111,16 +177,28 @@
 
 /* Short or small screens: tighter, so the block keeps to the bottom of the
    hero and the video stays visible above it. */
-@media (max-width: 700px), (max-height: 820px) {
-  .home-hero-title { font-size: clamp(32px, 5vw, 56px); }
-  .home-hero-body { font-size: var(--text-body); line-height: 24px; margin-top: 12px; }
-  .home-hero-actions { margin-top: 16px; }
+@media (max-width: 700px),
+(max-height: 820px) {
+  .home-hero-title {
+    font-size: clamp(32px, 5vw, 56px);
+  }
+
+  .home-hero-body {
+    font-size: var(--text-body);
+    line-height: 24px;
+    margin-top: 12px;
+  }
+
+  .home-hero-actions {
+    margin-top: 16px;
+  }
 }
 
 /* — what we do: intro — */
 .home-services-intro {
   padding-block: clamp(48px, 6vw, 96px) 24px;
 }
+
 .home-services-heading {
   font-size: clamp(30px, 3.4vw, 44px);
   line-height: 1.1;
@@ -129,6 +207,7 @@
   margin-left: -0.028em;
   max-width: 26ch;
 }
+
 .home-services-body {
   font-size: var(--text-lg);
   line-height: 28px;
@@ -143,6 +222,7 @@
   margin-top: clamp(28px, 4vw, 56px);
   border-top: 1px solid var(--color-divider);
 }
+
 .home-final-heading {
   font-size: clamp(30px, 4vw, 56px);
   line-height: 1.08;
@@ -150,6 +230,7 @@
   max-width: 22ch;
   margin: 0 auto;
 }
+
 .home-final-body {
   font-size: var(--text-lg);
   line-height: 28px;

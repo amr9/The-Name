@@ -9,6 +9,8 @@ import './ChatLauncher.css';
 // How long a visitor reads before the nudge bubble offers to talk. Long
 // enough that it lands as an offer rather than an interruption.
 const NUDGE_DELAY_MS = 30_000;
+// How long the bubble stays if it is never clicked — then it goes for good.
+const NUDGE_LIFETIME_MS = 5 * 60_000;
 
 // The floating button in the corner of every page. It opens a small menu
 // with two ways to reach us — the on-site assistant, or WhatsApp directly —
@@ -32,6 +34,12 @@ export default function ChatLauncher() {
   useEffect(() => {
     if (nudge !== 'waiting') return undefined;
     const id = setTimeout(() => setNudge('shown'), NUDGE_DELAY_MS);
+    return () => clearTimeout(id);
+  }, [nudge]);
+
+  useEffect(() => {
+    if (nudge !== 'shown') return undefined;
+    const id = setTimeout(() => setNudge('gone'), NUDGE_LIFETIME_MS);
     return () => clearTimeout(id);
   }, [nudge]);
 

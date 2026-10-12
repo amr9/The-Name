@@ -228,10 +228,22 @@
     border-radius: calc(var(--radius-md) - 6px);
   }
 
-  /* Same lit pill as the desktop row, squared off to the dropdown's radius. */
+  /* The current page is marked by a dot before it, not the desktop row's lit
+     pill: the dot is the pill's yellow (the strong end of
+     --gradient-accent-soft), and the gap after it sets the link apart. */
   .navbar .navbar-menu .navbar-link[aria-current='page'] {
-    background: var(--gradient-accent-soft);
+    background: none;
     color: var(--color-accent-800);
+  }
+  .navbar .navbar-menu .navbar-link[aria-current='page']::before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 8px;
+    height: 8px;
+    margin-inline-end: 10px;
+    border-radius: 50%;
+    background: var(--color-accent-300);
   }
 
   /* The switcher sits below the pages, off the same divider that separates it

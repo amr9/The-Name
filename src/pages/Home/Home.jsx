@@ -96,7 +96,6 @@ export default function Home() {
         <div className="home-hero-media">
           <AutoplayVideo className="home-hero-video" {...media.hero} label={h.hero.mediaLabel} />
         </div>
-        <div className="home-hero-scrim" />
         <div className="container home-hero-content">
           <h1 className="display-title home-hero-title">
             {/* The full line for screen readers and crawlers; the drawn
