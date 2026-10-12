@@ -1,13 +1,16 @@
-/* The Brands page — a short header, then the logos as a card grid. */
+/* The Brands page — the hero, then one PillarRows row per featured brand
+   (components/PillarRows: the same rows, chips, buttons and phone stage as
+   Home's "What we do"), then the remaining brands as logo cards. Only what
+   is particular to brands lives here: the logo beside the row number, and
+   the two product cards that are each row's media. */
 .brands-page {
   padding-block: calc(var(--space-8) * 2);
 }
 
-.brands-hero {
-  max-width: 62ch;
-  margin: 0 auto;
-  text-align: center;
-}
+/* Start-aligned like every other page hero (kicker, title, lede). The
+   measure is on the children, not the header: .container centres itself,
+   so a max-width on it would pull the whole hero to the middle. */
+.brands-hero > * { max-width: 62ch; }
 .brands-title {
   font-size: clamp(36px, 4.6vw, 60px);
   /* Top margin comes from `.card-kicker + .page-title` in theme.css. */
@@ -19,68 +22,27 @@
   margin: var(--space-4) 0 0;
   color: color-mix(in srgb, var(--color-text) 72%, transparent);
 }
+.brands-hero + .pillars { margin-top: clamp(var(--space-6), 4vw, calc(var(--space-8) * 1.5)); }
 
-/* — featured brands: one section each, intro beside two product cards — */
-.brand-features {
-  margin-top: calc(var(--space-8) * 1.5);
+/* The brand's logo after the row number's rule (PillarRows `mark`) — a
+   small, even-height mark; --logo-scale (data/brands.js `logoScale`)
+   evens out tall marks against long wordmarks, as in the logo cards. */
+.brand-row-mark {
+  height: calc(22px * var(--logo-scale, 1));
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+  margin-inline-start: 4px;
 }
-.brand-feature {
-  display: grid;
-  grid-template-columns: minmax(240px, 1fr) minmax(0, 2fr);
-  gap: clamp(var(--space-6), 4vw, calc(var(--space-8) * 2));
-  padding-block: calc(var(--space-8) * 1.5);
-  border-top: 1px solid color-mix(in srgb, var(--color-text) 12%, transparent);
-}
-/* Alternate sides down the page, so three sections don't read as one long
-   column. `order`, not a mirrored template, keeps the DOM (and the reading
-   order for a screen reader) intro-first in every section. */
-.brand-feature:nth-child(even) {
-  grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr);
-}
-.brand-feature:nth-child(even) .brand-feature-intro { order: 2; }
 
-/* The intro stays in view while the taller product column scrolls past. */
-.brand-feature-intro {
-  position: sticky;
-  top: calc(var(--navbar-h) + var(--space-6));
-  align-self: start;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-4);
-}
-.brand-feature-index {
-  font-size: var(--text-sm);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--color-accent-700);
-}
-.brand-feature-name {
-  margin: 0;
-  width: 100%;
-}
-/* Left-aligned, unlike the centred logo cards below. */
-.brand-feature-name .brands-logo {
-  width: calc(min(100%, 200px) * var(--logo-scale, 1));
-}
-.brand-feature-name .brands-logo img { object-position: left center; }
-[dir="rtl"] .brand-feature-name .brands-logo img { object-position: right center; }
-.brand-feature-name .brands-logo.img-slot-empty { align-items: flex-start; text-align: start; }
-.brand-feature-text {
-  margin: 0;
-  font-size: var(--text-body);
-  line-height: 1.65;
-  color: color-mix(in srgb, var(--color-text) 78%, transparent);
-}
-.brand-feature-intro .btn { margin-top: var(--space-2); }
-
-.brand-feature-products {
+/* A row's media: its two product cards side by side, in the wide frame. */
+.brand-row-products {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-6);
+  gap: var(--space-4);
 }
 
 /* A product: white bordered card (site-wide rule — no beige on cards), the
@@ -118,6 +80,11 @@
   font-size: var(--text-lg);
   line-height: 1.25;
 }
+/* A "coming soon" card (a brand still waiting for content) reads as a
+   placeholder, not a product: its name steps back. */
+.brand-product.is-pending .brand-product-name {
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
 .brand-product-line {
   margin: 0;
   font-size: var(--text-sm);
@@ -143,16 +110,29 @@
   border: 1px solid var(--color-divider);
 }
 
-@media (max-width: 980px) {
-  .brand-feature,
-  .brand-feature:nth-child(even) {
-    grid-template-columns: minmax(0, 1fr);
+/* On the phone stage the media is a fixed box: the two cards fill it, each
+   its photo plus name only (the line and facts are on wider screens). The
+   photo carries its 4:5 ratio inline, so it is overridden to fill. */
+@media (max-width: 760px) {
+  .pillars-stage .brand-row-products {
+    height: 100%;
+    gap: var(--space-2);
   }
-  .brand-feature:nth-child(even) .brand-feature-intro { order: 0; }
-  .brand-feature-intro { position: static; }
-}
-@media (max-width: 560px) {
-  .brand-feature-products { grid-template-columns: minmax(0, 1fr); }
+  .pillars-stage .brand-product {
+    min-height: 0;
+    padding: var(--space-2);
+  }
+  .pillars-stage .brand-product-media {
+    flex: 1 1 auto;
+    min-height: 0;
+    aspect-ratio: auto !important;
+    border-radius: calc(var(--radius-md) - var(--space-2));
+  }
+  .pillars-stage .brand-product-media img { height: 100%; }
+  .pillars-stage .brand-product-body { flex: none; padding: var(--space-2) 2px 0; }
+  .pillars-stage .brand-product-name { font-size: var(--text-sm); }
+  .pillars-stage .brand-product-line,
+  .pillars-stage .brand-product-facts { display: none; }
 }
 
 /* — the remaining brands, as logo cards — */
@@ -175,7 +155,10 @@
   gap: var(--space-6);
 }
 
-.brands-card {
+/* Scoped under .brands-grid so it outranks theme.css's `.card` (grey
+   --color-surface): the two are otherwise equally specific, and whichever
+   stylesheet the bundle happens to load last would win. */
+.brands-grid .brands-card {
   height: 100%;
   justify-content: center;
   align-items: center;
@@ -186,8 +169,8 @@
   color: var(--color-text);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-.brands-card:hover,
-.brands-card:focus-visible {
+.brands-grid .brands-card:hover,
+.brands-grid .brands-card:focus-visible {
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }

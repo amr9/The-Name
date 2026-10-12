@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
+import Arrow from '../../components/Arrow.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
+import PillarRows, { ROW_RATIO } from '../../components/PillarRows/PillarRows.jsx';
 import { brandLink, brands, brandsById } from '../../data/brands.js';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import { featuredBrands } from './data.js';
+import { PENDING_SLOTS, featuredBrands } from './data.js';
 import './Brands.css';
 
 const featuredIds = new Set(featuredBrands.map((f) => f.brandId));
@@ -15,67 +17,103 @@ function BrandLink({ brand, ...props }) {
   return /^https?:/.test(to) ? <a href={to} {...props} /> : <Link to={to} {...props} />;
 }
 
+// One product card. A real product passes its photo and facts; a "coming
+// soon" slot passes no `src`, so ImagePlaceholder shows its dashed frame.
+function BrandProduct({ src, label, name, line, facts = [], pending = false }) {
+  return (
+    <li className={`brand-product${pending ? ' is-pending' : ''}`}>
+      <ImagePlaceholder src={src} label={label} ratio={ROW_RATIO} className="brand-product-media" />
+      <div className="brand-product-body">
+        <h3 className="brand-product-name">{name}</h3>
+        <p className="brand-product-line">{line}</p>
+        {facts.length > 0 && (
+          <ul className="brand-product-facts">
+            {facts.map((fact) => <li key={fact}>{fact}</li>)}
+          </ul>
+        )}
+      </div>
+    </li>
+  );
+}
+
 /**
- * The partner brands. Each brand in `featuredBrands` (./data.js) gets a
- * section of its own — logo, intro, a link to its site and up to two product
- * cards — alternating sides down the page. Every other brand in data/brands.js
- * is listed underneath as a logo card linking out, the same card the page
- * used to be made of. Logos come from media.brands; until a logo file exists
- * the brand's name shows as a wordmark.
+ * The partner brands, laid out exactly like Home's "What we do": every brand
+ * in `featuredBrands` (./data.js) is a PillarRows row — number, name, intro,
+ * its products' names as chips and a "Visit" button, beside its two product
+ * cards (the row's media), alternating sides; on phones the same pinned
+ * scroll stage, with a "04 / 19" counter. The brand's logo, when there is a
+ * file for it (media.brands), sits beside the number. A featured brand
+ * without `products` is still waiting for its content: the shared "coming
+ * soon" intro (brandsPage.pending) and PENDING_SLOTS dashed cards. Every
+ * other brand in data/brands.js is listed underneath as a logo card.
  */
 export default function Brands() {
   const { t } = useLanguage();
   const b = t.brandsPage;
   const others = brands.filter((brand) => !featuredIds.has(brand.id));
 
+  const rows = featuredBrands.map(({ brandId, products }) => {
+    const brand = brandsById[brandId];
+    const copy = b.brands[brandId];
+    const pending = !products;
+    const cards = pending
+      ? Array.from({ length: PENDING_SLOTS }, (_, n) => (
+          <BrandProduct key={n} label={b.pending.product} name={b.pending.product} line={b.pending.line} pending />
+        ))
+      : products.map((id) => {
+          const p = copy.products[id];
+          return (
+            <BrandProduct
+              key={id}
+              src={media.brandProducts[id]}
+              label={`${brand.name} ${p.name}`}
+              name={p.name}
+              line={p.line}
+              facts={p.facts}
+            />
+          );
+        });
+    return {
+      key: brandId,
+      title: brand.name,
+      label: brand.name,
+      // Decorative: the heading already names the brand. A logo listed in
+      // media.brands whose file is missing renders as nothing (empty alt).
+      mark: media.brands[brandId] && (
+        <img
+          className="brand-row-mark"
+          src={media.brands[brandId]}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          style={brand.logoScale ? { '--logo-scale': brand.logoScale } : undefined}
+        />
+      ),
+      lead: pending ? b.pending.intro(brand.name) : copy.intro,
+      tags: pending ? [] : products.map((id) => copy.products[id].name),
+      actions: (
+        <BrandLink brand={brand} className="btn btn-primary">
+          {b.visitSite(brand.name)} <Arrow />
+        </BrandLink>
+      ),
+      bare: true,
+      wide: true,
+      media: () => <ul className="brand-row-products">{cards}</ul>,
+    };
+  });
+
   return (
-    <div className="container brands-page">
-      <header className="brands-hero">
+    <div className="brands-page">
+      <header className="container brands-hero">
         <span className="card-kicker">{b.kicker}</span>
         <h1 className="page-title brands-title">{b.title}</h1>
         <p className="brands-lede">{b.lede}</p>
       </header>
 
-      <div className="brand-features">
-        {featuredBrands.map(({ brandId, products }, i) => {
-          const brand = brandsById[brandId];
-          const copy = b.brands[brandId];
-          return (
-            <section key={brandId} className="brand-feature" aria-labelledby={`brand-${brandId}`}>
-              <div className="brand-feature-intro">
-                <span className="brand-feature-index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                {/* The logo IS the heading: its alt text is the brand name. */}
-                <h2 id={`brand-${brandId}`} className="brand-feature-name" style={brand.logoScale ? { '--logo-scale': brand.logoScale } : undefined}>
-                  <ImagePlaceholder src={media.brands[brandId]} label={brand.name} ratio="3 / 1" className="brands-logo" />
-                </h2>
-                <p className="brand-feature-text">{copy.intro}</p>
-                <BrandLink brand={brand} className="btn btn-secondary">{b.visitSite(brand.name)}</BrandLink>
-              </div>
-
-              <ul className="brand-feature-products">
-                {products.map((id) => {
-                  const p = copy.products[id];
-                  return (
-                    <li key={id} className="brand-product">
-                      <ImagePlaceholder src={media.brandProducts[id]} label={`${brand.name} ${p.name}`} ratio="4 / 5" className="brand-product-media" />
-                      <div className="brand-product-body">
-                        <h3 className="brand-product-name">{p.name}</h3>
-                        <p className="brand-product-line">{p.line}</p>
-                        <ul className="brand-product-facts">
-                          {p.facts.map((fact) => <li key={fact}>{fact}</li>)}
-                        </ul>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            </section>
-          );
-        })}
-      </div>
+      <PillarRows rows={rows} titleAs="h2" />
 
       {others.length > 0 && (
-        <section className="brands-more" aria-labelledby="brands-more-title">
+        <section className="container brands-more" aria-labelledby="brands-more-title">
           <h2 id="brands-more-title" className="brands-more-title">{b.more}</h2>
           <ul className="brands-grid">
             {others.map((brand) => (

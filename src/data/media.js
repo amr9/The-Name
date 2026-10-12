@@ -176,6 +176,26 @@ export const media = {
     kreafunk: `${BASE}/brands/kreafunk.png`,
     gingko: `${BASE}/brands/gingko.png`,
     prodir: `${BASE}/brands/prodir.svg`,
+    // The MENA partner slide's other brands (Oct 2026). Each is the brand's
+    // own current logo: from its official site (Cerruti 1881, Festina,
+    // Christian Lacroix, Ungaro, Pitaka, Makito, MOB, Senator) or Wikimedia
+    // Commons (Hugo Boss, Cacharel, Nina Ricci, Ice-Watch). Christian
+    // Lacroix, Ungaro and Makito publish only WHITE logos (for dark site
+    // headers); these are the same artwork recoloured to one-colour black.
+    // Senator's is its site header logo, 131x46 — swap in a larger file
+    // when the brand sends one. SOL'S has no file yet (wordmark).
+    cerruti1881: `${BASE}/brands/cerruti-1881.svg`,
+    hugoBoss: `${BASE}/brands/hugo-boss.svg`,
+    cacharel: `${BASE}/brands/cacharel.svg`,
+    ninaRicci: `${BASE}/brands/nina-ricci.svg`,
+    festina: `${BASE}/brands/festina.svg`,
+    iceWatch: `${BASE}/brands/ice-watch.svg`,
+    christianLacroix: `${BASE}/brands/christian-lacroix.png`,
+    senator: `${BASE}/brands/senator.png`,
+    ungaro: `${BASE}/brands/ungaro.svg`,
+    pitaka: `${BASE}/brands/pitaka.svg`,
+    makito: `${BASE}/brands/makito.png`,
+    mob: `${BASE}/brands/mob.png`,
   },
 
   // Brands page — one photo per featured product (keys match

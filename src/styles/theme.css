@@ -115,7 +115,7 @@
      50% back to anything that has a CORNER.
 
      DECORATIVE CIRCLES are not corners and stay 50%: the ring drawn around
-     each "What we do" image (.home-service-ring) and the PARKED Bubbles.
+     each "What we do" image (.pillar-ring) and the PARKED Bubbles.
      Squaring a circle off turns it into a box around a box.
 
      ONE exemption:
@@ -234,6 +234,11 @@ h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
    bundle happens to order them. A new page gets the spacing for free; none
    should set a top margin on its title again. */
 .card-kicker + .page-title { margin-top: var(--space-4); }
+
+/* The "→" after a call to action (components/Arrow.jsx) — points the
+   reading direction, so it is mirrored under RTL. */
+.cta-arrow { display: inline-block; }
+[dir='rtl'] .cta-arrow { transform: scaleX(-1); }
 
 p { margin: 0 0 var(--space-3); }
 a { color: var(--color-accent-700); text-decoration: none; text-underline-offset: 3px; }

@@ -6,7 +6,13 @@ export default {
 
   // `chatOnWhatsapp` is the label on ContactForm's WhatsApp button — today
   // that form appears only at the foot of /about.
-  common: { whatsapp: 'WhatsApp', chatOnWhatsapp: 'Chat with us', backToTop: 'Back to the top' },
+  common: {
+    whatsapp: 'WhatsApp',
+    chatOnWhatsapp: 'Chat with us',
+    backToTop: 'Back to the top',
+    // The bouncing hint on the phone pillar stage (components/PillarRows).
+    scrollHint: 'Scroll',
+  },
 
   // Search-result and link-preview copy, one entry per page (keys = navLinks
   // keys in data/site.js, plus notFound) — read by utils/pageHead.js. A title
@@ -105,6 +111,13 @@ export default {
     // under each intro; `more` heads the logo row of the remaining brands.
     visitSite: (name) => `Visit ${name}`,
     more: "Also in our collection",
+    // A featured brand still waiting for its content (pages/Brands/data.js
+    // entries without `products`): its intro and the dashed product cards.
+    pending: {
+      intro: (name) => `Our ${name} selection is being prepared — the collection, with pieces ready to personalise, is coming soon.`,
+      product: "Product coming soon",
+      line: "Photos and details to follow.",
+    },
     brands: {
       pantone: {
         intro: "The official PANTONE Lifestyle Collection by Copenhagen Design, sole licensee in over 70 countries. Every piece is matched to its PANTONE colour chip — so your brand can carry its exact colour.",
@@ -661,8 +674,6 @@ export default {
       kicker: 'What we do',
       heading: 'Everything connects.',
       body: 'Our expertise comes together across five specialised pillars, working collectively to strengthen brand positioning, communication, visibility and awareness.',
-      // The bouncing hint under the first pillar on the phone stage.
-      scrollHint: 'Scroll',
     },
     // The five pillar rows — ids match pages/Home/data.js `pillars`.
     // `ctas` labels the row's buttons, keyed by each link's `key`. `body` may

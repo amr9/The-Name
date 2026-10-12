@@ -4,7 +4,12 @@ export default {
   nav: { home: 'الرئيسية', cafe: 'المقهى', events: 'الفعاليات والتجارب', shop: 'المتجر', brands: 'العلامات التجارية', business: 'هدايا الشركات', agency: 'الوكالة', fnb: 'المطاعم والمتجر المفاهيمي', whatWeDo: 'ما نقدّمه', about: 'قصتنا', policies: 'السياسات', contact: 'تواصل معنا', customize: "خصّصها", menu: 'القائمة',
          policyTabs: { terms: 'الشروط والأحكام', delivery: 'التوصيل والإرجاع', privacy: 'سياسة الخصوصية' } },
 
-  common: { whatsapp: 'واتساب', chatOnWhatsapp: 'الدردشة عبر واتساب', backToTop: 'العودة إلى الأعلى' },
+  common: {
+    whatsapp: 'واتساب',
+    chatOnWhatsapp: 'الدردشة عبر واتساب',
+    backToTop: 'العودة إلى الأعلى',
+    scrollHint: 'مرّر',
+  },
 
   // عناوين وأوصاف نتائج البحث ومعاينات الروابط — see the note on `seo` in en.js.
   seo: {
@@ -93,6 +98,11 @@ export default {
     visit: "زيارة",
     visitSite: (name) => `زيارة موقع ${name}`,
     more: "أيضًا ضمن مجموعتنا",
+    pending: {
+      intro: (name) => `نجهّز تشكيلتنا من ${name} — المجموعة، بقطع جاهزة للتخصيص، قريبًا.`,
+      product: "منتج قريبًا",
+      line: "الصور والتفاصيل لاحقًا.",
+    },
     brands: {
       pantone: {
         intro: "مجموعة PANTONE Lifestyle الرسمية من Copenhagen Design، المرخّص الحصري في أكثر من 70 دولة. كل قطعة مطابقة لرقم لونها في PANTONE — لتحمل علامتك لونها الدقيق.",
@@ -620,7 +630,6 @@ export default {
       kicker: 'ما نقدّمه',
       heading: 'كل شيء مترابط.',
       body: 'تجتمع خبراتنا عبر خمس ركائز متخصصة، تعمل معًا لتعزيز تموضع العلامة التجارية وتواصلها وحضورها والوعي بها.',
-      scrollHint: 'مرّر',
     },
     pillars: {
       corporateGifts: {
