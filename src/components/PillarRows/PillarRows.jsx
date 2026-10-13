@@ -36,8 +36,9 @@ export const ROW_RATIO = '4 / 5';
 const DOTS_MAX = 6;
 
 // Phones only: the rows become ONE pinned stage. Keep in step with the
-// @media in PillarRows.css's "pillar stage" block.
-const STAGE_QUERY = '(max-width: 760px)';
+// @media in PillarRows.css's "pillar stage" block. Home also passes it to
+// its films as `expandable`, so a tap opens them full-screen on the stage.
+export const STAGE_QUERY = '(max-width: 760px)';
 
 // Drives the phone stage. The page scrolls normally; the track is tall (see
 // PillarRows.css) and the stage inside it is sticky, so while it is pinned the

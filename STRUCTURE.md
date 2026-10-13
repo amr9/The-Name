@@ -609,6 +609,12 @@ src/
                         Optional `active`: `false` pauses it even while on
                         screen (Home's phone stage, where every row is "in
                         view"); left undefined, visibility alone decides.
+                        Optional `expandable` (a media query): while it
+                        matches, a tap opens the film full-screen (whole film
+                        on black, the browser's player controls with an exit
+                        button; webkitEnterFullscreen on iPhone). Home's
+                        section films pass PillarRows' exported STAGE_QUERY,
+                        so this is phones only.
                         Used by Home's hero and its Corporate Gifts, Agency
                         and Events rows (none of the films has an audio track).
       VideoPlaceholder/ — a film slot that has no film yet: the poster still
