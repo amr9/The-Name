@@ -177,8 +177,11 @@
     background: transparent;
     color: inherit;
     cursor: pointer;
+    /* No fill when it is tapped: no hover tint (on touch screens :hover
+       sticks after a tap, so the button stayed lit while the menu was open)
+       and no browser tap flash. */
+    -webkit-tap-highlight-color: transparent;
   }
-  .navbar-toggle:hover { background: var(--color-accent-100); }
 
   /* The dropdown. It is `absolute` inside the bar rather than `fixed`, because
      the bar's backdrop-filter makes it the containing block for fixed
