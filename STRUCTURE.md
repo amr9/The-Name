@@ -574,7 +574,10 @@ src/
                         as uppercase outline chips. Phones (≤760px,
                         `STAGE_QUERY`): ONE pinned stage — a tall `.pillars`
                         track (stage + (count − 0.5) × 75svh) with a sticky
-                        `.pillars-stage`; `usePillarStage` scrubs the
+                        `.pillars-stage` sized in dvh (fills the VISIBLE
+                        screen as the browser's address bar / Google app
+                        header slides away and back; the per-row step stays
+                        svh, so the scroll geometry never moves with the bar); `usePillarStage` scrubs the
                         transition with the scroll (per-row CSS variables
                         `--d`, `--o` media, `--ot` text, `--vis`: media
                         cross-fades, text hands over at halfway sliding out

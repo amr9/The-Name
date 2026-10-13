@@ -26,10 +26,17 @@ import './FilmLightbox.css';
  * gesture closes it rather than leaving the page (one history entry, pushed
  * on open). Closes with the × button, Escape, back, or a tap outside the film.
  * Focus returns to the button.
+ *
+ * It picks up where the film on the page is: the viewer starts at the inline
+ * film's current time (the <video> sharing the button's parent), and on close
+ * the inline film carries on from wherever the viewer stopped — one film,
+ * shown larger, not a restart.
  */
 export default function FilmLightbox({ src, poster, label }) {
   const { t } = useLanguage();
-  const [open, setOpen] = useState(false);
+  // The inline film beside the button, while the viewer is open.
+  const [inline, setInline] = useState(null);
+  const open = inline !== null;
   const triggerRef = useRef(null);
 
   // Focus goes back to the button once the viewer is GONE — while the
@@ -43,7 +50,7 @@ export default function FilmLightbox({ src, poster, label }) {
     }
     wasOpen.current = open;
   }, [open]);
-  const closed = () => setOpen(false);
+  const closed = () => setInline(null);
 
   return (
     <>
@@ -53,7 +60,7 @@ export default function FilmLightbox({ src, poster, label }) {
         className="film-expand"
         aria-label={t.common.watchFilm(label)}
         aria-haspopup="dialog"
-        onClick={() => setOpen(true)}
+        onClick={() => setInline(triggerRef.current.parentElement.querySelector('video') ?? undefined)}
       >
         <span className="film-expand-badge" aria-hidden="true">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -62,7 +69,7 @@ export default function FilmLightbox({ src, poster, label }) {
         </span>
       </button>
       {open && createPortal(
-        <Viewer src={src} poster={poster} label={label} closeLabel={t.common.closeFilm} onClosed={closed} />,
+        <Viewer src={src} poster={poster} label={label} inline={inline} closeLabel={t.common.closeFilm} onClosed={closed} />,
         document.body,
       )}
     </>
@@ -71,7 +78,7 @@ export default function FilmLightbox({ src, poster, label }) {
 
 const HISTORY_KEY = 'filmLightbox';
 
-function Viewer({ src, poster, label, closeLabel, onClosed }) {
+function Viewer({ src, poster, label, inline, closeLabel, onClosed }) {
   const dialogRef = useRef(null);
   const videoRef = useRef(null);
   const onClosedRef = useRef(onClosed);
@@ -90,10 +97,14 @@ function Viewer({ src, poster, label, closeLabel, onClosed }) {
     root.style.overflow = 'hidden';
     const at = { y: window.scrollY, width: window.innerWidth };
 
-    const held = [...document.querySelectorAll('video')].filter((v) => v !== videoRef.current && !v.paused);
+    const video = videoRef.current;
+    const held = [...document.querySelectorAll('video')].filter((v) => v !== video && !v.paused);
     held.forEach((v) => v.pause());
+    // Same frame as the inline film. Set before the file has loaded, the
+    // time is kept as the start position and applied once it has.
+    if (inline?.currentTime) video.currentTime = inline.currentTime;
     // play() rejects if the browser refuses (data saver) — the poster stays.
-    videoRef.current.play().catch(() => {});
+    video.play().catch(() => {});
 
     // Keeps the router's own state (key, idx), so React Router sees the
     // same location; only the back gesture notices the extra entry.
@@ -107,6 +118,8 @@ function Viewer({ src, poster, label, closeLabel, onClosed }) {
       window.removeEventListener('popstate', onPop);
       root.style.overflow = overflow;
       if (window.innerWidth === at.width) window.scrollTo({ top: at.y, behavior: 'instant' });
+      // ...and back: the inline film resumes from the viewer's frame.
+      if (inline && video.readyState > 0) inline.currentTime = video.currentTime;
       held.forEach((v) => v.play().catch(() => {}));
       if (dialog.open) dialog.close();
     };
@@ -136,7 +149,9 @@ function Viewer({ src, poster, label, closeLabel, onClosed }) {
         ref={videoRef}
         className="film-lightbox-video"
         src={src}
-        poster={poster}
+        // A poster is the film's FIRST frame; starting mid-film it would
+        // flash before the jump, so there it is black until the frame is in.
+        poster={inline?.currentTime ? undefined : poster}
         muted
         loop
         playsInline

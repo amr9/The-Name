@@ -141,12 +141,21 @@
 
 @media (max-width: 760px) {
   .pillars {
-    /* The stage fills the screen under the navbar (svh, like the hero, so
-       the mobile address bar never resizes it), and each row owns one
-       --stage-step of scrolling. PillarRows.jsx measures these back from the
-       layout, so change them only here. */
+    /* The stage fills the VISIBLE screen under the navbar: dvh, which
+       follows the browser's own bar (Chrome's address bar, the Google app's
+       header, Safari's toolbars) as it slides away on scroll and back. It was
+       svh — sized for the bar SHOWN — so once the bar hid, the rows kept that
+       smaller size and left a strip of screen unused. Older browsers fall
+       back through svh to vh.
+       Each row owns one --stage-step of scrolling, and that stays svh: it
+       must not change as the bar comes and goes. The track grows with the
+       stage (height below), so the scroll per row is the same at either
+       size, and the stage keeps its row while the bar moves.
+       PillarRows.jsx measures these back from the layout, so change them
+       only here. */
     --stage-h: calc(100vh - var(--navbar-h));
     --stage-h: calc(100svh - var(--navbar-h));
+    --stage-h: calc(100dvh - var(--navbar-h));
     --stage-step: 75vh;
     --stage-step: 75svh;
     position: relative;
@@ -205,6 +214,8 @@
     display: flex;
     justify-content: center;
     transform: scale(calc(1 + var(--ad) * 0.04));
+    /* eases into the room the browser bar gives back (or takes) */
+    transition: height 0.3s ease;
   }
   .pillars-stage .pillar-ring { display: none; }
   .pillars-stage .pillar-image-wrap {
