@@ -10,6 +10,14 @@
 // and its image are always looked up by the same key.
 const BASE = '/media';
 
+// The "Brand Communication" film — the Agency row's film, and also the Home
+// hero's on phones (portrait 4:5, so it fills a tall screen far better than
+// the 16:9 showreel cropped to a sliver).
+const agencyFilm = {
+  src: `${BASE}/home/brand-communication.mp4`,
+  poster: `${BASE}/home/brand-communication-poster.jpg`,
+};
+
 export const media = {
   // Full-bleed hero film on the Home page — the R Investments showreel, its
   // first 1:55 (3450 frames; the logo end card after that was cut, so the
@@ -21,6 +29,8 @@ export const media = {
     src: `${BASE}/hero/hero.mp4`,
     poster: `${BASE}/hero/hero-poster.jpg`,
   },
+  // On phones (≤700px) the hero plays the Agency film instead (agencyFilm).
+  heroPhone: agencyFilm,
 
   // The picture in Home's "Customize Yours" section (CustomizeSection.jsx),
   // shown wide at 16:7.
@@ -63,10 +73,7 @@ export const media = {
     },
     // "Brand Communication" — 1024x1280 (already 4:5, shown uncropped), 92s,
     // CRF 28, SSIM 0.993.
-    agency: {
-      src: `${BASE}/home/brand-communication.mp4`,
-      poster: `${BASE}/home/brand-communication-poster.jpg`,
-    },
+    agency: agencyFilm,
   },
 
   // Customization methods shown in the Home page "how it works" panel —

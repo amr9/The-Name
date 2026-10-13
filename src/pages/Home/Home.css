@@ -32,6 +32,13 @@
   object-fit: cover;
   object-position: center;
 }
+/* Phones get the portrait film (media.heroPhone), everything wider the
+   showreel; the same breakpoint as the phone navbar. */
+.home-hero .home-hero-video-phone { display: none; }
+@media (max-width: 700px) {
+  .home-hero .home-hero-video-wide { display: none; }
+  .home-hero .home-hero-video-phone { display: block; }
+}
 
 /* The type block runs to the hero's bottom edge and carries the white wash
    itself, so the wash starts exactly at the top of the title (at any width or

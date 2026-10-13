@@ -94,7 +94,11 @@ export default function Home() {
       {/* 01 — hero: the looping film, full width (components/AutoplayVideo) */}
       <section className="home-hero">
         <div className="home-hero-media">
-          <AutoplayVideo className="home-hero-video" {...media.hero} label={h.hero.mediaLabel} />
+          {/* Two films, one shown per width by CSS: the showreel, and on
+              phones the portrait Agency film. The hidden one never plays
+              or loads — AutoplayVideo only starts a film that is in view. */}
+          <AutoplayVideo className="home-hero-video home-hero-video-wide" {...media.hero} label={h.hero.mediaLabel} />
+          <AutoplayVideo className="home-hero-video home-hero-video-phone" {...media.heroPhone} label={h.hero.mediaLabel} />
         </div>
         <div className="container home-hero-content">
           <h1 className="display-title home-hero-title">
