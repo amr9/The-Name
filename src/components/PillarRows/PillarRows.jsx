@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import './PillarRows.css';
 
 /**
@@ -30,7 +29,8 @@ import './PillarRows.css';
 // frame shape, portrait 4:5 (the shape the films are cut to). Media of
 // another shape FILLS it (object-fit: cover), cropped at the edges rather
 // than letterboxed. The frame's WIDTH is capped in PillarRows.css
-// (.pillar-figure). On the phone stage the frame is a fixed box instead.
+// (.pillar-figure). On the phone stage the frame keeps the same 4:5, sized
+// to the space the text leaves (--text-band).
 export const ROW_RATIO = '4 / 5';
 
 const DOTS_MAX = 6;
@@ -56,9 +56,6 @@ function usePillarStage(count) {
   const stageRef = useRef(null);
   const [isStage, setIsStage] = useState(false);
   const [active, setActive] = useState(0);
-  // The "Scroll" hint shows until the visitor has scrolled a little into the
-  // stage (and again if they come back to the very start).
-  const [atStart, setAtStart] = useState(true);
 
   useEffect(() => {
     const mq = window.matchMedia(STAGE_QUERY);
@@ -78,6 +75,26 @@ function usePillarStage(count) {
     return { track, pin, step };
   };
 
+  // The text band: the height of the TALLEST row's copy, written to the
+  // stage as --text-band. PillarRows.css gives the media everything else, so
+  // there is no empty band under the buttons and the film is as tall as the
+  // screen allows. Re-measured whenever any copy changes size (fonts
+  // loading, a language switch, a rotation).
+  useEffect(() => {
+    if (!isStage || !('ResizeObserver' in window)) return undefined;
+    const stage = stageRef.current;
+    const texts = [...stage.querySelectorAll(':scope > .pillar-row .pillar-text')];
+    const ro = new ResizeObserver(() => {
+      const band = Math.max(...texts.map((t) => t.offsetHeight));
+      stage.style.setProperty('--text-band', `${band}px`);
+    });
+    texts.forEach((t) => ro.observe(t));
+    return () => {
+      ro.disconnect();
+      stage.style.removeProperty('--text-band');
+    };
+  }, [isStage, count]);
+
   useEffect(() => {
     if (!isStage) {
       setActive(0);
@@ -92,7 +109,6 @@ function usePillarStage(count) {
       const scrolled = pin - track.getBoundingClientRect().top;
       const index = Math.min(count - 1, Math.max(0, Math.round(scrolled / step)));
       setActive(index);
-      setAtStart(scrolled < step * 0.15);
 
       // The transition is SCRUBBED by the scroll, not triggered at a
       // threshold: x is the position in rows (1.5 = halfway from row 02 to
@@ -197,7 +213,7 @@ function usePillarStage(count) {
     window.scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
   };
 
-  return { trackRef, stageRef, isStage, active, atStart, goTo };
+  return { trackRef, stageRef, isStage, active, goTo };
 }
 
 // A row's specialities as chips. On the phone stage the list is one line
@@ -243,7 +259,6 @@ function TagRow({ tags }) {
 }
 
 export default function PillarRows({ rows, titleAs: Title = 'h3' }) {
-  const { t } = useLanguage();
   const stage = usePillarStage(rows.length);
   const pad = (n) => String(n).padStart(2, '0');
 
@@ -252,14 +267,7 @@ export default function PillarRows({ rows, titleAs: Title = 'h3' }) {
     // tall and the stage inside it is pinned, so scrolling swaps one row for
     // the next in place (usePillarStage; PillarRows.css "pillar stage").
     <div className="pillars" ref={stage.trackRef} style={{ '--pillar-count': rows.length }}>
-      <div className="pillars-stage" ref={stage.stageRef} data-at-start={stage.atStart ? '' : undefined}>
-        {/* Phone-only "Scroll" hint for the first row; decorative. */}
-        <div className="pillars-hint" aria-hidden="true">
-          <span>{t.common.scrollHint}</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-            <path d="m6 9 6 6 6-6" />
-          </svg>
-        </div>
+      <div className="pillars-stage" ref={stage.stageRef}>
         {rows.length > DOTS_MAX ? (
           <div className="pillars-counter" aria-hidden="true">
             {/* dir="ltr" on the numbers only: "04 / 19" must not flip to

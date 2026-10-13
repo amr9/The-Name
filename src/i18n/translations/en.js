@@ -11,7 +11,6 @@ export default {
     chatOnWhatsapp: 'Chat with us',
     backToTop: 'Back to the top',
     // The bouncing hint on the phone pillar stage (components/PillarRows).
-    scrollHint: 'Scroll',
   },
 
   // Search-result and link-preview copy, one entry per page (keys = navLinks

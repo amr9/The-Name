@@ -89,15 +89,22 @@ export default function LanguageSwitcher() {
     // the pass that gets the width right. useLayoutEffect, not useEffect, so
     // the correction lands before the browser paints and nothing jumps.
     place();
-    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    // Escape closes THIS menu only: caught on the way down (capture, on
+    // document) and stopped, so the Navbar's own Escape listener (on window,
+    // bubbling) does not also close the phone menu this was opened from.
+    const onKey = (e) => {
+      if (e.key !== 'Escape') return;
+      e.stopPropagation();
+      setOpen(false);
+    };
     // The bar is sticky, so scrolling can still move the trigger under it.
     window.addEventListener('resize', place);
     window.addEventListener('scroll', place, true);
-    window.addEventListener('keydown', onKey);
+    document.addEventListener('keydown', onKey, true);
     return () => {
       window.removeEventListener('resize', place);
       window.removeEventListener('scroll', place, true);
-      window.removeEventListener('keydown', onKey);
+      document.removeEventListener('keydown', onKey, true);
     };
   }, [open, place]);
 

@@ -583,10 +583,15 @@ src/
                         hidden films) and SETTLES after a swipe — on to the
                         next row past 8% of a step, else back (no CSS
                         scroll-snap: proximity snap made the stage feel stuck).
-                        Fixed media box `max(40%, 100% − 316px)`; tags one
+                        The copy sits on the stage's BOTTOM edge and the media
+                        takes the rest, one size for every row: the stage
+                        minus `--text-band` (the tallest row's copy, measured
+                        by a ResizeObserver in PillarRows.jsx), never under
+                        40%; its frame fills that height and is never wider
+                        than 4:5, so films are portrait on every phone; tags one
                         swipeable chip line with a scroll bar (`TagRow`);
-                        dots (≤6 rows) or a "04 / 19" counter; a "Scroll" hint
-                        (`common.scrollHint`) at the start. Its row
+                        dots (≤6 rows) or a "04 / 19" counter (no "Scroll"
+                        hint — it was removed). Its row
                         selectors carry an extra `.pillars` to beat
                         useSectionReveal's `.reveal-in`.
       Arrow.jsx       — the "→" after a call to action (Home, PillarRows rows,
@@ -652,8 +657,9 @@ src/
                         bubble (i18n chat.nudge) that appears after
                         NUDGE_DELAY_MS (30s), points at the button with a
                         CSS-triangle tail, and on click opens the menu and
-                        goes for good; unclicked, it also goes after
-                        NUDGE_LIFETIME_MS (5 min). Opening the launcher any other way
+                        goes for good; unclicked, it shows for
+                        NUDGE_SHOW_MS (1 min), hides for NUDGE_REST_MS
+                        (10 min) and comes back, on that loop. Opening the launcher any other way
                         cancels it too, so it never asks a question the
                         visitor has already answered. The timer is per PAGE
                         LOAD, not per page viewed — the launcher sits outside

@@ -8,7 +8,6 @@ export default {
     whatsapp: 'واتساب',
     chatOnWhatsapp: 'الدردشة عبر واتساب',
     backToTop: 'العودة إلى الأعلى',
-    scrollHint: 'مرّر',
   },
 
   // عناوين وأوصاف نتائج البحث ومعاينات الروابط — see the note on `seo` in en.js.

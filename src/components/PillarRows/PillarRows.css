@@ -135,8 +135,7 @@
    STAGE_QUERY in PillarRows.jsx. */
 .pillars-dots,
 .pillars-counter,
-.pillar-tags-bar,
-.pillars-hint { display: none; }
+.pillar-tags-bar { display: none; }
 
 @media (max-width: 760px) {
   .pillars {
@@ -181,12 +180,15 @@
   .pillars .pillars-stage .pillar-figure { opacity: var(--o); }
   .pillars .pillars-stage .pillar-text { opacity: var(--ot); }
 
-  /* Media on top at a FIXED size, so every row’s film or photo is exactly
-     the same whatever its text: all of the stage but a 316px band kept for
-     the text (the longest row — Brands, two buttons, now with the chip
-     scroll bar — needs about 300px on a 360x640 phone), never under 40%.
-     Text sits below it,
-     top-aligned. */
+  /* The text sits at the BOTTOM of the stage and the media takes ALL the
+     rest — at ONE size for every row, so it never jumps between rows: the
+     stage minus the text band (--text-band, the height of the tallest row's
+     copy, measured by PillarRows.jsx; 316px until then), never under 40%.
+     A row with shorter copy keeps its buttons on the bottom edge; its spare
+     room opens between the media and the copy instead. The frame fills the
+     box's height and is never wider than 4:5 (ROW_RATIO), so it is PORTRAIT
+     on every phone: full width on tall screens, narrower and centred on
+     short ones. */
   .pillars-stage .pillar-grid {
     display: flex;
     flex-direction: column;
@@ -196,12 +198,18 @@
   .pillars-stage .row-img { order: -1 !important; }
   .pillars-stage .pillar-figure {
     flex: none;
-    height: max(40%, calc(100% - 316px));
+    height: max(40%, calc(100% - var(--text-band, 316px) - 16px));
     width: 100%;
+    display: flex;
+    justify-content: center;
     transform: scale(calc(1 + var(--ad) * 0.04));
   }
   .pillars-stage .pillar-ring { display: none; }
-  .pillars-stage .pillar-image-wrap { height: 100%; }
+  .pillars-stage .pillar-image-wrap {
+    height: 100%;
+    aspect-ratio: 4 / 5;
+    max-width: 100%;
+  }
   /* The films and photos carry their row ratio inline; here they fill the
      media box instead (cropped, centred). */
   .pillars-stage .pillar-video,
@@ -213,8 +221,10 @@
   .pillars-stage .img-slot img { height: 100%; object-fit: cover; }
 
   .pillars-stage .pillar-text {
-    flex: 1 1 auto;
-    min-height: 0;
+    /* its natural height — that is what --text-band measures — pushed to
+       the bottom of the stage */
+    flex: none;
+    margin-top: auto;
     /* min-width 0 so the one-line tag row (below) scrolls inside the
        column instead of widening it past the screen. */
     min-width: 0;
@@ -350,39 +360,7 @@
   }
 }
 
-@media (max-width: 760px) {
-  /* "Scroll ⌄" hint, centred at the foot of the stage, only while the
-     visitor is still at the start of the stage (data-at-start). It fades out
-     as soon as they scroll on. */
-  .pillars-hint {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    position: absolute;
-    z-index: 2;
-    bottom: 10px;
-    left: 50%;
-    translate: -50% 0;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-accent-700);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  [dir="rtl"] .pillars-hint { letter-spacing: 0; font-size: 12px; }
-  .pillars-stage[data-at-start] .pillars-hint { opacity: 1; }
-  .pillars-hint svg { animation: pillars-hint-bob 1.4s ease-in-out infinite; }
-}
-@keyframes pillars-hint-bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(4px); }
-}
-
 @media (max-width: 760px) and (prefers-reduced-motion: reduce) {
-  .pillars-hint svg { animation: none; }
   .pillars-stage .pillar-row,
   .pillars-stage .pillar-text,
   .pillars-stage .pillar-figure { transition: none !important; }

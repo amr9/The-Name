@@ -74,8 +74,14 @@ export default function Navbar() {
     // LanguageSwitcher.jsx documents at length). An outside-press listener
     // does the same job without needing to escape the bar. The language menu
     // portals onto <body>, so picking a language reads as "outside" and closes
-    // this menu too — which is the wanted outcome anyway.
-    const onDown = (e) => { if (!barRef.current?.contains(e.target)) close(); };
+    // this menu too — which is the wanted outcome anyway. Its SCRIM is the
+    // exception: a press there only dismisses the language menu, so the
+    // phone menu it was opened from stays open.
+    const onDown = (e) => {
+      if (barRef.current?.contains(e.target)) return;
+      if (e.target.closest?.('.lang-switcher-scrim')) return;
+      close();
+    };
     window.addEventListener('keydown', onKey);
     window.addEventListener('pointerdown', onDown);
     return () => {
