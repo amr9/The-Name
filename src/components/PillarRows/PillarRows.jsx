@@ -36,9 +36,8 @@ export const ROW_RATIO = '4 / 5';
 const DOTS_MAX = 6;
 
 // Phones only: the rows become ONE pinned stage. Keep in step with the
-// @media in PillarRows.css's "pillar stage" block. Home also passes it to
-// its films as `expandable`, so a tap opens them full-screen on the stage.
-export const STAGE_QUERY = '(max-width: 760px)';
+// @media in PillarRows.css's "pillar stage" block.
+const STAGE_QUERY = '(max-width: 760px)';
 
 // Drives the phone stage. The page scrolls normally; the track is tall (see
 // PillarRows.css) and the stage inside it is sticky, so while it is pinned the
@@ -104,10 +103,15 @@ function usePillarStage(count) {
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     const rows = [...stageRef.current.querySelectorAll(':scope > .pillar-row')];
     let frame = 0;
+    // The step the scroll position was last read against, and where in the
+    // rows that put the page (see onResize).
+    let lastStep = geometry().step;
+    let lastX = -1;
     const measure = () => {
       frame = 0;
       const { track, pin, step } = geometry();
       const scrolled = pin - track.getBoundingClientRect().top;
+      if (Math.abs(step - lastStep) < 1) lastX = scrolled / step;
       const index = Math.min(count - 1, Math.max(0, Math.round(scrolled / step)));
       setActive(index);
 
@@ -187,20 +191,34 @@ function usePillarStage(count) {
       touching = false;
       schedule();
     };
+    // A REAL resize (a rotation; the address bar does not count — the stage
+    // is in svh) moves every row's resting point, so the old scroll offset
+    // now points at another row. Keep the row that was showing instead,
+    // when the stage was pinned: put the page back on its resting point.
+    const onResize = () => {
+      const { track, pin, step } = geometry();
+      if (Math.abs(step - lastStep) >= 1) {
+        lastStep = step;
+        if (lastX > -0.02 && lastX < count - 0.98) {
+          window.scrollTo({ top: track.getBoundingClientRect().top + window.scrollY - pin + rest * step, behavior: 'auto' });
+        }
+      }
+      onScroll();
+    };
     measure();
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('scrollend', settle);
     window.addEventListener('touchstart', onTouchStart, { passive: true });
     window.addEventListener('touchend', onTouchEnd, { passive: true });
     window.addEventListener('touchcancel', onTouchEnd, { passive: true });
-    window.addEventListener('resize', onScroll);
+    window.addEventListener('resize', onResize);
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('scrollend', settle);
       window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchend', onTouchEnd);
       window.removeEventListener('touchcancel', onTouchEnd);
-      window.removeEventListener('resize', onScroll);
+      window.removeEventListener('resize', onResize);
       cancelAnimationFrame(frame);
       clearTimeout(timer);
     };

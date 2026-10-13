@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import Arrow from '../../components/Arrow.jsx';
 import AutoplayVideo from '../../components/AutoplayVideo.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
-import PillarRows, { ROW_RATIO, STAGE_QUERY } from '../../components/PillarRows/PillarRows.jsx';
+import FilmLightbox from '../../components/FilmLightbox/FilmLightbox.jsx';
+import PillarRows, { ROW_RATIO } from '../../components/PillarRows/PillarRows.jsx';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { contactLink, routes } from '../../data/site.js';
@@ -82,7 +83,11 @@ export default function Home() {
       mediaClass: video ? undefined : 'washed',
       media: ({ active }) =>
         video ? (
-          <AutoplayVideo className="pillar-video" {...video} ratio={ROW_RATIO} label={info.title} active={active} expandable={STAGE_QUERY} />
+          <>
+            <AutoplayVideo className="pillar-video" {...video} ratio={ROW_RATIO} label={info.title} active={active} />
+            {/* tap to watch full-screen — shown on the phone stage only */}
+            <FilmLightbox {...video} label={info.title} />
+          </>
         ) : (
           <ImagePlaceholder src={media.services[p.id]} label={info.placeholder} ratio={ROW_RATIO} />
         ),

@@ -107,6 +107,8 @@
   pointer-events: none;
 }
 .pillar-image-wrap {
+  /* positioned for FilmLightbox's tap target, which covers it */
+  position: relative;
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-md);
@@ -219,6 +221,9 @@
     aspect-ratio: auto !important;
   }
   .pillars-stage .img-slot img { height: 100%; object-fit: cover; }
+  /* A film opens full-screen at a tap (FilmLightbox) — here only, where
+     the stage leaves it a phone-sized frame. */
+  .pillars-stage .film-expand { display: block; }
 
   .pillars-stage .pillar-text {
     /* its natural height — that is what --text-band measures — pushed to

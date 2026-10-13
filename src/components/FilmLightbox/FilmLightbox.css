@@ -1,0 +1,98 @@
+/* The tap target over a film (FilmLightbox.jsx). Hidden until a host shows
+   it — PillarRows.css does, on the phone stage. Its parent must be
+   positioned; the button covers it edge to edge. */
+.film-expand {
+  display: none;
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  border-radius: inherit;
+  background: none;
+  cursor: zoom-in;
+  -webkit-tap-highlight-color: transparent;
+}
+.film-expand:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -4px;
+}
+/* The cue that the film opens: a small expand badge in the bottom end
+   corner (the top end one is taken by the stage's progress dots). */
+.film-expand-badge {
+  position: absolute;
+  bottom: 12px;
+  inset-inline-end: 12px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-black) 45%, transparent);
+  color: var(--color-white);
+  backdrop-filter: blur(6px);
+  transition: transform 0.15s ease;
+}
+.film-expand:active .film-expand-badge { transform: scale(0.9); }
+
+/* The viewer: a modal <dialog> filling the screen in black, the film as large
+   as it fits, never cropped. `display` is set only while open — a bare
+   `display: grid` would override the hidden state of a closed dialog. */
+.film-lightbox {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--color-black);
+  color: var(--color-white);
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+.film-lightbox[open] {
+  display: grid;
+  place-items: center;
+}
+.film-lightbox::backdrop { background: var(--color-black); }
+.film-lightbox-video {
+  display: block;
+  width: auto;
+  height: auto;
+  /* In viewport units: a percentage of the grid cell does not resolve
+     (the row is sized by this very video), and the film overflowed the
+     screen in landscape. dvh after vh: the visible height on phones. */
+  max-width: 100vw;
+  max-height: 100vh;
+  max-height: 100dvh;
+}
+/* Clear of the notch and the status bar. */
+.film-lightbox-close {
+  position: absolute;
+  top: max(12px, env(safe-area-inset-top));
+  inset-inline-end: max(12px, env(safe-area-inset-right));
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-white) 18%, transparent);
+  color: var(--color-white);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.film-lightbox-close:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .film-lightbox[open] { animation: film-lightbox-in 0.2s ease-out; }
+}
+@keyframes film-lightbox-in {
+  from { opacity: 0; }
+}

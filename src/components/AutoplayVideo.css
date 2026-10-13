@@ -5,15 +5,3 @@
   user-select: none;
   -webkit-touch-callout: none;
 }
-
-/* `expandable` films take taps (a tap opens them full-screen while the
-   query matches — AutoplayVideo.jsx); long-press stays off. Full-screen shows
-   the whole film on black, whatever its frame cropped. */
-.autoplay-video-expandable {
-  pointer-events: auto;
-  -webkit-tap-highlight-color: transparent;
-}
-.autoplay-video:fullscreen {
-  object-fit: contain;
-  background: #000;
-}

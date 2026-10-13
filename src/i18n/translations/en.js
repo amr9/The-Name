@@ -10,7 +10,9 @@ export default {
     whatsapp: 'WhatsApp',
     chatOnWhatsapp: 'Chat with us',
     backToTop: 'Back to the top',
-    // The bouncing hint on the phone pillar stage (components/PillarRows).
+    // components/FilmLightbox: the button over a film, and the viewer's ×.
+    watchFilm: (title) => `Watch ${title} full screen`,
+    closeFilm: 'Close',
   },
 
   // Search-result and link-preview copy, one entry per page (keys = navLinks

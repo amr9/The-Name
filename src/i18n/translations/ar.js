@@ -8,6 +8,8 @@ export default {
     whatsapp: 'واتساب',
     chatOnWhatsapp: 'الدردشة عبر واتساب',
     backToTop: 'العودة إلى الأعلى',
+    watchFilm: (title) => `شاهد ${title} بملء الشاشة`,
+    closeFilm: 'إغلاق',
   },
 
   // عناوين وأوصاف نتائج البحث ومعاينات الروابط — see the note on `seo` in en.js.
