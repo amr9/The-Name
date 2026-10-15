@@ -75,7 +75,7 @@ const CONFIRM_COPY = {
     body: 'To make sure this email address is really yours, please confirm your message:',
     button: 'Confirm my message',
     after: (hours) => `We only receive your message once you confirm. The link works for ${hours} hours.`,
-    ignore: 'If you did not write to us, you can ignore this email — nothing will be sent.',
+    ignore: 'If you did not write to us, you can ignore this email. Nothing will be sent.',
   },
   AR: {
     dir: 'rtl',
@@ -84,7 +84,7 @@ const CONFIRM_COPY = {
     body: 'للتأكد من أن عنوان البريد الإلكتروني هذا يخصّك، يرجى تأكيد رسالتك:',
     button: 'تأكيد رسالتي',
     after: (hours) => `لن تصلنا رسالتك إلا بعد التأكيد. يعمل الرابط لمدة ${hours} ساعة.`,
-    ignore: 'إذا لم تراسلنا، يمكنك تجاهل هذه الرسالة — لن يُرسَل أي شيء.',
+    ignore: 'إذا لم تراسلنا، يمكنك تجاهل هذه الرسالة، لن يُرسَل أي شيء.',
   },
 };
 

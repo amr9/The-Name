@@ -36,17 +36,6 @@ export const media = {
   // shown wide at 16:7.
   customize: `${BASE}/photos/home/customize.jpg`,
 
-  // Agency page rows — keys match pages/Agency/data.js `agencyServices` id.
-  // 4:5 stills from the films in The Name Agency's Pitch presentation.
-  agencyServices: {
-    positioning: `${BASE}/photos/agency/brand-positioning.webp`,
-    communication: `${BASE}/photos/agency/brand-communication.webp`,
-    awareness: `${BASE}/photos/agency/brand-awareness.webp`,
-    exposure: `${BASE}/photos/agency/brand-exposure.webp`,
-    csr: `${BASE}/photos/agency/csr-sustainability.webp`,
-    ooh: `${BASE}/photos/agency/ooh-media.webp`,
-  },
-
   // Home page "What we do" pillar rows — keys match pages/Home/data.js
   // `pillars` id. The dashed ImagePlaceholder shows until each file exists.
   services: {

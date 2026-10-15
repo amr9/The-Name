@@ -39,7 +39,7 @@ import { confirmByToken, expireUnconfirmed, landingUrl } from './confirm.js';
 const ERROR_TEXT = {
   required: 'This field is required.',
   email: 'That email address does not look right.',
-  emailUndeliverable: 'That email domain cannot receive mail — check it for a typo.',
+  emailUndeliverable: 'That email domain cannot receive mail. Check it for a typo.',
   emailDisposable: 'Please use an address we can actually reply to.',
   tooLong: 'That value is too long.',
 };

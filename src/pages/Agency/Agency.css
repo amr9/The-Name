@@ -1,3 +1,27 @@
 /* The Agency page — the shared hero (.rows-page / .page-hero in theme.css),
-   one PillarRows row per service and the shared .final-cta. Nothing is
-   particular to this page yet; add rules here only for what is. */
+   then the services: each a title beside its text, between hairlines.
+   The type comes from PillarRows.css (.pillar-title/-lead/-body); only the
+   layout lives here. */
+.agency-services {
+  margin-top: clamp(var(--space-6), 4vw, calc(var(--space-8) * 1.5));
+}
+.agency-service {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--space-6);
+  padding-block: clamp(var(--space-6), 4vw, calc(var(--space-8) * 1.25));
+  border-top: 1px solid var(--color-divider);
+}
+.agency-service:last-child { border-bottom: 1px solid var(--color-divider); }
+/* Level with the lead beside it, rather than the row's usual gap under a
+   number. */
+.agency-service .agency-service-title { margin-top: 0; }
+.agency-service-text > .pillar-lead { margin-top: 0; }
+.agency-service-text > .btn { margin-top: var(--space-6); }
+
+@media (max-width: 760px) {
+  .agency-service {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+}

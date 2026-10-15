@@ -22,31 +22,31 @@ export default {
   // it (~150-160 characters, written to be clicked, not stuffed).
   seo: {
     home: {
-      title: 'The Name — Personalised & Corporate Gifts in Dubai',
+      title: 'The Name | Personalised & Corporate Gifts in Dubai',
       description: 'Design-led gifts personalised with a name, a message or your brand. Curated pieces, custom engraving and corporate gifting, made in Dubai for the UAE.',
     },
     shop: {
-      title: 'Store — Personalised Gifts & Designer Pieces | The Name',
+      title: 'Store: Personalised Gifts & Designer Pieces | The Name',
       description: 'Shop design-led objects from brands like Lexon, Pantone and Kreafunk, then make them yours with a name, initials or a message. Delivered across the UAE.',
     },
     brands: {
-      title: 'Our Brands — Lexon, Pantone, Kreafunk & More | The Name',
-      description: 'The design brands we curate, personalise and gift: Lexon, Lund London, Pantone, Korin, Kreafunk and Gingko — chosen for pieces worth keeping.',
+      title: 'Our Brands: Lexon, Pantone, Kreafunk & More | The Name',
+      description: 'The design brands we curate, personalise and gift: Lexon, Lund London, Pantone, Korin, Kreafunk and Gingko, chosen for pieces worth keeping.',
     },
     business: {
-      title: 'Corporate Gifts in Dubai — Branded & Personalised | The Name',
+      title: 'Corporate Gifts in Dubai: Branded & Personalised | The Name',
       description: 'Thoughtful, branded corporate gifts in Dubai: employee kits, client gifts, events, VIP gifting and large orders, designed and personalised by The Name.',
     },
     agency: {
-      title: 'Agency — Brand Communication & Marketing | The Name',
-      description: 'Campaigns, activations and branded pieces — planned, designed and produced by The Name Agency in Dubai for the brands we work with.',
+      title: 'Agency: Brand Communication & Marketing | The Name',
+      description: 'Campaigns, activations and branded pieces, planned, designed and produced by The Name Agency in Dubai for the brands we work with.',
     },
     events: {
       title: 'Events & Kids Activations in Dubai | The Name',
-      description: 'Personalised gifts, back-to-school pieces, birthdays and hands-on creative activations for children — their name, their drawings, their story.',
+      description: 'Personalised gifts, back-to-school pieces, birthdays and hands-on creative activations for children: their name, their drawings, their story.',
     },
     about: {
-      title: 'About The Name — Our Story Since 1990',
+      title: 'About The Name: Our Story Since 1990',
       description: 'From customisation and corporate gifting in 1990 to a design-led gifting brand in Dubai: the story behind The Name and the people who make it.',
     },
     notFound: {
@@ -58,7 +58,7 @@ export default {
   contact: {
     kicker: 'Contact',
     title: 'Tell us what you need.',
-    body: 'Bookings for eight or more, catering quotes, private nights, press and trade enquiries — send it here and the operations desk picks it up.',
+    body: 'Bookings for eight or more, catering quotes, private nights, press and trade enquiries. Send it here and the operations desk picks it up.',
     emailHeading: 'Email',
     phoneHeading: 'Phone & WhatsApp',
     privacyHeading: 'Privacy & personal data',
@@ -72,16 +72,16 @@ export default {
     // After submitting: the message is NOT with us yet — it reaches the
     // business only once the visitor clicks the link we email them
     // (server/confirm.js). So this asks them to check their inbox.
-    sentTitle: 'Almost there — check your inbox.',
+    sentTitle: 'Almost there. Check your inbox.',
     sentBody: 'We have emailed you a link to confirm your address. Your message reaches us as soon as you click it. Nothing there? Check your spam folder, or reach us on WhatsApp.',
     sendAnother: 'Send another message',
     // Where the confirmation link lands (/about?enquiry=…#contact).
     confirmed: {
-      title: 'Thank you — your message is with us.',
+      title: 'Thank you, your message is with us.',
       body: 'Your email address is confirmed and your message is on its way to our team. We reply within one working day; for anything urgent, WhatsApp is faster.',
     },
     confirmExpired: 'That confirmation link has expired, so your earlier message was not sent. Please send it again below.',
-    confirmInvalid: 'That confirmation link is not valid — it may be incomplete. Please send your message again below.',
+    confirmInvalid: 'That confirmation link is not valid. It may be incomplete. Please send your message again below.',
     fields: {
       name: { label: 'Name', placeholder: 'Your name' },
       email: { label: 'Email', placeholder: 'you@example.com' },
@@ -92,7 +92,7 @@ export default {
       required: 'This one is needed.',
       email: 'That email address does not look right.',
       tooLong: 'That is longer than we can accept.',
-      emailUndeliverable: 'That email domain cannot receive mail — check it for a typo.',
+      emailUndeliverable: 'That email domain cannot receive mail. Check it for a typo.',
       emailDisposable: 'Please use an address we can reply to.',
       rateLimited: 'That is a few messages in a short time. Try again shortly, or reach us on WhatsApp.',
       send: 'That did not send. Try again, or reach us on WhatsApp.',
@@ -106,7 +106,7 @@ export default {
   brandsPage: {
     kicker: "Our brands",
     title: "The brands we curate.",
-    lede: "Design-led makers we stock, personalise and gift — each one chosen for pieces worth keeping.",
+    lede: "Design-led makers we stock, personalise and gift, each one chosen for pieces worth keeping.",
     visit: "Visit",
     // The featured sections (pages/Brands/data.js). `visitSite` is the link
     // under each intro; `more` heads the logo row of the remaining brands.
@@ -115,13 +115,13 @@ export default {
     // A featured brand still waiting for its content (pages/Brands/data.js
     // entries without `products`): its intro and the dashed product cards.
     pending: {
-      intro: (name) => `Our ${name} selection is being prepared — the collection, with pieces ready to personalise, is coming soon.`,
+      intro: (name) => `Our ${name} selection is being prepared. The collection, with pieces ready to personalise, is coming soon.`,
       product: "Product coming soon",
       line: "Photos and details to follow.",
     },
     brands: {
       pantone: {
-        intro: "The official PANTONE Lifestyle Collection by Copenhagen Design, sole licensee in over 70 countries. Every piece is matched to its PANTONE colour chip — so your brand can carry its exact colour.",
+        intro: "The official PANTONE Lifestyle Collection by Copenhagen Design, sole licensee in over 70 countries. Every piece is matched to its PANTONE colour chip, so your brand can carry its exact colour.",
         products: {
           pantoneOriginalMug: {
             name: "Original Mug",
@@ -136,22 +136,22 @@ export default {
         },
       },
       lundLondon: {
-        intro: "Lund Design House pairs good looks with a light footprint — Skittle drinkware and Lund Living home pieces in soft pastels and bold tones, all made to be reused.",
+        intro: "Lund Design House pairs good looks with a light footprint: Skittle drinkware and Lund Living home pieces in soft pastels and bold tones, all made to be reused.",
         products: {
           skittleWaterBottle: {
             name: "Skittle Water Bottle",
-            line: "The iconic stainless-steel bottle with a ball top — keeps drinks cold or hot for hours.",
+            line: "The iconic stainless-steel bottle with a ball top that keeps drinks cold or hot for hours.",
             facts: ["300 / 500 / 750 ml", "Cold 24 h · hot 12 h", "BPA-free"],
           },
           lundWirelessLamp: {
             name: "Wireless Lamp",
-            line: "A cordless lamp with a soft silicone bulb — touch to change colour; its charging base also charges your phone.",
+            line: "A cordless lamp with a soft silicone bulb. Touch to change colour; its charging base also charges your phone.",
             facts: ["8 colour settings", "Up to 45 h battery", "Wireless charger"],
           },
         },
       },
       prodir: {
-        intro: "Swiss-designed pens and everyday accessories, built to carry a brand — precise, colourful and made to be personalised.",
+        intro: "Swiss-designed pens and everyday accessories, built to carry a brand: precise, colourful and made to be personalised.",
         products: {
           prodirMs8: {
             name: "MS8",
@@ -168,7 +168,7 @@ export default {
       // The brands below: products and facts from their 2026 catalogues
       // (vertex.ae/catalogues, Main Catalogue).
       cerruti1881: {
-        intro: "Italian elegance for work and travel — textured leathers, clean lines and the Cerruti 1881 signature on bags, small leather goods and writing instruments.",
+        intro: "Italian elegance for work and travel: textured leathers, clean lines and the Cerruti 1881 signature on bags, small leather goods and writing instruments.",
         products: {
           cerrutiHudsonTravelBag: {
             name: "Hudson Travel Bag",
@@ -183,7 +183,7 @@ export default {
         },
       },
       hugoBoss: {
-        intro: "The BOSS Double B monogram on writing instruments, electronics, umbrellas and leather goods — modern design with a confident signature.",
+        intro: "The BOSS Double B monogram on writing instruments, electronics, umbrellas and leather goods. Modern design with a confident signature.",
         products: {
           hugoBossElementalSpeaker: {
             name: "Elemental Mini Speaker",
@@ -198,7 +198,7 @@ export default {
         },
       },
       cacharel: {
-        intro: "Parisian femininity in soft colours — bags, watches, scarves and jewellery, signed with Cacharel's gold-toned C.",
+        intro: "Parisian femininity in soft colours: bags, watches, scarves and jewellery, signed with Cacharel's gold-toned C.",
         products: {
           cacharelSeraphineTote: {
             name: "Séraphine Tote",
@@ -213,7 +213,7 @@ export default {
         },
       },
       festina: {
-        intro: "Spanish craftsmanship in travel goods, writing instruments and accessories — rich textures, precise details and the Festina blazon.",
+        intro: "Spanish craftsmanship in travel goods, writing instruments and accessories, with rich textures, precise details and the Festina blazon.",
         products: {
           festinaInterlaceTravelBag: {
             name: "Interlace Travel Bag",
@@ -228,7 +228,7 @@ export default {
         },
       },
       christianLacroix: {
-        intro: "French couture spirit in watches, bags and accessories — confident colour and the Christian Lacroix signature on every piece.",
+        intro: "French couture spirit in watches, bags and accessories, with confident colour and the Christian Lacroix signature on every piece.",
         products: {
           lacroixCaprioWatch: {
             name: "Caprio Watch",
@@ -243,22 +243,22 @@ export default {
         },
       },
       lexon: {
-        intro: "French design objects that are useful, beautiful and affordable — lamps, clocks and tech made for homes, hotels and offices.",
+        intro: "French design objects that are useful, beautiful and affordable: lamps, clocks and tech made for homes, hotels and offices.",
         products: {
           lexonMinaM: {
             name: "Mina M Lamp",
-            line: "A portable aluminium lamp for indoors and out — press its top to change between 9 dimmable colours.",
+            line: "A portable aluminium lamp for indoors and out. Press its top to change between 9 dimmable colours.",
             facts: ["Up to 24 h battery", "USB-C or wireless", "IPX4"],
           },
           lexonFlipPremium: {
             name: "Flip Premium Clock",
-            line: "The iconic reversible alarm clock in aluminium — flip it over to turn the alarm on or off.",
+            line: "The iconic reversible alarm clock in aluminium. Flip it over to turn the alarm on or off.",
             facts: ["Pure black LCD", "Sound-activated screen", "Up to 6 months battery"],
           },
         },
       },
       sols: {
-        intro: "French apparel made to be personalised — essentials, premium Edition pieces and workwear in a wide palette of colours.",
+        intro: "French apparel made to be personalised: essentials, premium Edition pieces and workwear in a wide palette of colours.",
         products: {
           solsCameronHoodie: {
             name: "Cameron Hoodie",
@@ -273,7 +273,7 @@ export default {
         },
       },
       ungaro: {
-        intro: "Parisian flair in silk scarves, watches and leather goods — bold prints and refined details from the house of Ungaro.",
+        intro: "Parisian flair in silk scarves, watches and leather goods, with bold prints and refined details from the house of Ungaro.",
         products: {
           ungaroMiloWatch: {
             name: "Milo Date Watch",
@@ -288,7 +288,7 @@ export default {
         },
       },
       makito: {
-        intro: "A wide promotional range from Spain — bags, drinkware, tech and more, made to be printed with your logo.",
+        intro: "A wide promotional range from Spain: bags, drinkware, tech and more, made to be printed with your logo.",
         products: {
           makitoMekongBackpack: {
             name: "Mekong Backpack",
@@ -309,60 +309,50 @@ export default {
   agency: {
     kicker: "The Agency",
     title: "Not just another agency.",
-    lede: "Your dedicated partner for 360-degree media and marketing — strategy, creative, media buying, digital, branding, CSR and sustainability — in one unified approach built for consistency, efficiency and maximum impact.",
-    // The button on every service row.
+    lede: "Your dedicated partner for 360-degree media and marketing: strategy, creative, media buying, digital, branding, CSR and sustainability, in one unified approach built for consistency, efficiency and maximum impact.",
+    // The button under every service.
     rowCta: "Let's talk",
-    // One row per service (pages/Agency/data.js). The titles are the Agency
-    // row's chips on Home; the copy is from The Name Agency's presentation.
+    // One section per service (pages/Agency/data.js). The titles are the
+    // Agency row's chips on Home; the copy is from The Name Agency's
+    // presentation.
     services: {
       positioning: {
         title: "Brand Positioning",
         lead: "Navigated, innovated and elevated marketing. Expert guidance and strategic insight to help you find your place in an ever-changing market.",
-        body: "We develop innovative marketing strategies — grounded in market and consumer insight — that elevate your brand and drive business growth.",
-        tags: ["Integrated Campaign Strategies", "Market & Consumer Insights", "Strategic Business Planning", "Brand Identity & Incubation", "Performance Measurement"],
+        body: "We develop innovative marketing strategies, grounded in market and consumer insight, that elevate your brand and drive business growth.",
       },
       communication: {
         title: "Brand Communication",
-        lead: "Bringing brands to life creatively. Strategies that go beyond telling your brand story — they build meaningful connections with your audience.",
+        lead: "Bringing brands to life creatively. Strategies that go beyond telling your brand story. They build meaningful connections with your audience.",
         body: "Carefully crafted brand narratives foster loyalty and lift how your brand is seen, keeping every piece of communication consistent, compelling and true to its essence.",
-        tags: ["Merchandise Design & Execution", "Custom 3D Models & Prototypes", "Innovative Gifting Solutions"],
       },
       awareness: {
         title: "Brand Awareness",
         lead: "Digital solutions that achieve real results. From SEO to social media management and paid advertising, targeted campaigns that engage your audience.",
         body: "Strategies designed to connect with customers, boost brand visibility and drive measurable success across multiple platforms.",
-        tags: ["Targeted Ad Campaigns", "Pay-Per-Click (PPC)", "Pay-Per-Lead (PPL)", "Multi-Platform Campaigns", "Analytics & Reporting"],
       },
       exposure: {
         title: "Brand Exposure",
         lead: "Captivating experiences in Dubai's creative hubs. Events and activations in Dubai Design District and Dubai CommerCity, known for innovative brands and creative energy.",
-        body: "The right venue amplifies your brand — a dynamic backdrop to showcase your identity and engage your target audience face to face.",
-        tags: ["Event Strategies", "Brand Activations & Events", "Corporate Event Execution"],
+        body: "The right venue amplifies your brand, giving you a dynamic backdrop to showcase your identity and engage your target audience face to face.",
       },
       csr: {
         title: "CSR & Sustainability Campaigns",
         lead: "Helping you make a meaningful difference. Corporate Social Responsibility campaigns that align with your business values and drive positive change in your community.",
-        body: "Initiatives that promote sustainability, social responsibility and ethical business practice — so your brand contributes to a better world while enhancing its reputation.",
-        tags: ["Sustainability Programs", "Community Engagement", "Cause-Related Marketing", "Team-Inclusive CSR"],
+        body: "Initiatives that promote sustainability, social responsibility and ethical business practice, so your brand contributes to a better world while enhancing its reputation.",
       },
       ooh: {
         title: "OOH Media",
         lead: "Smart media buying for maximum reach. Media strategies tailored to your brand's goals, audience and budget, guided by data-driven insight.",
-        body: "Strong partnerships with media outlets put your message on the right channels — from meticulous planning and buying to seamless campaign implementation.",
-        tags: ["Cross-Channel Media Planning", "Programmatic Media Buying", "Strategic Partnerships", "Campaign Implementation"],
+        body: "Strong partnerships with media outlets put your message on the right channels, from meticulous planning and buying to seamless campaign implementation.",
       },
-    },
-    finalCta: {
-      heading: "Got questions? We got answers.",
-      body: "Tell us about your brand and your goals — we'll listen, understand your objectives and shape a solution around them.",
-      cta: "Start a conversation",
     },
   },
 
   notFound: {
     kicker: "Page not found",
     title: "That page has moved on.",
-    lede: "The link you followed does not lead anywhere — it may be mistyped, or it may be a page we have since folded into another one.",
+    lede: "The link you followed does not lead anywhere. It may be mistyped, or it may be a page we have since folded into another one.",
     home: "Back to the homepage",
     tryInstead: "Try one of these",
   },
@@ -374,7 +364,7 @@ export default {
     title: "You Choose & Design",
     lede: "Start from a piece you like, make every decision about it yourself, and we build the one you designed.",
     steps: {
-      base: { title: "Choose Your Base", body: "Pick the style, model or material you want to start from — that is your canvas." },
+      base: { title: "Choose Your Base", body: "Pick the style, model or material you want to start from. That is your canvas." },
       detail: { title: "Personalize Every Detail", body: "Colours, engraving, materials and finishes, set the way you want them." },
       life: { title: "Bring It to Life", body: "Place the order and our craftspeople build it to the specification you set." },
     },
@@ -434,7 +424,7 @@ export default {
     // to. Two keys, not one with a token in it: `contactNote` is the sentence
     // and `contactNoteLink` is the linked clause rendered straight after it,
     // so neither side has to be cut up at render time.
-    contactNote: 'For our registered details and every way to reach us — orders, deliveries, returns, privacy requests and where to find us —',
+    contactNote: 'For our registered details and every way to reach us (orders, deliveries, returns, privacy requests and where to find us),',
     contactNoteLink: 'see the contact section on our About page',
 
     docs: {
@@ -645,7 +635,7 @@ export default {
             ],
           },
           returns: {
-            heading: 'Returns — Non-Customized Products',
+            heading: 'Returns: Non-Customized Products',
             blocks: [
               'Eligible non-customized products may be returned within 7 days of receipt. To qualify for a return, the product must be:',
               { list: [
@@ -760,8 +750,8 @@ export default {
               'We do not sell your personal information or provide it to third parties for their own marketing purposes.',
               'We may share only the information reasonably necessary with service providers that help us operate and fulfil your purchase. This may include:',
               { list: [
-                'Stripe — to process online payments.',
-                'Delivery and courier providers — to deliver your order. This may include sharing information such as your name, mobile number and delivery address.',
+                'Stripe, to process online payments.',
+                'Delivery and courier providers, to deliver your order. This may include sharing information such as your name, mobile number and delivery address.',
               ] },
               'We may also disclose information where required by applicable law, regulation, court order or a competent UAE authority.',
             ],
@@ -852,7 +842,7 @@ export default {
       body: 'A 360° ecosystem bringing creativity, brands, products and experiences together to help you communicate, connect and explore possibilities.',
       cta: 'Explore what we do',
       ctaTour: 'Virtual Store',
-      mediaLabel: 'Showreel — The Name across gifts, brands, agency, events and F&B',
+      mediaLabel: 'Showreel: The Name across gifts, brands, agency, events and F&B',
     },
     whatWeDo: {
       kicker: 'What we do',
@@ -890,7 +880,7 @@ export default {
       events: {
         title: 'Events & Experiences',
         lead: 'We turn brand ideas into experiences people can see, feel and remember.',
-        body: 'From intimate gatherings and corporate events to launches, activations and large-scale experiences, we take every project from concept and creative direction through to production and execution — ensuring every detail reflects the brand behind it.',
+        body: 'From intimate gatherings and corporate events to launches, activations and large-scale experiences, we take every project from concept and creative direction through to production and execution, ensuring every detail reflects the brand behind it.',
         tags: ['Events', 'Activations', 'Launches', 'Creative Concepts', 'Event Branding', 'Production', 'Experiences'],
         ctas: { explore: 'Explore Events & Experiences' },
         placeholder: 'A brand event or activation',
@@ -898,7 +888,7 @@ export default {
       fnb: {
         title: 'F&B & Concept Store',
         lead: 'Our F&B and Concept Store brings The Name into a physical, social space where food, retail, creativity and community come together.',
-        body: 'More than a restaurant or a store, it is a destination for discovery and connection — from dining and catering to curated products, pop-ups, collaborations and experiences that bring people together.',
+        body: 'More than a restaurant or a store, it is a destination for discovery and connection, from dining and catering to curated products, pop-ups, collaborations and experiences that bring people together.',
         tags: ['F&B', 'Catering', 'Concept Store', 'Retail', 'Pop-Ups', 'Collaborations', 'Community Experiences'],
         ctas: { explore: 'Explore F&B & Concept Store' },
         placeholder: 'The concept store and café',
@@ -919,7 +909,7 @@ export default {
       minimum: 'Minimum',
       leadTime: 'Lead time',
       ctaShop: 'Make It Personal',
-      footnote: 'Business quantities are quoted — talk to us',
+      footnote: 'Business quantities are quoted. Talk to us',
       methods: {
         engraving: {
           name: 'Engraving', suits: 'Metal, wood, glass, leather', minimum: '1 piece', lead: '3 – 5 days',
@@ -938,7 +928,7 @@ export default {
         },
         emboss: {
           name: 'Embossing', suits: 'Leather, card, cloth covers', minimum: '25 pieces', lead: '7 – 10 days',
-          note: 'Pressed into the material, raised or recessed. Quiet and tactile — no ink at all.',
+          note: 'Pressed into the material, raised or recessed. Quiet and tactile, with no ink at all.',
           placeholder: 'Close-up of an embossed cover',
         },
       },
@@ -969,7 +959,7 @@ export default {
         items: {
           breadConservaOil: { dish: 'Bread, conserva, oil', note: "Friday's loaf, day two, on the Orbit side plate.", tag: 'All day', price: '£6' },
           anchovyToast: { dish: 'Anchovy toast', note: 'Two slices, butter, chilli.', tag: 'All day', price: '£7' },
-          oliveOilCake: { dish: 'Olive oil cake', note: 'Whole cakes to order — ask us.', tag: 'Bakes', price: '£5' },
+          oliveOilCake: { dish: 'Olive oil cake', note: 'Whole cakes to order. Ask us.', tag: 'Bakes', price: '£5' },
         },
       },
       kitchen: {
@@ -989,19 +979,19 @@ export default {
         },
       },
     },
-    intro: 'Breakfast to late lunch seven days, a four-course supper on Friday nights, and the room itself free for private evenings. Anything cooked for your own address is catering — that is on the business page.',
+    intro: 'Breakfast to late lunch seven days, a four-course supper on Friday nights, and the room itself free for private evenings. Anything cooked for your own address is catering, which is on the business page.',
     events: {
       kicker: 'Events',
       heading: 'Private nights, held here',
-      lede: 'Every event happens in the cafe itself — the room after service, or before we open. We can brand the favours to match the night.',
+      lede: 'Every event happens in the cafe itself: the room after service, or before we open. We can brand the favours to match the night.',
       title: 'Events, in the café',
       colOne: 'Format',
-      intro: 'Every event happens in the café itself — the room after service, or before we open. Same kitchen and same team that cooks the Friday supper, and the floor can be re-dressed to suit the night. Anything at your address is catering.',
+      intro: 'Every event happens in the café itself: the room after service, or before we open. Same kitchen and same team that cooks the Friday supper, and the floor can be re-dressed to suit the night. Anything at your address is catering.',
       placeholder: 'The room set for a private evening',
       askFor: [
         'The date and the finish time',
-        'Headcount and whether it is seated — the room holds 40',
-        'Format — supper club, launch night, tasting, room only',
+        'Headcount and whether it is seated (the room holds 40)',
+        'Format: supper club, launch night, tasting, room only',
         'Anything the room has to hold: AV, a speech, a cake',
       ],
       packages: {
@@ -1016,7 +1006,7 @@ export default {
   shop: {
     badge: 'Curated brands · personalised by us',
     title: 'Make It Personal',
-    body: 'Discover design-led objects from brands we love — then make them unmistakably yours. Add a name, initials, a message or something that means something to you.',
+    body: 'Discover design-led objects from brands we love, then make them unmistakably yours. Add a name, initials, a message or something that means something to you.',
     openShop: 'Shop the Collection',
     askPersonal: 'Customize Yours',
     // The store's shelves. Keys and order come from `storeCategories` in
@@ -1078,7 +1068,7 @@ export default {
       },
       'TN-201': {
         name: 'Fine speaker', finish: 'Aluminium, wireless', lead: '5 – 7 days',
-        note: 'A pocket-sized speaker that engraves cleanly — a favourite for team and client gifts.',
+        note: 'A pocket-sized speaker that engraves cleanly, a favourite for team and client gifts.',
         placeholder: 'Lexon Fine speaker with an engraved logo',
       },
       'TN-202': {
@@ -1108,7 +1098,7 @@ export default {
       },
       'TN-502': {
         name: 'Desk starter set', finish: 'Notebook, pen and leather sleeve', lead: '7 – 10 days',
-        note: 'A first-day set for a new starter — the notebook embossed, the pen engraved, boxed as one.',
+        note: 'A first-day set for a new starter: the notebook embossed, the pen engraved, boxed as one.',
         placeholder: 'A boxed desk starter set',
       },
       'TN-503': {
@@ -1118,7 +1108,7 @@ export default {
       },
       'TN-504': {
         name: 'Welcome kit, large', finish: 'Bottle, notebook, tote and tech', lead: '10 – 14 days',
-        note: 'Our biggest set — four pieces personalised together for onboarding, VIP gifting or a launch.',
+        note: 'Our biggest set: four pieces personalised together for onboarding, VIP gifting or a launch.',
         placeholder: 'A large branded welcome kit',
       },
       'TN-103': {
@@ -1147,7 +1137,7 @@ export default {
   business: {
     kicker: 'For business',
     title: 'Make Your Brand the Gift.',
-    intro: 'Corporate gifting should do more than carry your logo. We create thoughtful, design-led gifts and branded collections that keep your identity visible, useful and remembered — from employee kits and client gifts to events, VIP gifting and large-scale orders.',
+    intro: 'Corporate gifting should do more than carry your logo. We create thoughtful, design-led gifts and branded collections that keep your identity visible, useful and remembered, from employee kits and client gifts to events, VIP gifting and large-scale orders.',
     ctaEnquiry: 'Start a Business Enquiry',
     offer: {
       heading: 'Made for Business',
@@ -1155,17 +1145,17 @@ export default {
       items: {
         corporateGifts: {
           name: 'Corporate Gifts', moq: 'From 25',
-          note: 'Client thank-yous, VIP gifting, milestones and seasonal moments — thoughtfully curated, branded and ready to give.',
+          note: 'Client thank-yous, VIP gifting, milestones and seasonal moments, thoughtfully curated, branded and ready to give.',
           placeholder: 'Branded corporate gift boxes',
         },
         onboardingKits: {
           name: 'Employee & Onboarding Kits', moq: 'From 10 kits',
-          note: 'Welcome new joiners with a collection that feels considered from day one — curated, personalized and packaged around your brand.',
+          note: 'Welcome new joiners with a collection that feels considered from day one: curated, personalized and packaged around your brand.',
           placeholder: 'A new-starter welcome kit, packed',
         },
         eventGiveaways: {
           name: 'Events & Brand Experiences', moq: 'From 50',
-          note: 'From launches and conferences to activations and special occasions — branded pieces designed to keep your identity in the experience.',
+          note: 'From launches and conferences to activations and special occasions, branded pieces designed to keep your identity in the experience.',
           placeholder: 'Branded giveaways on an event table',
         },
       },
@@ -1203,7 +1193,7 @@ export default {
       kicker: 'Our story',
       title: 'Watch the story.',
       lede: 'A short film on who we are, what we make, and why a name changes an object.',
-      placeholder: 'About The Name — brand video',
+      placeholder: 'About The Name: brand video',
     },
 
     // — the hero —
@@ -1216,10 +1206,10 @@ export default {
     //   pages/About/data.js and the slots in data/media.js `about.story`. —
     story: {
       legacy: {
-        era: '1990 — where it started',
+        era: '1990: where it started',
         headline: 'Made Personal, From the Beginning.',
-        body: 'The journey began in 1990 with customization and corporate gifting — creating objects for businesses, occasions and people that carried something more meaningful than the product itself: an identity.',
-        placeholder: '1990 — the first customized pieces',
+        body: 'The journey began in 1990 with customization and corporate gifting, creating objects for businesses, occasions and people that carried something more meaningful than the product itself: an identity.',
+        placeholder: '1990: the first customized pieces',
       },
       evolution: {
         era: 'The next chapter',
@@ -1229,7 +1219,7 @@ export default {
         placeholder: 'The design brands we brought to the region',
       },
       today: {
-        era: 'Today — The Name',
+        era: 'Today: The Name',
         headline: 'One Place. Every Part of Our Story.',
         body: 'THE NAME brings that legacy together in one place. A destination to discover design, personalize what you love, meet, eat, collaborate, create and experience something new. Physical and digital. Personal and corporate. A store, a social hub and a platform for what comes next.',
         placeholder: 'Inside THE NAME today',
@@ -1248,36 +1238,36 @@ export default {
     //   names are proper nouns and live in pages/About/data.js. —
     takeover: {
       headline: 'For a moment, the space isn\'t ours. It\'s theirs.',
-      body: 'We build collaborations around the identity of the people and brands we work with — transforming the products, experience and sometimes the space itself around their name.',
+      body: 'We build collaborations around the identity of the people and brands we work with, transforming the products, experience and sometimes the space itself around their name.',
     },
 
     // — who we have worked with —
     collab: {
       era: 'Built through collaboration',
       headline: 'Some Names We\'ve Made Something With.',
-      body: 'Across the journey, our work has brought us together with global brands, institutions and organizations — creating customized products, gifting, experiences and collaborations built around their identity.',
+      body: 'Across the journey, our work has brought us together with global brands, institutions and organizations, creating customized products, gifting, experiences and collaborations built around their identity.',
     },
 
     // — where it goes next —
     future: {
       era: 'What\'s next',
       headline: 'A Legacy Built Here. Ready to Travel.',
-      body: 'The UAE taught us to keep looking forward — to build, evolve and think beyond where we are today. THE NAME is our next chapter: bringing more than three decades of experience into a new era of digital customization, experiences and collaboration, with our sights set beyond the UAE and across the GCC.',
+      body: 'The UAE taught us to keep looking forward: to build, evolve and think beyond where we are today. THE NAME is our next chapter: bringing more than three decades of experience into a new era of digital customization, experiences and collaboration, with our sights set beyond the UAE and across the GCC.',
       closing: 'The story started in 1990. What comes next has your name on it.',
     },
 
     // — everything below belongs to the PARKED block in About.jsx —
     servicesHeading: 'What we do',
-    servicesLede: 'One studio for people and for brands — from a single engraved gift to a full corporate gifting programme.',
+    servicesLede: 'One studio for people and for brands, from a single engraved gift to a full corporate gifting programme.',
     services: {
       personalGifts: {
         title: 'Personalised gifts',
-        body: 'Birthdays, weddings, new babies and thank-yous. Choose a piece, add a name, initials or a message, and we make it theirs — one piece is a perfectly normal order.',
+        body: 'Birthdays, weddings, new babies and thank-yous. Choose a piece, add a name, initials or a message, and we make it theirs. One piece is a perfectly normal order.',
         cta: 'Browse the shop',
       },
       corporateGifting: {
         title: 'Corporate gifting',
-        body: 'Client gifts, VIP delegations, conference giveaways, excellence awards and onboarding kits — carrying your logo, delivered in bulk on a set date.',
+        body: 'Client gifts, VIP delegations, conference giveaways, excellence awards and onboarding kits, carrying your logo, delivered in bulk on a set date.',
         cta: 'For business',
       },
       curatedBrands: {
@@ -1292,7 +1282,7 @@ export default {
       },
       creative: {
         title: 'Creative concepts',
-        body: 'We started as a creative agency, so concept, storytelling and design are in-house — a full 360 service, not just a print run.',
+        body: 'We started as a creative agency, so concept, storytelling and design are in-house: a full 360 service, not just a print run.',
         cta: 'Talk to us',
       },
       cafe: {
@@ -1306,7 +1296,7 @@ export default {
     methodsLabel: 'We personalise with',
     mission: {
       kicker: 'Our mission',
-      statement: 'To turn everyday objects into meaningful ones — curating thoughtful, design-led pieces and personalising them, so every gift carries a name, a story or a brand.',
+      statement: 'To turn everyday objects into meaningful ones, curating thoughtful, design-led pieces and personalising them, so every gift carries a name, a story or a brand.',
     },
     vision: {
       kicker: 'Our vision',
@@ -1314,7 +1304,7 @@ export default {
     },
     cta: {
       heading: 'Let\'s put a name on it.',
-      body: 'Tell us who it is for and what it should say — we\'ll take it from there.',
+      body: 'Tell us who it is for and what it should say, and we\'ll take it from there.',
       contact: 'Contact us',
       whatsapp: 'Chat on WhatsApp',
     },
@@ -1323,7 +1313,7 @@ export default {
   kids: {
     kicker: 'For kids',
     title: 'Little Names. Big Stories.',
-    lede: 'Their name on a bottle. Their drawing on something real. Their idea turned into something they can hold. From everyday essentials to gifts, celebrations and their very first creations — we make the things that belong to their story.',
+    lede: 'Their name on a bottle. Their drawing on something real. Their idea turned into something they can hold. From everyday essentials to gifts, celebrations and their very first creations, we make the things that belong to their story.',
     heroPlaceholder: "A child's bottle and lunchbox with a name on them",
     ctaShop: 'Shop for Kids',
     ctaAsk: 'Make Something for Them',
@@ -1332,7 +1322,7 @@ export default {
     offers: {
       backToSchool: {
         name: 'Back to School',
-        note: 'Bottles, lunchboxes, pencil cases and everyday favourites — made easier to spot, harder to lose and unmistakably theirs.',
+        note: 'Bottles, lunchboxes, pencil cases and everyday favourites, made easier to spot, harder to lose and unmistakably theirs.',
         placeholder: 'Named bottle, lunchbox and pencil case',
       },
       newBaby: {
@@ -1342,7 +1332,7 @@ export default {
       },
       birthdays: {
         name: 'Birthdays & Celebrations',
-        note: 'Personalized gifts, party favours and little details made especially for the birthday child — and, if you like, the whole guest list.',
+        note: 'Personalized gifts, party favours and little details made especially for the birthday child, and if you like, the whole guest list.',
         placeholder: 'Named party favours on a table',
       },
     },
@@ -1350,9 +1340,9 @@ export default {
       kicker: 'Made for them',
       heading: 'Small Details. Completely Theirs.',
       points: [
-        'Names, initials, messages, drawings and little ideas — made personal in the way that suits each piece.',
+        'Names, initials, messages, drawings and little ideas, made personal in the way that suits each piece.',
         'See their personalization before you order, so every little detail feels right.',
-        'One child or a whole celebration — we can make one or make many.',
+        'One child or a whole celebration, we can make one or make many.',
         "Need something for a class, party or group? Tell us what you're planning and we'll build it with you.",
       ],
     },
@@ -1362,15 +1352,15 @@ export default {
     activation: {
       kicker: 'The Name: Little Creators',
       heading: 'What If Their Idea Had a Name?',
-      body: "We believe kids shouldn't only receive things made for them. Sometimes, they should get to make the idea. Draw it. Name it. Put it out into the world — and discover what happens when something that started in their imagination becomes real.",
+      body: "We believe kids shouldn't only receive things made for them. Sometimes, they should get to make the idea. Draw it. Name it. Put it out into the world, and discover what happens when something that started in their imagination becomes real.",
       support: 'That\'s exactly what happened at our latest kids activation.',
-      videoPlaceholder: 'Kids at the activation — showing their products and answering questions',
+      videoPlaceholder: 'Kids at the activation, showing their products and answering questions',
       galleryHeading: 'From the activation',
       prevShots: 'Previous photos',
       nextShots: 'More photos',
       shots: {
         showingProducts: 'The little creators behind their stand',
-        theCollection: 'The collection laid out — mugs, bottles, caps and notebooks',
+        theCollection: 'The collection laid out: mugs, bottles, caps and notebooks',
         mugs: 'Mugs carrying the kids\' own drawings',
         withParents: 'Parents and children around the table',
         makingTogether: 'Making at the craft table',
@@ -1382,7 +1372,7 @@ export default {
     twoTs: {
       kicker: "Meet Two T's",
       heading: 'A Little Brand With a Big Heart.',
-      body: "Created by five-year-old Teya, Two T's began with her drawings and ideas — including her Hearts collection — and became something she could proudly call her own. At our kids activation, she got to share it, talk about it and watch other children discover what she created.",
+      body: "Created by five-year-old Teya, Two T's began with her drawings and ideas, including her Hearts collection, and became something she could proudly call her own. At our kids activation, she got to share it, talk about it and watch other children discover what she created.",
       closing: 'Her idea. Her drawings. Her name on it.',
       videoPlaceholder: 'Kids interviews from the activation',
     },
@@ -1396,7 +1386,7 @@ export default {
 
   process: {
     steps: {
-      pick: { title: 'Choose It', body: 'Find your piece from our curated collection — from lifestyle and desk objects to drinkware, accessories, gifting and more.' },
+      pick: { title: 'Choose It', body: 'Find your piece from our curated collection, from lifestyle and desk objects to drinkware, accessories, gifting and more.' },
       artwork: { title: 'Name It', body: 'Add a name, initials, message, artwork or brand identity.' },
       proof: { title: 'See It', body: 'We prepare your artwork or mock-up where required, so you know how your personalization will look before production.' },
       produce: { title: 'Make It Yours', body: 'We produce, finish and prepare your order for collection or delivery.' },
@@ -1425,7 +1415,7 @@ export default {
     topics: {
       products: {
         label: 'What do you sell?',
-        answer: 'Design-led objects from brands like Lexon, Lund London, Pantone, Korin, Kreafunk and Gingko — drinkware, tech, desk pieces, travel and gift sets — plus our own house pieces. Every one can be personalised.',
+        answer: 'Design-led objects from brands like Lexon, Lund London, Pantone, Korin, Kreafunk and Gingko (drinkware, tech, desk pieces, travel and gift sets), plus our own house pieces. Every one can be personalised.',
         keywords: ['product', 'sell', 'shop', 'store', 'brand', 'buy', 'bottle', 'speaker', 'lamp', 'bag'],
       },
       personalise: {
@@ -1450,7 +1440,7 @@ export default {
       },
       human: {
         label: 'Talk to a person',
-        answer: 'Of course — our team replies on WhatsApp within the hour during opening times.',
+        answer: 'Of course, our team replies on WhatsApp within the hour during opening times.',
         keywords: ['person', 'human', 'agent', 'whatsapp', 'call', 'talk', 'phone'],
       },
     },

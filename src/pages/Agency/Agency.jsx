@@ -1,42 +1,22 @@
 import { Link } from 'react-router-dom';
 import Arrow from '../../components/Arrow.jsx';
-import FinalCta from '../../components/FinalCta.jsx';
-import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
-import PillarRows, { ROW_RATIO } from '../../components/PillarRows/PillarRows.jsx';
-import { media } from '../../data/media.js';
 import { contactLink } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { agencyServices } from './data.js';
 import './Agency.css';
 
 /**
- * The Agency page, built like Brands: the shared hero (.page-hero), then one
- * PillarRows row per service in `agencyServices` (./data.js) — the same
- * six titles as the Agency row's chips on Home — and the shared closing
- * call to action. Every button opens the enquiry form at the foot of /about.
- * Copy is i18n `agency`.
+ * The Agency page: the shared page hero (.rows-page / .page-hero in
+ * theme.css), then one text section per service in `agencyServices`
+ * (./data.js), the same six titles as the Agency row's chips on Home. Each
+ * is a title beside its lead, body and a button to the enquiry form at the
+ * foot of /about. The type is PillarRows' own (.pillar-title/-lead/-body,
+ * loaded site-wide), so a service reads like a Home or Brands row without
+ * its number, chips or picture. Copy is i18n `agency`.
  */
 export default function Agency() {
   const { t } = useLanguage();
   const a = t.agency;
-
-  const rows = agencyServices.map(({ id }) => {
-    const s = a.services[id];
-    return {
-      key: id,
-      title: s.title,
-      label: s.title,
-      lead: s.lead,
-      body: s.body,
-      tags: s.tags,
-      actions: (
-        <Link to={contactLink} className="btn btn-primary">
-          {a.rowCta} <Arrow />
-        </Link>
-      ),
-      media: () => <ImagePlaceholder src={media.agencyServices[id]} label={s.title} ratio={ROW_RATIO} />,
-    };
-  });
 
   return (
     <div className="rows-page agency-page">
@@ -46,9 +26,23 @@ export default function Agency() {
         <p className="page-hero-lede">{a.lede}</p>
       </header>
 
-      <PillarRows rows={rows} titleAs="h2" />
-
-      <FinalCta content={a.finalCta} to={contactLink} />
+      <div className="container agency-services">
+        {agencyServices.map(({ id }) => {
+          const s = a.services[id];
+          return (
+            <section key={id} className="agency-service" aria-labelledby={`agency-${id}`}>
+              <h2 id={`agency-${id}`} className="pillar-title agency-service-title">{s.title}</h2>
+              <div className="agency-service-text">
+                <p className="pillar-lead">{s.lead}</p>
+                <p className="pillar-body">{s.body}</p>
+                <Link to={contactLink} className="btn btn-primary">
+                  {a.rowCta} <Arrow />
+                </Link>
+              </div>
+            </section>
+          );
+        })}
+      </div>
     </div>
   );
 }

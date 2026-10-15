@@ -110,7 +110,7 @@ export default function Chatbot({ onBack, onClose }) {
         {topic.appendMethods && (
           <ul>
             {Object.entries(methods.methods).map(([id, m]) => (
-              <li key={id}>{m.name} — {m.lead} · {methods.minimum}: {m.minimum}</li>
+              <li key={id}>{m.name}: {m.lead} · {methods.minimum}: {m.minimum}</li>
             ))}
           </ul>
         )}

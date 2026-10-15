@@ -249,11 +249,10 @@ h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
    should set a top margin on its title again. */
 .card-kicker + .page-title { margin-top: var(--space-4); }
 
-/* The "hero + PillarRows" page layout, shared by Brands and Agency (Home's
-   "What we do" uses the same rows under its own film hero):
+/* The shared page hero and page padding, used by Brands and Agency:
      <div class="rows-page">
        <header class="container page-hero"> kicker · h1.page-title.page-hero-title · p.page-hero-lede
-       <PillarRows …>
+       <PillarRows …> on Brands, the service sections on Agency
        <FinalCta …>   (optional, components/FinalCta.jsx)
    Start-aligned like every other page hero. The measure is on the children,
    not the header: .container centres itself, so a max-width on it would pull
@@ -275,7 +274,7 @@ h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
 .page-hero + .pillars { margin-top: clamp(var(--space-6), 4vw, calc(var(--space-8) * 1.5)); }
 
 /* The closing call to action at the foot of a page (components/FinalCta.jsx)
-   — Home and Agency. Centred heading, one line, one button, under a rule. */
+   — Home. Centred heading, one line, one button, under a rule. */
 .final-cta {
   text-align: center;
   padding-block: clamp(64px, 8vw, 128px);
