@@ -249,6 +249,53 @@ h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
    should set a top margin on its title again. */
 .card-kicker + .page-title { margin-top: var(--space-4); }
 
+/* The "hero + PillarRows" page layout, shared by Brands and Agency (Home's
+   "What we do" uses the same rows under its own film hero):
+     <div class="rows-page">
+       <header class="container page-hero"> kicker · h1.page-title.page-hero-title · p.page-hero-lede
+       <PillarRows …>
+       <FinalCta …>   (optional, components/FinalCta.jsx)
+   Start-aligned like every other page hero. The measure is on the children,
+   not the header: .container centres itself, so a max-width on it would pull
+   the whole hero to the middle. */
+.rows-page { padding-top: calc(var(--space-8) * 2); }
+.rows-page:not(:has(> .final-cta)) { padding-bottom: calc(var(--space-8) * 2); }
+.page-hero > * { max-width: 62ch; }
+.page-hero-title {
+  font-size: clamp(36px, 4.6vw, 60px);
+  /* Top margin comes from `.card-kicker + .page-title` above. */
+  margin: 0;
+}
+.page-hero-lede {
+  font-size: var(--text-lg);
+  line-height: 1.6;
+  margin: var(--space-4) 0 0;
+  color: color-mix(in srgb, var(--color-text) 72%, transparent);
+}
+.page-hero + .pillars { margin-top: clamp(var(--space-6), 4vw, calc(var(--space-8) * 1.5)); }
+
+/* The closing call to action at the foot of a page (components/FinalCta.jsx)
+   — Home and Agency. Centred heading, one line, one button, under a rule. */
+.final-cta {
+  text-align: center;
+  padding-block: clamp(64px, 8vw, 128px);
+  margin-top: clamp(28px, 4vw, 56px);
+  border-top: 1px solid var(--color-divider);
+}
+.final-cta-heading {
+  font-size: clamp(30px, 4vw, 56px);
+  line-height: 1.08;
+  text-transform: uppercase;
+  max-width: 22ch;
+  margin: 0 auto;
+}
+.final-cta-body {
+  font-size: var(--text-lg);
+  line-height: 28px;
+  max-width: 56ch;
+  margin: 18px auto 28px;
+}
+
 /* The "→" after a call to action (components/Arrow.jsx) — points the
    reading direction, so it is mirrored under RTL. */
 .cta-arrow { display: inline-block; }

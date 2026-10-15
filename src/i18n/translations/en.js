@@ -307,10 +307,56 @@ export default {
 
   // The Agency page (pages/Agency/).
   agency: {
-    kicker: "Agency",
-    title: "Ideas, made to carry your name.",
-    lede: "Campaigns, activations and branded pieces — planned, designed and produced by The Name for the brands we work with.",
-    cta: "Talk to us",
+    kicker: "The Agency",
+    title: "Not just another agency.",
+    lede: "Your dedicated partner for 360-degree media and marketing — strategy, creative, media buying, digital, branding, CSR and sustainability — in one unified approach built for consistency, efficiency and maximum impact.",
+    // The button on every service row.
+    rowCta: "Let's talk",
+    // One row per service (pages/Agency/data.js). The titles are the Agency
+    // row's chips on Home; the copy is from The Name Agency's presentation.
+    services: {
+      positioning: {
+        title: "Brand Positioning",
+        lead: "Navigated, innovated and elevated marketing. Expert guidance and strategic insight to help you find your place in an ever-changing market.",
+        body: "We develop innovative marketing strategies — grounded in market and consumer insight — that elevate your brand and drive business growth.",
+        tags: ["Integrated Campaign Strategies", "Market & Consumer Insights", "Strategic Business Planning", "Brand Identity & Incubation", "Performance Measurement"],
+      },
+      communication: {
+        title: "Brand Communication",
+        lead: "Bringing brands to life creatively. Strategies that go beyond telling your brand story — they build meaningful connections with your audience.",
+        body: "Carefully crafted brand narratives foster loyalty and lift how your brand is seen, keeping every piece of communication consistent, compelling and true to its essence.",
+        tags: ["Merchandise Design & Execution", "Custom 3D Models & Prototypes", "Innovative Gifting Solutions"],
+      },
+      awareness: {
+        title: "Brand Awareness",
+        lead: "Digital solutions that achieve real results. From SEO to social media management and paid advertising, targeted campaigns that engage your audience.",
+        body: "Strategies designed to connect with customers, boost brand visibility and drive measurable success across multiple platforms.",
+        tags: ["Targeted Ad Campaigns", "Pay-Per-Click (PPC)", "Pay-Per-Lead (PPL)", "Multi-Platform Campaigns", "Analytics & Reporting"],
+      },
+      exposure: {
+        title: "Brand Exposure",
+        lead: "Captivating experiences in Dubai's creative hubs. Events and activations in Dubai Design District and Dubai CommerCity, known for innovative brands and creative energy.",
+        body: "The right venue amplifies your brand — a dynamic backdrop to showcase your identity and engage your target audience face to face.",
+        tags: ["Event Strategies", "Brand Activations & Events", "Corporate Event Execution"],
+      },
+      csr: {
+        title: "CSR & Sustainability Campaigns",
+        lead: "Helping you make a meaningful difference. Corporate Social Responsibility campaigns that align with your business values and drive positive change in your community.",
+        body: "Initiatives that promote sustainability, social responsibility and ethical business practice — so your brand contributes to a better world while enhancing its reputation.",
+        tags: ["Sustainability Programs", "Community Engagement", "Cause-Related Marketing", "Team-Inclusive CSR"],
+      },
+      ooh: {
+        title: "OOH Media",
+        lead: "Smart media buying for maximum reach. Media strategies tailored to your brand's goals, audience and budget, guided by data-driven insight.",
+        body: "Strong partnerships with media outlets put your message on the right channels — from meticulous planning and buying to seamless campaign implementation.",
+        tags: ["Cross-Channel Media Planning", "Programmatic Media Buying", "Strategic Partnerships", "Campaign Implementation"],
+      },
+    },
+    finalCta: {
+      heading: "Got questions? We got answers.",
+      body: "Tell us about your brand and your goals — we'll listen, understand your objectives and shape a solution around them.",
+      cta: "Start a conversation",
+    },
   },
 
   notFound: {

@@ -213,25 +213,4 @@
   margin: 18px 0 0;
 }
 
-/* — final CTA — white like every section; a hairline sets it off the rows. */
-.home-final {
-  text-align: center;
-  padding-block: clamp(64px, 8vw, 128px);
-  margin-top: clamp(28px, 4vw, 56px);
-  border-top: 1px solid var(--color-divider);
-}
-
-.home-final-heading {
-  font-size: clamp(30px, 4vw, 56px);
-  line-height: 1.08;
-  text-transform: uppercase;
-  max-width: 22ch;
-  margin: 0 auto;
-}
-
-.home-final-body {
-  font-size: var(--text-lg);
-  line-height: 28px;
-  max-width: 56ch;
-  margin: 18px auto 28px;
-}
+/* — final CTA — components/FinalCta.jsx; its rules are .final-cta in theme.css. */

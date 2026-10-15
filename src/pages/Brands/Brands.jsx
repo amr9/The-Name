@@ -103,11 +103,11 @@ export default function Brands() {
   });
 
   return (
-    <div className="brands-page">
-      <header className="container brands-hero">
+    <div className="rows-page brands-page">
+      <header className="container page-hero">
         <span className="card-kicker">{b.kicker}</span>
-        <h1 className="page-title brands-title">{b.title}</h1>
-        <p className="brands-lede">{b.lede}</p>
+        <h1 className="page-title page-hero-title">{b.title}</h1>
+        <p className="page-hero-lede">{b.lede}</p>
       </header>
 
       <PillarRows rows={rows} titleAs="h2" />

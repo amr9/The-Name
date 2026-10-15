@@ -3,26 +3,8 @@
    Home's "What we do"), then the remaining brands as logo cards. Only what
    is particular to brands lives here: the logo beside the row number, and
    the two product cards that are each row's media. */
-.brands-page {
-  padding-block: calc(var(--space-8) * 2);
-}
-
-/* Start-aligned like every other page hero (kicker, title, lede). The
-   measure is on the children, not the header: .container centres itself,
-   so a max-width on it would pull the whole hero to the middle. */
-.brands-hero > * { max-width: 62ch; }
-.brands-title {
-  font-size: clamp(36px, 4.6vw, 60px);
-  /* Top margin comes from `.card-kicker + .page-title` in theme.css. */
-  margin: 0;
-}
-.brands-lede {
-  font-size: var(--text-lg);
-  line-height: 1.6;
-  margin: var(--space-4) 0 0;
-  color: color-mix(in srgb, var(--color-text) 72%, transparent);
-}
-.brands-hero + .pillars { margin-top: clamp(var(--space-6), 4vw, calc(var(--space-8) * 1.5)); }
+/* The page padding and the hero (kicker, title, lede) are the shared
+   .rows-page / .page-hero rules in theme.css — the same as Agency's. */
 
 /* The brand's logo after the row number's rule (PillarRows `mark`) — a
    small, even-height mark; --logo-scale (data/brands.js `logoScale`)

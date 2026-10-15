@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Arrow from '../../components/Arrow.jsx';
 import AutoplayVideo from '../../components/AutoplayVideo.jsx';
+import FinalCta from '../../components/FinalCta.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import FilmLightbox from '../../components/FilmLightbox/FilmLightbox.jsx';
 import PillarRows, { ROW_RATIO } from '../../components/PillarRows/PillarRows.jsx';
@@ -143,13 +144,7 @@ export default function Home() {
       <PillarRows rows={rows} />
 
       {/* final CTA — opens the enquiry form at the foot of /about */}
-      <section className="container home-final">
-        <h2 className="home-final-heading">{h.finalCta.heading}</h2>
-        <p className="home-final-body">{h.finalCta.body}</p>
-        <Link to={contactLink} className="btn btn-primary">
-          {h.finalCta.cta} <Arrow />
-        </Link>
-      </section>
+      <FinalCta content={h.finalCta} to={contactLink} />
     </div>
   );
 }
