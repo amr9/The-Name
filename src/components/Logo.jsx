@@ -2,7 +2,7 @@ import { media } from '../data/media.js';
 import { site } from '../data/site.js';
 import './Logo.css';
 
-// The brand lockup, from the artwork in public/media/brand/. `on` names the
+// The brand lockup, from the artwork in public/media/the-name/. `on` names the
 // ground the logo sits on, so its ink always contrasts with it: 'light'
 // grounds (the navbar) get the charcoal artwork, 'dark' grounds (the footer)
 // the yellow. On phones the wide main lockup gives way to the compact

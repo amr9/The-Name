@@ -86,8 +86,8 @@ scripts/              — build-time tools, never imported by the site.
                         could not match rather than guessing.
   import-store-products.mjs
                       — regenerates data/storeProducts.js and the pictures in
-                        public/media/store/ from the Odoo export
-                        `Product (product.template).xlsx` at the repo root:
+                        public/media/store-products/ from the Odoo export
+                        `source-files/data/Product (product.template).xlsx` (the default):
                         `node scripts/import-store-products.mjs [file.xlsx]`.
                         Reads the .xlsx as the zip of XML it is, so there is
                         nothing to install. It reports what the export is
@@ -977,7 +977,7 @@ src/
 
   data/storeProducts.js  — the REAL store catalogue: 192 products GENERATED
                           from the Odoo export `Product
-                          (product.template).xlsx` at the repo root by
+                          (product.template).xlsx` in source-files/data/ by
                           `node scripts/import-store-products.mjs`. Never
                           hand-edit a product row — re-export and re-run, or
                           the next run overwrites the edit. Carries only what
@@ -1141,7 +1141,7 @@ src/
                           so headings fell back to Georgia) and, earlier, the
                           guideline's (p.14) script Artisoul Signature.
                           There are no @font-face rules in theme.css any more
-                          and public/fonts/ is unused. Gradients: --gradient-panel
+                          and public/fonts/ was removed. Gradients: --gradient-panel
                           (the guideline's orange→gold panel, built from the
                           --color-panel-* stops),
                           --gradient-footer (--color-ink
@@ -1200,89 +1200,106 @@ origin in production.
 
 ## Media files
 
-Artwork lives in `public/media/` (served as-is by Vite, so no import step):
+Two folders, split by whether the site SERVES the file:
+
+- **`public/media/`**: every file the website shows, served as-is by Vite
+  at `/media/...` (nginx caches it for a day). Grouped by PURPOSE, not by
+  page, and documented in `public/media/README.md`. Every path is listed in
+  `src/data/media.js` (store photos: `storeImage()` in data/storeProducts.js).
+- **`source-files/`** (repo root): originals the site does NOT serve. These
+  are the catalogue PDFs, original logo/favicon exports, the Odoo product
+  export, raw footage and design references. Never deployed, because the
+  Dockerfile copies only public/, src/, shared/ and scripts/. See
+  `source-files/README.md`. Do not move these into public/: the product
+  export and the brand guideline would become downloadable from the site.
 
 ```
 public/media/
-  hero/       — home hero: hero.mp4 (the R Investments reel, first 1:55,
-                end card cut) + hero-poster.jpg (its frame 0)
-  services/   — the Home pillar-row photos, one per `pillars` id
-                (corporate-gifts, brands, agency, events, fnb .jpg)
-  home/       — the Home page's films: vertex.mp4 (the Corporate Gifts
-                row, 4:5), events.mp4 (the Events row, 4:5),
-                brand-communication.mp4 (the
-                Agency row) and marketing-strategy.mp4 (currently
-                UNUSED), each with a -poster.jpg; read via
-                media.serviceVideos
-  methods/    — close-ups of each customization technique (engraving,
-                print, embroidery, emboss) for the Home "how it works" panel
-  menu/       — cafe menu dishes
-  shop/       — the shop's products, named by product code
-  cafe/       — the events section on the Cafe page
-  business/   — the branded-goods offer cards + the catering section
-  kids/       — the Kids page: hero.jpg, plus one image per offer block
-                (back-to-school.jpg, new-baby.jpg, birthdays.jpg). The Little
-                Creators activation adds activation.mp4 + activation-poster.jpg
-                (the opening film), activation-interviews.mp4 +
-                activation-interviews-poster.jpg (the Two T's film) and one
-                activation-<shot>.jpg per id in pages/Kids/data.js
-                `activationShots`. The gallery shots are the only photos in
-                the repo exported from originals rather than dropped in as-is:
-                each is PRE-CROPPED to 4:3 at 1440x1080, because the carousel
-                slot is a fixed 4/3 and `.img-slot img` is `object-fit: cover`
-                — an uncropped frame would be silently trimmed by the browser,
-                on the centre rather than on the subject. Crop a replacement to
-                4:3 before it lands here, and do not upscale: the portrait
-                frame among them gives up half its height to fit.
-  about/      — the About page's brand film: about-video.mp4 and its still
-                about-video-poster.jpg. Until they exist the section shows
-                the dashed placeholder slot.
-  brands/     — partner-brand logos for the Home strip, named in
-                data/media.js `brands`: lexon.svg, pantone.svg,
-                lund-london.png, korin.png, kreafunk.png, gingko.png
-                (prodir.svg is listed but not supplied yet — wordmark). Copied
-                from each brand's site and stored locally (their CDN paths
-                are versioned). gingko.png is the brand's white-on-black logo
-                converted to dark ink on transparency. A missing file makes
-                the strip fall back to the brand name as a wordmark.
-                Plus the MENA partner slide's brands (Oct 2026), each its
-                own current official logo: cerruti-1881.svg, festina.svg,
-                ungaro.svg, pitaka.svg (brands' sites), christian-lacroix.png,
-                makito.png, mob.png, senator.png (brands' sites; senator is
-                only 131x46), hugo-boss.svg, cacharel.svg, nina-ricci.svg,
-                ice-watch.svg (Wikimedia Commons). Lacroix, Ungaro and Makito
-                publish only WHITE logos, so theirs are recoloured to
-                one-colour black. No SOL'S file yet (wordmark).
-    products/ — the Brands page's product photos (data/media.js
-                `brandProducts`), six 900px WebPs taken from the brands' own
-                2025/26 catalogues (PANTONE by Copenhagen Design, Lund Design
-                House, Prodir Novelties 2026).
-  partners/   — reserved for delivery-partner logos. Currently empty: the
-                Cafe logo strip (commented out for now) hot-links talabat's
-                and noon's own CDN URLs (see data/media.js `partners`) so a
-                rebrand on their side appears automatically. Drop a file
-                here and repoint that entry to pin an asset locally instead.
-  brand/      — The Name's own artwork, cropped to the artwork's edges
-                from the 500×500 guideline exports (the originals sit
-                untracked at the repo root):
-                  logo-main-dark.png / logo-main-yellow.png
-                  logo-secondary-dark.png / logo-secondary-yellow.png
-                    — the lockups in charcoal (light grounds) and yellow
-                      (dark grounds); see components/Logo.jsx. The
-                      "YOUR SOCIAL HUB" tagline was cropped out of all four
-                      in Sept 2026 (it sat under the main wordmark and beside
-                      the secondary N), so they are wordmark-only now. The
-                      untracked repo-root originals still have it — re-crop
-                      rather than re-export if these are ever regenerated.
-                  mark-outline.png — the outline N tile (one bubble per set)
-                  mark-filled.png  — the filled N tile (chat button, tab icon)
-                  from-the-name-to-your-name.png — the tagline lettering
-                      (black + yellow script, transparent ground), cropped
-                      to its edges. UNUSED (TaglineArt.jsx was deleted when
-                      the Home hero and About tagline became live type).
-                Also `footer-pattern.svg`, the guideline's hand-drawn line
-                texture — kept, but not referenced anywhere.
+  README.md       — what each folder is for (served, harmless)
+  the-name/       — The Name's own artwork, cropped to the artwork's edges
+                    from the 500×500 guideline exports (originals in
+                    source-files/the-name-brand/):
+                      logo-main-dark.png / logo-main-yellow.png
+                      logo-secondary-dark.png / logo-secondary-yellow.png
+                        — the lockups in charcoal (light grounds) and yellow
+                          (dark grounds); see components/Logo.jsx. The
+                          "YOUR SOCIAL HUB" tagline was cropped out of all four
+                          in Sept 2026, so they are wordmark-only now. The
+                          originals still have it — re-crop rather than
+                          re-export if these are ever regenerated.
+                      mark-outline.png — the outline N tile (one bubble per set)
+                      mark-filled.png  — the filled N tile (chat button, tab
+                          icon: index.html's favicon)
+                      from-the-name-to-your-name.png — the tagline lettering.
+                          UNUSED (TaglineArt.jsx was deleted when the Home hero
+                          and About tagline became live type).
+                    Also `footer-pattern.svg`, the guideline's hand-drawn line
+                    texture — kept, but not referenced anywhere.
+  partner-brands/
+    logos/        — partner-brand logos (data/media.js `brands`), for the
+                    Home strip and the Brands page cards: lexon.svg,
+                    pantone.svg, lund-london.png, korin.png, kreafunk.png,
+                    gingko.png (prodir.svg is listed but not supplied yet —
+                    wordmark). Copied from each brand's site and stored
+                    locally (their CDN paths are versioned). gingko.png is the
+                    brand's white-on-black logo converted to dark ink on
+                    transparency. A missing file falls back to the brand name
+                    as a wordmark. Plus the MENA partner slide's brands (Oct
+                    2026), each its own current official logo:
+                    cerruti-1881.svg, festina.svg, ungaro.svg, pitaka.svg
+                    (brands' sites), christian-lacroix.png, makito.png,
+                    mob.png, senator.png (brands' sites; senator is only
+                    131x46), hugo-boss.svg, cacharel.svg, nina-ricci.svg,
+                    ice-watch.svg (Wikimedia Commons). Lacroix, Ungaro and
+                    Makito publish only WHITE logos, so theirs are recoloured
+                    to one-colour black. No SOL'S file yet (wordmark).
+    products/     — the Brands page's product photos (data/media.js
+                    `brandProducts`), two per featured brand, 4:5 WebP, from
+                    the brands' own catalogues (PANTONE, Lund Design House,
+                    Prodir in source-files/catalogues/; the rest from the 2026
+                    catalogues on vertex.ae/catalogues).
+  store-products/ — one photo per online-store product, <store id>.webp.
+                    WRITTEN BY scripts/import-store-products.mjs and
+                    import-store-images.mjs; never edit by hand.
+  videos/         — every film and its -poster.jpg:
+                    hero.mp4 (the R Investments reel, first 1:55, end card
+                      cut) + hero-poster.jpg (its frame 0) — Home hero;
+                    vertex.mp4 (Corporate Gifts row, 4:5), events.mp4 (Events
+                      row, 4:5), brand-communication.mp4 (Agency row) and
+                      marketing-strategy.mp4 (currently UNUSED) — read via
+                      media.serviceVideos;
+                    activation.mp4 (Events/Kids opening film) and
+                      activation-interviews.mp4 (the Two T's film) — not
+                      supplied yet;
+                    about-video.mp4 — the About brand film, not supplied yet
+                      (the section shows the dashed placeholder slot).
+  photos/         — page photography, one folder per page or section:
+    home/         — the Home pillar-row photos, one per `pillars` id
+                    (corporate-gifts, brands, agency, events, fnb .jpg), and
+                    customize.jpg. Not supplied yet.
+    events/       — the Events (Kids) page: hero.jpg and one image per offer
+                    block (back-to-school, new-baby, birthdays — not supplied
+                    yet), plus one activation-<shot>.jpg per id in
+                    pages/Kids/data.js `activationShots`. The gallery shots are
+                    exported from originals rather than dropped in as-is:
+                    each is PRE-CROPPED to 4:3 at 1440x1080, because the
+                    carousel slot is a fixed 4/3 and `.img-slot img` is
+                    `object-fit: cover`. An uncropped frame would be silently
+                    trimmed on the centre rather than on the subject. Crop a
+                    replacement to 4:3 before it lands here, and do not
+                    upscale.
+    about/        — the About page's story and takeover photos.
+    corporate-gifts/ — the branded-goods offer cards + the catering section.
+    cafe/         — cafe menu dishes and the Cafe events section (parked page).
+    gift-sets/    — the Shop's gift sets, named by product code (tn-*.jpg).
+    methods/      — close-ups of each customization technique (engraving,
+                    print, embroidery, emboss).
 ```
+
+Folders whose files are not supplied yet hold a `.gitkeep`. There is no
+`partners/` folder: the parked Cafe logo strip hot-links talabat's and noon's
+own CDN URLs (data/media.js `partners`). Add a `partner-brands/`-style folder
+if one of those is ever pinned locally.
 
 `src/data/media.js` already points at the expected filename for every slot.
 Saving a file under that name is all that's needed — no code change. Until it

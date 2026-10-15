@@ -1,7 +1,7 @@
 import { site } from './site.js';
 
 // The Name Store catalogue - GENERATED from the Odoo export
-// `Product (product.template).xlsx` at the repo root. Do not hand-edit a
+// `source-files/data/Product (product.template).xlsx`. Do not hand-edit a
 // product here: re-export the sheet and regenerate, or the next export
 // silently overwrites the edit. Only the fields the sheet actually carries
 // are kept - the id (a slug of the name, and the image filename), the display
@@ -22,7 +22,7 @@ import { site } from './site.js';
 // each row here; nothing else on the Shop page has to change.
 //
 // IMAGES are a THIRD source, and no longer the spreadsheet. They live in
-// public/media/store/<id>.webp and are written by
+// public/media/store-products/<id>.webp and are written by
 // scripts/import-store-images.mjs, which pulls each product's original upload
 // straight off the store at /web/image/product.template/<store id>/image_1920
 // - the store id being the trailing number on `url`, so nothing extra has to
@@ -281,7 +281,7 @@ export const productUrl = (p) => (p.url ? `${site.shopUrl}${p.url}` : site.shopU
 
 // Everything the page needs to know about a product's picture in one place,
 // so no component has to remember the folder or the extension.
-export const storeImage = (p) => (p.image === false ? null : `/media/store/${p.id}.webp`);
+export const storeImage = (p) => (p.image === false ? null : `/media/store-products/${p.id}.webp`);
 
 // 'all' is every product; any other shelf is everything whose `cats` includes
 // it. A product can be on several, so this is `includes`, not equality.

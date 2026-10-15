@@ -1,10 +1,10 @@
 // Regenerates the store catalogue from the Odoo product export.
 //
-//   node scripts/import-store-products.mjs ["Product (product.template).xlsx"]
+//   node scripts/import-store-products.mjs ["source-files/data/Product (product.template).xlsx"]
 //
 // Writes:
 //   src/data/storeProducts.js   — one row per product (id, name, ref, price)
-//   public/media/store/<id>.webp — the picture from the sheet's "Image 128"
+//   public/media/store-products/<id>.webp — the picture from the sheet's "Image 128"
 //
 // It reads the .xlsx directly (a zip of XML), so there is no dependency to
 // install. Only the columns the Shop page uses are read; everything else in
@@ -21,7 +21,7 @@ import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 
-const xlsx = process.argv[2] ?? 'Product (product.template).xlsx';
+const xlsx = process.argv[2] ?? 'source-files/data/Product (product.template).xlsx';
 if (!existsSync(xlsx)) {
   console.error(`No such file: ${xlsx}`);
   process.exit(1);
@@ -69,7 +69,7 @@ const webpSize = (b) => {
 const slug = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
   .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
 
-const outDir = 'public/media/store';
+const outDir = 'public/media/store-products';
 rmSync(outDir, { recursive: true, force: true });
 mkdirSync(outDir, { recursive: true });
 
@@ -113,7 +113,7 @@ export const productUrl = (p) => (p.url ? \`\${site.shopUrl}\${p.url}\` : site.s
 
 // Everything the page needs to know about a product's picture in one place,
 // so no component has to remember the folder or the extension.
-export const storeImage = (p) => (p.image === false ? null : \`/media/store/\${p.id}.webp\`);
+export const storeImage = (p) => (p.image === false ? null : \`/media/store-products/\${p.id}.webp\`);
 
 // 'all' is every product; any other shelf is everything whose \`cats\` includes
 // it. A product can be on several, so this is \`includes\`, not equality.

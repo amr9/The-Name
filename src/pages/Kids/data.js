@@ -13,7 +13,7 @@ export const kidsOffers = [
 // under i18n kids.activation.shots.* and the slots in data/media.js
 // `kids.activation.shots` — caption and picture share the one id.
 // Carousel order, left to right. The photos are pre-cropped to 4:3 in
-// public/media/kids/, matching the slot ratio in Kids.jsx.
+// public/media/photos/events/, matching the slot ratio in Kids.jsx.
 export const activationShots = [
   { id: 'showingProducts' },
   { id: 'theCollection' },

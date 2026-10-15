@@ -37,8 +37,8 @@ it there too.
 
 ### 2. A share image → `src/data/site.js`, `shareImage`
 A 1200×630px image (logo + a product photo works well), saved under
-`public/` — e.g. `public/media/brand/share.jpg` →
-`shareImage: '/media/brand/share.jpg'`. Shown when a page is shared on
+`public/` — e.g. `public/media/the-name/share.jpg` →
+`shareImage: '/media/the-name/share.jpg'`. Shown when a page is shared on
 WhatsApp, LinkedIn, X. Needs `siteUrl` too.
 
 ### 3. Replace placeholder content (crawlers now read every word)

@@ -10,7 +10,7 @@ server/data
 *.db
 *.db-wal
 *.db-shm
-TheNAMEsocialhub_Brand Guideline.pdf
+source-files/the-name-brand/TheNAMEsocialhub_Brand Guideline.pdf
 # this is folder of 2Ts event images
 OK
 dist-ssr

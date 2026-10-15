@@ -144,7 +144,7 @@
    this file used to carry (Book Antiqua for headings, and before it the script
    Artisoul Signature) were both licensed, on no CDN, and so only ever appeared
    on visitors who happened to own them. Everyone else saw Georgia. There are
-   no @font-face rules here any more and public/fonts/ is unused — add nothing
+   no @font-face rules here any more and public/fonts/ was removed — add nothing
    back without a webfont the site is licensed to serve. */
 
 *, *::before, *::after { box-sizing: border-box; }

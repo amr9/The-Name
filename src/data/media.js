@@ -14,8 +14,8 @@ const BASE = '/media';
 // hero's on phones (portrait 4:5, so it fills a tall screen far better than
 // the 16:9 showreel cropped to a sliver).
 const agencyFilm = {
-  src: `${BASE}/home/brand-communication.mp4`,
-  poster: `${BASE}/home/brand-communication-poster.jpg`,
+  src: `${BASE}/videos/brand-communication.mp4`,
+  poster: `${BASE}/videos/brand-communication-poster.jpg`,
 };
 
 export const media = {
@@ -26,24 +26,24 @@ export const media = {
   // serviceVideos, plus -vf scale=1600:-2); 16 MB. The poster IS frame 0, so
   // the swap from poster to playing film is invisible.
   hero: {
-    src: `${BASE}/hero/hero.mp4`,
-    poster: `${BASE}/hero/hero-poster.jpg`,
+    src: `${BASE}/videos/hero.mp4`,
+    poster: `${BASE}/videos/hero-poster.jpg`,
   },
   // On phones (≤700px) the hero plays the Agency film instead (agencyFilm).
   heroPhone: agencyFilm,
 
   // The picture in Home's "Customize Yours" section (CustomizeSection.jsx),
   // shown wide at 16:7.
-  customize: `${BASE}/customize/customize.jpg`,
+  customize: `${BASE}/photos/home/customize.jpg`,
 
   // Home page "What we do" pillar rows — keys match pages/Home/data.js
   // `pillars` id. The dashed ImagePlaceholder shows until each file exists.
   services: {
-    corporateGifts: `${BASE}/services/corporate-gifts.jpg`,
-    brands: `${BASE}/services/brands.jpg`,
-    agency: `${BASE}/services/agency.jpg`,
-    events: `${BASE}/services/events.jpg`,
-    fnb: `${BASE}/services/fnb.jpg`,
+    corporateGifts: `${BASE}/photos/home/corporate-gifts.jpg`,
+    brands: `${BASE}/photos/home/brands.jpg`,
+    agency: `${BASE}/photos/home/agency.jpg`,
+    events: `${BASE}/photos/home/events.jpg`,
+    fnb: `${BASE}/photos/home/fnb.jpg`,
   },
   // A pillar row with an entry here shows this VIDEO instead of its image
   // above, in the same 4:5 frame every row uses (ROW_RATIO in Home.jsx). The films
@@ -60,16 +60,16 @@ export const media = {
     // centre 4:5 (crop=1080:1350,scale=768:960) so the file holds only what
     // the frame shows; CRF 28, 18 MB, SSIM 0.985.
     corporateGifts: {
-      src: `${BASE}/home/vertex.mp4`,
-      poster: `${BASE}/home/vertex-poster.jpg`,
+      src: `${BASE}/videos/vertex.mp4`,
+      poster: `${BASE}/videos/vertex-poster.jpg`,
     },
     // "The Name Events IPAD" (1080x1920, 5:59) with two cuts: 4:26 to the
     // end of the NAJ Academy contact card (frames 7980-8128, through 4:30.97
     // where the next shot starts), and 5:45 to the end. 5:40 left. Same 4:5
     // centre crop as Vertex; CRF 30 for its length, 33 MB.
     events: {
-      src: `${BASE}/home/events.mp4`,
-      poster: `${BASE}/home/events-poster.jpg`,
+      src: `${BASE}/videos/events.mp4`,
+      poster: `${BASE}/videos/events-poster.jpg`,
     },
     // "Brand Communication" — 1024x1280 (already 4:5, shown uncropped), 92s,
     // CRF 28, SSIM 0.993.
@@ -80,52 +80,52 @@ export const media = {
   // keys match pages/Home/data.js `customMethods` id. Each wants a close-up
   // of that technique on a finished product.
   methods: {
-    engraving: `${BASE}/methods/engraving.jpg`,
-    print: `${BASE}/methods/print.jpg`,
-    embroidery: `${BASE}/methods/embroidery.jpg`,
-    emboss: `${BASE}/methods/emboss.jpg`,
+    engraving: `${BASE}/photos/methods/engraving.jpg`,
+    print: `${BASE}/photos/methods/print.jpg`,
+    embroidery: `${BASE}/photos/methods/embroidery.jpg`,
+    emboss: `${BASE}/photos/methods/emboss.jpg`,
   },
 
   // Menu dishes — keys match pages/Menu/data.js item ids.
   menu: {
-    breadConservaOil: `${BASE}/menu/bread-conserva-oil.jpg`,
-    anchovyToast: `${BASE}/menu/anchovy-toast.jpg`,
-    oliveOilCake: `${BASE}/menu/olive-oil-cake.jpg`,
-    whiteBeans: `${BASE}/menu/white-beans.jpg`,
-    roastCarrot: `${BASE}/menu/roast-carrot.jpg`,
-    porkSandwich: `${BASE}/menu/pork-sandwich.jpg`,
-    houseFilter: `${BASE}/menu/house-filter.jpg`,
-    flatWhite: `${BASE}/menu/flat-white.jpg`,
-    citrusSoda: `${BASE}/menu/citrus-soda.jpg`,
+    breadConservaOil: `${BASE}/photos/cafe/bread-conserva-oil.jpg`,
+    anchovyToast: `${BASE}/photos/cafe/anchovy-toast.jpg`,
+    oliveOilCake: `${BASE}/photos/cafe/olive-oil-cake.jpg`,
+    whiteBeans: `${BASE}/photos/cafe/white-beans.jpg`,
+    roastCarrot: `${BASE}/photos/cafe/roast-carrot.jpg`,
+    porkSandwich: `${BASE}/photos/cafe/pork-sandwich.jpg`,
+    houseFilter: `${BASE}/photos/cafe/house-filter.jpg`,
+    flatWhite: `${BASE}/photos/cafe/flat-white.jpg`,
+    citrusSoda: `${BASE}/photos/cafe/citrus-soda.jpg`,
   },
 
   // Shop products — keys match the `code` in data/catalogue.js.
   shop: {
-    'TN-101': `${BASE}/shop/tn-101.jpg`,
-    'TN-102': `${BASE}/shop/tn-102.jpg`,
-    'TN-103': `${BASE}/shop/tn-103.jpg`,
-    'TN-201': `${BASE}/shop/tn-201.jpg`,
-    'TN-202': `${BASE}/shop/tn-202.jpg`,
-    'TN-203': `${BASE}/shop/tn-203.jpg`,
-    'TN-301': `${BASE}/shop/tn-301.jpg`,
-    'TN-302': `${BASE}/shop/tn-302.jpg`,
-    'TN-303': `${BASE}/shop/tn-303.jpg`,
-    'TN-401': `${BASE}/shop/tn-401.jpg`,
-    'TN-402': `${BASE}/shop/tn-402.jpg`,
-    'TN-501': `${BASE}/shop/tn-501.jpg`,
-    'TN-502': `${BASE}/shop/tn-502.jpg`,
-    'TN-503': `${BASE}/shop/tn-503.jpg`,
-    'TN-504': `${BASE}/shop/tn-504.jpg`,
+    'TN-101': `${BASE}/photos/gift-sets/tn-101.jpg`,
+    'TN-102': `${BASE}/photos/gift-sets/tn-102.jpg`,
+    'TN-103': `${BASE}/photos/gift-sets/tn-103.jpg`,
+    'TN-201': `${BASE}/photos/gift-sets/tn-201.jpg`,
+    'TN-202': `${BASE}/photos/gift-sets/tn-202.jpg`,
+    'TN-203': `${BASE}/photos/gift-sets/tn-203.jpg`,
+    'TN-301': `${BASE}/photos/gift-sets/tn-301.jpg`,
+    'TN-302': `${BASE}/photos/gift-sets/tn-302.jpg`,
+    'TN-303': `${BASE}/photos/gift-sets/tn-303.jpg`,
+    'TN-401': `${BASE}/photos/gift-sets/tn-401.jpg`,
+    'TN-402': `${BASE}/photos/gift-sets/tn-402.jpg`,
+    'TN-501': `${BASE}/photos/gift-sets/tn-501.jpg`,
+    'TN-502': `${BASE}/photos/gift-sets/tn-502.jpg`,
+    'TN-503': `${BASE}/photos/gift-sets/tn-503.jpg`,
+    'TN-504': `${BASE}/photos/gift-sets/tn-504.jpg`,
   },
 
   // Kids page — the hero and one image per offer block (keys match
   // pages/Kids/data.js `kidsOffers` id).
   kids: {
-    hero: `${BASE}/kids/hero.jpg`,
+    hero: `${BASE}/photos/events/hero.jpg`,
     offers: {
-      backToSchool: `${BASE}/kids/back-to-school.jpg`,
-      newBaby: `${BASE}/kids/new-baby.jpg`,
-      birthdays: `${BASE}/kids/birthdays.jpg`,
+      backToSchool: `${BASE}/photos/events/back-to-school.jpg`,
+      newBaby: `${BASE}/photos/events/new-baby.jpg`,
+      birthdays: `${BASE}/photos/events/birthdays.jpg`,
     },
 
     // The Little Creators activation. `video` is the opening film (kids
@@ -134,18 +134,18 @@ export const media = {
     // matching `activationShots` in pages/Kids/data.js. `interviews` is the
     // second film, the kids interviews under the Two T's story.
     activation: {
-      video: `${BASE}/kids/activation.mp4`,
-      videoPoster: `${BASE}/kids/activation-poster.jpg`,
+      video: `${BASE}/videos/activation.mp4`,
+      videoPoster: `${BASE}/videos/activation-poster.jpg`,
       shots: {
-        showingProducts: `${BASE}/kids/activation-showing-products.jpg`,
-        theCollection: `${BASE}/kids/activation-the-collection.jpg`,
-        mugs: `${BASE}/kids/activation-mugs.jpg`,
-        withParents: `${BASE}/kids/activation-with-parents.jpg`,
-        makingTogether: `${BASE}/kids/activation-making-together.jpg`,
-        onTheStand: `${BASE}/kids/activation-on-the-stand.jpg`,
+        showingProducts: `${BASE}/photos/events/activation-showing-products.jpg`,
+        theCollection: `${BASE}/photos/events/activation-the-collection.jpg`,
+        mugs: `${BASE}/photos/events/activation-mugs.jpg`,
+        withParents: `${BASE}/photos/events/activation-with-parents.jpg`,
+        makingTogether: `${BASE}/photos/events/activation-making-together.jpg`,
+        onTheStand: `${BASE}/photos/events/activation-on-the-stand.jpg`,
       },
-      interviews: `${BASE}/kids/activation-interviews.mp4`,
-      interviewsPoster: `${BASE}/kids/activation-interviews-poster.jpg`,
+      interviews: `${BASE}/videos/activation-interviews.mp4`,
+      interviewsPoster: `${BASE}/videos/activation-interviews-poster.jpg`,
     },
   },
 
@@ -157,14 +157,14 @@ export const media = {
   // index.html). The chat button uses the bare dark secondary logo instead.
   brand: {
     logos: {
-      dark: { main: `${BASE}/brand/logo-main-dark.png`, secondary: `${BASE}/brand/logo-secondary-dark.png` },
-      yellow: { main: `${BASE}/brand/logo-main-yellow.png`, secondary: `${BASE}/brand/logo-secondary-yellow.png` },
+      dark: { main: `${BASE}/the-name/logo-main-dark.png`, secondary: `${BASE}/the-name/logo-secondary-dark.png` },
+      yellow: { main: `${BASE}/the-name/logo-main-yellow.png`, secondary: `${BASE}/the-name/logo-secondary-yellow.png` },
     },
-    markOutline: `${BASE}/brand/mark-outline.png`,
-    markFilled: `${BASE}/brand/mark-filled.png`,
+    markOutline: `${BASE}/the-name/mark-outline.png`,
+    markFilled: `${BASE}/the-name/mark-filled.png`,
     // "From The Name, to your Name" lettering — UNUSED since the Home hero
     // and About tagline became live type; kept for reuse.
-    tagline: `${BASE}/brand/from-the-name-to-your-name.png`,
+    tagline: `${BASE}/the-name/from-the-name-to-your-name.png`,
   },
 
   // Partner-brand logos for the Home logo strip — keys match data/brands.js
@@ -176,13 +176,13 @@ export const media = {
   // the originals carried wide empty margins that made them render small.
   // If a file goes missing the strip shows the brand name as a wordmark.
   brands: {
-    lexon: `${BASE}/brands/lexon.svg`,
-    lundLondon: `${BASE}/brands/lund-london.png`,
-    pantone: `${BASE}/brands/pantone.svg`,
-    korin: `${BASE}/brands/korin.png`,
-    kreafunk: `${BASE}/brands/kreafunk.png`,
-    gingko: `${BASE}/brands/gingko.png`,
-    prodir: `${BASE}/brands/prodir.svg`,
+    lexon: `${BASE}/partner-brands/logos/lexon.svg`,
+    lundLondon: `${BASE}/partner-brands/logos/lund-london.png`,
+    pantone: `${BASE}/partner-brands/logos/pantone.svg`,
+    korin: `${BASE}/partner-brands/logos/korin.png`,
+    kreafunk: `${BASE}/partner-brands/logos/kreafunk.png`,
+    gingko: `${BASE}/partner-brands/logos/gingko.png`,
+    prodir: `${BASE}/partner-brands/logos/prodir.svg`,
     // The MENA partner slide's other brands (Oct 2026). Each is the brand's
     // own current logo: from its official site (Cerruti 1881, Festina,
     // Christian Lacroix, Ungaro, Pitaka, Makito, MOB, Senator) or Wikimedia
@@ -191,18 +191,18 @@ export const media = {
     // headers); these are the same artwork recoloured to one-colour black.
     // Senator's is its site header logo, 131x46 — swap in a larger file
     // when the brand sends one. SOL'S has no file yet (wordmark).
-    cerruti1881: `${BASE}/brands/cerruti-1881.svg`,
-    hugoBoss: `${BASE}/brands/hugo-boss.svg`,
-    cacharel: `${BASE}/brands/cacharel.svg`,
-    ninaRicci: `${BASE}/brands/nina-ricci.svg`,
-    festina: `${BASE}/brands/festina.svg`,
-    iceWatch: `${BASE}/brands/ice-watch.svg`,
-    christianLacroix: `${BASE}/brands/christian-lacroix.png`,
-    senator: `${BASE}/brands/senator.png`,
-    ungaro: `${BASE}/brands/ungaro.svg`,
-    pitaka: `${BASE}/brands/pitaka.svg`,
-    makito: `${BASE}/brands/makito.png`,
-    mob: `${BASE}/brands/mob.png`,
+    cerruti1881: `${BASE}/partner-brands/logos/cerruti-1881.svg`,
+    hugoBoss: `${BASE}/partner-brands/logos/hugo-boss.svg`,
+    cacharel: `${BASE}/partner-brands/logos/cacharel.svg`,
+    ninaRicci: `${BASE}/partner-brands/logos/nina-ricci.svg`,
+    festina: `${BASE}/partner-brands/logos/festina.svg`,
+    iceWatch: `${BASE}/partner-brands/logos/ice-watch.svg`,
+    christianLacroix: `${BASE}/partner-brands/logos/christian-lacroix.png`,
+    senator: `${BASE}/partner-brands/logos/senator.png`,
+    ungaro: `${BASE}/partner-brands/logos/ungaro.svg`,
+    pitaka: `${BASE}/partner-brands/logos/pitaka.svg`,
+    makito: `${BASE}/partner-brands/logos/makito.png`,
+    mob: `${BASE}/partner-brands/logos/mob.png`,
   },
 
   // Brands page — one photo per featured product (keys match
@@ -210,33 +210,33 @@ export const media = {
   // own 2025/26 catalogues (Copenhagen Design's PANTONE Lifestyle Collection,
   // Lund Design House, Prodir Novelties 2026), resized to 900px WebP.
   brandProducts: {
-    pantoneOriginalMug: `${BASE}/brands/products/pantone-original-mug.webp`,
-    pantoneGatefoldNotebook: `${BASE}/brands/products/pantone-gatefold-notebook.webp`,
-    skittleWaterBottle: `${BASE}/brands/products/skittle-water-bottle.webp`,
-    lundWirelessLamp: `${BASE}/brands/products/lund-wireless-lamp.webp`,
-    prodirMs8: `${BASE}/brands/products/prodir-ms8.webp`,
-    prodirMc01: `${BASE}/brands/products/prodir-mc01.webp`,
+    pantoneOriginalMug: `${BASE}/partner-brands/products/pantone-original-mug.webp`,
+    pantoneGatefoldNotebook: `${BASE}/partner-brands/products/pantone-gatefold-notebook.webp`,
+    skittleWaterBottle: `${BASE}/partner-brands/products/skittle-water-bottle.webp`,
+    lundWirelessLamp: `${BASE}/partner-brands/products/lund-wireless-lamp.webp`,
+    prodirMs8: `${BASE}/partner-brands/products/prodir-ms8.webp`,
+    prodirMc01: `${BASE}/partner-brands/products/prodir-mc01.webp`,
     // From the 2026 brand catalogues on vertex.ae/catalogues (Main
     // Catalogue), cropped to 4:5 from the catalogue pages; Lexon, SOL'S and
     // Makito are the catalogues' own embedded photos.
-    cerrutiHudsonTravelBag: `${BASE}/brands/products/cerruti-hudson-travel-bag.webp`,
-    cerrutiEastonBackpack: `${BASE}/brands/products/cerruti-easton-backpack.webp`,
-    hugoBossElementalSpeaker: `${BASE}/brands/products/hugo-boss-elemental-speaker.webp`,
-    hugoBossVarsityUmbrella: `${BASE}/brands/products/hugo-boss-varsity-umbrella.webp`,
-    cacharelSeraphineTote: `${BASE}/brands/products/cacharel-seraphine-tote.webp`,
-    cacharelSeraphineWatch: `${BASE}/brands/products/cacharel-seraphine-watch.webp`,
-    festinaInterlaceTravelBag: `${BASE}/brands/products/festina-interlace-travel-bag.webp`,
-    festinaBlackEditionPen: `${BASE}/brands/products/festina-black-edition-pen.webp`,
-    lacroixCaprioWatch: `${BASE}/brands/products/lacroix-caprio-watch.webp`,
-    lacroixWhitelineTravelBag: `${BASE}/brands/products/lacroix-whiteline-travel-bag.webp`,
-    lexonMinaM: `${BASE}/brands/products/lexon-mina-m.webp`,
-    lexonFlipPremium: `${BASE}/brands/products/lexon-flip-premium.webp`,
-    solsCameronHoodie: `${BASE}/brands/products/sols-cameron-hoodie.webp`,
-    solsLegendTee: `${BASE}/brands/products/sols-legend-tee.webp`,
-    ungaroMiloWatch: `${BASE}/brands/products/ungaro-milo-watch.webp`,
-    ungaroPaolaDocumentBag: `${BASE}/brands/products/ungaro-paola-document-bag.webp`,
-    makitoMekongBackpack: `${BASE}/brands/products/makito-mekong-backpack.webp`,
-    makitoStaverBottle: `${BASE}/brands/products/makito-staver-bottle.webp`,
+    cerrutiHudsonTravelBag: `${BASE}/partner-brands/products/cerruti-hudson-travel-bag.webp`,
+    cerrutiEastonBackpack: `${BASE}/partner-brands/products/cerruti-easton-backpack.webp`,
+    hugoBossElementalSpeaker: `${BASE}/partner-brands/products/hugo-boss-elemental-speaker.webp`,
+    hugoBossVarsityUmbrella: `${BASE}/partner-brands/products/hugo-boss-varsity-umbrella.webp`,
+    cacharelSeraphineTote: `${BASE}/partner-brands/products/cacharel-seraphine-tote.webp`,
+    cacharelSeraphineWatch: `${BASE}/partner-brands/products/cacharel-seraphine-watch.webp`,
+    festinaInterlaceTravelBag: `${BASE}/partner-brands/products/festina-interlace-travel-bag.webp`,
+    festinaBlackEditionPen: `${BASE}/partner-brands/products/festina-black-edition-pen.webp`,
+    lacroixCaprioWatch: `${BASE}/partner-brands/products/lacroix-caprio-watch.webp`,
+    lacroixWhitelineTravelBag: `${BASE}/partner-brands/products/lacroix-whiteline-travel-bag.webp`,
+    lexonMinaM: `${BASE}/partner-brands/products/lexon-mina-m.webp`,
+    lexonFlipPremium: `${BASE}/partner-brands/products/lexon-flip-premium.webp`,
+    solsCameronHoodie: `${BASE}/partner-brands/products/sols-cameron-hoodie.webp`,
+    solsLegendTee: `${BASE}/partner-brands/products/sols-legend-tee.webp`,
+    ungaroMiloWatch: `${BASE}/partner-brands/products/ungaro-milo-watch.webp`,
+    ungaroPaolaDocumentBag: `${BASE}/partner-brands/products/ungaro-paola-document-bag.webp`,
+    makitoMekongBackpack: `${BASE}/partner-brands/products/makito-mekong-backpack.webp`,
+    makitoStaverBottle: `${BASE}/partner-brands/products/makito-staver-bottle.webp`,
   },
 
   // Delivery partner logos for the Cafe logo strip (currently commented out)
@@ -254,17 +254,17 @@ export const media = {
 
   // Cafe page — the events section at its foot.
   cafe: {
-    events: `${BASE}/cafe/events.jpg`,
+    events: `${BASE}/photos/cafe/events.jpg`,
   },
 
   // Business page — the branded-goods offer cards (keys match
   // pages/Business/data.js `brandingOffers` id) and the catering section.
   business: {
-    catering: `${BASE}/business/catering.jpg`,
+    catering: `${BASE}/photos/corporate-gifts/catering.jpg`,
     offers: {
-      corporateGifts: `${BASE}/business/corporate-gifts.jpg`,
-      onboardingKits: `${BASE}/business/onboarding-kits.jpg`,
-      eventGiveaways: `${BASE}/business/event-giveaways.jpg`,
+      corporateGifts: `${BASE}/photos/corporate-gifts/corporate-gifts.jpg`,
+      onboardingKits: `${BASE}/photos/corporate-gifts/onboarding-kits.jpg`,
+      eventGiveaways: `${BASE}/photos/corporate-gifts/event-giveaways.jpg`,
     },
   },
 
@@ -272,26 +272,26 @@ export const media = {
   // by <ImagePlaceholder> until the film lands (dashed slot until then);
   // `video` is the file the commented-out <video> in About.jsx points at.
   about: {
-    videoPoster: `${BASE}/about/about-video-poster.jpg`,
-    video: `${BASE}/about/about-video.mp4`,
+    videoPoster: `${BASE}/videos/about-video-poster.jpg`,
+    video: `${BASE}/videos/about-video.mp4`,
 
     // The three chapters of the story timeline — keys match `storyChapters`
     // in pages/About/data.js. Archive photography for the first two, a shot
     // of the space as it is now for the third.
     story: {
-      legacy: `${BASE}/about/story-1990.jpg`,
-      evolution: `${BASE}/about/story-evolution.jpg`,
-      today: `${BASE}/about/story-today.jpg`,
+      legacy: `${BASE}/photos/about/story-1990.jpg`,
+      evolution: `${BASE}/photos/about/story-evolution.jpg`,
+      today: `${BASE}/photos/about/story-today.jpg`,
     },
 
     // The takeovers — keys match `takeovers` in pages/About/data.js. Each
     // wants the space, product or experience built around that name.
     takeovers: {
-      bentley: `${BASE}/about/takeover-bentley.jpg`,
-      sephora: `${BASE}/about/takeover-sephora.jpg`,
-      vogue: `${BASE}/about/takeover-vogue.jpg`,
-      colombianPavilion: `${BASE}/about/takeover-colombian-pavilion.jpg`,
-      customShow: `${BASE}/about/takeover-custom-show.jpg`,
+      bentley: `${BASE}/photos/about/takeover-bentley.jpg`,
+      sephora: `${BASE}/photos/about/takeover-sephora.jpg`,
+      vogue: `${BASE}/photos/about/takeover-vogue.jpg`,
+      colombianPavilion: `${BASE}/photos/about/takeover-colombian-pavilion.jpg`,
+      customShow: `${BASE}/photos/about/takeover-custom-show.jpg`,
     },
   },
 };

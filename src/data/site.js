@@ -60,7 +60,7 @@ export const site = {
   // the build also writes sitemap.xml and llms.txt.
   siteUrl: 'https://thename.ae',
   // TODO(SEO): the image shown when a page is shared on WhatsApp, LinkedIn,
-  // X… — 1200x630px, saved under public/ (e.g. '/media/brand/share.jpg').
+  // X… — 1200x630px, saved under public/ (e.g. '/media/the-name/share.jpg').
   // Needs `siteUrl` too: og:image must be absolute.
   shareImage: '',
 };

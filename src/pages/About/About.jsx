@@ -133,7 +133,7 @@ export default function About() {
         />
       </section>
 
-            To go live: save the film as public/media/about/about-video.mp4
+            To go live: save the film as public/media/videos/about-video.mp4
             (and a still as about-video-poster.jpg), then use this figure in
             place of the <VideoPlaceholder> above. Note the page's <h1> would
             move back to the film, so drop it from the hero at the same time.

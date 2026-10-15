@@ -24,7 +24,7 @@ import crypto from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 
 const BASE = 'https://store.thename.ae';
-const OUT = 'public/media/store';
+const OUT = 'public/media/store-products';
 
 // Odoo answers EVERY id, including ones that do not exist — a product with no
 // picture gets a stock "no image" PNG rather than a 404, so the HTTP status

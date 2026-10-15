@@ -63,8 +63,8 @@ function businessJsonLd(description) {
   };
   if (site.siteUrl) {
     data.url = site.siteUrl;
-    data.logo = absolute('/media/brand/logo-main-dark.png');
-    data.image = absolute(site.shareImage || '/media/brand/logo-main-dark.png');
+    data.logo = absolute('/media/the-name/logo-main-dark.png');
+    data.image = absolute(site.shareImage || '/media/the-name/logo-main-dark.png');
   }
   return data;
 }
