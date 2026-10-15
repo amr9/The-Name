@@ -6,13 +6,16 @@ import { agencyServices } from './data.js';
 import './Agency.css';
 
 /**
- * The Agency page: the shared page hero (.rows-page / .page-hero in
- * theme.css), then one text section per service in `agencyServices`
- * (./data.js), the same six titles as the Agency row's chips on Home. Each
- * is a title beside its lead, body and a button to the enquiry form at the
- * foot of /about. The type is PillarRows' own (.pillar-title/-lead/-body,
- * loaded site-wide), so a service reads like a Home or Brands row without
- * its number, chips or picture. Copy is i18n `agency`.
+ * The Agency page, "Editorial" direction: the shared page hero
+ * (.rows-page / .page-hero in theme.css) with a larger title whose last
+ * words carry a yellow highlighter stroke, beside an "On this page" index
+ * of the services. Then one full-width row per service in `agencyServices`
+ * (./data.js), the same six titles as the Agency row's chips on Home: the
+ * title on one side, its lead, body and an underlined "Let's talk" link to
+ * the enquiry form on the other, between hairlines. The index links are
+ * router Links to `#<id>`, so hooks/useScrollToTop scrolls to the row
+ * (each row is a .scroll-anchor, clearing the sticky navbar) and the /ar
+ * prefix is kept. Copy is i18n `agency`.
  */
 export default function Agency() {
   const { t } = useLanguage();
@@ -20,24 +23,40 @@ export default function Agency() {
 
   return (
     <div className="rows-page agency-page">
-      <header className="container page-hero">
-        <span className="card-kicker">{a.kicker}</span>
-        <h1 className="page-title page-hero-title">{a.title}</h1>
-        <p className="page-hero-lede">{a.lede}</p>
+      <header className="container page-hero agency-hero">
+        <div className="agency-hero-text">
+          <span className="card-kicker">{a.kicker}</span>
+          <h1 className="page-title page-hero-title agency-title">
+            {a.titleLead} <span className="agency-title-mark">{a.titleMark}</span>
+          </h1>
+          <p className="page-hero-lede">{a.lede}</p>
+        </div>
+        <nav className="agency-index" aria-labelledby="agency-index-title">
+          <p id="agency-index-title" className="agency-index-title">{a.onThisPage}</p>
+          <ul className="agency-index-list">
+            {agencyServices.map(({ id }) => (
+              <li key={id}>
+                <Link to={`#${id}`} className="agency-index-link">{a.services[id].title}</Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </header>
 
-      <div className="container agency-services">
+      <div className="agency-services">
         {agencyServices.map(({ id }) => {
           const s = a.services[id];
           return (
-            <section key={id} className="agency-service" aria-labelledby={`agency-${id}`}>
-              <h2 id={`agency-${id}`} className="pillar-title agency-service-title">{s.title}</h2>
-              <div className="agency-service-text">
-                <p className="pillar-lead">{s.lead}</p>
-                <p className="pillar-body">{s.body}</p>
-                <Link to={contactLink} className="btn btn-primary">
-                  {a.rowCta} <Arrow />
-                </Link>
+            <section key={id} id={id} className="scroll-anchor agency-service" aria-labelledby={`agency-${id}`}>
+              <div className="container agency-service-inner">
+                <h2 id={`agency-${id}`} className="agency-service-title">{s.title}</h2>
+                <div className="agency-service-text">
+                  <p className="agency-service-lead">{s.lead}</p>
+                  <p className="agency-service-body">{s.body}</p>
+                  <Link to={contactLink} className="agency-service-link">
+                    {a.rowCta} <Arrow />
+                  </Link>
+                </div>
               </div>
             </section>
           );

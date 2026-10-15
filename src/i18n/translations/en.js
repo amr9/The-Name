@@ -308,7 +308,11 @@ export default {
   // The Agency page (pages/Agency/).
   agency: {
     kicker: "The Agency",
-    title: "Not just another agency.",
+    // The title in two parts: `titleMark` carries the yellow highlighter.
+    titleLead: "Not just another",
+    titleMark: "agency.",
+    // Heads the list of services beside the hero, each linking to its row.
+    onThisPage: "On this page",
     lede: "Your dedicated partner for 360-degree media and marketing: strategy, creative, media buying, digital, branding, CSR and sustainability, in one unified approach built for consistency, efficiency and maximum impact.",
     // The button under every service.
     rowCta: "Let's talk",

@@ -1,27 +1,119 @@
-/* The Agency page — the shared hero (.rows-page / .page-hero in theme.css),
-   then the services: each a title beside its text, between hairlines.
-   The type comes from PillarRows.css (.pillar-title/-lead/-body); only the
-   layout lives here. */
-.agency-services {
-  margin-top: clamp(var(--space-6), 4vw, calc(var(--space-8) * 1.5));
+/* The Agency page, "Editorial" direction. The page padding and the hero's
+   kicker / title / lede are the shared .rows-page / .page-hero rules in
+   theme.css; only what is particular to this page lives here. */
+
+/* — hero: the text beside the "On this page" index; the index drops under
+   the text on narrow screens. */
+.agency-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: calc(var(--space-8) * 1.5) calc(var(--space-8) * 2);
 }
-.agency-service {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: var(--space-6);
-  padding-block: clamp(var(--space-6), 4vw, calc(var(--space-8) * 1.25));
+.agency-hero-text { flex: 999 1 560px; min-width: 0; }
+/* Bigger than the other page heroes: on this page the title is the
+   picture. Top margin still comes from `.card-kicker + .page-title`. */
+.agency-page .agency-title {
+  font-size: clamp(44px, 7vw, 104px);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+}
+/* The yellow highlighter stroke under the title's last words, drawn as a
+   band of the brand accent across the lower part of the line. */
+.agency-title-mark {
+  background: linear-gradient(transparent 62%, var(--color-accent) 62%, var(--color-accent) 92%, transparent 92%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.agency-page .page-hero-lede { margin-top: calc(var(--space-8) * 1); }
+
+.agency-index { flex: 1 1 280px; min-width: 0; }
+.agency-index-title {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+}
+.agency-index-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   border-top: 1px solid var(--color-divider);
 }
-.agency-service:last-child { border-bottom: 1px solid var(--color-divider); }
-/* Level with the lead beside it, rather than the row's usual gap under a
-   number. */
-.agency-service .agency-service-title { margin-top: 0; }
-.agency-service-text > .pillar-lead { margin-top: 0; }
-.agency-service-text > .btn { margin-top: var(--space-6); }
+.agency-index-link {
+  display: block;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-divider);
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: padding-inline-start 0.2s ease, color 0.2s ease;
+}
+.agency-index-link:hover,
+.agency-index-link:focus-visible { padding-inline-start: var(--space-2); color: var(--color-accent-700); }
 
-@media (max-width: 760px) {
-  .agency-service {
-    grid-template-columns: 1fr;
-    gap: var(--space-3);
-  }
+/* — the services: full-width rows between hairlines, each the title beside
+   its text; a faint wash of the accent on hover. */
+.agency-services {
+  margin-top: clamp(var(--space-8), 6vw, calc(var(--space-8) * 2.5));
+  border-top: 1px solid var(--color-divider);
+}
+.agency-service {
+  border-bottom: 1px solid var(--color-divider);
+  transition: background-color 0.25s ease;
+}
+.agency-service:hover { background: color-mix(in srgb, var(--color-accent-100) 60%, transparent); }
+.agency-service-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6) calc(var(--space-8) * 2);
+  padding-block: clamp(calc(var(--space-8) * 1.25), 5vw, calc(var(--space-8) * 2));
+}
+.agency-service-title {
+  flex: 1 1 360px;
+  min-width: 0;
+  margin: 0;
+  font-size: clamp(28px, 3.4vw, 46px);
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+.agency-service-text { flex: 1.4 1 460px; min-width: 0; max-width: 640px; }
+.agency-service-lead {
+  margin: 0;
+  font-size: var(--text-lg);
+  line-height: 1.55;
+  font-weight: 600;
+}
+.agency-service-body {
+  margin: var(--space-4) 0 0;
+  line-height: 1.75;
+  color: var(--color-gray);
+}
+/* A quiet text link rather than a button: uppercase, underlined in the
+   brand yellow, the underline turning ink on hover. */
+.agency-service-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: calc(var(--space-6) + var(--space-1));
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--color-accent);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+.agency-service-link:hover,
+.agency-service-link:focus-visible { border-color: var(--color-ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .agency-index-link,
+  .agency-service,
+  .agency-service-link { transition: none; }
 }
