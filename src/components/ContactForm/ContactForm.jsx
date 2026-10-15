@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import WhatsAppButton from '../WhatsAppButton.jsx';
 import { addressLine, mapsLink, site, telLink } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { contactFields, honeypotField, timingField, validateContact } from '../../../shared/contactForm.js';
@@ -198,8 +197,6 @@ export default function ContactForm() {
             </dd>
           </div>
         </dl>
-
-        <WhatsAppButton className="btn btn-secondary">{t.common.chatOnWhatsapp}</WhatsAppButton>
 
         {/* The registered entity, carried over from the policies page — the
             trading name is "The Name", but the terms bind this company. */}

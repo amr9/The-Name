@@ -435,6 +435,10 @@ src/
                         foot of About it became a component, so the host page
                         owns the surrounding layout and its heading is an <h2>
                         (About already has the <h1>).
+                        No WhatsApp button in it any more: the "Chat with us"
+                        button under the details was removed at the owner's
+                        request (the chat bubble and the footer still offer
+                        WhatsApp).
                         Imports shared/contactForm.js directly and POSTs to
                         VITE_CONTACT_ENDPOINT or same-origin /api/contact,
                         with the page's `lang`. After sending it says "check
