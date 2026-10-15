@@ -1,6 +1,6 @@
+import { Link } from 'react-router-dom';
 import Arrow from '../../components/Arrow.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
-import SmartLink from '../../components/SmartLink.jsx';
 import PillarRows, { ROW_RATIO } from '../../components/PillarRows/PillarRows.jsx';
 import { brandLink, brands, brandsById } from '../../data/brands.js';
 import { media } from '../../data/media.js';
@@ -10,10 +10,11 @@ import './Brands.css';
 
 const featuredIds = new Set(featuredBrands.map((f) => f.brandId));
 
-// A brand's link (data/brands.js brandLink), via SmartLink: a full URL is a
-// plain <a>, an in-app path a router Link.
+// A brand's link (data/brands.js brandLink): a full URL is a plain <a>, an
+// in-app path a router Link — so it keeps the /ar prefix in Arabic.
 function BrandLink({ brand, ...props }) {
-  return <SmartLink to={brandLink(brand)} {...props} />;
+  const to = brandLink(brand);
+  return /^https?:/.test(to) ? <a href={to} {...props} /> : <Link to={to} {...props} />;
 }
 
 // One product card. A real product passes its photo and facts; a "coming

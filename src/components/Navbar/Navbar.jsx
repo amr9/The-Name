@@ -30,15 +30,19 @@ function Chevron() {
 // on the path alone, so it would light up as "current" on that whole page.
 // An entry with `url` (e.g. Shop → the Odoo store) leaves the site, so it is
 // a plain <a>.
+// Every in-app navbar link passes `fromNavbar`, so hooks/useScrollToTop opens
+// the page at its TOP even when the link has a #hash (F&B → /about#contact).
+const FROM_NAVBAR = { fromNavbar: true };
+
 function PageLink({ link, label }) {
   if (link.url) {
     return <a href={link.url} className="navbar-link">{label}</a>;
   }
   if (link.to.includes('#')) {
-    return <Link to={link.to} className="navbar-link">{label}</Link>;
+    return <Link to={link.to} state={FROM_NAVBAR} className="navbar-link">{label}</Link>;
   }
   return (
-    <NavLink to={link.to} end={link.to === '/'} className="navbar-link">
+    <NavLink to={link.to} state={FROM_NAVBAR} end={link.to === '/'} className="navbar-link">
       {label}
     </NavLink>
   );

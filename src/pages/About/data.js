@@ -2,11 +2,11 @@
 import { routes, shopLink } from '../../data/site.js';
 
 // The services, in the order they are listed. `to` is where each one's link
-// goes; `showBrands` lists the partner brands (data/brands.js) under it.
+// goes (`href` for the Odoo store, outside the site); `showBrands` lists the partner brands (data/brands.js) under it.
 export const aboutServices = [
-  { id: 'personalGifts', to: shopLink },
+  { id: 'personalGifts', href: shopLink },
   { id: 'corporateGifting', to: routes.business },
-  { id: 'curatedBrands', to: shopLink, showBrands: true },
+  { id: 'curatedBrands', href: shopLink, showBrands: true },
   { id: 'packaging', to: routes.business },
   // The enquiry form is now at the foot of this page, so this one is an anchor.
   { id: 'creative', to: '#contact' },

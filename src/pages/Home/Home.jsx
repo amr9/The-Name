@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Arrow from '../../components/Arrow.jsx';
 import AutoplayVideo from '../../components/AutoplayVideo.jsx';
 import FinalCta from '../../components/FinalCta.jsx';
-import SmartLink from '../../components/SmartLink.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import FilmLightbox from '../../components/FilmLightbox/FilmLightbox.jsx';
 import PillarRows, { ROW_RATIO } from '../../components/PillarRows/PillarRows.jsx';
@@ -76,11 +76,15 @@ export default function Home() {
       lead: info.lead,
       body: info.body,
       tags: info.tags,
-      actions: p.links.map((l, j) => (
-        <SmartLink key={l.key} to={l.to} className={j === 0 ? 'btn btn-primary' : 'btn btn-secondary'}>
-          {info.ctas[l.key]} <Arrow />
-        </SmartLink>
-      )),
+      // A link with `href` leaves the site (the Brands row's Shop → the Odoo
+      // store), so it is a plain <a>; the rest are in-app router Links.
+      actions: p.links.map((l, j) => {
+        const cls = j === 0 ? 'btn btn-primary' : 'btn btn-secondary';
+        const label = <>{info.ctas[l.key]} <Arrow /></>;
+        return l.href
+          ? <a key={l.key} href={l.href} className={cls}>{label}</a>
+          : <Link key={l.key} to={l.to} className={cls}>{label}</Link>;
+      }),
       mediaClass: video ? undefined : 'washed',
       media: ({ active }) =>
         video ? (
@@ -119,9 +123,9 @@ export default function Home() {
           <div className="home-hero-actions">
             {/* Labelled "Explore what we do" but opens the SHOP page — as
                 asked; the What-we-do section is linked from the footer. */}
-            <SmartLink to={shopLink} className="btn btn-primary">
+            <a href={shopLink} className="btn btn-primary">
               {h.hero.cta} <Arrow />
-            </SmartLink>
+            </a>
             {/* The Matterport walkthrough — an external 3D tour, so a plain
                 anchor rather than a router Link. */}
             <a

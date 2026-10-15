@@ -155,9 +155,9 @@ export const navLinks = [
 ];
 
 // Where EVERY "Shop" button and link goes: the Odoo store, straight there,
-// while the in-app Shop page (/store) is PARKED (App.jsx). Render it with
-// components/SmartLink.jsx, which makes a full URL a plain <a>. When the Shop
-// page returns, set this back to routes.shop and every button follows.
+// while the in-app Shop page (/store) is PARKED (App.jsx). It is a full URL,
+// so the buttons are plain <a href={shopLink}> rather than router Links (in
+// data lists: an `href` entry instead of a `to`).
 export const shopLink = site.odooShopUrl;
 
 // The enquiry form, at the foot of /about. Every "contact" link reads this.

@@ -13,7 +13,6 @@ import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { eventPackageIds, menuSections /* , partners */ } from './data.js';
 import './Cafe.css';
 import { shopLink } from '../../data/site.js';
-import SmartLink from '../../components/SmartLink.jsx';
 
 export default function Cafe() {
   const { t } = useLanguage();
@@ -47,7 +46,7 @@ export default function Cafe() {
           <ViewToggle view={view} onChange={setView} listLabel={t.cafe.viewList} cardsLabel={t.cafe.viewCards} />
           <span className="menu-updated">{t.cafe.updated}</span>
           <WhatsAppButton className="btn btn-secondary">{t.cafe.askAllergens}</WhatsAppButton>
-          <SmartLink to={shopLink} className="btn btn-ghost">{t.cafe.shopLink}</SmartLink>
+          <a href={shopLink} className="btn btn-ghost">{t.cafe.shopLink}</a>
         </div>
 
         {menuSections.map((section) => {

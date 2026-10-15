@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigationType } from 'react-router-dom';
 import scrollToElement from '../utils/scrollToElement.js';
 
 // How long to let the new page's .page-enter fade run before starting the
@@ -30,23 +30,44 @@ const WAIT_FOR_TARGET_MS = 4000;
  */
 export default function useScrollToTop() {
   // `key` is new on EVERY navigation, including a click on a link to the
-  // address already open (the navbar's F&B and Home's "Start a conversation"
-  // both go to /about#contact). Without it in the deps below, clicking such a
-  // link again after scrolling away does nothing, because the path and hash
-  // have not changed.
-  const { pathname, hash, key } = useLocation();
+  // address already open (an Agency "On this page" link clicked twice).
+  // Without it in the deps below, clicking such a link again after scrolling
+  // away does nothing, because the path and hash have not changed.
+  const { pathname, hash, key, state } = useLocation();
+  // 'POP' = the browser's Back/Forward (and the first load); 'PUSH' /
+  // 'REPLACE' = a link or button in the page.
+  const navigationType = useNavigationType();
   // Whether this run is a page change or just a move within the page already
   // open, which decides where the scroll starts from below.
   const lastPathname = useRef(null);
 
+  // This hook decides every scroll position itself, so the browser must not
+  // restore its own: with the default 'auto', Back/Forward put the old offset
+  // back AFTER the reset below (e.g. returning to /about#contact landed on
+  // the contact form again).
   useEffect(() => {
+    if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual';
+  }, []);
+
+  useEffect(() => {
+    const firstLoad = lastPathname.current === null;
     const changedPage = lastPathname.current !== pathname;
     lastPathname.current = pathname;
+
+    // Only an explicit jump goes to a #section: a button or link inside a
+    // page (Home's "Start a conversation", the Agency index), or a link that
+    // was opened directly (first load). Browsing with the NAVBAR (its links
+    // pass state.fromNavbar, components/Navbar) and Back/Forward open the
+    // page at the top instead, even when the address has a hash: the
+    // navbar's F&B & Concept Store is /about#contact while /cafe is parked,
+    // and it should read as opening that page, not as being dropped at the
+    // foot of it.
+    const jumpToSection = Boolean(hash) && (firstLoad || (navigationType !== 'POP' && !state?.fromNavbar));
 
     // 'instant' is explicit rather than implied: it keeps a plain page change
     // a jump rather than a long animated scroll through the new page, even if
     // a global scroll-behavior is ever added to html.
-    if (!hash) {
+    if (!jumpToSection) {
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       return undefined;
     }
@@ -101,5 +122,5 @@ export default function useScrollToTop() {
       window.clearTimeout(scrollTimer);
       cancelScroll();
     };
-  }, [pathname, hash, key]);
+  }, [pathname, hash, key, state, navigationType]);
 }

@@ -14,7 +14,7 @@ export const pillars = [
     num: '02',
     links: [
       { key: 'explore', to: routes.brands },
-      { key: 'shop', to: shopLink },
+      { key: 'shop', href: shopLink },
     ],
   },
   { id: 'agency', num: '03', links: [{ key: 'explore', to: routes.agency }] },
