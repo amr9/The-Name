@@ -165,6 +165,143 @@ export default {
           },
         },
       },
+      // The brands below: products and facts from their 2026 catalogues
+      // (vertex.ae/catalogues, Main Catalogue).
+      cerruti1881: {
+        intro: "Italian elegance for work and travel — textured leathers, clean lines and the Cerruti 1881 signature on bags, small leather goods and writing instruments.",
+        products: {
+          cerrutiHudsonTravelBag: {
+            name: "Hudson Travel Bag",
+            line: "The line's most fashion-forward piece: vintage-textured leather in a deep chocolate, finished with gunmetal accents.",
+            facts: ["Chocolate brown", "Gunmetal details", "RR zippers"],
+          },
+          cerrutiEastonBackpack: {
+            name: "Easton Backpack",
+            line: "A roll-top backpack in a smooth matte finish, with a buckled strap and a zipped front pocket.",
+            facts: ["Roll-top", "Black · green · bright blue · navy", "Matching dressing-case"],
+          },
+        },
+      },
+      hugoBoss: {
+        intro: "The BOSS Double B monogram on writing instruments, electronics, umbrellas and leather goods — modern design with a confident signature.",
+        products: {
+          hugoBossElementalSpeaker: {
+            name: "Elemental Mini Speaker",
+            line: "A compact speaker in metallised finishes, with the Double B logo on its main control button.",
+            facts: ["5 W sound", "5 h battery · USB-C", "Black · silver · camel"],
+          },
+          hugoBossVarsityUmbrella: {
+            name: "Varsity Pocket Umbrella",
+            line: "A compact umbrella with the varsity Double B motif and an iconic stripe trimming the canopy.",
+            facts: ["Auto open & close", "4 colours", "Zipped gift pouch"],
+          },
+        },
+      },
+      cacharel: {
+        intro: "Parisian femininity in soft colours — bags, watches, scarves and jewellery, signed with Cacharel's gold-toned C.",
+        products: {
+          cacharelSeraphineTote: {
+            name: "Séraphine Tote",
+            line: "A roomy everyday tote with a detachable pouch and an oversized gold-toned C plate.",
+            facts: ["2-in-1 with pouch", "Hook-and-ring closure", "5 colours"],
+          },
+          cacharelSeraphineWatch: {
+            name: "Séraphine Watch",
+            line: "An angular, finely proportioned case on a Saffiano-finished strap, with a small crystal detail.",
+            facts: ["Sunray dial", "Saffiano strap", "4 colours"],
+          },
+        },
+      },
+      festina: {
+        intro: "Spanish craftsmanship in travel goods, writing instruments and accessories — rich textures, precise details and the Festina blazon.",
+        products: {
+          festinaInterlaceTravelBag: {
+            name: "Interlace Travel Bag",
+            line: "A woven texture that looks hand-braided, in a smooth matte finish with blazon-engraved zip pullers.",
+            facts: ["Black · taupe · navy", "Gun accents", "Matching travel line"],
+          },
+          festinaBlackEditionPen: {
+            name: "Classicals Black Edition Pen",
+            line: "The Classicals pen in a full brushed black, with a sharp colour accent on the logo and rings.",
+            facts: ["Brushed black", "Yellow · red · blue", "Matching card holders"],
+          },
+        },
+      },
+      christianLacroix: {
+        intro: "French couture spirit in watches, bags and accessories — confident colour and the Christian Lacroix signature on every piece.",
+        products: {
+          lacroixCaprioWatch: {
+            name: "Caprio Watch",
+            line: "A sporty watch with a bold bezel on a textured strap, also offered as a chronograph.",
+            facts: ["Rose gold · black", "Date or chronograph", "Textile strap"],
+          },
+          lacroixWhitelineTravelBag: {
+            name: "Whiteline Travel Bag",
+            line: "A black weekender traced with a fine white line, from a matching range of bags.",
+            facts: ["Black", "Shoulder strap", "Matching backpack & bags"],
+          },
+        },
+      },
+      lexon: {
+        intro: "French design objects that are useful, beautiful and affordable — lamps, clocks and tech made for homes, hotels and offices.",
+        products: {
+          lexonMinaM: {
+            name: "Mina M Lamp",
+            line: "A portable aluminium lamp for indoors and out — press its top to change between 9 dimmable colours.",
+            facts: ["Up to 24 h battery", "USB-C or wireless", "IPX4"],
+          },
+          lexonFlipPremium: {
+            name: "Flip Premium Clock",
+            line: "The iconic reversible alarm clock in aluminium — flip it over to turn the alarm on or off.",
+            facts: ["Pure black LCD", "Sound-activated screen", "Up to 6 months battery"],
+          },
+        },
+      },
+      sols: {
+        intro: "French apparel made to be personalised — essentials, premium Edition pieces and workwear in a wide palette of colours.",
+        products: {
+          solsCameronHoodie: {
+            name: "Cameron Hoodie",
+            line: "A unisex hoodie in brushed fleece, with a contrasting jersey-lined hood and a kangaroo pocket.",
+            facts: ["280 g fleece", "Recycled polyester", "XS – 3XL"],
+          },
+          solsLegendTee: {
+            name: "Legend T-shirt",
+            line: "SOL'S best-selling tee in organic combed cotton, with a modern, comfortable fit.",
+            facts: ["175 g jersey", "Organic cotton", "XS – 3XL"],
+          },
+        },
+      },
+      ungaro: {
+        intro: "Parisian flair in silk scarves, watches and leather goods — bold prints and refined details from the house of Ungaro.",
+        products: {
+          ungaroMiloWatch: {
+            name: "Milo Date Watch",
+            line: "A sporty date watch with a diver-style bezel on a soft rubber strap.",
+            facts: ["Date window", "Green · navy · yellow · grey", "Rubber strap"],
+          },
+          ungaroPaolaDocumentBag: {
+            name: "Paola Document Bag",
+            line: "A structured black document bag with gold-toned hardware, made to pair with the Paola watch.",
+            facts: ["Black", "Gold-toned details", "Matching Paola watch"],
+          },
+        },
+      },
+      makito: {
+        intro: "A wide promotional range from Spain — bags, drinkware, tech and more, made to be printed with your logo.",
+        products: {
+          makitoMekongBackpack: {
+            name: "Mekong Backpack",
+            line: "A backpack-bag hybrid with padded back and straps, and its own shoe compartment.",
+            facts: ["32.5 × 45 × 23 cm", "Shoe compartment", "Padded straps"],
+          },
+          makitoStaverBottle: {
+            name: "Staver Bottle",
+            line: "A double-wall stainless-steel bottle, copper vacuum insulated, with a carry loop on the lid.",
+            facts: ["650 ml", "Copper vacuum insulated", "5 colours"],
+          },
+        },
+      },
     },
   },
 

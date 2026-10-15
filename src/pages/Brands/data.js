@@ -18,25 +18,28 @@ export const featuredBrands = [
   { brandId: 'pantone', products: ['pantoneOriginalMug', 'pantoneGatefoldNotebook'] },
   { brandId: 'lundLondon', products: ['skittleWaterBottle', 'lundWirelessLamp'] },
   { brandId: 'prodir', products: ['prodirMs8', 'prodirMc01'] },
+  // The brands whose 2026 catalogues are on vertex.ae/catalogues (Main
+  // Catalogue) — products and facts taken from those catalogues. In the
+  // order of the MENA partner slide.
+  { brandId: 'cerruti1881', products: ['cerrutiHudsonTravelBag', 'cerrutiEastonBackpack'] },
+  { brandId: 'hugoBoss', products: ['hugoBossElementalSpeaker', 'hugoBossVarsityUmbrella'] },
+  { brandId: 'cacharel', products: ['cacharelSeraphineTote', 'cacharelSeraphineWatch'] },
+  { brandId: 'festina', products: ['festinaInterlaceTravelBag', 'festinaBlackEditionPen'] },
+  { brandId: 'christianLacroix', products: ['lacroixCaprioWatch', 'lacroixWhitelineTravelBag'] },
+  { brandId: 'lexon', products: ['lexonMinaM', 'lexonFlipPremium'] },
+  { brandId: 'sols', products: ['solsCameronHoodie', 'solsLegendTee'] },
+  { brandId: 'ungaro', products: ['ungaroMiloWatch', 'ungaroPaolaDocumentBag'] },
+  { brandId: 'makito', products: ['makitoMekongBackpack', 'makitoStaverBottle'] },
   // PARKED until their content arrives — for now these brands sit in the
   // "Also in our collection" logo cards (every brand not listed here does).
   // To give one its own row: uncomment it here (it shows the "coming soon"
-  // row), or better, add its `products` and copy first. In the order of the
-  // MENA partner slide.
-  // { brandId: 'cerruti1881' },
-  // { brandId: 'hugoBoss' },
-  // { brandId: 'cacharel' },
+  // row), or better, add its `products` and copy first. Senator and Korin
+  // are on vertex.ae too, but their FlippingBook catalogues were offline.
   // { brandId: 'ninaRicci' },
-  // { brandId: 'festina' },
   // { brandId: 'iceWatch' },
-  // { brandId: 'christianLacroix' },
   // { brandId: 'korin' },
   // { brandId: 'gingko' },
-  // { brandId: 'lexon' },
   // { brandId: 'senator' },
-  // { brandId: 'sols' },
-  // { brandId: 'ungaro' },
   // { brandId: 'pitaka' },
-  // { brandId: 'makito' },
   // { brandId: 'mob' },
 ];

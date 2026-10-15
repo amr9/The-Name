@@ -216,6 +216,27 @@ export const media = {
     lundWirelessLamp: `${BASE}/brands/products/lund-wireless-lamp.webp`,
     prodirMs8: `${BASE}/brands/products/prodir-ms8.webp`,
     prodirMc01: `${BASE}/brands/products/prodir-mc01.webp`,
+    // From the 2026 brand catalogues on vertex.ae/catalogues (Main
+    // Catalogue), cropped to 4:5 from the catalogue pages; Lexon, SOL'S and
+    // Makito are the catalogues' own embedded photos.
+    cerrutiHudsonTravelBag: `${BASE}/brands/products/cerruti-hudson-travel-bag.webp`,
+    cerrutiEastonBackpack: `${BASE}/brands/products/cerruti-easton-backpack.webp`,
+    hugoBossElementalSpeaker: `${BASE}/brands/products/hugo-boss-elemental-speaker.webp`,
+    hugoBossVarsityUmbrella: `${BASE}/brands/products/hugo-boss-varsity-umbrella.webp`,
+    cacharelSeraphineTote: `${BASE}/brands/products/cacharel-seraphine-tote.webp`,
+    cacharelSeraphineWatch: `${BASE}/brands/products/cacharel-seraphine-watch.webp`,
+    festinaInterlaceTravelBag: `${BASE}/brands/products/festina-interlace-travel-bag.webp`,
+    festinaBlackEditionPen: `${BASE}/brands/products/festina-black-edition-pen.webp`,
+    lacroixCaprioWatch: `${BASE}/brands/products/lacroix-caprio-watch.webp`,
+    lacroixWhitelineTravelBag: `${BASE}/brands/products/lacroix-whiteline-travel-bag.webp`,
+    lexonMinaM: `${BASE}/brands/products/lexon-mina-m.webp`,
+    lexonFlipPremium: `${BASE}/brands/products/lexon-flip-premium.webp`,
+    solsCameronHoodie: `${BASE}/brands/products/sols-cameron-hoodie.webp`,
+    solsLegendTee: `${BASE}/brands/products/sols-legend-tee.webp`,
+    ungaroMiloWatch: `${BASE}/brands/products/ungaro-milo-watch.webp`,
+    ungaroPaolaDocumentBag: `${BASE}/brands/products/ungaro-paola-document-bag.webp`,
+    makitoMekongBackpack: `${BASE}/brands/products/makito-mekong-backpack.webp`,
+    makitoStaverBottle: `${BASE}/brands/products/makito-staver-bottle.webp`,
   },
 
   // Delivery partner logos for the Cafe logo strip (currently commented out)
