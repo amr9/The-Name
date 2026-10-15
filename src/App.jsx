@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar.jsx';
 import Footer from './components/Footer/Footer.jsx';
@@ -11,7 +11,7 @@ import useCarouselAutoplay from './hooks/useCarouselAutoplay.js';
 import useScrollToTop from './hooks/useScrollToTop.js';
 import useSectionReveal from './hooks/useSectionReveal.js';
 import useDocumentHead from './hooks/useDocumentHead.js';
-import { routes } from './data/site.js';
+import { routes, site } from './data/site.js';
 // Home is the landing page, so it ships in the main bundle — splitting it
 // would only add a second round trip before the first paint. Every other page
 // is LAZY: its JavaScript is fetched the first time it is visited. Their CSS
@@ -23,7 +23,19 @@ import './pages/lazyPageStyles.js';
 // below (and the nav entry in data/site.js) to bring it back.
 // const Cafe = lazy(() => import('./pages/Cafe/Cafe.jsx'));
 const Kids = lazy(() => import('./pages/Kids/Kids.jsx'));
-const Shop = lazy(() => import('./pages/Shop/Shop.jsx'));
+// The Shop page is PARKED, not deleted — the navbar/footer "Shop" links go
+// straight to the Odoo store (site.odooShopUrl). Uncomment this import and its
+// route below (and restore the routes.shop entries in data/site.js) to bring
+// it back.
+// const Shop = lazy(() => import('./pages/Shop/Shop.jsx'));
+
+// While Shop is parked, the old in-app paths (/store, /shop) and every button
+// still linking to routes.shop hand the visitor to the Odoo store instead of
+// the 404.
+function ToOdooShop() {
+  useEffect(() => { window.location.replace(site.odooShopUrl); }, []);
+  return null;
+}
 const Brands = lazy(() => import('./pages/Brands/Brands.jsx'));
 const Business = lazy(() => import('./pages/Business/Business.jsx'));
 const Agency = lazy(() => import('./pages/Agency/Agency.jsx'));
@@ -56,7 +68,8 @@ export default function App() {
                 /corporate-gifts), so a rename is made there, not here. */}
             <Route path={routes.home} element={<Home />} />
             {/* <Route path={routes.cafe} element={<Cafe />} /> */}
-            <Route path={routes.shop} element={<Shop />} />
+            {/* <Route path={routes.shop} element={<Shop />} /> */}
+            <Route path={routes.shop} element={<ToOdooShop />} />
             <Route path={routes.brands} element={<Brands />} />
             {/* Customize Yours was its own page here; it is now a section of
                 Home, so old links land on it. */}
@@ -70,7 +83,7 @@ export default function App() {
             {/* The OLD paths, from before the URLs were renamed to match the
                 navbar. They redirect rather than 404, so bookmarks and links
                 already shared keep working. */}
-            <Route path="/shop" element={<Navigate to={routes.shop} replace />} />
+            <Route path="/shop" element={<ToOdooShop />} />
             <Route path="/business" element={<Navigate to={routes.business} replace />} />
             <Route path="/kids" element={<Navigate to={routes.events} replace />} />
             {/* Terms, delivery/returns and privacy, all on one page; the

@@ -47,6 +47,9 @@ export const site = {
   // page's button hands you to a category page rather than the front. Not
   // under /shop/: it is a CMS page on the store, not a category.
   customizableUrl: 'https://store.thename.ae/customizable-products',
+  // The Odoo shop. The navbar and footer "Shop" links go straight here while
+  // the in-app Shop page (/store) is PARKED — see App.jsx.
+  odooShopUrl: 'https://thenamemea.odoo.llc/shop',
 
   // — SEO (read by utils/pageHead.js and scripts/prerender.mjs) —
   //
@@ -140,7 +143,7 @@ export const routes = {
 // the bar and the footer print them in CAPITALS via CSS text-transform.
 export const navLinks = [
   { to: routes.home, key: 'home' },
-  { to: routes.shop, key: 'shop' },
+  // { to: routes.shop, key: 'shop' }, // PARKED with the Shop page (App.jsx)
   { to: routes.brands, key: 'brands' },
   { to: routes.business, key: 'business' },
   { to: routes.agency, key: 'agency' },
@@ -171,10 +174,11 @@ export const whatWeDoLinks = [
 ];
 
 // The navbar, top level. An entry with `children` is a DROPDOWN instead of a
-// link: its label is a button that opens the list (Navbar.jsx).
+// link: its label is a button that opens the list (Navbar.jsx). An entry with
+// `url` instead of `to` is an EXTERNAL link (a plain <a>).
 export const navMenu = [
   { to: routes.home, key: 'home' },
-  { to: routes.shop, key: 'shop' },
+  { url: site.odooShopUrl, key: 'shop' },
   { key: 'whatWeDo', children: whatWeDoLinks },
   { to: routes.about, key: 'about' },
 ];
@@ -182,7 +186,7 @@ export const navMenu = [
 // The footer's Explore column.
 export const footerExplore = [
   { to: routes.home, key: 'home' },
-  { to: routes.shop, key: 'shop' },
+  { url: site.odooShopUrl, key: 'shop' },
   { to: whatWeDoLink, key: 'whatWeDo' },
   { to: routes.about, key: 'about' },
 ];

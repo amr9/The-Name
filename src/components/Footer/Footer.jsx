@@ -57,7 +57,7 @@ export default function Footer() {
         <div className="footer-columns">
           <Column heading={f.exploreHeading}>
             {footerExplore.map((l) => (
-              <FooterLink key={l.key} to={l.to}>{t.nav[l.key]}</FooterLink>
+              <FooterLink key={l.key} to={l.to} href={l.url}>{t.nav[l.key]}</FooterLink>
             ))}
           </Column>
 

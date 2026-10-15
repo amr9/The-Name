@@ -28,7 +28,12 @@ function Chevron() {
 // A plain page link in the bar or inside a dropdown. A link to a SECTION
 // (with a #hash, e.g. F&B → /about#contact) is a plain Link: NavLink matches
 // on the path alone, so it would light up as "current" on that whole page.
+// An entry with `url` (e.g. Shop → the Odoo store) leaves the site, so it is
+// a plain <a>.
 function PageLink({ link, label }) {
+  if (link.url) {
+    return <a href={link.url} className="navbar-link">{label}</a>;
+  }
   if (link.to.includes('#')) {
     return <Link to={link.to} className="navbar-link">{label}</Link>;
   }
