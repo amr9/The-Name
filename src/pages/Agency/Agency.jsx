@@ -8,8 +8,8 @@ import './Agency.css';
 /**
  * The Agency page, "Editorial" direction: the shared page hero
  * (.rows-page / .page-hero in theme.css) with a larger title whose last
- * words carry a yellow highlighter stroke, beside an "On this page" index
- * of the services. Then one full-width row per service in `agencyServices`
+ * words are in .gold-leaf (the Home hero name's gradient), with an "On this
+ * page" index of the services on the right. Then one full-width row per service in `agencyServices`
  * (./data.js), the same six titles as the Agency row's chips on Home: the
  * title on one side, its lead, body and an underlined "Let's talk" link to
  * the enquiry form on the other, between hairlines. The index links are
@@ -27,7 +27,7 @@ export default function Agency() {
         <div className="agency-hero-text">
           <span className="card-kicker">{a.kicker}</span>
           <h1 className="page-title page-hero-title agency-title">
-            {a.titleLead} <span className="agency-title-mark">{a.titleMark}</span>
+            {a.titleLead} <span className="gold-leaf agency-title-mark">{a.titleMark}</span>
           </h1>
           <p className="page-hero-lede">{a.lede}</p>
         </div>

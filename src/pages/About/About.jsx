@@ -8,7 +8,7 @@ import './About.css';
 // The services / how-we-work / mission / closing-CTA block further down is
 // PARKED (see the big comment in the markup). These imports belong to that
 // parked markup — uncomment them along with it.
-// import { Link } from 'react-router-dom';
+// import SmartLink from '../../components/SmartLink.jsx';
 // import VideoPlaceholder from '../../components/VideoPlaceholder/VideoPlaceholder.jsx';
 // import ProcessSteps from '../../components/ProcessSteps/ProcessSteps.jsx';
 // import WhatsAppButton from '../../components/WhatsAppButton.jsx';
@@ -169,7 +169,7 @@ export default function About() {
                     ))}
                   </ul>
                 )}
-                <Link to={s.to} className="btn btn-ghost about-service-link">{info.cta}</Link>
+                <SmartLink to={s.to} className="btn btn-ghost about-service-link">{info.cta}</SmartLink>
               </article>
             );
           })}

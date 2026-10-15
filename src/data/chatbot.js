@@ -6,10 +6,10 @@
 //   appendMethods — lists every customization method with its lead time and
 //                   minimum, read from the same i18n entries as the Home
 //                   "how it works" panel, so the two can never disagree
-import { routes } from './site.js';
+import { routes, shopLink } from './site.js';
 
 export const chatTopics = [
-  { id: 'products', to: routes.shop },
+  { id: 'products', to: shopLink },
   { id: 'personalise', to: '/about' },
   { id: 'leadTimes', appendMethods: true },
   { id: 'business', to: routes.business },

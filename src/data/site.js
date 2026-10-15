@@ -154,6 +154,12 @@ export const navLinks = [
   // will link to the store's own pages (see policySections below).
 ];
 
+// Where EVERY "Shop" button and link goes: the Odoo store, straight there,
+// while the in-app Shop page (/store) is PARKED (App.jsx). Render it with
+// components/SmartLink.jsx, which makes a full URL a plain <a>. When the Shop
+// page returns, set this back to routes.shop and every button follows.
+export const shopLink = site.odooShopUrl;
+
 // The enquiry form, at the foot of /about. Every "contact" link reads this.
 export const contactLink = `${routes.about}#contact`;
 
@@ -178,7 +184,7 @@ export const whatWeDoLinks = [
 // `url` instead of `to` is an EXTERNAL link (a plain <a>).
 export const navMenu = [
   { to: routes.home, key: 'home' },
-  { url: site.odooShopUrl, key: 'shop' },
+  { url: shopLink, key: 'shop' },
   { key: 'whatWeDo', children: whatWeDoLinks },
   { to: routes.about, key: 'about' },
 ];
@@ -186,7 +192,7 @@ export const navMenu = [
 // The footer's Explore column.
 export const footerExplore = [
   { to: routes.home, key: 'home' },
-  { url: site.odooShopUrl, key: 'shop' },
+  { url: shopLink, key: 'shop' },
   { to: whatWeDoLink, key: 'whatWeDo' },
   { to: routes.about, key: 'about' },
 ];

@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 // Bubbles are PARKED site-wide — uncomment these two imports and the three
 // <Bubbles> below to bring them back.
 // import Bubbles from '../../components/Bubbles/Bubbles.jsx';
@@ -13,7 +12,8 @@ import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { activationShots, kidsOffers } from './data.js';
 import Doodles from './Doodles.jsx';
 import './Kids.css';
-import { routes } from '../../data/site.js';
+import { shopLink } from '../../data/site.js';
+import SmartLink from '../../components/SmartLink.jsx';
 
 export default function Kids() {
   const { t } = useLanguage();
@@ -34,7 +34,7 @@ export default function Kids() {
           <h1 className="page-title kids-hero-title">{k.title}</h1>
           <p className="kids-hero-lede">{k.lede}</p>
           <div className="kids-hero-actions">
-            <Link to={routes.shop} className="btn btn-primary"><ShopIcon />{k.ctaShop}</Link>
+            <SmartLink to={shopLink} className="btn btn-primary"><ShopIcon />{k.ctaShop}</SmartLink>
             <WhatsAppButton className="btn btn-secondary">{k.ctaAsk}</WhatsAppButton>
           </div>
         </div>
@@ -142,7 +142,7 @@ export default function Kids() {
         <h2 className="kids-section-title">{k.cta.heading}</h2>
         <p className="kids-section-lede">{k.cta.body}</p>
         <div className="kids-hero-actions">
-          <Link to={routes.shop} className="btn btn-primary"><ShopIcon />{k.cta.shop}</Link>
+          <SmartLink to={shopLink} className="btn btn-primary"><ShopIcon />{k.cta.shop}</SmartLink>
           <WhatsAppButton className="btn btn-secondary">{k.cta.whatsapp}</WhatsAppButton>
         </div>
       </section>

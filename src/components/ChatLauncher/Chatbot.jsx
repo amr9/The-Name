@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
 import WhatsAppButton from '../WhatsAppButton.jsx';
 import { chatTopics } from '../../data/chatbot.js';
 import en from '../../i18n/translations/en.js';
@@ -114,7 +113,7 @@ export default function Chatbot({ onBack, onClose }) {
             ))}
           </ul>
         )}
-        {topic.to && <Link to={topic.to} className="chatbot-link" onClick={onClose}>{c.openPage}</Link>}
+        {topic.to && <SmartLink to={topic.to} className="chatbot-link" onClick={onClose}>{c.openPage}</SmartLink>}
         {topic.whatsapp && (
           <WhatsAppButton className="btn btn-primary chatbot-wa">{c.continueWhatsapp}</WhatsAppButton>
         )}

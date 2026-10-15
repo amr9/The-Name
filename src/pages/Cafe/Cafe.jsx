@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import Bubbles from '../../components/Bubbles/Bubbles.jsx';
 import { foodIcons } from '../../components/Bubbles/icons.jsx';
 import Carousel from '../../components/Carousel.jsx';
@@ -13,7 +12,8 @@ import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { eventPackageIds, menuSections /* , partners */ } from './data.js';
 import './Cafe.css';
-import { routes } from '../../data/site.js';
+import { shopLink } from '../../data/site.js';
+import SmartLink from '../../components/SmartLink.jsx';
 
 export default function Cafe() {
   const { t } = useLanguage();
@@ -47,7 +47,7 @@ export default function Cafe() {
           <ViewToggle view={view} onChange={setView} listLabel={t.cafe.viewList} cardsLabel={t.cafe.viewCards} />
           <span className="menu-updated">{t.cafe.updated}</span>
           <WhatsAppButton className="btn btn-secondary">{t.cafe.askAllergens}</WhatsAppButton>
-          <Link to={routes.shop} className="btn btn-ghost">{t.cafe.shopLink}</Link>
+          <SmartLink to={shopLink} className="btn btn-ghost">{t.cafe.shopLink}</SmartLink>
         </div>
 
         {menuSections.map((section) => {

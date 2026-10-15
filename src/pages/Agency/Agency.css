@@ -2,15 +2,17 @@
    kicker / title / lede are the shared .rows-page / .page-hero rules in
    theme.css; only what is particular to this page lives here. */
 
-/* — hero: the text beside the "On this page" index; the index drops under
-   the text on narrow screens. */
+/* — hero: the text, with the "On this page" index on the RIGHT of the page
+   in both languages (so under RTL the row is reversed); the index drops
+   under the text on narrow screens. */
 .agency-hero {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
   gap: calc(var(--space-8) * 1.5) calc(var(--space-8) * 2);
 }
-.agency-hero-text { flex: 999 1 560px; min-width: 0; }
+[dir="rtl"] .agency-hero { flex-direction: row-reverse; }
+.agency-hero-text { flex: 999 1 480px; min-width: 0; }
 /* Bigger than the other page heroes: on this page the title is the
    picture. Top margin still comes from `.card-kicker + .page-title`. */
 .agency-page .agency-title {
@@ -18,16 +20,13 @@
   line-height: 0.98;
   letter-spacing: -0.03em;
 }
-/* The yellow highlighter stroke under the title's last words, drawn as a
-   band of the brand accent across the lower part of the line. */
-.agency-title-mark {
-  background: linear-gradient(transparent 62%, var(--color-accent) 62%, var(--color-accent) 92%, transparent 92%);
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
+/* The title's last words in .gold-leaf (theme.css), the gradient of the
+   name in the Home hero title. The title is italic, so the gradient's box
+   gets a little room at the end or the slanted last letter is clipped. */
+.agency-title-mark { padding-inline-end: 0.08em; }
 .agency-page .page-hero-lede { margin-top: calc(var(--space-8) * 1); }
 
-.agency-index { flex: 1 1 280px; min-width: 0; }
+.agency-index { flex: 1 1 260px; min-width: 0; }
 .agency-index-title {
   margin: 0 0 var(--space-3);
   font-size: var(--text-xs);
@@ -55,16 +54,12 @@
 .agency-index-link:focus-visible { padding-inline-start: var(--space-2); color: var(--color-accent-700); }
 
 /* — the services: full-width rows between hairlines, each the title beside
-   its text; a faint wash of the accent on hover. */
+   its text. */
 .agency-services {
   margin-top: clamp(var(--space-8), 6vw, calc(var(--space-8) * 2.5));
   border-top: 1px solid var(--color-divider);
 }
-.agency-service {
-  border-bottom: 1px solid var(--color-divider);
-  transition: background-color 0.25s ease;
-}
-.agency-service:hover { background: color-mix(in srgb, var(--color-accent-100) 60%, transparent); }
+.agency-service { border-bottom: 1px solid var(--color-divider); }
 .agency-service-inner {
   display: flex;
   flex-wrap: wrap;
@@ -114,6 +109,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .agency-index-link,
-  .agency-service,
   .agency-service-link { transition: none; }
 }

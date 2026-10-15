@@ -5,7 +5,7 @@
 // `links` are the row's buttons; `key` picks the label from
 // home.pillars[id].ctas. F&B points at the enquiry form because its own page
 // (/cafe) is PARKED — swap in routes.cafe when that route comes back.
-import { contactLink, routes } from '../../data/site.js';
+import { contactLink, routes, shopLink } from '../../data/site.js';
 
 export const pillars = [
   { id: 'corporateGifts', num: '01', links: [{ key: 'explore', to: routes.business }] },
@@ -14,7 +14,7 @@ export const pillars = [
     num: '02',
     links: [
       { key: 'explore', to: routes.brands },
-      { key: 'shop', to: routes.shop },
+      { key: 'shop', to: shopLink },
     ],
   },
   { id: 'agency', num: '03', links: [{ key: 'explore', to: routes.agency }] },

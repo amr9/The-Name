@@ -29,7 +29,12 @@ const WAIT_FOR_TARGET_MS = 4000;
  * lands underneath the bar. Policies.css sets it on the sections there.
  */
 export default function useScrollToTop() {
-  const { pathname, hash } = useLocation();
+  // `key` is new on EVERY navigation, including a click on a link to the
+  // address already open (the navbar's F&B and Home's "Start a conversation"
+  // both go to /about#contact). Without it in the deps below, clicking such a
+  // link again after scrolling away does nothing, because the path and hash
+  // have not changed.
+  const { pathname, hash, key } = useLocation();
   // Whether this run is a page change or just a move within the page already
   // open, which decides where the scroll starts from below.
   const lastPathname = useRef(null);
@@ -96,5 +101,5 @@ export default function useScrollToTop() {
       window.clearTimeout(scrollTimer);
       cancelScroll();
     };
-  }, [pathname, hash]);
+  }, [pathname, hash, key]);
 }

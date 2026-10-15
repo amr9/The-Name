@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Arrow from '../../components/Arrow.jsx';
 import AutoplayVideo from '../../components/AutoplayVideo.jsx';
 import FinalCta from '../../components/FinalCta.jsx';
+import SmartLink from '../../components/SmartLink.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import FilmLightbox from '../../components/FilmLightbox/FilmLightbox.jsx';
 import PillarRows, { ROW_RATIO } from '../../components/PillarRows/PillarRows.jsx';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import { contactLink, routes } from '../../data/site.js';
+import { contactLink, shopLink } from '../../data/site.js';
 import { pillars } from './data.js';
 import './Home.css';
 
@@ -77,9 +77,9 @@ export default function Home() {
       body: info.body,
       tags: info.tags,
       actions: p.links.map((l, j) => (
-        <Link key={l.key} to={l.to} className={j === 0 ? 'btn btn-primary' : 'btn btn-secondary'}>
+        <SmartLink key={l.key} to={l.to} className={j === 0 ? 'btn btn-primary' : 'btn btn-secondary'}>
           {info.ctas[l.key]} <Arrow />
-        </Link>
+        </SmartLink>
       )),
       mediaClass: video ? undefined : 'washed',
       media: ({ active }) =>
@@ -119,9 +119,9 @@ export default function Home() {
           <div className="home-hero-actions">
             {/* Labelled "Explore what we do" but opens the SHOP page — as
                 asked; the What-we-do section is linked from the footer. */}
-            <Link to={routes.shop} className="btn btn-primary">
+            <SmartLink to={shopLink} className="btn btn-primary">
               {h.hero.cta} <Arrow />
-            </Link>
+            </SmartLink>
             {/* The Matterport walkthrough — an external 3D tour, so a plain
                 anchor rather than a router Link. */}
             <a
