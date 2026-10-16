@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import Arrow from '../../components/Arrow.jsx';
+import AutoplayVideo from '../../components/AutoplayVideo.jsx';
 import { STAGE_QUERY } from '../../components/PillarRows/PillarRows.jsx';
+import { media } from '../../data/media.js';
 import { contactLink } from '../../data/site.js';
 import useScrollStage from '../../hooks/useScrollStage.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
@@ -14,10 +16,14 @@ import './Agency.css';
  * in `agencyServices` (./data.js), the same six titles as the Agency row's
  * chips on Home: full-width rows between hairlines, the title on one side,
  * its lead, body and an underlined "Let's talk" link to the enquiry form on
- * the other. On PHONES they become the same pinned stage as Home's "What we
+ * the other. On desktop/tablet ONE film (media.agencyOutdoor, 16:9) sits beside
+ * them, pinned under the navbar and playing on while the services scroll
+ * past it. On PHONES they become the same pinned stage as Home's "What we
  * do" (hooks/useScrollStage with PillarRows' STAGE_QUERY): the section stays
  * put under the navbar while the scroll swaps one service's text for the
- * next, with the shared progress dots. Copy is i18n `agency`.
+ * next, with the shared progress dots — and the same film fills the stage
+ * BEHIND the copy (cropped to its centre), under the shared white wash, like
+ * Home's backdrop stage. Copy is i18n `agency`.
  */
 export default function Agency() {
   const { t } = useLanguage();
@@ -25,6 +31,7 @@ export default function Agency() {
   const stage = useScrollStage(agencyServices.length, {
     query: STAGE_QUERY,
     rowSelector: '.agency-service',
+    bandSelector: '.agency-service .agency-service-inner',
   });
 
   return (
@@ -55,6 +62,17 @@ export default function Agency() {
               />
             ))}
           </div>
+          {/* One film for every service: pinned beside them on desktop/tablet,
+              the stage's backdrop on phones (Agency.css). */}
+          <div className="stage-wash wash-to-bg" aria-hidden="true" />
+          <figure className="agency-film">
+            <AutoplayVideo
+              className="agency-film-video"
+              {...media.agencyOutdoor}
+              ratio="16 / 9"
+              label={a.filmLabel}
+            />
+          </figure>
           {agencyServices.map(({ id }, i) => {
             const s = a.services[id];
             return (

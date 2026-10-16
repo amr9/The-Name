@@ -78,6 +78,48 @@
 .agency-service-link:hover,
 .agency-service-link:focus-visible { border-color: var(--color-ink); }
 
+/* — the film (desktop/tablet) — the services in the left column (the right
+   one under RTL: a grid starts on the reading side) and ONE film in the
+   other, spanning every service's row. It is sticky inside that span, so it
+   stays pinned under the navbar and keeps playing while the services scroll
+   past, then leaves with the last one. The stage carries the page gutter
+   here instead of each row's .container. The breakpoint is the phone
+   stage's, below, plus one; on phones the same film is the stage's
+   backdrop instead (below). */
+.agency-film { display: none; }
+@media (min-width: 761px) {
+  .agency-stage {
+    display: grid;
+    /* wide enough that the 16:9 film is not a letterbox strip */
+    grid-template-columns: minmax(0, 1fr) min(48vw, 760px);
+    column-gap: clamp(var(--space-8), 5vw, calc(var(--space-8) * 2.5));
+    align-items: start;
+    padding-inline: clamp(20px, 5vw, 72px);
+  }
+  .agency-service { grid-column: 1; }
+  .agency-stage .agency-service-inner { padding-inline: 0; }
+  .agency-film {
+    display: block;
+    grid-column: 2;
+    grid-row: 1 / span var(--stage-count);
+    position: sticky;
+    top: calc(var(--navbar-h) + var(--space-6));
+    margin: var(--space-6) 0;
+  }
+  /* The same rounded, shadowed frame as the Home rows' films
+     (.pillar-image-wrap), never taller than the screen under the navbar:
+     a short window crops the film (cover) rather than cut it off. */
+  .agency-film-video {
+    display: block;
+    width: 100%;
+    max-height: calc(100svh - var(--navbar-h) - var(--space-6) * 2);
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    background: var(--color-black);
+  }
+}
+
 /* — the services' stage (phones) — the same pinned stage as Home's "What
    we do" (PillarRows.css "pillar stage"), driven by the same hook
    (hooks/useScrollStage, with PillarRows' STAGE_QUERY — keep this
@@ -105,7 +147,28 @@
     height: var(--stage-h);
     overflow: hidden;
   }
-  .agency-stage .stage-dots { display: flex; }
+  .agency-stage .stage-dots { display: flex; z-index: 3; }
+  /* BACKDROP, as on Home (PillarRows.css "backdrop stage"): the film fills
+     the whole stage behind every service, the shared .stage-wash (theme.css)
+     fades it into the page at the foot, and the copy sits on top. One film
+     for all six services, so it just plays on while the copy changes. */
+  .agency-film {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    margin: 0;
+  }
+  .agency-film-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* AutoplayVideo sets the ratio inline; here the stage sets the size */
+    aspect-ratio: auto !important;
+    object-fit: cover;
+    background: var(--color-black);
+  }
+  .agency-stage .stage-wash { display: block; }
   /* Every service stacked in the stage, its text on the bottom edge as on
      Home. The extra .agency-services outranks useSectionReveal's
      .reveal / .reveal-in (theme.css), which these pick up as top-level
@@ -117,6 +180,7 @@
     align-items: flex-end;
     padding-block: 12px 20px;
     border-bottom: 0;
+    z-index: 2;
     opacity: 1;
     visibility: var(--vis);
     transition: none;

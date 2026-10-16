@@ -10,12 +10,21 @@
 // and its image are always looked up by the same key.
 const BASE = '/media';
 
-// The "Brand Communication" film — the Agency row's film, and also the Home
-// hero's on phones (portrait 4:5, so it fills a tall screen far better than
+// The "Brand Communication" film — the Home hero's on phones (portrait 4:5, so it fills a tall screen far better than
 // the 16:9 showreel cropped to a sliver).
 const agencyFilm = {
   src: `${BASE}/videos/brand-communication.mp4`,
   poster: `${BASE}/videos/brand-communication-poster.jpg`,
+};
+
+// The "Outdoor Media" film — the Agency row's film on Home and the Agency
+// page's. From "OUTDOOR MEDIA HORIZONTAL.mp4": 1920x1080 → 1600x900 (16:9),
+// 90s, CRF 31, audio dropped, +faststart (the hero's settings); 9.4 MB. The
+// poster IS frame 0 (the "Outdoor Media" title card). In 4:5 frames (the Home
+// row, the phone stages) it is cropped to its centre (cover).
+const outdoorFilm = {
+  src: `${BASE}/videos/agency-outdoor.mp4`,
+  poster: `${BASE}/videos/agency-outdoor-poster.jpg`,
 };
 
 export const media = {
@@ -31,6 +40,10 @@ export const media = {
   },
   // On phones (≤700px) the hero plays the Agency film instead (agencyFilm).
   heroPhone: agencyFilm,
+
+  // The Agency page's film (outdoorFilm): pinned beside the services on
+  // desktop/tablet, the backdrop of their pinned stage on phones.
+  agencyOutdoor: outdoorFilm,
 
   // The picture in Home's "Customize Yours" section (CustomizeSection.jsx),
   // shown wide at 16:7.
@@ -71,9 +84,10 @@ export const media = {
       src: `${BASE}/videos/events.mp4`,
       poster: `${BASE}/videos/events-poster.jpg`,
     },
-    // "Brand Communication" — 1024x1280 (already 4:5, shown uncropped), 92s,
-    // CRF 28, SSIM 0.993.
-    agency: agencyFilm,
+    // "Outdoor Media" (outdoorFilm above), 16:9 cropped to the 4:5 frame.
+    // Was "Brand Communication" (agencyFilm: 1024x1280, already 4:5, 92s,
+    // CRF 28, SSIM 0.993), still the Home hero's phone film.
+    agency: outdoorFilm,
   },
 
   // Customization methods shown in the Home page "how it works" panel —

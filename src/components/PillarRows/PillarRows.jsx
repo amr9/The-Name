@@ -24,6 +24,10 @@ import './PillarRows.css';
  *   mediaClass — an extra class on the frame (Home: .washed on placeholders)
  * `titleAs`: the heading level — h3 under Home's section h2, h2 on Brands.
  * More than DOTS_MAX rows show a "04 / 19" counter instead of dots.
+ * When every row's media is framed (none `bare` — Home), the phone stage is a
+ * BACKDROP: each row's film or photo fills the whole stage and its copy sits
+ * on top, at the bottom, over the Home hero's white wash (.wash-to-bg). Bare
+ * media (the Brands page's product cards) keeps the media-above-copy stage.
  */
 
 // Every row's picture or film — photo, placeholder or video — sits in ONE
@@ -89,13 +93,17 @@ export default function PillarRows({ rows, titleAs: Title = 'h3' }) {
     bandSelector: '.pillar-row .pillar-text',
   });
   const pad = (n) => String(n).padStart(2, '0');
+  const backdrop = rows.every((r) => !r.bare);
 
   return (
     // Desktop and tablet: the rows below simply stack. Phones: the track is
     // tall and the stage inside it is pinned, so scrolling swaps one row for
     // the next in place (hooks/useScrollStage; PillarRows.css "pillar stage").
-    <div className="pillars" ref={stage.trackRef} style={{ '--pillar-count': rows.length }}>
+    <div className={`pillars${backdrop ? ' pillars-backdrop' : ''}`} ref={stage.trackRef} style={{ '--pillar-count': rows.length }}>
       <div className="pillars-stage" ref={stage.stageRef}>
+        {/* ONE wash for the whole stage (phones, backdrop only), so it holds
+            still while the films and copy change over it. */}
+        {backdrop && <div className="stage-wash wash-to-bg" aria-hidden="true" />}
         {rows.length > DOTS_MAX ? (
           <div className="pillars-counter" aria-hidden="true">
             {/* dir="ltr" on the numbers only: "04 / 19" must not flip to

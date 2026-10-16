@@ -110,7 +110,7 @@ export default function Home() {
           <AutoplayVideo className="home-hero-video home-hero-video-wide" {...media.hero} label={h.hero.mediaLabel} />
           <AutoplayVideo className="home-hero-video home-hero-video-phone" {...media.heroPhone} label={h.hero.mediaLabel} />
         </div>
-        <div className="container home-hero-content">
+        <div className="container home-hero-content wash-to-bg">
           <h1 className="display-title home-hero-title">
             {/* The full line for screen readers and crawlers; the drawn
                 version below rotates the name, so it is hidden from them. */}

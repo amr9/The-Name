@@ -314,6 +314,8 @@ export default {
     lede: "Your dedicated partner for 360-degree media and marketing: strategy, creative, media buying, digital, branding, CSR and sustainability, in one unified approach built for consistency, efficiency and maximum impact.",
     // The button under every service.
     rowCta: "Let's talk",
+    // The film beside the services (desktop), for screen readers.
+    filmLabel: "The Name Agency at work: campaigns, branding and out-of-home media",
     // One section per service (pages/Agency/data.js). The titles are the
     // Agency row's chips on Home; the copy is from The Name Agency's
     // presentation.

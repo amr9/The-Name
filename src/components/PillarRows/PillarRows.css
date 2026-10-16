@@ -343,6 +343,43 @@
   .pillars-counter strong { color: var(--color-accent); font-weight: 700; }
 }
 
+/* — backdrop stage (phones, Home) — PillarRows.jsx adds .pillars-backdrop
+   when every row's media is framed. Each row's film or photo then fills the
+   WHOLE stage, edge to edge, and the copy sits on top of it at the bottom,
+   over one stage-wide white wash (the shared .stage-wash + .wash-to-bg in
+   theme.css). Layers, all inside the sticky stage's own stacking context:
+   media 0, wash 1, copy and dots 2. The media still cross-fades and eases from its slight zoom, the copy
+   still slides; only the layout changes. */
+@media (max-width: 760px) {
+  .pillars-backdrop .pillars-stage .pillar-figure {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: auto;
+    height: auto;
+    transition: none;
+  }
+  .pillars-backdrop .pillars-stage .pillar-image-wrap {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .pillars-backdrop .stage-wash { display: block; }
+  .pillars-backdrop .pillars-stage .pillar-text {
+    position: relative;
+    z-index: 2;
+  }
+  /* The film's expand badge moves to the top START corner: its usual
+     bottom corner is under the copy now, and the top end one has the dots. */
+  .pillars-backdrop .film-expand-badge {
+    top: 22px;
+    bottom: auto;
+    inset-inline: calc(clamp(20px, 5vw, 72px) + 8px) auto;
+  }
+}
+
 @media (max-width: 760px) and (prefers-reduced-motion: reduce) {
   .pillars-stage .pillar-row,
   .pillars-stage .pillar-text,

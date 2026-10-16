@@ -594,6 +594,41 @@ button { font: inherit; }
    footer is not pulled up under the navbar for a frame. */
 .page-loading { min-height: 100vh; }
 
+/* — wash to the page — a picture or film fading into the page background
+   at the bottom: the Home hero's type block, and the phone scroll stage's
+   copy (PillarRows). A smootherstep ramp in 25 stops — flat at both ends,
+   so it eases out of nothing at the top and settles into the page
+   background at the bottom with no visible line at either end. The element
+   sets its own height and position; this is only the gradient. */
+.wash-to-bg {
+  background: linear-gradient(to bottom,
+      transparent 0%,
+      color-mix(in srgb, var(--color-bg) 0.1%, transparent) 4.2%,
+      color-mix(in srgb, var(--color-bg) 0.5%, transparent) 8.3%,
+      color-mix(in srgb, var(--color-bg) 1.6%, transparent) 12.5%,
+      color-mix(in srgb, var(--color-bg) 3.5%, transparent) 16.7%,
+      color-mix(in srgb, var(--color-bg) 6.5%, transparent) 20.8%,
+      color-mix(in srgb, var(--color-bg) 10.4%, transparent) 25%,
+      color-mix(in srgb, var(--color-bg) 15.2%, transparent) 29.2%,
+      color-mix(in srgb, var(--color-bg) 21%, transparent) 33.3%,
+      color-mix(in srgb, var(--color-bg) 27.5%, transparent) 37.5%,
+      color-mix(in srgb, var(--color-bg) 34.7%, transparent) 41.7%,
+      color-mix(in srgb, var(--color-bg) 42.2%, transparent) 45.8%,
+      color-mix(in srgb, var(--color-bg) 50%, transparent) 50%,
+      color-mix(in srgb, var(--color-bg) 57.8%, transparent) 54.2%,
+      color-mix(in srgb, var(--color-bg) 65.3%, transparent) 58.3%,
+      color-mix(in srgb, var(--color-bg) 72.5%, transparent) 62.5%,
+      color-mix(in srgb, var(--color-bg) 79%, transparent) 66.7%,
+      color-mix(in srgb, var(--color-bg) 84.8%, transparent) 70.8%,
+      color-mix(in srgb, var(--color-bg) 89.6%, transparent) 75%,
+      color-mix(in srgb, var(--color-bg) 93.5%, transparent) 79.2%,
+      color-mix(in srgb, var(--color-bg) 96.5%, transparent) 83.3%,
+      color-mix(in srgb, var(--color-bg) 98.4%, transparent) 87.5%,
+      color-mix(in srgb, var(--color-bg) 99.5%, transparent) 91.7%,
+      color-mix(in srgb, var(--color-bg) 99.9%, transparent) 95.8%,
+      var(--color-bg) 100%);
+}
+
 /* — scroll stage progress dots — the column of dots over the top end corner
    of a pinned scroll stage (hooks/useScrollStage), one per row, each
    scrolling to its row (goTo). Used by PillarRows and the Agency services,
@@ -632,6 +667,22 @@ button { font: inherit; }
 .stage-dot.is-active::before {
   background: var(--color-accent);
   transform: scale(1.35);
+}
+/* The white wash along the foot of a BACKDROP scroll stage (media filling
+   the stage, copy on top): ONE layer for the whole stage, so it holds still
+   while the media and copy change over it. Carries .wash-to-bg too (the
+   gradient). Starts the Home hero's lead-in above the tallest row's copy
+   (--text-band, written by hooks/useScrollStage's bandSelector) and reaches
+   the page colour at the stage's foot. Hidden unless a stage's phone @media
+   shows it with `display: block`. Layers: media 0, wash 1, copy 2, dots 3. */
+.stage-wash {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  inset-inline: 0;
+  bottom: 0;
+  height: calc(var(--text-band, 316px) + 20px + clamp(30px, 18vh, 180px));
+  pointer-events: none;
 }
 
 /* — responsive: tablet / mobile (shared layout breakpoints) — */
