@@ -129,7 +129,7 @@
    On phones all the rows share ONE screen. .pillars is a
    tall track; .pillars-stage inside it is sticky under the navbar, so
    it stays put while the page scrolls through the track, and PillarRows.jsx
-   (usePillarStage) marks one row data-pos="active" from how far in the
+   (hooks/useScrollStage) marks one row data-pos="active" from how far in the
    scroll is. The rows are stacked in the stage and cross-fade; each row
    slides in sideways (before = off to the left, after = off to the right).
    Wider screens ignore all of this: the track and stage are plain blocks
@@ -170,7 +170,7 @@
   }
 
   /* Every row, stacked in the stage. Its fade is SCRUBBED by the scroll:
-     usePillarStage writes --o (opacity), --vis, --d (signed distance from
+     useScrollStage writes --o (opacity), --vis, --d (signed distance from
      the scroll position, -1..1), --ad (its size) and --ot (the text's own
      opacity, which hands over at halfway rather than cross-fading, so two
      blocks of copy never overlap) on every frame, so a

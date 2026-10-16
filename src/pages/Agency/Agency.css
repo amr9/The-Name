@@ -2,34 +2,6 @@
    kicker / title / lede are the shared .rows-page / .page-hero rules in
    theme.css; only what is particular to this page lives here. */
 
-/* — hero: on wide screens a two-column grid, the text on the left and the
-   "On this page" index as a fixed column pinned to the RIGHT edge of the
-   container, in both languages (an RTL grid starts on the right, so the
-   areas swap there to keep the index on the right). Below 960px the index
-   drops under the text. */
-.agency-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: calc(var(--space-8) * 1.5);
-}
-@media (min-width: 960px) {
-  .agency-hero {
-    grid-template-columns: minmax(0, 1fr) clamp(260px, 24vw, 320px);
-    grid-template-areas: "text index";
-    column-gap: calc(var(--space-8) * 2);
-    align-items: end;
-  }
-  [dir="rtl"] .agency-hero {
-    grid-template-columns: clamp(260px, 24vw, 320px) minmax(0, 1fr);
-    grid-template-areas: "index text";
-  }
-  .agency-hero-text { grid-area: text; }
-  .agency-index { grid-area: index; }
-}
-/* .page-hero caps each child at 62ch; the index fills its column instead. */
-.agency-hero > .agency-index { max-width: none; }
-.agency-hero-text { min-width: 0; }
-
 /* Bigger than the other page heroes: on this page the title is the
    picture. Top margin still comes from `.card-kicker + .page-title`. */
 .agency-page .agency-title {
@@ -52,45 +24,88 @@
 }
 .agency-page .page-hero-lede { margin-top: calc(var(--space-8) * 1); }
 
-.agency-index { min-width: 0; }
-/* A quiet sentence-case label, not a tracked all-caps eyebrow: it only
-   names the list under it. */
-.agency-index-title {
-  margin: 0 0 var(--space-3);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--color-gray);
-}
-.agency-index-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-top: 1px solid var(--color-divider);
-}
-.agency-index-link {
-  display: block;
-  padding: var(--space-3) 0;
-  border-bottom: 1px solid var(--color-divider);
-  font-weight: 600;
-  color: var(--color-ink);
-  text-decoration: none;
-  transition: padding-inline-start 0.2s ease, color 0.2s ease;
-}
-.agency-index-link:hover,
-.agency-index-link:focus-visible { padding-inline-start: var(--space-2); color: var(--color-accent-700); }
-
-/* — the services: full-width rows between hairlines, each the title beside
-   its text. */
+/* — the services: ONE pinned stage, at every width. .agency-services is a
+   tall track (the stage plus (count − 0.5) steps of scroll); .agency-stage
+   inside it is sticky under the navbar, so the section stays put while the
+   page scrolls through the track, and hooks/useScrollStage swaps one
+   service for the next. It writes per service, every frame: --d (signed
+   distance from the scroll position, −1..1), --ot (the text's opacity,
+   which hands over at halfway, so two services never overlap) and --vis.
+   Scrubbed by the scroll, so no timed transitions. The hook measures the
+   geometry back from the layout, so change it only here. */
 .agency-services {
+  --stage-h: calc(100vh - var(--navbar-h));
+  --stage-h: calc(100svh - var(--navbar-h));
+  --stage-h: calc(100dvh - var(--navbar-h));
+  --stage-step: 75vh;
+  --stage-step: 75svh;
+  position: relative;
+  height: calc(var(--stage-h) + (var(--stage-count) - 0.5) * var(--stage-step));
   margin-top: clamp(var(--space-8), 6vw, calc(var(--space-8) * 2.5));
-  border-top: 1px solid var(--color-divider);
 }
-.agency-service { border-bottom: 1px solid var(--color-divider); }
+.agency-stage {
+  position: sticky;
+  top: var(--navbar-h);
+  height: var(--stage-h);
+  overflow: hidden;
+  border-block: 1px solid var(--color-divider);
+}
+/* Every service, stacked in the stage and centred in it. The extra
+   .agency-services outranks useSectionReveal's .reveal / .reveal-in
+   (theme.css), which these pick up as top-level sections. Scrolling down,
+   the text rises in from below and leaves upward; up, the reverse. */
+.agency-services .agency-stage .agency-service {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  opacity: var(--ot);
+  visibility: var(--vis);
+  transform: translateY(calc(var(--d) * 64px));
+  transition: none;
+}
 .agency-service-inner {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-6) calc(var(--space-8) * 2);
-  padding-block: clamp(calc(var(--space-8) * 1.25), 5vw, calc(var(--space-8) * 2));
+  width: 100%;
+  /* clear of the dots */
+  padding-inline-end: calc(var(--space-8) + 8px);
+}
+/* Progress dots on the stage's end edge, one per service (goTo in the hook). */
+.agency-dots {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 2px;
+  pointer-events: none;
+}
+.agency-dot {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  pointer-events: auto;
+}
+.agency-dot::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-divider);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.agency-dot.is-active::before {
+  background: var(--color-accent);
+  transform: scale(1.35);
 }
 .agency-service-title {
   flex: 1 1 360px;
@@ -133,7 +148,16 @@
 .agency-service-link:hover,
 .agency-service-link:focus-visible { border-color: var(--color-ink); }
 
+/* Phones: tighter type so a whole service fits the stage. */
+@media (max-width: 760px) {
+  .agency-service-inner { gap: var(--space-4); }
+  .agency-service-title { font-size: 26px; }
+  .agency-service-lead { font-size: var(--text-body); }
+  .agency-service-link { margin-top: var(--space-4); }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .agency-index-link,
-  .agency-service-link { transition: none; }
+  .agency-service-link,
+  .agency-dot::before { transition: none; }
+  .agency-services .agency-stage .agency-service { transform: none; }
 }
