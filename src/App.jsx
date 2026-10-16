@@ -24,16 +24,16 @@ import './pages/lazyPageStyles.js';
 // const Cafe = lazy(() => import('./pages/Cafe/Cafe.jsx'));
 const Kids = lazy(() => import('./pages/Kids/Kids.jsx'));
 // The Shop page is PARKED, not deleted — the navbar/footer "Shop" links go
-// straight to the online store (site.shopUrl). Uncomment this import and its
+// straight to the Odoo store (site.odooShopUrl). Uncomment this import and its
 // route below (and restore the routes.shop entries in data/site.js) to bring
 // it back.
 // const Shop = lazy(() => import('./pages/Shop/Shop.jsx'));
 
 // While Shop is parked, the old in-app paths (/store, /shop) and every button
-// still linking to routes.shop hand the visitor to the online store instead of
+// still linking to routes.shop hand the visitor to the Odoo store instead of
 // the 404.
 function ToOdooShop() {
-  useEffect(() => { window.location.replace(site.shopUrl); }, []);
+  useEffect(() => { window.location.replace(site.odooShopUrl); }, []);
   return null;
 }
 const Brands = lazy(() => import('./pages/Brands/Brands.jsx'));

@@ -37,9 +37,9 @@ export const site = {
     countryCode: 'AE',
   },
 
-  // The online store, off-site. Everything that leaves for it reads this:
-  // every "Shop" button and link (via `shopLink` below), the old /store and
-  // /shop paths (App.jsx), and the parked Shop page's product/category links.
+  // The online store, off-site. Everything that leaves for it reads this —
+  // the Shop page's hero button and its per-item View/Personalise links. (The
+  // Kids and Home "shop" CTAs are router Links to routes.shop, not to the store.)
   shopUrl: 'https://store.thename.ae',
   // The store's OWN page for the pieces it will personalise. The Customize
   // Yours page mirrors that selection (data/storeCustomizable.js) and its CTA
@@ -47,6 +47,9 @@ export const site = {
   // page's button hands you to a category page rather than the front. Not
   // under /shop/: it is a CMS page on the store, not a category.
   customizableUrl: 'https://store.thename.ae/customizable-products',
+  // The Odoo shop. The navbar and footer "Shop" links go straight here while
+  // the in-app Shop page (/store) is PARKED — see App.jsx.
+  odooShopUrl: 'https://thenamemea.odoo.llc/shop',
 
   // — SEO (read by utils/pageHead.js and scripts/prerender.mjs) —
   //
@@ -151,11 +154,11 @@ export const navLinks = [
   // will link to the store's own pages (see policySections below).
 ];
 
-// Where EVERY "Shop" button and link goes: the online store, straight there,
+// Where EVERY "Shop" button and link goes: the Odoo store, straight there,
 // while the in-app Shop page (/store) is PARKED (App.jsx). It is a full URL,
 // so the buttons are plain <a href={shopLink}> rather than router Links (in
 // data lists: an `href` entry instead of a `to`).
-export const shopLink = site.shopUrl;
+export const shopLink = site.odooShopUrl;
 
 // The enquiry form, at the foot of /about. Every "contact" link reads this.
 export const contactLink = `${routes.about}#contact`;
