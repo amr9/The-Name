@@ -590,7 +590,7 @@ src/
                         left / in from the right), marks the active row
                         (`inert` on the rest; `media({ active })` pauses
                         hidden films) and SETTLES after a swipe — on to the
-                        next row past 8% of a step, else back (no CSS
+                        next row past 3% of a step (SETTLE_NUDGE in hooks/useScrollStage), else back, and a glide already under way is carried on to its row rather than re-judged mid-way (no CSS
                         scroll-snap: proximity snap made the stage feel stuck).
                         The copy sits on the stage's BOTTOM edge and the media
                         takes the rest, one size for every row: the stage

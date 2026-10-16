@@ -15,6 +15,12 @@ import { useEffect, useRef, useState } from 'react';
 //   rowSelector  — the rows, direct children of the stage
 //   bandSelector — optional: their copy, whose tallest height is written to
 //                  the stage as --text-band (PillarRows sizes its media off it)
+
+// How far from the row it rested on (a share of one step) a swipe must move
+// to carry the stage on to the next row: 3%, ~15px on a phone — enough to
+// ignore a finger's jitter, small enough that a short flick still advances.
+const SETTLE_NUDGE = 0.03;
+
 // 0 below a, 1 above b, eased in between.
 const smoothstep = (a, b, v) => {
   const t = Math.min(1, Math.max(0, (v - a) / (b - a)));
@@ -26,6 +32,9 @@ export default function useScrollStage(count, { query, rowSelector, bandSelector
   const stageRef = useRef(null);
   const [isStage, setIsStage] = useState(false);
   const [active, setActive] = useState(0);
+  // The row a glide is on its way to, -1 for none (see SETTLING below). A
+  // ref, because a dot's goTo starts glides too.
+  const glideRef = useRef(-1);
 
   useEffect(() => {
     if (!query) {
@@ -119,14 +128,31 @@ export default function useScrollStage(count, { query, rowSelector, bandSelector
     // started from (the stage felt stuck) and let medium ones rest halfway
     // (measured with real touch input). Instead, once the scroll is at rest
     // and the finger is up, this glides to a row chosen by DIRECTION: moved
-    // more than 8% of a step (~50px) from the row it last rested on → on to
-    // the next row that way; less → back. Outside the pinned span (before
-    // the first row, after the last) the page scrolls freely.
+    // more than SETTLE_NUDGE of a step from the row it last rested on → on
+    // to the next row that way; less (a jitter) → back. Outside the pinned
+    // span (before the first row, after the last) the page scrolls freely.
+    //
+    // `rest` is the row the page last actually REACHED; glideRef the row a
+    // glide is on its way to (-1: none). They are kept apart on purpose:
+    // settle() can run again MID-glide (the swipe's own momentum ending,
+    // or the timer fallback), and measured against the target instead of
+    // the row it left, the page — still short of the target — read as
+    // having moved BACK, so a small swipe turned round halfway. A glide in
+    // flight is carried on to its row instead, until the finger (or a wheel)
+    // takes over.
     let rest = Math.min(count - 1, Math.max(0, Math.round(
       (geometry().pin - trackRef.current.getBoundingClientRect().top) / geometry().step,
     )));
+    glideRef.current = -1;
     let touching = false;
     let timer = 0;
+    const scrollToRow = (i) => {
+      const { track, pin, step } = geometry();
+      window.scrollTo({
+        top: track.getBoundingClientRect().top + window.scrollY - pin + i * step,
+        behavior: reduce ? 'auto' : 'smooth',
+      });
+    };
     const settle = () => {
       clearTimeout(timer);
       timer = 0;
@@ -136,15 +162,17 @@ export default function useScrollStage(count, { query, rowSelector, bandSelector
       const near = Math.round(x);
       if (x <= 0.02 || x >= count - 1.02 || Math.abs(x - near) < 0.02) {
         rest = Math.min(count - 1, Math.max(0, near));
+        glideRef.current = -1;
+        return;
+      }
+      if (glideRef.current >= 0) {
+        scrollToRow(glideRef.current);
         return;
       }
       const moved = x - rest;
-      const target = moved > 0.08 ? Math.ceil(x) : moved < -0.08 ? Math.floor(x) : rest;
-      rest = Math.min(count - 1, Math.max(0, target));
-      window.scrollTo({
-        top: track.getBoundingClientRect().top + window.scrollY - pin + rest * step,
-        behavior: reduce ? 'auto' : 'smooth',
-      });
+      const target = moved > SETTLE_NUDGE ? Math.ceil(x) : moved < -SETTLE_NUDGE ? Math.floor(x) : rest;
+      glideRef.current = Math.min(count - 1, Math.max(0, target));
+      scrollToRow(glideRef.current);
     };
     // Settle once scrolling stops: `scrollend` where the browser has it,
     // otherwise (Safari) a short pause in scroll events — momentum keeps
@@ -159,7 +187,12 @@ export default function useScrollStage(count, { query, rowSelector, bandSelector
     };
     const onTouchStart = () => {
       touching = true;
+      glideRef.current = -1;
       clearTimeout(timer);
+    };
+    // A wheel or trackpad takes over from a glide the same way a finger does.
+    const onWheel = () => {
+      glideRef.current = -1;
     };
     const onTouchEnd = () => {
       touching = false;
@@ -183,6 +216,7 @@ export default function useScrollStage(count, { query, rowSelector, bandSelector
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('scrollend', settle);
     window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('wheel', onWheel, { passive: true });
     window.addEventListener('touchend', onTouchEnd, { passive: true });
     window.addEventListener('touchcancel', onTouchEnd, { passive: true });
     window.addEventListener('resize', onResize);
@@ -190,6 +224,7 @@ export default function useScrollStage(count, { query, rowSelector, bandSelector
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('scrollend', settle);
       window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('wheel', onWheel);
       window.removeEventListener('touchend', onTouchEnd);
       window.removeEventListener('touchcancel', onTouchEnd);
       window.removeEventListener('resize', onResize);
@@ -198,8 +233,10 @@ export default function useScrollStage(count, { query, rowSelector, bandSelector
     };
   }, [isStage, count, rowSelector]);
 
-  // A progress dot scrolls the page to that row's resting point.
+  // A progress dot scrolls the page to that row's resting point — a glide
+  // like settle's, so a settle mid-way carries on to this row.
   const goTo = (i) => {
+    glideRef.current = i;
     const { track, pin, step } = geometry();
     const top = track.getBoundingClientRect().top + window.scrollY - pin + i * step;
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
