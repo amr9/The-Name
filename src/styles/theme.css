@@ -594,6 +594,46 @@ button { font: inherit; }
    footer is not pulled up under the navbar for a frame. */
 .page-loading { min-height: 100vh; }
 
+/* — scroll stage progress dots — the column of dots over the top end corner
+   of a pinned scroll stage (hooks/useScrollStage), one per row, each
+   scrolling to its row (goTo). Used by PillarRows and the Agency services,
+   both on phones only: hidden unless a stage's @media (max-width: 760px)
+   block turns them on with `display: flex`. */
+.stage-dots {
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  position: absolute;
+  z-index: 2;
+  top: 22px;
+  inset-inline-end: calc(clamp(20px, 5vw, 72px) + 8px);
+  padding: 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-black) 35%, transparent);
+}
+.stage-dot {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.stage-dot::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-white) 55%, transparent);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.stage-dot.is-active::before {
+  background: var(--color-accent);
+  transform: scale(1.35);
+}
+
 /* — responsive: tablet / mobile (shared layout breakpoints) — */
 @media (max-width: 1024px) {
   .row-flip, .split { grid-template-columns: minmax(0, 1fr) !important; }

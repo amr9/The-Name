@@ -24,88 +24,18 @@
 }
 .agency-page .page-hero-lede { margin-top: calc(var(--space-8) * 1); }
 
-/* — the services: ONE pinned stage, at every width. .agency-services is a
-   tall track (the stage plus (count − 0.5) steps of scroll); .agency-stage
-   inside it is sticky under the navbar, so the section stays put while the
-   page scrolls through the track, and hooks/useScrollStage swaps one
-   service for the next. It writes per service, every frame: --d (signed
-   distance from the scroll position, −1..1), --ot (the text's opacity,
-   which hands over at halfway, so two services never overlap) and --vis.
-   Scrubbed by the scroll, so no timed transitions. The hook measures the
-   geometry back from the layout, so change it only here. */
+/* — the services: full-width rows between hairlines, each the title beside
+   its text. On phones they become a pinned stage (below). */
 .agency-services {
-  --stage-h: calc(100vh - var(--navbar-h));
-  --stage-h: calc(100svh - var(--navbar-h));
-  --stage-h: calc(100dvh - var(--navbar-h));
-  --stage-step: 75vh;
-  --stage-step: 75svh;
-  position: relative;
-  height: calc(var(--stage-h) + (var(--stage-count) - 0.5) * var(--stage-step));
   margin-top: clamp(var(--space-8), 6vw, calc(var(--space-8) * 2.5));
+  border-top: 1px solid var(--color-divider);
 }
-.agency-stage {
-  position: sticky;
-  top: var(--navbar-h);
-  height: var(--stage-h);
-  overflow: hidden;
-  border-block: 1px solid var(--color-divider);
-}
-/* Every service, stacked in the stage and centred in it. The extra
-   .agency-services outranks useSectionReveal's .reveal / .reveal-in
-   (theme.css), which these pick up as top-level sections. Scrolling down,
-   the text rises in from below and leaves upward; up, the reverse. */
-.agency-services .agency-stage .agency-service {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  opacity: var(--ot);
-  visibility: var(--vis);
-  transform: translateY(calc(var(--d) * 64px));
-  transition: none;
-}
+.agency-service { border-bottom: 1px solid var(--color-divider); }
 .agency-service-inner {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-6) calc(var(--space-8) * 2);
-  width: 100%;
-  /* clear of the dots */
-  padding-inline-end: calc(var(--space-8) + 8px);
-}
-/* Progress dots on the stage's end edge, one per service (goTo in the hook). */
-.agency-dots {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 2px;
-  pointer-events: none;
-}
-.agency-dot {
-  width: 20px;
-  height: 20px;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  pointer-events: auto;
-}
-.agency-dot::before {
-  content: "";
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--color-divider);
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-.agency-dot.is-active::before {
-  background: var(--color-accent);
-  transform: scale(1.35);
+  padding-block: clamp(calc(var(--space-8) * 1.25), 5vw, calc(var(--space-8) * 2));
 }
 .agency-service-title {
   flex: 1 1 360px;
@@ -148,16 +78,62 @@
 .agency-service-link:hover,
 .agency-service-link:focus-visible { border-color: var(--color-ink); }
 
-/* Phones: tighter type so a whole service fits the stage. */
+/* — the services' stage (phones) — the same pinned stage as Home's "What
+   we do" (PillarRows.css "pillar stage"), driven by the same hook
+   (hooks/useScrollStage, with PillarRows' STAGE_QUERY — keep this
+   breakpoint in step). .agency-services is a tall track; .agency-stage
+   inside it is sticky under the navbar, so the section stays put while the
+   page scrolls and the services take turns in it. The hook writes --d
+   (signed distance from the scroll position, −1..1), --ot (the text's
+   opacity, handing over at halfway) and --vis per service, every frame —
+   scrubbed by the finger, so no timed transitions. The text slides in from
+   the RIGHT and out to the LEFT, physical in both languages, as on Home. */
 @media (max-width: 760px) {
-  .agency-service-inner { gap: var(--space-4); }
+  .agency-services {
+    --stage-h: calc(100vh - var(--navbar-h));
+    --stage-h: calc(100svh - var(--navbar-h));
+    --stage-h: calc(100dvh - var(--navbar-h));
+    --stage-step: 75vh;
+    --stage-step: 75svh;
+    position: relative;
+    height: calc(var(--stage-h) + (var(--stage-count) - 0.5) * var(--stage-step));
+    border-top: 0;
+  }
+  .agency-stage {
+    position: sticky;
+    top: var(--navbar-h);
+    height: var(--stage-h);
+    overflow: hidden;
+  }
+  .agency-stage .stage-dots { display: flex; }
+  /* Every service stacked in the stage, its text on the bottom edge as on
+     Home. The extra .agency-services outranks useSectionReveal's
+     .reveal / .reveal-in (theme.css), which these pick up as top-level
+     sections. */
+  .agency-services .agency-stage .agency-service {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    padding-block: 12px 20px;
+    border-bottom: 0;
+    opacity: 1;
+    visibility: var(--vis);
+    transition: none;
+  }
+  .agency-stage .agency-service-inner {
+    padding-block: 0;
+    gap: var(--space-4);
+    opacity: var(--ot);
+    transform: translateX(calc(var(--d) * 48px));
+  }
   .agency-service-title { font-size: 26px; }
   .agency-service-lead { font-size: var(--text-body); }
-  .agency-service-link { margin-top: var(--space-4); }
+  /* Clear of the floating chat button in the bottom RIGHT corner, as on Home. */
+  .agency-service-link { margin-top: var(--space-4); margin-right: 72px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .agency-service-link,
-  .agency-dot::before { transition: none; }
-  .agency-services .agency-stage .agency-service { transform: none; }
+  .agency-service-link { transition: none; }
+  .agency-stage .agency-service-inner { transform: none !important; }
 }

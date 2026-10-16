@@ -38,7 +38,7 @@ const DOTS_MAX = 6;
 
 // Phones only: the rows become ONE pinned stage. Keep in step with the
 // @media in PillarRows.css's "pillar stage" block.
-const STAGE_QUERY = '(max-width: 760px)';
+export const STAGE_QUERY = '(max-width: 760px)';
 
 // A row's specialities as chips. On the phone stage the list is one line
 // that swipes sideways (PillarRows.css), and the slim bar under it shows where:
@@ -103,12 +103,12 @@ export default function PillarRows({ rows, titleAs: Title = 'h3' }) {
             <span dir="ltr"><strong>{pad(stage.active + 1)}</strong> / {pad(rows.length)}</span>
           </div>
         ) : (
-          <div className="pillars-dots">
+          <div className="stage-dots">
             {rows.map((r, i) => (
               <button
                 key={r.key}
                 type="button"
-                className={`pillars-dot${i === stage.active ? ' is-active' : ''}`}
+                className={`stage-dot${i === stage.active ? ' is-active' : ''}`}
                 aria-label={r.label}
                 aria-current={i === stage.active ? 'true' : undefined}
                 onClick={() => stage.goTo(i)}

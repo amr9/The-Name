@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Arrow from '../../components/Arrow.jsx';
+import { STAGE_QUERY } from '../../components/PillarRows/PillarRows.jsx';
 import { contactLink } from '../../data/site.js';
 import useScrollStage from '../../hooks/useScrollStage.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
@@ -11,16 +12,20 @@ import './Agency.css';
  * (.rows-page / .page-hero in theme.css) with a larger title whose last
  * words are in .gold-leaf (the Home hero name's gradient). Then the services
  * in `agencyServices` (./data.js), the same six titles as the Agency row's
- * chips on Home, on ONE pinned stage (hooks/useScrollStage, at every width):
- * the section stays put under the navbar while the scroll swaps one service's
- * text for the next — the title on one side, its lead, body and an
- * underlined "Let's talk" link to the enquiry form on the other. Dots on the
- * stage's edge jump to a service. Copy is i18n `agency`.
+ * chips on Home: full-width rows between hairlines, the title on one side,
+ * its lead, body and an underlined "Let's talk" link to the enquiry form on
+ * the other. On PHONES they become the same pinned stage as Home's "What we
+ * do" (hooks/useScrollStage with PillarRows' STAGE_QUERY): the section stays
+ * put under the navbar while the scroll swaps one service's text for the
+ * next, with the shared progress dots. Copy is i18n `agency`.
  */
 export default function Agency() {
   const { t } = useLanguage();
   const a = t.agency;
-  const stage = useScrollStage(agencyServices.length, { rowSelector: '.agency-service' });
+  const stage = useScrollStage(agencyServices.length, {
+    query: STAGE_QUERY,
+    rowSelector: '.agency-service',
+  });
 
   return (
     <div className="rows-page agency-page">
@@ -38,12 +43,12 @@ export default function Agency() {
         style={{ '--stage-count': agencyServices.length }}
       >
         <div className="agency-stage" ref={stage.stageRef}>
-          <div className="container agency-dots">
+          <div className="stage-dots">
             {agencyServices.map(({ id }, i) => (
               <button
                 key={id}
                 type="button"
-                className={`agency-dot${i === stage.active ? ' is-active' : ''}`}
+                className={`stage-dot${i === stage.active ? ' is-active' : ''}`}
                 aria-label={a.services[id].title}
                 aria-current={i === stage.active ? 'true' : undefined}
                 onClick={() => stage.goTo(i)}
@@ -58,11 +63,12 @@ export default function Agency() {
                 id={id}
                 className="agency-service"
                 aria-labelledby={`agency-${id}`}
-                // Service 01 showing, for the pre-rendered HTML; useScrollStage
-                // takes over from here.
+                // The phone stage's starting state (service 01 shown), for the
+                // pre-rendered HTML; useScrollStage takes over from here. Read
+                // only by the stage CSS.
                 style={{ '--d': Math.sign(i), '--ot': i ? 0 : 1, '--vis': i ? 'hidden' : 'visible' }}
-                // A hidden service's link must not take keyboard focus.
-                inert={i !== stage.active ? '' : undefined}
+                // A service hidden on the stage must not take keyboard focus.
+                inert={stage.isStage && i !== stage.active ? '' : undefined}
               >
                 <div className="container agency-service-inner">
                   <h2 id={`agency-${id}`} className="agency-service-title">{s.title}</h2>

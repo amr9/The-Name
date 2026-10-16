@@ -135,7 +135,6 @@
    Wider screens ignore all of this: the track and stage are plain blocks
    and the rows stack as before. Keep the breakpoint in step with
    STAGE_QUERY in PillarRows.jsx. */
-.pillars-dots,
 .pillars-counter,
 .pillar-tags-bar { display: none; }
 
@@ -321,20 +320,10 @@
      of it — matters under RTL, where the buttons start at the right. */
   .pillars-stage .pillar-ctas { margin-top: 14px; padding-right: 72px; }
 
-  /* Progress dots, a column over the top end corner of the media. Each
-     scrolls to its row (goTo in PillarRows.jsx). */
-  .pillars-dots {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    position: absolute;
-    z-index: 2;
-    top: 22px;
-    inset-inline-end: calc(clamp(20px, 5vw, 72px) + 8px);
-    padding: 4px;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--color-black) 35%, transparent);
-  }
+  /* Progress dots (.stage-dots, theme.css), a column over the top end
+     corner of the media. */
+  .pillars-stage .stage-dots { display: flex; }
+
   /* With more rows than dots can sensibly show (the Brands page), a
      "04 / 19" counter takes their place, in the same corner. */
   .pillars-counter {
@@ -352,28 +341,6 @@
     letter-spacing: 0.06em;
   }
   .pillars-counter strong { color: var(--color-accent); font-weight: 700; }
-  .pillars-dot {
-    width: 20px;
-    height: 20px;
-    padding: 0;
-    border: 0;
-    background: none;
-    cursor: pointer;
-    display: grid;
-    place-items: center;
-  }
-  .pillars-dot::before {
-    content: "";
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: color-mix(in srgb, var(--color-white) 55%, transparent);
-    transition: background 0.2s ease, transform 0.2s ease;
-  }
-  .pillars-dot.is-active::before {
-    background: var(--color-accent);
-    transform: scale(1.35);
-  }
 }
 
 @media (max-width: 760px) and (prefers-reduced-motion: reduce) {
