@@ -131,6 +131,8 @@ export const routes = {
   // The Kids page under its new name, Events (/kids redirects here). Its
   // files are still pages/Kids/ and its copy is still i18n `kids`.
   events: '/events',
+  // F&B & Concept Store. (The older café page, /cafe, stays parked.)
+  fnb: '/fnb',
   about: '/about',
   // Parked pages — not routed at the moment (see App.jsx).
   cafe: '/cafe',
@@ -149,6 +151,7 @@ export const navLinks = [
   { to: routes.agency, key: 'agency' },
   // { to: routes.cafe, key: 'cafe' },
   { to: routes.events, key: 'events' },
+  { to: routes.fnb, key: 'fnb' },
   { to: routes.about, key: 'about' },
   // /policies is deliberately NOT here — it is parked, and Terms & Privacy
   // will link to the store's own pages (see policySections below).
@@ -169,14 +172,12 @@ export const whatWeDoLink = `${routes.home}#what-we-do`;
 
 // The five pillars, in the brief's order: the navbar's "What we do" dropdown
 // AND the footer's "What we do" column. Labels from i18n `nav[key]`.
-// F&B points at the enquiry form while /cafe is PARKED — switch it to
-// routes.cafe when that page returns.
 export const whatWeDoLinks = [
   { to: routes.business, key: 'business' },
   { to: routes.brands, key: 'brands' },
   { to: routes.agency, key: 'agency' },
   { to: routes.events, key: 'events' },
-  { to: contactLink, key: 'fnb' },
+  { to: routes.fnb, key: 'fnb' },
 ];
 
 // The navbar, top level. An entry with `children` is a DROPDOWN instead of a

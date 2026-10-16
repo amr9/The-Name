@@ -43,3 +43,19 @@ export const featuredBrands = [
   // { brandId: 'pitaka' },
   // { brandId: 'mob' },
 ];
+
+// The page's CATEGORY sections (components/ServicePage), in order. Each
+// title is the matching Brands chip on Home (i18n home.pillars.brands.tags,
+// SAME ORDER); the copy is i18n brandsPage.categories[id].
+//   brands — data/brands.js ids, listed as chips in the section. Every brand
+//            sits in exactly one category.
+//   image  — a media.brandProducts id: the ONE product photo standing for the
+//            category, pinned beside the sections on desktop and behind the
+//            copy on phones (the brands have no films).
+export const brandCategories = [
+  { id: 'lifestyle', image: 'cacharelSeraphineTote', brands: ['cacharel', 'festina', 'iceWatch', 'kreafunk'] },
+  { id: 'office', image: 'pantoneGatefoldNotebook', brands: ['pantone', 'prodir', 'senator', 'pitaka', 'mob'] },
+  { id: 'design', image: 'lexonMinaM', brands: ['lexon', 'lundLondon', 'korin', 'gingko'] },
+  { id: 'corporate', image: 'solsLegendTee', brands: ['makito', 'sols'] },
+  { id: 'premium', image: 'cerrutiHudsonTravelBag', brands: ['hugoBoss', 'cerruti1881', 'christianLacroix', 'ungaro', 'ninaRicci'] },
+];

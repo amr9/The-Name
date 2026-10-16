@@ -1,10 +1,10 @@
-/* The Agency page, "Editorial" direction. The page padding and the hero's
-   kicker / title / lede are the shared .rows-page / .page-hero rules in
-   theme.css; only what is particular to this page lives here. */
+/* The "What we do" pillar pages (ServicePage.jsx). The page padding and the
+   hero's kicker / title / lede are the shared .rows-page / .page-hero rules
+   in theme.css; only what is particular to this layout lives here. */
 
-/* Bigger than the other page heroes: on this page the title is the
+/* Bigger than the other page heroes: on these pages the title is the
    picture. Top margin still comes from `.card-kicker + .page-title`. */
-.agency-page .agency-title {
+.service-page .service-title {
   font-size: clamp(44px, 7vw, 104px);
   line-height: 0.98;
   letter-spacing: -0.03em;
@@ -16,28 +16,28 @@
    tails) were cut off at the bottom, and the italic's slanted last letter at
    the end. The box gets room on those sides and gives it back with negative
    margins, so the line spacing is unchanged. */
-.agency-title-mark {
+.service-title-mark {
   padding-block: 0.04em 0.2em;
   padding-inline-end: 0.1em;
   margin-block: -0.04em -0.2em;
   margin-inline-end: -0.1em;
 }
-.agency-page .page-hero-lede { margin-top: calc(var(--space-8) * 1); }
+.service-page .page-hero-lede { margin-top: calc(var(--space-8) * 1); }
 
 /* — the services: full-width rows between hairlines, each the title beside
    its text. On phones they become a pinned stage (below). */
-.agency-services {
+.service-list {
   margin-top: clamp(var(--space-8), 6vw, calc(var(--space-8) * 2.5));
   border-top: 1px solid var(--color-divider);
 }
-.agency-service { border-bottom: 1px solid var(--color-divider); }
-.agency-service-inner {
+.service-row { border-bottom: 1px solid var(--color-divider); }
+.service-row-inner {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-6) calc(var(--space-8) * 2);
   padding-block: clamp(calc(var(--space-8) * 1.25), 5vw, calc(var(--space-8) * 2));
 }
-.agency-service-title {
+.service-row-title {
   flex: 1 1 360px;
   min-width: 0;
   margin: 0;
@@ -46,21 +46,21 @@
   text-transform: uppercase;
   letter-spacing: -0.01em;
 }
-.agency-service-text { flex: 1.4 1 460px; min-width: 0; max-width: 640px; }
-.agency-service-lead {
+.service-row-text { flex: 1.4 1 460px; min-width: 0; max-width: 640px; }
+.service-row-lead {
   margin: 0;
   font-size: var(--text-lg);
   line-height: 1.55;
   font-weight: 600;
 }
-.agency-service-body {
+.service-row-body {
   margin: var(--space-4) 0 0;
   line-height: 1.75;
   color: var(--color-gray);
 }
 /* A quiet text link rather than a button: uppercase, underlined in the
    brand yellow, the underline turning ink on hover. */
-.agency-service-link {
+.service-row-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -75,45 +75,64 @@
   text-decoration: none;
   transition: border-color 0.2s ease;
 }
-.agency-service-link:hover,
-.agency-service-link:focus-visible { border-color: var(--color-ink); }
+.service-row-link:hover,
+.service-row-link:focus-visible { border-color: var(--color-ink); }
 
-/* — the film (desktop/tablet) — the services in the left column (the right
-   one under RTL: a grid starts on the reading side) and ONE film in the
-   other, spanning every service's row. It is sticky inside that span, so it
-   stays pinned under the navbar and keeps playing while the services scroll
-   past, then leaves with the last one. The stage carries the page gutter
-   here instead of each row's .container. The breakpoint is the phone
-   stage's, below, plus one; on phones the same film is the stage's
-   backdrop instead (below). */
-.agency-film { display: none; }
+/* — the media — every entry stacked in one frame; the shown one fades in
+   (one entry: always shown). Films and pictures fill it (cover). */
+.service-media {
+  display: none;
+  margin: 0;
+  overflow: hidden;
+}
+.service-media-item {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.service-media-item[data-shown="true"] { opacity: 1; }
+.service-media-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--color-black);
+}
+/* A picture is an ImagePlaceholder (its dashed slot until the file exists):
+   here it fills the frame, which supplies the rounding. */
+.service-media-item .service-media-slot { height: 100%; border-radius: 0; }
+
+/* — desktop/tablet — the rows in the left column (the right one under RTL:
+   a grid starts on the reading side) and the media in the other, spanning
+   every row. It is sticky inside that span, so it stays pinned under the
+   navbar while the rows scroll past, then leaves with the last one. The
+   stage carries the page gutter here instead of each row's .container. The
+   breakpoint is the phone stage's, below, plus one. */
 @media (min-width: 761px) {
-  .agency-stage {
+  .service-stage {
     display: grid;
-    /* wide enough that the 16:9 film is not a letterbox strip */
-    grid-template-columns: minmax(0, 1fr) min(48vw, 760px);
+    grid-template-columns: minmax(0, 1fr) min(34vw, 460px);
     column-gap: clamp(var(--space-8), 5vw, calc(var(--space-8) * 2.5));
     align-items: start;
     padding-inline: clamp(20px, 5vw, 72px);
   }
-  .agency-service { grid-column: 1; }
-  .agency-stage .agency-service-inner { padding-inline: 0; }
-  .agency-film {
+  /* wide enough that a 16:9 film is not a letterbox strip */
+  .service-list-wide .service-stage { grid-template-columns: minmax(0, 1fr) min(48vw, 760px); }
+  .service-row { grid-column: 1; }
+  .service-stage .service-row-inner { padding-inline: 0; }
+  /* The same rounded, shadowed frame as the Home rows' films
+     (.pillar-image-wrap), never taller than the screen under the navbar: a
+     short window crops the media (cover) rather than cut it off. */
+  .service-media {
     display: block;
     grid-column: 2;
     grid-row: 1 / span var(--stage-count);
     position: sticky;
     top: calc(var(--navbar-h) + var(--space-6));
     margin: var(--space-6) 0;
-  }
-  /* The same rounded, shadowed frame as the Home rows' films
-     (.pillar-image-wrap), never taller than the screen under the navbar:
-     a short window crops the film (cover) rather than cut it off. */
-  .agency-film-video {
-    display: block;
-    width: 100%;
+    aspect-ratio: var(--media-ratio);
     max-height: calc(100svh - var(--navbar-h) - var(--space-6) * 2);
-    object-fit: cover;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
     background: var(--color-black);
@@ -123,15 +142,15 @@
 /* — the services' stage (phones) — the same pinned stage as Home's "What
    we do" (PillarRows.css "pillar stage"), driven by the same hook
    (hooks/useScrollStage, with PillarRows' STAGE_QUERY — keep this
-   breakpoint in step). .agency-services is a tall track; .agency-stage
-   inside it is sticky under the navbar, so the section stays put while the
-   page scrolls and the services take turns in it. The hook writes --d
-   (signed distance from the scroll position, −1..1), --ot (the text's
-   opacity, handing over at halfway) and --vis per service, every frame —
-   scrubbed by the finger, so no timed transitions. The text slides in from
-   the RIGHT and out to the LEFT, physical in both languages, as on Home. */
+   breakpoint in step). .service-list is a tall track; .service-stage inside
+   it is sticky under the navbar, so the section stays put while the page
+   scrolls and the services take turns in it. The hook writes --d (signed
+   distance from the scroll position, −1..1), --ot (the text's opacity,
+   handing over at halfway) and --vis per service, every frame — scrubbed by
+   the finger, so no timed transitions. The text slides in from the RIGHT
+   and out to the LEFT, physical in both languages, as on Home. */
 @media (max-width: 760px) {
-  .agency-services {
+  .service-list {
     --stage-h: calc(100vh - var(--navbar-h));
     --stage-h: calc(100svh - var(--navbar-h));
     --stage-h: calc(100dvh - var(--navbar-h));
@@ -141,39 +160,28 @@
     height: calc(var(--stage-h) + (var(--stage-count) - 0.5) * var(--stage-step));
     border-top: 0;
   }
-  .agency-stage {
+  .service-stage {
     position: sticky;
     top: var(--navbar-h);
     height: var(--stage-h);
     overflow: hidden;
   }
-  .agency-stage .stage-dots { display: flex; z-index: 3; }
-  /* BACKDROP, as on Home (PillarRows.css "backdrop stage"): the film fills
+  .service-stage .stage-dots { display: flex; z-index: 3; }
+  /* BACKDROP, as on Home (PillarRows.css "backdrop stage"): the media fills
      the whole stage behind every service, the shared .stage-wash (theme.css)
-     fades it into the page at the foot, and the copy sits on top. One film
-     for all six services, so it just plays on while the copy changes. */
-  .agency-film {
+     fades it into the page at the foot, and the copy sits on top. */
+  .service-media {
     display: block;
     position: absolute;
     inset: 0;
     z-index: 0;
-    margin: 0;
   }
-  .agency-film-video {
-    display: block;
-    width: 100%;
-    height: 100%;
-    /* AutoplayVideo sets the ratio inline; here the stage sets the size */
-    aspect-ratio: auto !important;
-    object-fit: cover;
-    background: var(--color-black);
-  }
-  .agency-stage .stage-wash { display: block; }
+  .service-stage .stage-wash { display: block; }
   /* Every service stacked in the stage, its text on the bottom edge as on
-     Home. The extra .agency-services outranks useSectionReveal's
+     Home. The extra .service-list outranks useSectionReveal's
      .reveal / .reveal-in (theme.css), which these pick up as top-level
      sections. */
-  .agency-services .agency-stage .agency-service {
+  .service-list .service-stage .service-row {
     position: absolute;
     inset: 0;
     display: flex;
@@ -185,19 +193,20 @@
     visibility: var(--vis);
     transition: none;
   }
-  .agency-stage .agency-service-inner {
+  .service-stage .service-row-inner {
     padding-block: 0;
     gap: var(--space-4);
     opacity: var(--ot);
     transform: translateX(calc(var(--d) * 48px));
   }
-  .agency-service-title { font-size: 26px; }
-  .agency-service-lead { font-size: var(--text-body); }
+  .service-row-title { font-size: 26px; }
+  .service-row-lead { font-size: var(--text-body); }
   /* Clear of the floating chat button in the bottom RIGHT corner, as on Home. */
-  .agency-service-link { margin-top: var(--space-4); margin-right: 72px; }
+  .service-row-link { margin-top: var(--space-4); margin-right: 72px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .agency-service-link { transition: none; }
-  .agency-stage .agency-service-inner { transform: none !important; }
+  .service-row-link,
+  .service-media-item { transition: none; }
+  .service-stage .service-row-inner { transform: none !important; }
 }

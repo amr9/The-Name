@@ -5,8 +5,9 @@ import PillarRows, { ROW_RATIO } from '../../components/PillarRows/PillarRows.js
 import { brandLink, brands, brandsById } from '../../data/brands.js';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import { PENDING_SLOTS, featuredBrands } from './data.js';
+import { PENDING_SLOTS, brandCategories, featuredBrands } from './data.js';
 import './Brands.css';
+import ServicePage, { servicesFrom } from '../../components/ServicePage/ServicePage.jsx';
 
 const featuredIds = new Set(featuredBrands.map((f) => f.brandId));
 
@@ -47,7 +48,44 @@ function BrandProduct({ src, label, name, line, facts = [], pending = false }) {
  * soon" intro (brandsPage.pending) and PENDING_SLOTS dashed cards. Every
  * other brand in data/brands.js is listed underneath as a logo card.
  */
+/**
+ * The Brands page — the shared "What we do" layout (components/ServicePage):
+ * the hero, then one section per category in `brandCategories` (./data.js),
+ * titled by the Brands chips on Home, each listing its brands as chips. The
+ * brands have no films, so the media is ONE product photo per category,
+ * which changes with the category in view. Copy is i18n `brandsPage`.
+ */
 export default function Brands() {
+  const { t } = useLanguage();
+  const b = t.brandsPage;
+  const tags = t.home.pillars.brands.tags;
+
+  const services = servicesFrom(brandCategories, tags, b.categories).map((s, i) => ({
+    ...s,
+    extra: (
+      <ul className="pillar-tags service-brands" aria-label={b.categoryBrands}>
+        {brandCategories[i].brands.map((id) => <li key={id}>{brandsById[id].name}</li>)}
+      </ul>
+    ),
+  }));
+
+  return (
+    <ServicePage
+      className="brands-page"
+      hero={b}
+      services={services}
+      media={brandCategories.map((c, i) => ({ src: media.brandProducts[c.image], label: tags[i] }))}
+      ratio={ROW_RATIO}
+    />
+  );
+}
+
+// PARKED: the page before the "What we do" redesign — every featured brand as
+// a PillarRows row with its two product cards, the rest as logo cards — kept
+// intact but not rendered. Its copy (i18n brandsPage.*), CSS (Brands.css)
+// and data (featuredBrands, PENDING_SLOTS) are kept too. To bring it back,
+// render it from Brands() above.
+function ParkedBrands() {
   const { t } = useLanguage();
   const b = t.brandsPage;
   const others = brands.filter((brand) => !featuredIds.has(brand.id));

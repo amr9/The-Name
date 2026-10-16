@@ -22,3 +22,17 @@ export const activationShots = [
   { id: 'makingTogether' },
   { id: 'onTheStand' },
 ];
+
+// The Events page's services (components/ServicePage), in order: one
+// section each. Each title is the matching Events chip on Home (i18n
+// home.pillars.events.tags, SAME ORDER); the copy is i18n
+// eventsPage.services[id].
+export const eventServices = [
+  { id: 'events' },
+  { id: 'activations' },
+  { id: 'launches' },
+  { id: 'concepts' },
+  { id: 'branding' },
+  { id: 'production' },
+  { id: 'experiences' },
+];

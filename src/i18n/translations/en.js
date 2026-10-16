@@ -45,6 +45,10 @@ export default {
       title: 'Events & Kids Activations in Dubai | The Name',
       description: 'Personalised gifts, back-to-school pieces, birthdays and hands-on creative activations for children: their name, their drawings, their story.',
     },
+    fnb: {
+      title: 'F&B & Concept Store in Dubai: Café & Catering | The Name',
+      description: 'Dining, catering, curated products, pop-ups and collaborations: the F&B and Concept Store where The Name brings food, retail and community together.',
+    },
     about: {
       title: 'About The Name: Our Story Since 1990',
       description: 'From customisation and corporate gifting in 1990 to a design-led gifting brand in Dubai: the story behind The Name and the people who make it.',
@@ -104,6 +108,35 @@ export default {
   // The Brands page (pages/Brands/). The brand names themselves are proper
   // nouns and live in data/brands.js, not here.
   brandsPage: {
+    // The page's hero and its category sections (components/ServicePage).
+    // Category titles are the Brands chips on Home (home.pillars.brands
+    // .tags), in the order of pages/Brands/data.js `brandCategories`.
+    titleLead: "Brands worth",
+    titleMark: "giving.",
+    // aria-label of each category's list of brand names
+    categoryBrands: "Brands in this category",
+    categories: {
+      lifestyle: {
+        lead: "Everyday pieces with personality.",
+        body: "Fashion accessories, watches, audio and bags from brands that make daily life a little more stylish, to give or to keep.",
+      },
+      office: {
+        lead: "The working day, upgraded.",
+        body: "Pens, notebooks, drinkware and tech accessories that bring colour and craft to every desk.",
+      },
+      design: {
+        lead: "Objects where form meets function.",
+        body: "Lighting, audio and home pieces from design-led houses, chosen for how they look as much as how they work.",
+      },
+      corporate: {
+        lead: "Built for corporate programmes.",
+        body: "Promotional products, apparel and travel essentials that carry your branding well, in the volumes corporate orders need.",
+      },
+      premium: {
+        lead: "International names for the gifts that matter most.",
+        body: "Leather goods, watches and accessories from established fashion houses, for VIP gifting, milestones and executive programmes.",
+      },
+    },
     kicker: "Our brands",
     title: "The brands we curate.",
     lede: "Design-led makers we stock, personalise and gift, each one chosen for pieces worth keeping.",
@@ -305,6 +338,127 @@ export default {
     },
   },
 
+  // The shared parts of the "What we do" pillar pages (components/ServicePage).
+  servicePage: {
+    // The link under every service, to the enquiry form.
+    rowCta: "Let's talk",
+  },
+  // The Corporate Gifts page (components/ServicePage). Service titles are
+  // the Corporate Gifts chips on Home (home.pillars.corporateGifts.tags), in
+  // the order of pages/Business/data.js `giftServices`.
+  giftsPage: {
+    kicker: "Corporate Gifts",
+    titleLead: "Gifts that carry",
+    titleMark: "your name.",
+    lede: "We create gifting solutions that go beyond putting a logo on a product: curated collections, premium branded merchandise and fully customised creative concepts, each designed to tell a story and reflect your brand identity.",
+    filmLabel: "Inside the Vertex showroom and workshop, where our corporate gifts come together",
+    services: {
+      curated: {
+        lead: "Collections chosen for the people receiving them.",
+        body: "We select pieces from our partner brands and our own range around your occasion, audience and budget, so every gift feels considered rather than catalogued.",
+      },
+      concepts: {
+        lead: "Ideas first, products second.",
+        body: "Every brief starts with a concept: a theme, a story or a moment the gift should carry, developed with our creative team before anything is made.",
+      },
+      merchandise: {
+        lead: "Merchandise people actually keep.",
+        body: "Premium apparel, drinkware, tech, bags and desk essentials finished with your brand, made to be used every day rather than left in a drawer.",
+      },
+      customisation: {
+        lead: "Made personal, one piece or a thousand.",
+        body: "Engraving, printing, embossing and embroidery, matched to each material and finished with care, so every detail stays true to your brand.",
+      },
+      packaging: {
+        lead: "The first impression starts with the box.",
+        body: "Bespoke boxes, wraps, inserts and cards designed around the gift and your identity, so the unboxing becomes part of the message.",
+      },
+      production: {
+        lead: "From sample to delivery, handled for you.",
+        body: "Sourcing, sampling, production, quality control and delivery across the UAE and the GCC, on schedule and at the volume you need.",
+      },
+    },
+  },
+  // The Events page (components/ServicePage). Service titles are the Events
+  // chips on Home (home.pillars.events.tags), in the order of
+  // pages/Kids/data.js `eventServices`.
+  // The F&B & Concept Store page (pages/Fnb/). The service titles are the F&B
+  // chips on Home (home.pillars.fnb.tags).
+  fnbPage: {
+    kicker: "F&B & Concept Store",
+    titleLead: "Where people",
+    titleMark: "come together.",
+    lede: "Our F&B and Concept Store brings The Name into a physical, social space where food, retail, creativity and community come together: a destination for discovery and connection.",
+    // The picture beside the services, for screen readers.
+    mediaLabel: "The Name's concept store and café",
+    services: {
+      fnb: {
+        lead: "Food and drink at the heart of the space.",
+        body: "Good coffee, fresh plates and seasonal favourites, served in a room designed for lingering, meeting and talking.",
+      },
+      catering: {
+        lead: "Our kitchen, at your address.",
+        body: "Catering for office days, meetings, launches and private gatherings, planned with you and presented with the same care as everything we make.",
+      },
+      conceptStore: {
+        lead: "Part gallery, part gift shop.",
+        body: "Curated design pieces, gifts and The Name's own collections, displayed so they can be seen, handled and made personal.",
+      },
+      retail: {
+        lead: "Products chosen to be kept.",
+        body: "Design-led objects from the brands we work with, in store and ready to personalise with a name, initials or a message.",
+      },
+      popUps: {
+        lead: "Something new, season after season.",
+        body: "Temporary stores, tastings and showcases that keep the space changing and give visitors a reason to come back.",
+      },
+      collaborations: {
+        lead: "Shared ideas with brands and creatives.",
+        body: "Partnerships with designers, makers, chefs and brands that bring their work into the space through limited menus, products and installations.",
+      },
+      community: {
+        lead: "A place for people, not just purchases.",
+        body: "Workshops, talks, gatherings and creative sessions that turn the store into a meeting point for the community around it.",
+      },
+    },
+  },
+  eventsPage: {
+    kicker: "Events & Experiences",
+    titleLead: "Moments people",
+    titleMark: "remember.",
+    lede: "We turn brand ideas into experiences people can see, feel and remember, taking every project from concept and creative direction through to production and execution.",
+    filmLabel: "Highlights from events and activations by The Name",
+    services: {
+      events: {
+        lead: "Corporate events with your brand at the centre.",
+        body: "Conferences, gala dinners, award nights and intimate gatherings, planned and run end to end so your guests experience the brand, not the logistics.",
+      },
+      activations: {
+        lead: "Brand activations that invite people in.",
+        body: "Interactive spaces in malls, venues and public settings that let your audience try, play and share, turning attention into engagement.",
+      },
+      launches: {
+        lead: "Launches that make an entrance.",
+        body: "Product reveals and brand launches staged for the room, the press and the feed, so the first moment sets the tone for everything after it.",
+      },
+      concepts: {
+        lead: "Every experience starts with an idea.",
+        body: "Our creative team shapes the theme, story and journey of each event before a single element is built, so every detail serves the same idea.",
+      },
+      branding: {
+        lead: "Your identity, carried through every touchpoint.",
+        body: "Stage design, signage, wayfinding, photo walls and branded giveaways that keep the experience recognisably yours from entrance to exit.",
+      },
+      production: {
+        lead: "Built, installed and run by one team.",
+        body: "Fabrication, AV, lighting, staffing and on-site management handled from setup to teardown, so the day runs exactly as planned.",
+      },
+      experiences: {
+        lead: "Experiences people talk about afterwards.",
+        body: "Pop-ups, festivals and large-scale public experiences that bring brands and people together in ways that last well beyond the day itself.",
+      },
+    },
+  },
   // The Agency page (pages/Agency/).
   agency: {
     kicker: "The Agency",
@@ -312,8 +466,6 @@ export default {
     titleLead: "Not just another",
     titleMark: "agency.",
     lede: "Your dedicated partner for 360-degree media and marketing: strategy, creative, media buying, digital, branding, CSR and sustainability, in one unified approach built for consistency, efficiency and maximum impact.",
-    // The button under every service.
-    rowCta: "Let's talk",
     // The film beside the services (desktop), for screen readers.
     filmLabel: "The Name Agency at work: campaigns, branding and out-of-home media",
     // One section per service (pages/Agency/data.js). The titles are the
@@ -321,32 +473,26 @@ export default {
     // presentation.
     services: {
       positioning: {
-        title: "Brand Positioning",
         lead: "Navigated, innovated and elevated marketing. Expert guidance and strategic insight to help you find your place in an ever-changing market.",
         body: "We develop innovative marketing strategies, grounded in market and consumer insight, that elevate your brand and drive business growth.",
       },
       communication: {
-        title: "Brand Communication",
         lead: "Bringing brands to life creatively. Strategies that go beyond telling your brand story. They build meaningful connections with your audience.",
         body: "Carefully crafted brand narratives foster loyalty and lift how your brand is seen, keeping every piece of communication consistent, compelling and true to its essence.",
       },
       awareness: {
-        title: "Brand Awareness",
         lead: "Digital solutions that achieve real results. From SEO to social media management and paid advertising, targeted campaigns that engage your audience.",
         body: "Strategies designed to connect with customers, boost brand visibility and drive measurable success across multiple platforms.",
       },
       exposure: {
-        title: "Brand Exposure",
         lead: "Captivating experiences in Dubai's creative hubs. Events and activations in Dubai Design District and Dubai CommerCity, known for innovative brands and creative energy.",
         body: "The right venue amplifies your brand, giving you a dynamic backdrop to showcase your identity and engage your target audience face to face.",
       },
       csr: {
-        title: "CSR & Sustainability Campaigns",
         lead: "Helping you make a meaningful difference. Corporate Social Responsibility campaigns that align with your business values and drive positive change in your community.",
         body: "Initiatives that promote sustainability, social responsibility and ethical business practice, so your brand contributes to a better world while enhancing its reputation.",
       },
       ooh: {
-        title: "OOH Media",
         lead: "Smart media buying for maximum reach. Media strategies tailored to your brand's goals, audience and budget, guided by data-driven insight.",
         body: "Strong partnerships with media outlets put your message on the right channels, from meticulous planning and buying to seamless campaign implementation.",
       },

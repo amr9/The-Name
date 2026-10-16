@@ -8,3 +8,16 @@ export const brandingOffers = [
   { id: 'onboardingKits' },
   { id: 'eventGiveaways' },
 ];
+
+// The page's services (components/ServicePage), in order: one section each.
+// Each title is the matching Corporate Gifts chip on Home (i18n
+// home.pillars.corporateGifts.tags, SAME ORDER); the copy is i18n
+// giftsPage.services[id].
+export const giftServices = [
+  { id: 'curated' },
+  { id: 'concepts' },
+  { id: 'merchandise' },
+  { id: 'customisation' },
+  { id: 'packaging' },
+  { id: 'production' },
+];

@@ -26,12 +26,12 @@ function Chevron() {
 }
 
 // A plain page link in the bar or inside a dropdown. A link to a SECTION
-// (with a #hash, e.g. F&B → /about#contact) is a plain Link: NavLink matches
+// (with a #hash, e.g. /about#contact) is a plain Link: NavLink matches
 // on the path alone, so it would light up as "current" on that whole page.
 // An entry with `url` (e.g. Shop → the Odoo store) leaves the site, so it is
 // a plain <a>.
 // Every in-app navbar link passes `fromNavbar`, so hooks/useScrollToTop opens
-// the page at its TOP even when the link has a #hash (F&B → /about#contact).
+// the page at its TOP even when the link has a #hash.
 const FROM_NAVBAR = { fromNavbar: true };
 
 function PageLink({ link, label }) {

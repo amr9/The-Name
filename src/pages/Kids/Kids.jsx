@@ -9,12 +9,41 @@ import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 // import { kidsIcons } from '../../components/Bubbles/icons.jsx';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import { activationShots, kidsOffers } from './data.js';
+import { activationShots, eventServices, kidsOffers } from './data.js';
 import Doodles from './Doodles.jsx';
 import './Kids.css';
 import { shopLink } from '../../data/site.js';
+import ServicePage, { servicesFrom } from '../../components/ServicePage/ServicePage.jsx';
+import { ROW_RATIO } from '../../components/PillarRows/PillarRows.jsx';
 
+/**
+ * The Events page (/events; files still pages/Kids/) — the shared "What we
+ * do" layout (components/ServicePage): the hero, then one section per
+ * service in `eventServices` (./data.js), titled by the Events chips on
+ * Home, beside the Events film (the Events iPad reel, 4:5). Copy is i18n
+ * `eventsPage`.
+ */
 export default function Kids() {
+  const { t } = useLanguage();
+  const e = t.eventsPage;
+
+  return (
+    <ServicePage
+      className="events-page"
+      hero={e}
+      services={servicesFrom(eventServices, t.home.pillars.events.tags, e.services)}
+      media={[{ ...media.serviceVideos.events, video: true, label: e.filmLabel }]}
+      ratio={ROW_RATIO}
+    />
+  );
+}
+
+// PARKED: the Events page before the "What we do" redesign (the kids'
+// offers, safety note, activation film and gallery, the Two T's story and
+// the closing CTA), kept intact but not rendered. Its copy (i18n kids.*),
+// CSS (Kids.css) and data (kidsOffers, activationShots) are kept too. To
+// bring a section back, render it from Kids() above.
+function ParkedKids() {
   const { t } = useLanguage();
   const k = t.kids;
 

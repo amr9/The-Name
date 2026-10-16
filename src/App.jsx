@@ -39,6 +39,7 @@ function ToOdooShop() {
 const Brands = lazy(() => import('./pages/Brands/Brands.jsx'));
 const Business = lazy(() => import('./pages/Business/Business.jsx'));
 const Agency = lazy(() => import('./pages/Agency/Agency.jsx'));
+const Fnb = lazy(() => import('./pages/Fnb/Fnb.jsx'));
 const About = lazy(() => import('./pages/About/About.jsx'));
 // The policies page is PARKED, not deleted — uncomment this import and its
 // route below — and link to it from somewhere: the footer no longer does.
@@ -78,6 +79,7 @@ export default function App() {
             <Route path={routes.agency} element={<Agency />} />
             {/* Events is the Kids page under its new name (see routes.events). */}
             <Route path={routes.events} element={<Kids />} />
+            <Route path={routes.fnb} element={<Fnb />} />
             {/* The enquiry form now lives at the foot of /about. */}
             <Route path={routes.about} element={<About />} />
             {/* The OLD paths, from before the URLs were renamed to match the

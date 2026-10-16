@@ -58,9 +58,8 @@ export default function useScrollToTop() {
     // page (Home's "Start a conversation", the Agency index), or a link that
     // was opened directly (first load). Browsing with the NAVBAR (its links
     // pass state.fromNavbar, components/Navbar) and Back/Forward open the
-    // page at the top instead, even when the address has a hash: the
-    // navbar's F&B & Concept Store is /about#contact while /cafe is parked,
-    // and it should read as opening that page, not as being dropped at the
+    // page at the top instead, even when the address has a hash: a navbar
+    // link should read as opening that page, not as being dropped at the
     // foot of it.
     const jumpToSection = Boolean(hash) && (firstLoad || (navigationType !== 'POP' && !state?.fromNavbar));
 

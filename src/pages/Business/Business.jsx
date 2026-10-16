@@ -3,10 +3,38 @@ import WhatsAppButton from '../../components/WhatsAppButton.jsx';
 import PackagesPanel from '../../components/PackagesPanel/PackagesPanel.jsx';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import { brandingOffers } from './data.js';
+import { brandingOffers, giftServices } from './data.js';
 import './Business.css';
+import ServicePage, { servicesFrom } from '../../components/ServicePage/ServicePage.jsx';
+import { ROW_RATIO } from '../../components/PillarRows/PillarRows.jsx';
 
+/**
+ * The Corporate Gifts page — the shared "What we do" layout
+ * (components/ServicePage): the hero, then one section per service in
+ * `giftServices` (./data.js), titled by the Corporate Gifts chips on Home,
+ * beside the Corporate Gifts film (the Vertex reel, 4:5). Copy is i18n
+ * `giftsPage`.
+ */
 export default function Business() {
+  const { t } = useLanguage();
+  const g = t.giftsPage;
+
+  return (
+    <ServicePage
+      className="gifts-page"
+      hero={g}
+      services={servicesFrom(giftServices, t.home.pillars.corporateGifts.tags, g.services)}
+      media={[{ ...media.serviceVideos.corporateGifts, video: true, label: g.filmLabel }]}
+      ratio={ROW_RATIO}
+    />
+  );
+}
+
+// PARKED: the page before the "What we do" redesign (offer cards, account
+// terms, catering), kept intact but not rendered. Its copy (i18n business.*),
+// CSS (Business.css) and data (brandingOffers) are kept too. To bring a
+// section back, render it from Business() above.
+function ParkedBusiness() {
   const { t } = useLanguage();
 
   return (

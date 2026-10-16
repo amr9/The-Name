@@ -17,11 +17,12 @@
 import '../components/Carousel.css';
 import '../components/VideoPlaceholder/VideoPlaceholder.css';
 import './Kids/Kids.css';
+// components/ServicePage: Events, Brands, Corporate Gifts and Agency all use it
+import '../components/ServicePage/ServicePage.css';
 import '../components/ProductCard/ProductCard.css';
 import './Shop/Shop.css';
 import './Brands/Brands.css';
 import '../components/PackagesPanel/PackagesPanel.css';
 import './Business/Business.css';
-import './Agency/Agency.css';
 import './About/About.css';
 import './NotFound/NotFound.css';
