@@ -5,7 +5,7 @@ import PillarRows, { ROW_RATIO } from '../../components/PillarRows/PillarRows.js
 import { brandLink, brands, brandsById } from '../../data/brands.js';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import { PENDING_SLOTS, brandCategories, featuredBrands } from './data.js';
+import { PENDING_SLOTS, brandCatalogues, brandCategories, featuredBrands } from './data.js';
 import './Brands.css';
 import ServicePage, { servicesFrom } from '../../components/ServicePage/ServicePage.jsx';
 
@@ -48,12 +48,58 @@ function BrandProduct({ src, label, name, line, facts = [], pending = false }) {
  * soon" intro (brandsPage.pending) and PENDING_SLOTS dashed cards. Every
  * other brand in data/brands.js is listed underneath as a logo card.
  */
+// A brand's catalogue: its FIRST entry in `brandCatalogues` (Hugo Boss has
+// four; the 2026 one comes first). Brands without one are absent.
+const catalogueByBrand = {};
+brandCatalogues.forEach((c) => {
+  if (c.brandId && !catalogueByBrand[c.brandId]) catalogueByBrand[c.brandId] = c;
+});
+
+// PARKED for UI testing — not rendered; the catalogues now live in the
+// category sections (the brand chips link to them, the covers are the
+// media). To bring it back, pass <BrandCatalogues /> to ServicePage below.
+// The catalogue covers (./data.js `brandCatalogues`): each cover opens its
+// catalogue on the viewer vertex.ae/catalogues links it to, in a new tab.
+function BrandCatalogues() {
+  const { t } = useLanguage();
+  const c = t.brandsPage.catalogues;
+  return (
+    <section className="container brand-catalogues" aria-labelledby="brand-catalogues-title">
+      <span className="card-kicker">{c.kicker}</span>
+      <h2 id="brand-catalogues-title" className="brand-catalogues-title">{c.title}</h2>
+      <p className="brand-catalogues-lede">{c.lede}</p>
+      <ul className="brand-catalogues-grid">
+        {brandCatalogues.map(({ id, brandId, url }) => {
+          const line = c.items[id];
+          const name = brandId ? brandsById[brandId].name : line;
+          return (
+            <li key={id}>
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="brand-catalogue"
+                aria-label={c.open(brandId ? `${name}, ${line}` : name)}
+              >
+                <ImagePlaceholder src={media.brandCatalogues[id]} label={name} ratio="3 / 4" className="brand-catalogue-cover" />
+                <span className="brand-catalogue-name">{name}</span>
+                {brandId && <span className="brand-catalogue-line">{line}</span>}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
+
 /**
  * The Brands page — the shared "What we do" layout (components/ServicePage):
  * the hero, then one section per category in `brandCategories` (./data.js),
- * titled by the Brands chips on Home, each listing its brands as chips. The
- * brands have no films, so the media is ONE product photo per category,
- * which changes with the category in view. Copy is i18n `brandsPage`.
+ * titled by the Brands chips on Home, each listing its brands as chips — a
+ * brand with a catalogue is a chip linking to it (new tab). The brands have
+ * no films, so the media is ONE catalogue cover per category, which changes
+ * with the category in view. Copy is i18n `brandsPage`.
  */
 export default function Brands() {
   const { t } = useLanguage();
@@ -64,7 +110,24 @@ export default function Brands() {
     ...s,
     extra: (
       <ul className="pillar-tags service-brands" aria-label={b.categoryBrands}>
-        {brandCategories[i].brands.map((id) => <li key={id}>{brandsById[id].name}</li>)}
+        {brandCategories[i].brands.map((id) => {
+          const { name } = brandsById[id];
+          const catalogue = catalogueByBrand[id];
+          return (
+            <li key={id}>
+              {catalogue ? (
+                <a
+                  href={catalogue.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={b.catalogues.open(name)}
+                >
+                  {name}
+                </a>
+              ) : name}
+            </li>
+          );
+        })}
       </ul>
     ),
   }));
@@ -74,7 +137,7 @@ export default function Brands() {
       className="brands-page"
       hero={b}
       services={services}
-      media={brandCategories.map((c, i) => ({ src: media.brandProducts[c.image], label: tags[i] }))}
+      media={brandCategories.map((c, i) => ({ src: media.brandCatalogues[c.image], label: tags[i] }))}
       ratio={ROW_RATIO}
     />
   );

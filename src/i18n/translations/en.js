@@ -115,6 +115,36 @@ export default {
     titleMark: "giving.",
     // aria-label of each category's list of brand names
     categoryBrands: "Brands in this category",
+    // The catalogue covers under the categories (pages/Brands/data.js
+    // `brandCatalogues`). `items[id]` is the line under the brand's name, or
+    // the card's title when the catalogue has no single brand. `open` is
+    // each cover's aria-label (it opens in a new tab).
+    catalogues: {
+      kicker: "Catalogues",
+      title: "Browse the 2026 catalogues.",
+      lede: "Flip through each brand's full collection, then tell us what you'd like personalised.",
+      open: (name) => `Open the ${name} catalogue (opens in a new tab)`,
+      items: {
+        powerOfBrands: "The Power of Brands",
+        hugoBoss2026: "2026 Catalogue",
+        christianLacroix2026: "2026 Catalogue",
+        cerruti2026: "2026 Catalogue",
+        ungaro2026: "2026 Catalogue",
+        festina2026: "2026 Catalogue",
+        cacharel2026: "2026 Catalogue",
+        giftsToRemember: "Gifts to Remember",
+        makito2026: "General Catalogue 2026",
+        brandCharger2026: "BrandCharger 2026",
+        senator2026: "2026 Catalogue",
+        sols2026: "2026 Catalogue",
+        lexon: "Catalogue",
+        lundLondon: "Catalogue",
+        hugoBossPowerBanks: "Power Banks",
+        hugoBossWriting: "Writing Instruments",
+        bossUmbrellas: "Umbrellas",
+        korin: "Catalogue",
+      },
+    },
     categories: {
       lifestyle: {
         lead: "Everyday pieces with personality.",
@@ -465,7 +495,7 @@ export default {
     // The title in two parts: `titleMark` carries the yellow highlighter.
     titleLead: "Not just another",
     titleMark: "agency.",
-    lede: "Your dedicated partner for 360-degree media and marketing: strategy, creative, media buying, digital, branding, CSR and sustainability, in one unified approach built for consistency, efficiency and maximum impact.",
+    lede: "Your 360° media and marketing partner, from strategy to impact.",
     // The film beside the services (desktop), for screen readers.
     filmLabel: "The Name Agency at work: campaigns, branding and out-of-home media",
     // One section per service (pages/Agency/data.js). The titles are the
@@ -473,28 +503,28 @@ export default {
     // presentation.
     services: {
       positioning: {
-        lead: "Navigated, innovated and elevated marketing. Expert guidance and strategic insight to help you find your place in an ever-changing market.",
-        body: "We develop innovative marketing strategies, grounded in market and consumer insight, that elevate your brand and drive business growth.",
+        lead: "Find your place in a changing market.",
+        body: "Insight-led strategies that grow your brand.",
       },
       communication: {
-        lead: "Bringing brands to life creatively. Strategies that go beyond telling your brand story. They build meaningful connections with your audience.",
-        body: "Carefully crafted brand narratives foster loyalty and lift how your brand is seen, keeping every piece of communication consistent, compelling and true to its essence.",
+        lead: "Bringing brands to life, creatively.",
+        body: "Stories that build loyalty and stay on-brand.",
       },
       awareness: {
-        lead: "Digital solutions that achieve real results. From SEO to social media management and paid advertising, targeted campaigns that engage your audience.",
-        body: "Strategies designed to connect with customers, boost brand visibility and drive measurable success across multiple platforms.",
+        lead: "Digital that delivers real results.",
+        body: "SEO, social and paid campaigns that get you seen.",
       },
       exposure: {
-        lead: "Captivating experiences in Dubai's creative hubs. Events and activations in Dubai Design District and Dubai CommerCity, known for innovative brands and creative energy.",
-        body: "The right venue amplifies your brand, giving you a dynamic backdrop to showcase your identity and engage your target audience face to face.",
+        lead: "Experiences in Dubai's creative hubs.",
+        body: "Events in Dubai Design District and Dubai CommerCity.",
       },
       csr: {
-        lead: "Helping you make a meaningful difference. Corporate Social Responsibility campaigns that align with your business values and drive positive change in your community.",
-        body: "Initiatives that promote sustainability, social responsibility and ethical business practice, so your brand contributes to a better world while enhancing its reputation.",
+        lead: "Make a meaningful difference.",
+        body: "CSR and sustainability campaigns true to your values.",
       },
       ooh: {
-        lead: "Smart media buying for maximum reach. Media strategies tailored to your brand's goals, audience and budget, guided by data-driven insight.",
-        body: "Strong partnerships with media outlets put your message on the right channels, from meticulous planning and buying to seamless campaign implementation.",
+        lead: "Smart media buying, maximum reach.",
+        body: "Data-led plans that put you on the right channels.",
       },
     },
   },

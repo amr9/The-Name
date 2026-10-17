@@ -13,26 +13,28 @@ import { activationShots, eventServices, kidsOffers } from './data.js';
 import Doodles from './Doodles.jsx';
 import './Kids.css';
 import { shopLink } from '../../data/site.js';
-import ServicePage, { servicesFrom } from '../../components/ServicePage/ServicePage.jsx';
+import ServicePage, { servicePhotos, servicesFrom } from '../../components/ServicePage/ServicePage.jsx';
 import { ROW_RATIO } from '../../components/PillarRows/PillarRows.jsx';
 
 /**
  * The Events page (/events; files still pages/Kids/) — the shared "What we
  * do" layout (components/ServicePage): the hero, then one section per
  * service in `eventServices` (./data.js), titled by the Events chips on
- * Home, beside the Events film (the Events iPad reel, 4:5). Copy is i18n
- * `eventsPage`.
+ * Home, beside ONE picture per service (media.servicePhotos.events), which
+ * changes with the service in view — it replaced the Events film
+ * (media.serviceVideos.events). Copy is i18n `eventsPage`.
  */
 export default function Kids() {
   const { t } = useLanguage();
   const e = t.eventsPage;
+  const services = servicesFrom(eventServices, t.home.pillars.events.tags, e.services);
 
   return (
     <ServicePage
       className="events-page"
       hero={e}
-      services={servicesFrom(eventServices, t.home.pillars.events.tags, e.services)}
-      media={[{ ...media.serviceVideos.events, video: true, label: e.filmLabel }]}
+      services={services}
+      media={servicePhotos(services, media.servicePhotos.events)}
       ratio={ROW_RATIO}
     />
   );

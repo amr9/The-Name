@@ -51,7 +51,8 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer-main">
         <div className="footer-brand">
-          <Logo size="lg" on="dark" />
+          {/* compact={false}: the full name on phones too, not the N alone */}
+          <Logo size="lg" on="dark" compact={false} />
         </div>
 
         <div className="footer-columns">

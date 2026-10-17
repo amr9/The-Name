@@ -40,6 +40,8 @@ import './ServicePage.css';
  *
  * `hero`: { kicker, titleLead, titleMark, lede }
  * `services`: [{ id, title, lead, body, extra? }] — see servicesFrom below
+ * `children`: optional, rendered under the services inside the page (Brands:
+ * the catalogue covers).
  */
 
 // A page's services from its data.js list, its Home chips and its copy: the
@@ -49,7 +51,14 @@ import './ServicePage.css';
 export const servicesFrom = (list, tags, copy) =>
   list.map(({ id }, i) => ({ id, title: tags[i], ...copy[id] }));
 
-export default function ServicePage({ className = '', hero, services, media, ratio, wide = false }) {
+// ONE picture per service, for `media`: `photos` is a page's
+// media.servicePhotos[pillar] map ({ [service id]: src }); each picture is
+// labelled by its service's title. A file not supplied yet shows the dashed
+// ImagePlaceholder slot.
+export const servicePhotos = (services, photos) =>
+  services.map((s) => ({ src: photos[s.id], label: s.title }));
+
+export default function ServicePage({ className = '', hero, services, media, ratio, wide = false, children }) {
   const { t } = useLanguage();
   const stage = useScrollStage(services.length, {
     query: STAGE_QUERY,
@@ -155,6 +164,7 @@ export default function ServicePage({ className = '', hero, services, media, rat
           ))}
         </div>
       </div>
+      {children}
     </div>
   );
 }

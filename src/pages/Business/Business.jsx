@@ -5,26 +5,28 @@ import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { brandingOffers, giftServices } from './data.js';
 import './Business.css';
-import ServicePage, { servicesFrom } from '../../components/ServicePage/ServicePage.jsx';
+import ServicePage, { servicePhotos, servicesFrom } from '../../components/ServicePage/ServicePage.jsx';
 import { ROW_RATIO } from '../../components/PillarRows/PillarRows.jsx';
 
 /**
  * The Corporate Gifts page — the shared "What we do" layout
  * (components/ServicePage): the hero, then one section per service in
  * `giftServices` (./data.js), titled by the Corporate Gifts chips on Home,
- * beside the Corporate Gifts film (the Vertex reel, 4:5). Copy is i18n
- * `giftsPage`.
+ * beside ONE picture per service (media.servicePhotos.corporateGifts), which
+ * changes with the service in view — it replaced the Corporate Gifts film
+ * (media.serviceVideos.corporateGifts). Copy is i18n `giftsPage`.
  */
 export default function Business() {
   const { t } = useLanguage();
   const g = t.giftsPage;
+  const services = servicesFrom(giftServices, t.home.pillars.corporateGifts.tags, g.services);
 
   return (
     <ServicePage
       className="gifts-page"
       hero={g}
-      services={servicesFrom(giftServices, t.home.pillars.corporateGifts.tags, g.services)}
-      media={[{ ...media.serviceVideos.corporateGifts, video: true, label: g.filmLabel }]}
+      services={services}
+      media={servicePhotos(services, media.servicePhotos.corporateGifts)}
       ratio={ROW_RATIO}
     />
   );

@@ -41,9 +41,54 @@ export const media = {
   // On phones (≤700px) the hero plays the Agency film instead (agencyFilm).
   heroPhone: agencyFilm,
 
-  // The Agency page's film (outdoorFilm): pinned beside the services on
-  // desktop/tablet, the backdrop of their pinned stage on phones.
+  // The Agency page's film (outdoorFilm). UNUSED for now — the page shows
+  // one picture per service instead (servicePhotos below).
   agencyOutdoor: outdoorFilm,
+
+  // The "What we do" pages (components/ServicePage) — one picture per
+  // service, keyed by pillar, then by the service ids in each page's data.js
+  // (Business `giftServices`, Agency `agencyServices`, Kids `eventServices`,
+  // Fnb `fnbServices`). Pinned beside the services on desktop/tablet and the
+  // backdrop of their pinned stage on phones; the one shown follows the
+  // service in view. Shown 4:5, cropped to fill (cover). They replaced the
+  // pages' films. Not supplied yet — the dashed ImagePlaceholder shows until
+  // each file exists. (Brands uses its catalogue covers instead.)
+  servicePhotos: {
+    corporateGifts: {
+      curated: `${BASE}/photos/corporate-gifts/curated.jpg`,
+      concepts: `${BASE}/photos/corporate-gifts/concepts.jpg`,
+      merchandise: `${BASE}/photos/corporate-gifts/merchandise.jpg`,
+      customisation: `${BASE}/photos/corporate-gifts/customisation.jpg`,
+      packaging: `${BASE}/photos/corporate-gifts/packaging.jpg`,
+      production: `${BASE}/photos/corporate-gifts/production.jpg`,
+    },
+    agency: {
+      positioning: `${BASE}/photos/agency/positioning.jpg`,
+      communication: `${BASE}/photos/agency/communication.jpg`,
+      awareness: `${BASE}/photos/agency/awareness.jpg`,
+      exposure: `${BASE}/photos/agency/exposure.jpg`,
+      csr: `${BASE}/photos/agency/csr.jpg`,
+      ooh: `${BASE}/photos/agency/ooh.jpg`,
+    },
+    events: {
+      events: `${BASE}/photos/events/events.jpg`,
+      activations: `${BASE}/photos/events/activations.jpg`,
+      launches: `${BASE}/photos/events/launches.jpg`,
+      concepts: `${BASE}/photos/events/concepts.jpg`,
+      branding: `${BASE}/photos/events/branding.jpg`,
+      production: `${BASE}/photos/events/production.jpg`,
+      experiences: `${BASE}/photos/events/experiences.jpg`,
+    },
+    fnb: {
+      fnb: `${BASE}/photos/fnb/fnb.jpg`,
+      catering: `${BASE}/photos/fnb/catering.jpg`,
+      conceptStore: `${BASE}/photos/fnb/concept-store.jpg`,
+      retail: `${BASE}/photos/fnb/retail.jpg`,
+      popUps: `${BASE}/photos/fnb/pop-ups.jpg`,
+      collaborations: `${BASE}/photos/fnb/collaborations.jpg`,
+      community: `${BASE}/photos/fnb/community.jpg`,
+    },
+  },
 
   // The picture in Home's "Customize Yours" section (CustomizeSection.jsx),
   // shown wide at 16:7.
@@ -251,6 +296,30 @@ export const media = {
     ungaroPaolaDocumentBag: `${BASE}/partner-brands/products/ungaro-paola-document-bag.webp`,
     makitoMekongBackpack: `${BASE}/partner-brands/products/makito-mekong-backpack.webp`,
     makitoStaverBottle: `${BASE}/partner-brands/products/makito-staver-bottle.webp`,
+  },
+
+  // Brands page — the catalogue covers (keys match pages/Brands/data.js
+  // `brandCatalogues` id). The "Main Catalogue" covers on
+  // vertex.ae/catalogues, saved as 600px WebP from their Wix CDN.
+  brandCatalogues: {
+    powerOfBrands: `${BASE}/partner-brands/catalogues/power-of-brands.webp`,
+    hugoBoss2026: `${BASE}/partner-brands/catalogues/hugo-boss-2026.webp`,
+    christianLacroix2026: `${BASE}/partner-brands/catalogues/christian-lacroix-2026.webp`,
+    cerruti2026: `${BASE}/partner-brands/catalogues/cerruti-1881-2026.webp`,
+    ungaro2026: `${BASE}/partner-brands/catalogues/ungaro-2026.webp`,
+    festina2026: `${BASE}/partner-brands/catalogues/festina-2026.webp`,
+    cacharel2026: `${BASE}/partner-brands/catalogues/cacharel-2026.webp`,
+    giftsToRemember: `${BASE}/partner-brands/catalogues/gifts-to-remember.webp`,
+    makito2026: `${BASE}/partner-brands/catalogues/makito-general-2026.webp`,
+    brandCharger2026: `${BASE}/partner-brands/catalogues/brandcharger-2026.webp`,
+    senator2026: `${BASE}/partner-brands/catalogues/senator-2026.webp`,
+    sols2026: `${BASE}/partner-brands/catalogues/sols-2026.webp`,
+    lexon: `${BASE}/partner-brands/catalogues/lexon.webp`,
+    lundLondon: `${BASE}/partner-brands/catalogues/lund-london.webp`,
+    hugoBossPowerBanks: `${BASE}/partner-brands/catalogues/hugo-boss-power-banks.webp`,
+    hugoBossWriting: `${BASE}/partner-brands/catalogues/hugo-boss-writing-instruments.webp`,
+    bossUmbrellas: `${BASE}/partner-brands/catalogues/boss-umbrellas.webp`,
+    korin: `${BASE}/partner-brands/catalogues/korin.webp`,
   },
 
   // Delivery partner logos for the Cafe logo strip (currently commented out)
