@@ -48,9 +48,10 @@ export const media = {
   // The "What we do" pages (components/ServicePage) — one picture per
   // service, keyed by pillar, then by the service ids in each page's data.js
   // (Business `giftServices`, Agency `agencyServices`, Kids `eventServices`,
-  // Fnb `fnbServices`). Pinned beside the services on desktop/tablet and the
-  // backdrop of their pinned stage on phones; the one shown follows the
-  // service in view. Shown 4:5, cropped to fill (cover). They replaced the
+  // Fnb `fnbServices`). The backdrop of their pinned stage on phones (the one
+  // shown follows the service in view), and on desktop/tablet the first slice
+  // of each service's ServiceSlices — its other slices are the files beside
+  // it named <id>-2.jpg, -3.jpg, -4.jpg. Cropped to fill (cover). They replaced the
   // pages' films. Not supplied yet — the dashed ImagePlaceholder shows until
   // each file exists. (Brands uses its catalogue covers instead.)
   servicePhotos: {

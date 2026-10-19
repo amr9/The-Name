@@ -8,7 +8,23 @@
   font-size: clamp(44px, 7vw, 104px);
   line-height: 0.98;
   letter-spacing: -0.03em;
+  text-transform: uppercase;
 }
+/* TypedTitle: the typed line laid over an invisible copy of the full one,
+   which keeps the title its full size throughout. */
+.typed-title { display: grid; }
+.typed-title > * { grid-area: 1 / 1; }
+.typed-title-reserve { visibility: hidden; }
+.typed-caret {
+  display: inline-block;
+  width: 0.06em;
+  height: 0.85em;
+  margin-inline: 0.06em -0.12em;
+  vertical-align: -0.05em;
+  background: var(--color-ink);
+  animation: typed-caret-blink 1s steps(1) infinite;
+}
+@keyframes typed-caret-blink { 50% { opacity: 0; } }
 /* The title's last words in .gold-leaf (theme.css), the gradient of the
    name in the Home hero title. A background clipped to the text paints only
    inside the element's own box, and at this tight line-height that box is
@@ -58,28 +74,9 @@
   line-height: 1.75;
   color: var(--color-gray);
 }
-/* A quiet text link rather than a button: uppercase, underlined in the
-   brand yellow, the underline turning ink on hover. */
-.service-row-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: calc(var(--space-6) + var(--space-1));
-  padding-bottom: 4px;
-  border-bottom: 2px solid var(--color-accent);
-  font-size: var(--text-sm);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--color-ink);
-  text-decoration: none;
-  transition: border-color 0.2s ease;
-}
-.service-row-link:hover,
-.service-row-link:focus-visible { border-color: var(--color-ink); }
-
-/* — the media — every entry stacked in one frame; the shown one fades in
-   (one entry: always shown). Films and pictures fill it (cover). */
+/* — the media (phones' stage backdrop) — every entry stacked in one frame;
+   the shown one fades in (one entry: always shown). Films and pictures fill
+   it (cover). */
 .service-media {
   display: none;
   margin: 0;
@@ -103,40 +100,130 @@
    here it fills the frame, which supplies the rounding. */
 .service-media-item .service-media-slot { height: 100%; border-radius: 0; }
 
-/* — desktop/tablet — the rows in the left column (the right one under RTL:
-   a grid starts on the reading side) and the media in the other, spanning
-   every row. It is sticky inside that span, so it stays pinned under the
-   navbar while the rows scroll past, then leaves with the last one. The
-   stage carries the page gutter here instead of each row's .container. The
+/* — desktop/tablet — each row: the title over its text on the reading side,
+   its ServiceSlices on the other (a grid starts on the reading side, so RTL
+   mirrors it). Below 1024px the slices go full width under the text. The
    breakpoint is the phone stage's, below, plus one. */
 @media (min-width: 761px) {
-  .service-stage {
+  .service-row-inner {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) min(34vw, 460px);
-    column-gap: clamp(var(--space-8), 5vw, calc(var(--space-8) * 2.5));
-    align-items: start;
-    padding-inline: clamp(20px, 5vw, 72px);
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "title" "text" "media";
   }
-  /* wide enough that a 16:9 film is not a letterbox strip */
-  .service-list-wide .service-stage { grid-template-columns: minmax(0, 1fr) min(48vw, 760px); }
-  .service-row { grid-column: 1; }
-  .service-stage .service-row-inner { padding-inline: 0; }
-  /* The same rounded, shadowed frame as the Home rows' films
-     (.pillar-image-wrap), never taller than the screen under the navbar: a
-     short window crops the media (cover) rather than cut it off. */
-  .service-media {
-    display: block;
-    grid-column: 2;
-    grid-row: 1 / span var(--stage-count);
-    position: sticky;
-    top: calc(var(--navbar-h) + var(--space-6));
-    margin: var(--space-6) 0;
-    aspect-ratio: var(--media-ratio);
-    max-height: calc(100svh - var(--navbar-h) - var(--space-6) * 2);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    background: var(--color-black);
+  .service-row-title { grid-area: title; }
+  .service-row-text { grid-area: text; }
+  .service-slices { grid-area: media; aspect-ratio: 16 / 10; }
+}
+/* Text-led: the copy takes the larger column (≈55%) and a bigger title and
+   lead, and the slices are exactly as tall as the copy beside them — their
+   size containment keeps them out of the row's height, which the copy
+   alone decides (never shorter than a usable 300px). */
+@media (min-width: 1024px) {
+  .service-row-inner {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    grid-template-areas: "title media" "text media";
+    grid-template-rows: auto 1fr;
+    gap: var(--space-6) clamp(var(--space-8), 5vw, calc(var(--space-8) * 2.5));
   }
+  .service-row-title { font-size: clamp(34px, 3.6vw, 56px); }
+  .service-row-lead { font-size: clamp(var(--text-lg), 1.5vw, 22px); }
+  .service-row-text { max-width: 680px; }
+  .service-slices {
+    aspect-ratio: auto;
+    align-self: stretch;
+    min-height: 300px;
+  }
+}
+
+/* ServiceSlices: the pictures as slices of ONE rounded rectangle, the
+   Home rows' frame (.pillar-image-wrap). Each slice is a box clipped to a
+   parallelogram; --s / --e (set per slice in ServiceSlices) make its start /
+   end edge slanted (1) or straight (0). A slanted end overlaps the next
+   slice's box by --run (negative margin) so their slashes meet, leaving a
+   --gap hairline of the frame's gold between them. clip-path, flex and margin
+   all transition, so on hover the slashes swing straight and the open
+   slice widens while the others squeeze to the edges. --slant is the cut's
+   angle from vertical; --run, its horizontal reach across the frame's full
+   height (cqh: the frame is a size container, its height set by the row).
+   The open slice is ONE shape for every picture (--open-ar, the Cacharel
+   cover's portrait) at the frame's height, edge to edge with the splitters
+   right against it. Every picture is that window's size (or its slice's,
+   if wider), centred in its slice and filling it (cover): a squeezed slice
+   shows the middle of the SAME still picture, so nothing rescales as the
+   slices move. ONE picture: the frame itself takes that shape. */
+.service-slices {
+  display: none;
+  container-type: size;
+}
+@media (min-width: 761px) {
+  .service-slices { display: block; }
+}
+/* The frame is only as wide as its slices need — the open window, a
+   --strip for each squeezed slice and the slashes' reach — so a squeezed
+   slice is never wider than the open one; it sits at the row's far edge.
+   (These lengths resolve where they are used, against the frame's or the
+   slices' height, which is the same.) --n is set in ServiceSlices. */
+.service-slices-frame {
+  /* every open picture's shape: the Cacharel catalogue cover's (565×800) */
+  --open-ar: 565 / 800;
+  --open-w: calc(100cqh * var(--open-ar));
+  --strip: 72px;
+  --slant: 15deg;
+  --gap: 6px;
+  --run: calc(100cqh * tan(var(--slant)));
+  --ease: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  container-type: size;
+  width: min(100%, calc(var(--open-w) + (var(--n) - 1) * var(--strip) + max(var(--n) - 2, 0) * var(--run)));
+  height: 100%;
+  margin-inline-start: auto;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  /* seen only through the --gap hairlines: the splitters in the gradient
+     of the Home hero's name (.gold-leaf) */
+  background: var(--gradient-panel);
+}
+.service-slices-track {
+  display: flex;
+  height: 100%;
+  /* the end slices' outer hairlines fall outside the frame */
+  margin-inline: calc(var(--gap) / -2);
+}
+.service-slice {
+  /* physical left / right edge: start / end in LTR, swapped under RTL */
+  --l: var(--s);
+  --r: var(--e);
+  position: relative;
+  flex: 1 1 0;
+  min-width: calc(var(--run) + 32px);
+  margin-inline-end: calc(var(--e) * var(--run) * -1);
+  overflow: hidden;
+  clip-path: polygon(
+    calc(var(--l) * var(--run) + var(--gap) / 2) 0,
+    calc(100% - var(--gap) / 2) 0,
+    calc(100% - var(--r) * var(--run) - var(--gap) / 2) 100%,
+    calc(var(--gap) / 2) 100%
+  );
+  transition: flex var(--ease), margin var(--ease), clip-path var(--ease);
+}
+[dir="rtl"] .service-slice { --l: var(--e); --r: var(--s); }
+.service-slice[data-open="true"] { flex: 0 0 var(--open-w); }
+/* one picture: the whole frame (sized to it, above), no slices */
+.service-slice:only-child { flex: 1 1 auto; }
+.service-slice-img.img-slot {
+  position: absolute;
+  inset-block: 0;
+  left: 50%;
+  width: max(var(--open-w), 100%);
+  height: 100%;
+  border-radius: 0;
+  transform: translateX(-50%);
+}
+a.service-slice { cursor: pointer; }
+a.service-slice:focus-visible { outline: none; }
+.service-slices-frame:has(a.service-slice:focus-visible) {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 4px;
 }
 
 /* — the services' stage (phones) — the same pinned stage as Home's "What
@@ -201,12 +288,11 @@
   }
   .service-row-title { font-size: 26px; }
   .service-row-lead { font-size: var(--text-body); }
-  /* Clear of the floating chat button in the bottom RIGHT corner, as on Home. */
-  .service-row-link { margin-top: var(--space-4); margin-right: 72px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .service-row-link,
-  .service-media-item { transition: none; }
+  .service-media-item,
+  .service-slice { transition: none; }
+  .typed-caret { animation: none; }
   .service-stage .service-row-inner { transform: none !important; }
 }

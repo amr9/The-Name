@@ -111,8 +111,8 @@ export default {
     // The page's hero and its category sections (components/ServicePage).
     // Category titles are the Brands chips on Home (home.pillars.brands
     // .tags), in the order of pages/Brands/data.js `brandCategories`.
-    titleLead: "Brands worth",
-    titleMark: "giving.",
+    titleLead: "Brands that",
+    titleMark: "inspire.",
     // aria-label of each category's list of brand names
     categoryBrands: "Brands in this category",
     // The catalogue covers under the categories (pages/Brands/data.js
@@ -167,7 +167,7 @@ export default {
         body: "Leather goods, watches and accessories from established fashion houses, for VIP gifting, milestones and executive programmes.",
       },
     },
-    kicker: "Our brands",
+    kicker: "The Brands",
     title: "The brands we curate.",
     lede: "Design-led makers we stock, personalise and gift, each one chosen for pieces worth keeping.",
     visit: "Visit",
@@ -368,18 +368,13 @@ export default {
     },
   },
 
-  // The shared parts of the "What we do" pillar pages (components/ServicePage).
-  servicePage: {
-    // The link under every service, to the enquiry form.
-    rowCta: "Let's talk",
-  },
   // The Corporate Gifts page (components/ServicePage). Service titles are
   // the Corporate Gifts chips on Home (home.pillars.corporateGifts.tags), in
   // the order of pages/Business/data.js `giftServices`.
   giftsPage: {
     kicker: "Corporate Gifts",
-    titleLead: "Gifts that carry",
-    titleMark: "your name.",
+    titleLead: "Gifts that",
+    titleMark: "connect.",
     lede: "We create gifting solutions that go beyond putting a logo on a product: curated collections, premium branded merchandise and fully customised creative concepts, each designed to tell a story and reflect your brand identity.",
     filmLabel: "Inside the Vertex showroom and workshop, where our corporate gifts come together",
     services: {
@@ -416,8 +411,8 @@ export default {
   // chips on Home (home.pillars.fnb.tags).
   fnbPage: {
     kicker: "F&B & Concept Store",
-    titleLead: "Where people",
-    titleMark: "come together.",
+    titleLead: "Concepts that bring us",
+    titleMark: "together.",
     lede: "Our F&B and Concept Store brings The Name into a physical, social space where food, retail, creativity and community come together: a destination for discovery and connection.",
     // The picture beside the services, for screen readers.
     mediaLabel: "The Name's concept store and café",
@@ -454,8 +449,8 @@ export default {
   },
   eventsPage: {
     kicker: "Events & Experiences",
-    titleLead: "Moments people",
-    titleMark: "remember.",
+    titleLead: "Experiences that",
+    titleMark: "last.",
     lede: "We turn brand ideas into experiences people can see, feel and remember, taking every project from concept and creative direction through to production and execution.",
     filmLabel: "Highlights from events and activations by The Name",
     services: {
@@ -493,8 +488,8 @@ export default {
   agency: {
     kicker: "The Agency",
     // The title in two parts: `titleMark` carries the yellow highlighter.
-    titleLead: "Not just another",
-    titleMark: "agency.",
+    titleLead: "Ideas that",
+    titleMark: "matter.",
     lede: "Your 360° media and marketing partner, from strategy to impact.",
     // The film beside the services (desktop), for screen readers.
     filmLabel: "The Name Agency at work: campaigns, branding and out-of-home media",
@@ -1018,7 +1013,7 @@ export default {
       // server and what reduced-motion visitors keep; `title` above is the
       // full line screen readers and crawlers get.
       titleLead: 'More than just',
-      names: ['a name.', 'Sarah.', 'Omar.', 'Emily.', 'James.'],
+      names: ['a name.', 'Corporate Gifts.', 'brands.', 'ideas.', 'events.', 'experiences.', 'catering.'],
       body: 'A 360° ecosystem bringing creativity, brands, products and experiences together to help you communicate, connect and explore possibilities.',
       cta: 'Explore what we do',
       ctaTour: 'Virtual Store',

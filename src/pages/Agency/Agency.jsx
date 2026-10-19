@@ -1,4 +1,3 @@
-import { ROW_RATIO } from '../../components/PillarRows/PillarRows.jsx';
 import ServicePage, { servicePhotos, servicesFrom } from '../../components/ServicePage/ServicePage.jsx';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
@@ -7,8 +6,8 @@ import { agencyServices } from './data.js';
 /**
  * The Agency page — the shared "What we do" layout (components/ServicePage):
  * the hero, then one section per service in `agencyServices` (./data.js),
- * titled by the Agency chips on Home. The media is ONE picture per service
- * (media.servicePhotos.agency), which changes with the service in view — it
+ * titled by the Agency chips on Home. The media is a picture SET per service
+ * (media.servicePhotos.agency, plus -2…-4: ServicePage slices) — it
  * replaced the Outdoor Media film (media.agencyOutdoor). Copy is i18n
  * `agency`, adapted from The Name Agency's Pitch presentation.
  */
@@ -23,7 +22,6 @@ export default function Agency() {
       hero={a}
       services={services}
       media={servicePhotos(services, media.servicePhotos.agency)}
-      ratio={ROW_RATIO}
     />
   );
 }

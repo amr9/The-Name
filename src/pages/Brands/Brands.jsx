@@ -55,6 +55,18 @@ brandCatalogues.forEach((c) => {
   if (c.brandId && !catalogueByBrand[c.brandId]) catalogueByBrand[c.brandId] = c;
 });
 
+// A category's slices on desktop (ServicePage): its own cover first, then
+// the catalogue covers of its other brands, at most four — each a link to
+// its catalogue (new tab). `open` is brandsPage.catalogues.open.
+const catalogueById = Object.fromEntries(brandCatalogues.map((c) => [c.id, c]));
+const categoryCovers = (c, open) => [
+  ...new Set([c.image, ...c.brands.map((id) => catalogueByBrand[id]?.id).filter(Boolean)]),
+].slice(0, 4).map((id) => {
+  const { brandId, url } = catalogueById[id];
+  const name = brandsById[brandId].name;
+  return { src: media.brandCatalogues[id], label: name, href: url, linkLabel: open(name) };
+});
+
 // PARKED for UI testing — not rendered; the catalogues now live in the
 // category sections (the brand chips link to them, the covers are the
 // media). To bring it back, pass <BrandCatalogues /> to ServicePage below.
@@ -98,8 +110,9 @@ function BrandCatalogues() {
  * the hero, then one section per category in `brandCategories` (./data.js),
  * titled by the Brands chips on Home, each listing its brands as chips — a
  * brand with a catalogue is a chip linking to it (new tab). The brands have
- * no films, so the media is ONE catalogue cover per category, which changes
- * with the category in view. Copy is i18n `brandsPage`.
+ * no films, so the media is the category's catalogue covers: its own cover
+ * on the phone stage, up to four as desktop slices (categoryCovers). Copy is
+ * i18n `brandsPage`.
  */
 export default function Brands() {
   const { t } = useLanguage();
@@ -137,8 +150,11 @@ export default function Brands() {
       className="brands-page"
       hero={b}
       services={services}
-      media={brandCategories.map((c, i) => ({ src: media.brandCatalogues[c.image], label: tags[i] }))}
-      ratio={ROW_RATIO}
+      media={brandCategories.map((c, i) => ({
+        src: media.brandCatalogues[c.image],
+        label: tags[i],
+        gallery: categoryCovers(c, b.catalogues.open),
+      }))}
     />
   );
 }

@@ -1,12 +1,8 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Arrow from '../Arrow.jsx';
+import { useEffect, useRef, useState } from 'react';
 import AutoplayVideo from '../AutoplayVideo.jsx';
 import ImagePlaceholder from '../ImagePlaceholder.jsx';
 import { STAGE_QUERY } from '../PillarRows/PillarRows.jsx';
-import { contactLink } from '../../data/site.js';
 import useScrollStage from '../../hooks/useScrollStage.js';
-import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import './ServicePage.css';
 
 /**
@@ -15,34 +11,83 @@ import './ServicePage.css';
  * Agency page.
  *
  * HERO: the shared .rows-page / .page-hero (theme.css) — kicker, a large
- * title whose last words are in .gold-leaf (the Home hero name's gradient),
- * the lede.
+ * uppercase title whose last words are in .gold-leaf (the Home hero name's
+ * gradient), typed out on a loop (TypedTitle), the lede.
  *
  * SERVICES: one section per entry in `services`, their titles the pillar's
  * chips on Home (i18n home.pillars[id].tags — the pages pass them in, so a
  * service is named in one place). Each is the uppercase title beside its
- * bold lead, grey body, optional `extra` (Brands: the category's brands) and
- * a quiet "Let's talk →" text link to the enquiry form (i18n
- * servicePage.rowCta, `contactLink`).
- *  - Desktop/tablet: full-width rows between hairlines, the MEDIA pinned
- *    beside them (sticky over every row's span) while they scroll past.
+ * bold lead, grey body and optional `extra` (Brands: the category's brands).
+ * No per-row enquiry link: the floating chat button already does that.
+ *  - Desktop/tablet: full-width rows between hairlines, each with its own
+ *    pictures on the reading-end side as ServiceSlices (below).
  *  - Phones (PillarRows' STAGE_QUERY): the same pinned scroll stage as Home's
  *    "What we do" (hooks/useScrollStage), the media as its BACKDROP under
  *    the shared .stage-wash, the copy on top, the shared .stage-dots.
  *
  * MEDIA: `media` is a list. ONE entry is shared by every service (a film,
- * playing on while the copy changes — Agency, Corporate Gifts, Events); one
- * entry PER service (Brands: a picture per category) follows the service in
- * view — the active stage row on phones, the row across the middle of the
- * screen on desktop — cross-fading between them. An entry is
- * { src, poster? (a film), video?: true, label }. `ratio` is the media's
- * shape on desktop; `wide` gives a 16:9 film a wider column.
+ * playing on while the copy changes — phones only, no desktop slices); one
+ * entry PER service follows the active stage row on phones, cross-fading,
+ * and its `gallery` (or just its picture) is that row's slices on desktop.
+ * An entry is { src, poster? (a film), video?: true, label, gallery? } — a
+ * gallery item is a src or { src, label?, href?, linkLabel? } (a link).
  *
  * `hero`: { kicker, titleLead, titleMark, lede }
  * `services`: [{ id, title, lead, body, extra? }] — see servicesFrom below
  * `children`: optional, rendered under the services inside the page (Brands:
  * the catalogue covers).
  */
+
+// The hero title typed out like a keyboard, a caret blinking at its end: it
+// holds the full line for TYPE_HOLD_MS, erases it and types it again.
+const TYPE_MS = 70;
+const ERASE_MS = 30;
+const TYPE_HOLD_MS = 10000;
+const TYPE_PAUSE_MS = 400;
+
+function TypedTitle({ lead, mark }) {
+  // Code points, not UTF-16 units, so no character is ever split in two.
+  const chars = Array.from(`${lead} ${mark}`);
+  const leadLen = Array.from(lead).length + 1;
+  // The full line renders on the server and stays for reduced-motion
+  // visitors; in the browser it starts over from empty (and again on a
+  // language switch).
+  const [n, setN] = useState(chars.length);
+  const [typing, setTyping] = useState(true);
+  const [moving, setMoving] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    setN(0);
+    setTyping(true);
+    setMoving(true);
+  }, [lead, mark]);
+
+  useEffect(() => {
+    if (!moving) return undefined;
+    let next;
+    if (typing) next = n < chars.length ? [TYPE_MS, () => setN(n + 1)] : [TYPE_HOLD_MS, () => setTyping(false)];
+    else next = n > 0 ? [ERASE_MS, () => setN(n - 1)] : [TYPE_PAUSE_MS, () => setTyping(true)];
+    const id = setTimeout(next[1], next[0]);
+    return () => clearTimeout(id);
+  }, [moving, typing, n, chars.length]);
+
+  const typedMark = chars.slice(leadLen, n).join('');
+  return (
+    // An invisible copy of the full line holds the title's size, so the page
+    // under it never moves while the line types and erases.
+    <span className="typed-title" aria-hidden="true">
+      <span className="typed-title-reserve">
+        {lead} <span className="gold-leaf service-title-mark">{mark}</span>
+      </span>
+      <span>
+        {chars.slice(0, Math.min(n, leadLen)).join('')}
+        {typedMark && <span className="gold-leaf service-title-mark">{typedMark}</span>}
+        <span className="typed-caret" />
+      </span>
+    </span>
+  );
+}
 
 // A page's services from its data.js list, its Home chips and its copy: the
 // i-th service is titled by the i-th chip (home.pillars[pillar].tags), so a
@@ -51,54 +96,125 @@ import './ServicePage.css';
 export const servicesFrom = (list, tags, copy) =>
   list.map(({ id }, i) => ({ id, title: tags[i], ...copy[id] }));
 
+// How many slices a service's picture set has (desktop): its photo, then
+// the files beside it named <photo>-2.jpg … -<SLICES>.jpg.
+const SLICES = 4;
+const photoSet = (src) => [
+  src,
+  ...Array.from({ length: SLICES - 1 }, (_, n) => src.replace(/(\.\w+)$/, `-${n + 2}$1`)),
+];
+
 // ONE picture per service, for `media`: `photos` is a page's
 // media.servicePhotos[pillar] map ({ [service id]: src }); each picture is
-// labelled by its service's title. A file not supplied yet shows the dashed
-// ImagePlaceholder slot.
+// labelled by its service's title and carries its `gallery` (photoSet). A
+// file not supplied yet shows the dashed ImagePlaceholder slot.
 export const servicePhotos = (services, photos) =>
-  services.map((s) => ({ src: photos[s.id], label: s.title }));
+  services.map((s) => ({ src: photos[s.id], label: s.title, gallery: photoSet(photos[s.id]) }));
 
-export default function ServicePage({ className = '', hero, services, media, ratio, wide = false, children }) {
-  const { t } = useLanguage();
+// Desktop/tablet: a service's pictures as slices of one rectangle, cut apart
+// by slanted lines. One is OPEN — the first, or the one under the pointer —
+// shown whole with straight edges; the rest squeeze to the rectangle's edges,
+// still in view. Each slice's start/end edge is straight (0) or slanted (1):
+// the open one's, its neighbours' facing ones and the rectangle's ends are
+// straight, and the slash animates between the two (ServicePage.css).
+// `items`: a src, or { src, label?, href?, linkLabel? } — a slice with
+// `href` is a link, opened in a new tab (Brands: the catalogue). Every open
+// picture is the same portrait window (ServicePage.css --open-ar).
+//
+// The open slice follows the pointer only when the pointer MOVES (not on
+// mouseenter): while the slices animate they slide under a still pointer,
+// and treating that as hovering flipped the open slice back and forth.
+// After each change it holds for SLICE_SETTLE_MS, then takes the slice the
+// pointer last moved over.
+const SLICE_SETTLE_MS = 350;
+
+function ServiceSlices({ items, label }) {
+  const [open, setOpen] = useState(0);
+  const last = items.length - 1;
+  const settleUntil = useRef(0);
+  const wanted = useRef(0);
+  const timer = useRef(null);
+
+  const pick = (i) => {
+    wanted.current = i;
+    if (timer.current) return;
+    const apply = () => {
+      timer.current = null;
+      setOpen(wanted.current);
+      settleUntil.current = performance.now() + SLICE_SETTLE_MS;
+    };
+    const wait = settleUntil.current - performance.now();
+    if (wait > 0) timer.current = setTimeout(apply, wait);
+    else apply();
+  };
+  const reset = () => {
+    clearTimeout(timer.current);
+    timer.current = null;
+    wanted.current = 0;
+    setOpen(0);
+    settleUntil.current = performance.now() + SLICE_SETTLE_MS;
+  };
+  useEffect(() => () => clearTimeout(timer.current), []);
+
+  return (
+    <div className="service-slices" style={{ '--n': items.length }}>
+      <div className="service-slices-frame" onMouseLeave={reset}>
+        <div className="service-slices-track">
+          {items.map((item, i) => {
+            const { src, href, linkLabel, label: own } = typeof item === 'string' ? { src: item } : item;
+            const Slice = href ? 'a' : 'div';
+            return (
+              <Slice
+                key={src}
+                className="service-slice"
+                data-open={i === open}
+                style={{
+                  '--s': i === 0 || i === open || i === open + 1 ? 0 : 1,
+                  '--e': i === last || i === open || i === open - 1 ? 0 : 1,
+                }}
+                onPointerMove={(e) => (e.movementX || e.movementY) && i !== wanted.current && pick(i)}
+                onFocus={() => { wanted.current = i; setOpen(i); }}
+                {...(href && { href, target: '_blank', rel: 'noopener noreferrer', 'aria-label': linkLabel })}
+              >
+                <ImagePlaceholder className="service-slice-img" src={src} label={own || label} ratio="auto" />
+              </Slice>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function ServicePage({ className = '', hero, services, media, children }) {
   const stage = useScrollStage(services.length, {
     query: STAGE_QUERY,
     rowSelector: '.service-row',
     bandSelector: '.service-row .service-row-inner',
   });
 
-  // Desktop: which service is across the middle of the screen, for media
-  // that changes per service. A band 10% tall at mid-screen; the row in it
-  // is the one being read. (On phones the stage's own `active` decides.)
-  const [inView, setInView] = useState(0);
-  useEffect(() => {
-    if (media.length < 2 || stage.isStage || !('IntersectionObserver' in window)) return undefined;
-    const rows = [...stage.stageRef.current.querySelectorAll(':scope > .service-row')];
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => {
-        if (e.isIntersecting) setInView(rows.indexOf(e.target));
-      }),
-      { rootMargin: '-45% 0px -45% 0px' },
-    );
-    rows.forEach((r) => io.observe(r));
-    return () => io.disconnect();
-  }, [media.length, stage.isStage, stage.stageRef]);
-
-  const shown = media.length < 2 ? 0 : stage.isStage ? stage.active : inView;
+  const shown = media.length < 2 ? 0 : stage.active;
+  // One media entry per service: its slices on desktop (its `gallery`, or
+  // just its picture).
+  const perService = media.length === services.length;
 
   return (
     <div className={`rows-page service-page ${className}`}>
       <header className="container page-hero service-hero">
         <span className="card-kicker">{hero.kicker}</span>
         <h1 className="page-title page-hero-title service-title">
-          {hero.titleLead} <span className="gold-leaf service-title-mark">{hero.titleMark}</span>
+          {/* The full line for screen readers and crawlers; the typed one is
+              hidden from them. */}
+          <span className="sr-only">{hero.titleLead} {hero.titleMark}</span>
+          <TypedTitle lead={hero.titleLead} mark={hero.titleMark} />
         </h1>
         <p className="page-hero-lede">{hero.lede}</p>
       </header>
 
       <div
-        className={`service-list${wide ? ' service-list-wide' : ''}`}
+        className="service-list"
         ref={stage.trackRef}
-        style={{ '--stage-count': services.length, '--media-ratio': ratio }}
+        style={{ '--stage-count': services.length }}
       >
         <div className="service-stage" ref={stage.stageRef}>
           <div className="stage-dots">
@@ -114,9 +230,9 @@ export default function ServicePage({ className = '', hero, services, media, rat
             ))}
           </div>
           <div className="stage-wash wash-to-bg" aria-hidden="true" />
-          {/* Pinned beside the rows on desktop/tablet, the stage's backdrop on
-              phones (ServicePage.css). Every entry is stacked here and the
-              shown one fades in. */}
+          {/* The stage's backdrop on phones only (ServicePage.css); desktop
+              shows each row's ServiceSlices instead. Every entry is stacked
+              here and the shown one fades in. */}
           <figure className="service-media">
             {media.map((m, i) => (
               <div key={m.src} className="service-media-item" data-shown={i === shown}>
@@ -155,10 +271,10 @@ export default function ServicePage({ className = '', hero, services, media, rat
                   <p className="service-row-lead">{s.lead}</p>
                   {s.body && <p className="service-row-body">{s.body}</p>}
                   {s.extra}
-                  <Link to={contactLink} className="service-row-link">
-                    {t.servicePage.rowCta} <Arrow />
-                  </Link>
                 </div>
+                {perService && (
+                  <ServiceSlices items={media[i].gallery || [media[i].src]} label={media[i].label} />
+                )}
               </div>
             </section>
           ))}

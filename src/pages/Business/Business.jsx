@@ -6,14 +6,13 @@ import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { brandingOffers, giftServices } from './data.js';
 import './Business.css';
 import ServicePage, { servicePhotos, servicesFrom } from '../../components/ServicePage/ServicePage.jsx';
-import { ROW_RATIO } from '../../components/PillarRows/PillarRows.jsx';
 
 /**
  * The Corporate Gifts page — the shared "What we do" layout
  * (components/ServicePage): the hero, then one section per service in
  * `giftServices` (./data.js), titled by the Corporate Gifts chips on Home,
- * beside ONE picture per service (media.servicePhotos.corporateGifts), which
- * changes with the service in view — it replaced the Corporate Gifts film
+ * beside a picture SET per service (media.servicePhotos.corporateGifts, plus
+ * -2…-4: ServicePage slices) — it replaced the Corporate Gifts film
  * (media.serviceVideos.corporateGifts). Copy is i18n `giftsPage`.
  */
 export default function Business() {
@@ -27,7 +26,6 @@ export default function Business() {
       hero={g}
       services={services}
       media={servicePhotos(services, media.servicePhotos.corporateGifts)}
-      ratio={ROW_RATIO}
     />
   );
 }

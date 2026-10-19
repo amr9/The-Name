@@ -23,7 +23,7 @@ import './Home.css';
 // How long each name in the hero title stays before the next drops in —
 // longer on names[0], the slogan's own "a name." / "اسم.".
 const NAME_HOLD_MS = 1500;
-const SLOGAN_HOLD_MS = 3000;
+const SLOGAN_HOLD_MS = 5000;
 
 // The hero title's last line: each of `names` (per language, from i18n
 // home.hero.names) drops in from above while the one before falls away.
@@ -127,9 +127,11 @@ export default function Home() {
               {h.hero.cta} <Arrow />
             </a>
             {/* The Matterport walkthrough — an external 3D tour, so a plain
-                anchor rather than a router Link. */}
+                anchor rather than a router Link, opened in a new tab. */}
             <a
               href="https://my.matterport.com/show/?m=5rCPtmHS5iK"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn btn-secondary home-hero-secondary"
             >
               {h.hero.ctaTour}

@@ -14,14 +14,13 @@ import Doodles from './Doodles.jsx';
 import './Kids.css';
 import { shopLink } from '../../data/site.js';
 import ServicePage, { servicePhotos, servicesFrom } from '../../components/ServicePage/ServicePage.jsx';
-import { ROW_RATIO } from '../../components/PillarRows/PillarRows.jsx';
 
 /**
  * The Events page (/events; files still pages/Kids/) — the shared "What we
  * do" layout (components/ServicePage): the hero, then one section per
  * service in `eventServices` (./data.js), titled by the Events chips on
- * Home, beside ONE picture per service (media.servicePhotos.events), which
- * changes with the service in view — it replaced the Events film
+ * Home, beside a picture SET per service (media.servicePhotos.events, plus
+ * -2…-4: ServicePage slices) — it replaced the Events film
  * (media.serviceVideos.events). Copy is i18n `eventsPage`.
  */
 export default function Kids() {
@@ -35,7 +34,6 @@ export default function Kids() {
       hero={e}
       services={services}
       media={servicePhotos(services, media.servicePhotos.events)}
-      ratio={ROW_RATIO}
     />
   );
 }
