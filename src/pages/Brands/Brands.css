@@ -273,3 +273,13 @@
 .service-brands a:focus-visible {
   background: var(--color-accent-100);
 }
+
+/* The partner-logo strip under the hero (ServicePage `intro`): the same gap
+   above it as the hero leaves, and the services' top hairline is its own. */
+.brands-page .page-hero + .logo-marquee {
+  margin-top: clamp(var(--space-8), 6vw, calc(var(--space-8) * 2.5));
+}
+.brands-page .page-hero + .logo-marquee + .service-list {
+  margin-top: 0;
+  border-top: 0;
+}

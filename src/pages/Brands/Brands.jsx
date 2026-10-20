@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import Arrow from '../../components/Arrow.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
+import LogoMarquee from '../../components/LogoMarquee/LogoMarquee.jsx';
 import PillarRows, { ROW_RATIO } from '../../components/PillarRows/PillarRows.jsx';
 import { brandLink, brands, brandsById } from '../../data/brands.js';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import { PENDING_SLOTS, brandCatalogues, brandCategories, featuredBrands } from './data.js';
+import { PENDING_SLOTS, brandCatalogues, brandCategories, featuredBrands, marqueeBrands } from './data.js';
 import './Brands.css';
 import ServicePage, { servicesFrom } from '../../components/ServicePage/ServicePage.jsx';
 
@@ -111,8 +112,11 @@ function BrandCatalogues() {
  * titled by the Brands chips on Home, each listing its brands as chips — a
  * brand with a catalogue is a chip linking to it (new tab). The brands have
  * no films, so the media is the category's catalogue covers: its own cover
- * on the phone stage, up to four as desktop slices (categoryCovers). Copy is
- * i18n `brandsPage`.
+ * on the phone stage, up to four as desktop slices (categoryCovers). Under
+ * the hero and again under the categories (rolling the other way), the
+ * partner logos roll by (LogoMarquee, `marqueeBrands`), each opening its
+ * brand's catalogue.
+ * Copy is i18n `brandsPage`.
  */
 export default function Brands() {
   const { t } = useLanguage();
@@ -145,6 +149,14 @@ export default function Brands() {
     ),
   }));
 
+  // The logo strips: each logo opens its brand's catalogue (new tab), or
+  // its own site if it has none yet.
+  const logoStrip = marqueeBrands.map((id) => {
+    const brand = brandsById[id];
+    const catalogue = catalogueByBrand[id];
+    return catalogue ? { ...brand, url: catalogue.url, label: b.catalogues.open(brand.name) } : brand;
+  });
+
   return (
     <ServicePage
       className="brands-page"
@@ -155,7 +167,10 @@ export default function Brands() {
         label: tags[i],
         gallery: categoryCovers(c, b.catalogues.open),
       }))}
-    />
+      intro={<LogoMarquee items={logoStrip} logos={media.brands} />}
+    >
+      <LogoMarquee items={logoStrip} logos={media.brands} reverse />
+    </ServicePage>
   );
 }
 

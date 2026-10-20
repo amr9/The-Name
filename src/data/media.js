@@ -12,6 +12,8 @@ const BASE = '/media';
 
 // The "Brand Communication" film — the Home hero's on phones (portrait 4:5, so it fills a tall screen far better than
 // the 16:9 showreel cropped to a sliver).
+// Its first 3s were cut (re-encoded from the compressed file, CRF 29): 89s,
+// 8.5 MB; the poster is a frame from 2s in.
 const agencyFilm = {
   src: `${BASE}/videos/brand-communication.mp4`,
   poster: `${BASE}/videos/brand-communication-poster.jpg`,
@@ -19,8 +21,9 @@ const agencyFilm = {
 
 // The "Outdoor Media" film — the Agency row's film on Home and the Agency
 // page's. From "OUTDOOR MEDIA HORIZONTAL.mp4": 1920x1080 → 1600x900 (16:9),
-// 90s, CRF 31, audio dropped, +faststart (the hero's settings); 9.4 MB. The
-// poster IS frame 0 (the "Outdoor Media" title card). In 4:5 frames (the Home
+// 90s, CRF 31, audio dropped, +faststart (the hero's settings), then its
+// first 3s cut (re-encoded from that file, CRF 30); 87s, 9.5 MB. The
+// poster IS its new frame 0. In 4:5 frames (the Home
 // row, the phone stages) it is cropped to its centre (cover).
 const outdoorFilm = {
   src: `${BASE}/videos/agency-outdoor.mp4`,
@@ -131,7 +134,7 @@ export const media = {
       poster: `${BASE}/videos/events-poster.jpg`,
     },
     // "Outdoor Media" (outdoorFilm above), 16:9 cropped to the 4:5 frame.
-    // Was "Brand Communication" (agencyFilm: 1024x1280, already 4:5, 92s,
+    // Was "Brand Communication" (agencyFilm: 1024x1280, already 4:5, then 92s,
     // CRF 28, SSIM 0.993), still the Home hero's phone film.
     agency: outdoorFilm,
     // "brands.mp4" (464x832, 36s), the same centre 4:5 crop (crop=464:580);
@@ -139,6 +142,12 @@ export const media = {
     brands: {
       src: `${BASE}/videos/brands.mp4`,
       poster: `${BASE}/videos/brands-poster.jpg`,
+    },
+    // "f&b concept store.mp4" (480x848, 20s), centre 4:5 (crop=480:600);
+    // CRF 26, 1.3 MB.
+    fnb: {
+      src: `${BASE}/videos/fnb.mp4`,
+      poster: `${BASE}/videos/fnb-poster.jpg`,
     },
   },
 

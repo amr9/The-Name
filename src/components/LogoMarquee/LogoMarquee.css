@@ -24,9 +24,14 @@
   width: max-content;
   animation: marquee var(--marquee-duration) linear infinite;
 }
-/* RTL reads the other way, so the strip travels the other way too. */
+/* RTL reads the other way, so the strip travels the other way too; so does
+   a `reverse` strip (and an RTL reverse one goes forward again). */
+.logo-marquee.is-reverse .logo-marquee-track,
 [dir='rtl'] .logo-marquee-track {
   animation-direction: reverse;
+}
+[dir='rtl'] .logo-marquee.is-reverse .logo-marquee-track {
+  animation-direction: normal;
 }
 /* Guarded: on a touchscreen the tapped element keeps :hover after you come
    back from the linked site, which would leave the strip frozen. */

@@ -24,8 +24,8 @@ export const brands = [
   // slide, Oct 2026). Listed on the Brands page under "Also in our
   // collection" as logo cards until their copy and product photos arrive
   // (their rows are commented out in pages/Brands/data.js). Logos: media.js
-  // `brands`. `url` is each brand's own site, checked Oct 2026 — not linked
-  // anywhere yet.
+  // `brands`. `url` is each brand's own site, checked Oct 2026 — the Brands page
+  // logo strips (LogoMarquee) link to it when the brand has no catalogue.
   { id: 'cerruti1881', name: 'Cerruti 1881', url: 'https://www.cerruti.com', logoScale: 1.2 },
   { id: 'hugoBoss', name: 'Hugo Boss', url: 'https://www.hugoboss.com' },
   { id: 'cacharel', name: 'Cacharel', url: 'https://www.cacharel.com' },

@@ -34,8 +34,10 @@ import './ServicePage.css';
  *
  * `hero`: { kicker, titleLead, titleMark, lede }
  * `services`: [{ id, title, lead, body, extra? }] — see servicesFrom below
+ * `intro`: optional, rendered between the hero and the services (Brands: the
+ * partner-logo strip).
  * `children`: optional, rendered under the services inside the page (Brands:
- * the catalogue covers).
+ * the partner-logo strip again, rolling the other way).
  */
 
 // The hero title typed out like a keyboard, a caret blinking at its end: it
@@ -186,7 +188,7 @@ function ServiceSlices({ items, label }) {
   );
 }
 
-export default function ServicePage({ className = '', hero, services, media, children }) {
+export default function ServicePage({ className = '', hero, services, media, intro, children }) {
   const stage = useScrollStage(services.length, {
     query: STAGE_QUERY,
     rowSelector: '.service-row',
@@ -210,6 +212,7 @@ export default function ServicePage({ className = '', hero, services, media, chi
         </h1>
         <p className="page-hero-lede">{hero.lede}</p>
       </header>
+      {intro}
 
       <div
         className="service-list"

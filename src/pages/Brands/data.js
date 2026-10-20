@@ -91,3 +91,14 @@ export const brandCategories = [
   { id: 'corporate', image: 'sols2026', brands: ['makito', 'sols'] },
   { id: 'premium', image: 'cerruti2026', brands: ['hugoBoss', 'cerruti1881', 'christianLacroix', 'ungaro', 'ninaRicci'] },
 ];
+
+// The rolling logo strips under the hero and under the categories
+// (components/LogoMarquee), in this order — data/brands.js ids. Each shows
+// its logo (media.brands) and opens its brand's catalogue (its first in
+// brandCatalogues), or its own site if it has none; one without a logo file
+// shows its name.
+export const marqueeBrands = [
+  'hugoBoss', 'cerruti1881', 'festina', 'cacharel', 'iceWatch', 'christianLacroix',
+  'ungaro', 'lexon', 'senator', 'makito', 'pantone', 'kreafunk', 'sols',
+  'lundLondon', 'mob', 'gingko',
+];
