@@ -1370,7 +1370,8 @@ public/media/
                     hero.mp4 (the R Investments reel, first 1:55, end card
                       cut) + hero-poster.jpg (its frame 0) — Home hero;
                     vertex.mp4 (Corporate Gifts row, 4:5), events.mp4 (Events
-                      row, 4:5), agency-outdoor.mp4 (Agency row) and
+                      row, 4:5), brands.mp4 (Brands row, 4:5),
+                      agency-outdoor.mp4 (Agency row) and
                       marketing-strategy.mp4 (currently UNUSED) — read via
                       media.serviceVideos;
                     agency-outdoor.mp4 (from "OUTDOOR MEDIA HORIZONTAL.mp4",

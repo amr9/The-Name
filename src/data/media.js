@@ -134,6 +134,12 @@ export const media = {
     // Was "Brand Communication" (agencyFilm: 1024x1280, already 4:5, 92s,
     // CRF 28, SSIM 0.993), still the Home hero's phone film.
     agency: outdoorFilm,
+    // "brands.mp4" (464x832, 36s), the same centre 4:5 crop (crop=464:580);
+    // CRF 26, 1.6 MB.
+    brands: {
+      src: `${BASE}/videos/brands.mp4`,
+      poster: `${BASE}/videos/brands-poster.jpg`,
+    },
   },
 
   // Customization methods shown in the Home page "how it works" panel —
