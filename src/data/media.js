@@ -30,6 +30,36 @@ const outdoorFilm = {
   poster: `${BASE}/videos/agency-outdoor-poster.jpg`,
 };
 
+// The Events reel (from the Events iPad film, pre-cropped to 4:5) — the
+// Events row's film on Home (serviceVideos) and the Events service's on the
+// Events page (servicePhotos).
+const eventsFilm = {
+  src: `${BASE}/videos/events.mp4`,
+  poster: `${BASE}/videos/events-poster.jpg`,
+};
+
+// The Little Creators activation's photographs — its gallery
+// (kids.activation.shots, keys matching activationShots in
+// pages/Kids/data.js) and the pictures of the Events page's services.
+const activationShots = {
+  showingProducts: `${BASE}/photos/events/activation-showing-products.jpg`,
+  theCollection: `${BASE}/photos/events/activation-the-collection.jpg`,
+  mugs: `${BASE}/photos/events/activation-mugs.jpg`,
+  withParents: `${BASE}/photos/events/activation-with-parents.jpg`,
+  makingTogether: `${BASE}/photos/events/activation-making-together.jpg`,
+  onTheStand: `${BASE}/photos/events/activation-on-the-stand.jpg`,
+};
+
+// A film for one "What we do" service (servicePhotos below), from
+// public/media/videos/<name>.mp4 and its <name>-poster.jpg. Compressed like
+// serviceVideos (CRF 28, no audio, +faststart); the poster is a frame from
+// 2s in.
+const serviceFilm = (name) => ({
+  src: `${BASE}/videos/${name}.mp4`,
+  poster: `${BASE}/videos/${name}-poster.jpg`,
+  video: true,
+});
+
 export const media = {
   // Full-bleed hero film on the Home page — the R Investments showreel, its
   // first 1:55 (3450 frames; the logo end card after that was cut, so the
@@ -47,6 +77,10 @@ export const media = {
   // The Agency page's film (outdoorFilm). UNUSED for now — the page shows
   // one picture per service instead (servicePhotos below).
   agencyOutdoor: outdoorFilm,
+  // The Agency page's film preview under its hero (ServicePage `film`): the
+  // Haramain High Speed Railway gift film, its Brand Communication work (from
+  // "the agency"; 1920x1080 scaled to 1280x720, CRF 30). Landscape, 16:9.
+  agencyPreview: serviceFilm('agency-haramain'),
 
   // The "What we do" pages (components/ServicePage) — one picture per
   // service, keyed by pillar, then by the service ids in each page's data.js
@@ -55,36 +89,46 @@ export const media = {
   // shown follows the service in view), and on desktop/tablet the first slice
   // of each service's ServiceSlices — its other slices are the files beside
   // it named <id>-2.jpg, -3.jpg, -4.jpg. Cropped to fill (cover). They replaced the
-  // pages' films. Not supplied yet — the dashed ImagePlaceholder shows until
-  // each file exists. (Brands uses its catalogue covers instead.)
+  // pages' films. A path STRING is a slot not supplied yet — the dashed
+  // ImagePlaceholder shows until each file exists. An OBJECT is a supplied
+  // service, shown ALONE (one picture or film, no -2…-4 slices): a picture
+  // { src }, or a film (serviceFilm above), or several pictures
+  // { src, gallery: [src, …] } (slices on desktop, swiped on phones). (Brands
+  // uses its catalogue covers instead.)
   servicePhotos: {
     corporateGifts: {
-      curated: `${BASE}/photos/corporate-gifts/curated.jpg`,
-      concepts: `${BASE}/photos/corporate-gifts/concepts.jpg`,
-      merchandise: `${BASE}/photos/corporate-gifts/merchandise.jpg`,
-      customisation: `${BASE}/photos/corporate-gifts/customisation.jpg`,
-      packaging: `${BASE}/photos/corporate-gifts/packaging.jpg`,
-      production: `${BASE}/photos/corporate-gifts/production.jpg`,
+      curated: serviceFilm('gifts-curated'),
+      concepts: { src: `${BASE}/photos/corporate-gifts/concepts.jpg` },
+      merchandise: { src: `${BASE}/photos/corporate-gifts/merchandise.jpg` },
+      customisation: { src: `${BASE}/photos/corporate-gifts/customisation.jpg` },
+      packaging: { src: `${BASE}/photos/corporate-gifts/packaging.jpg` },
+      production: serviceFilm('gifts-production'),
     },
     agency: {
       positioning: `${BASE}/photos/agency/positioning.jpg`,
+      // Its film is now the page's preview under the hero (agencyPreview).
       communication: `${BASE}/photos/agency/communication.jpg`,
       awareness: `${BASE}/photos/agency/awareness.jpg`,
       exposure: `${BASE}/photos/agency/exposure.jpg`,
-      csr: `${BASE}/photos/agency/csr.jpg`,
+      csr: serviceFilm('agency-csr'),
       ooh: `${BASE}/photos/agency/ooh.jpg`,
     },
     events: {
-      events: `${BASE}/photos/events/events.jpg`,
-      activations: `${BASE}/photos/events/activations.jpg`,
-      launches: `${BASE}/photos/events/launches.jpg`,
-      concepts: `${BASE}/photos/events/concepts.jpg`,
-      branding: `${BASE}/photos/events/branding.jpg`,
-      production: `${BASE}/photos/events/production.jpg`,
-      experiences: `${BASE}/photos/events/experiences.jpg`,
+      // Every Events film and photograph we have: the Events reel, then the
+      // activation's six photos spread over the rest (two for Activations).
+      events: { ...eventsFilm, video: true },
+      activations: {
+        src: activationShots.onTheStand,
+        gallery: [activationShots.onTheStand, activationShots.withParents],
+      },
+      launches: { src: activationShots.theCollection },
+      concepts: { src: activationShots.makingTogether },
+      branding: { src: activationShots.mugs },
+      production: { src: activationShots.showingProducts },
+      experiences: serviceFilm('events-experiences'),
     },
     fnb: {
-      fnb: `${BASE}/photos/fnb/fnb.jpg`,
+      fnb: serviceFilm('fnb-service'),
       catering: `${BASE}/photos/fnb/catering.jpg`,
       conceptStore: `${BASE}/photos/fnb/concept-store.jpg`,
       retail: `${BASE}/photos/fnb/retail.jpg`,
@@ -129,10 +173,7 @@ export const media = {
     // end of the NAJ Academy contact card (frames 7980-8128, through 4:30.97
     // where the next shot starts), and 5:45 to the end. 5:40 left. Same 4:5
     // centre crop as Vertex; CRF 30 for its length, 33 MB.
-    events: {
-      src: `${BASE}/videos/events.mp4`,
-      poster: `${BASE}/videos/events-poster.jpg`,
-    },
+    events: eventsFilm,
     // "Outdoor Media" (outdoorFilm above), 16:9 cropped to the 4:5 frame.
     // Was "Brand Communication" (agencyFilm: 1024x1280, already 4:5, then 92s,
     // CRF 28, SSIM 0.993), still the Home hero's phone film.
@@ -211,14 +252,7 @@ export const media = {
     activation: {
       video: `${BASE}/videos/activation.mp4`,
       videoPoster: `${BASE}/videos/activation-poster.jpg`,
-      shots: {
-        showingProducts: `${BASE}/photos/events/activation-showing-products.jpg`,
-        theCollection: `${BASE}/photos/events/activation-the-collection.jpg`,
-        mugs: `${BASE}/photos/events/activation-mugs.jpg`,
-        withParents: `${BASE}/photos/events/activation-with-parents.jpg`,
-        makingTogether: `${BASE}/photos/events/activation-making-together.jpg`,
-        onTheStand: `${BASE}/photos/events/activation-on-the-stand.jpg`,
-      },
+      shots: activationShots,
       interviews: `${BASE}/videos/activation-interviews.mp4`,
       interviewsPoster: `${BASE}/videos/activation-interviews-poster.jpg`,
     },

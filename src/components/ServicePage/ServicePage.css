@@ -39,14 +39,56 @@
   margin-inline-end: -0.1em;
 }
 .service-page .page-hero-lede { margin-top: calc(var(--space-8) * 1); }
+/* The hero's optional extras under the lede: pills (`hero.tags`, the
+   shared .pillar-tags), paragraphs (`hero.body`), then a closing line
+   (`hero.motto`). */
+.service-hero .service-hero-tags { margin-top: var(--space-6); }
+.service-hero-body {
+  margin: var(--space-4) 0 0;
+  line-height: 1.75;
+  color: var(--color-gray);
+}
+.service-hero-motto {
+  margin: var(--space-6) 0 0;
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  font-size: var(--text-lg);
+  color: var(--color-ink);
+}
 
-/* — the services: full-width rows between hairlines, each the title beside
-   its text. On phones they become a pinned stage (below). */
+/* The optional film under the hero (`film`): landscape, shown whole at 16:9
+   and centred, in the Home rows' frame, with FilmLightbox's expand badge
+   (tap: full-screen) — at every width. Same gap above as the services. */
+.service-film {
+  margin-top: clamp(var(--space-8), 6vw, calc(var(--space-8) * 2.5));
+  margin-bottom: 0;
+}
+.service-film-frame {
+  position: relative;
+  max-width: 960px;
+  margin-inline: auto;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  background: var(--color-black);
+}
+.service-film .film-expand { display: block; }
+.service-film-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* — the services: full-width rows, each the title beside its text. On
+   phones they become a pinned stage (below). Every section on these pages
+   is separated by a hairline on its TOP only (never the bottom): each row,
+   the logo strips (LogoMarquee), Events' moments and the closing FinalCta. */
 .service-list {
   margin-top: clamp(var(--space-8), 6vw, calc(var(--space-8) * 2.5));
-  border-top: 1px solid var(--color-divider);
 }
-.service-row { border-bottom: 1px solid var(--color-divider); }
+.service-row { border-top: 1px solid var(--color-divider); }
 .service-row-inner {
   display: flex;
   flex-wrap: wrap;
@@ -89,6 +131,9 @@
   transition: opacity 0.5s ease;
 }
 .service-media-item[data-shown="true"] { opacity: 1; }
+/* a linked entry (`href`): only the shown one takes taps */
+a.service-media-item { display: block; }
+.service-media-item[data-shown="false"] { pointer-events: none; }
 .service-media-fill {
   display: block;
   width: 100%;
@@ -99,6 +144,36 @@
 /* A picture is an ImagePlaceholder (its dashed slot until the file exists):
    here it fills the frame, which supplies the rounding. */
 .service-media-item .service-media-slot { height: 100%; border-radius: 0; }
+/* MediaStrip: a gallery as a strip of full-frame slides, swiped by hand
+   (scroll-snap, one slide per swipe), its dots — the shared .stage-dot —
+   in a pill at the top centre. */
+.service-media-track {
+  display: flex;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.service-media-track::-webkit-scrollbar { display: none; }
+.service-media-slide {
+  flex: 0 0 100%;
+  height: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+.service-media-dots {
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-black) 35%, transparent);
+  transform: translateX(-50%);
+}
 
 /* — desktop/tablet — each row: the title over its text on the reading side,
    its ServiceSlices on the other (a grid starts on the reading side, so RTL
@@ -139,9 +214,13 @@
    Home rows' frame (.pillar-image-wrap). Each slice is a box clipped to a
    parallelogram; --s / --e (set per slice in ServiceSlices) make its start /
    end edge slanted (1) or straight (0). A slanted end overlaps the next
-   slice's box by --run (negative margin) so their slashes meet, leaving a
-   --gap hairline of the frame's gold between them. clip-path, flex and margin
-   all transition, so on hover the slashes swing straight and the open
+   slice's box by --run (negative margin) so their slashes meet exactly, and
+   each slice after the first draws a --gap-wide splitter stripe of gold
+   along its start edge, ON TOP of its picture. (It used to be a gap between
+   the slices with the frame's gold showing through, but each slice paints
+   in several layers, each anti-aliased by the clip, so a slanted or
+   off-pixel edge ate into the gold and the splitters visibly thinned and
+   thickened as they moved.) clip-path, flex and margin all transition, so on hover the slashes swing straight and the open
    slice widens while the others squeeze to the edges. --slant is the cut's
    angle from vertical; --run, its horizontal reach across the frame's full
    height (cqh: the frame is a size container, its height set by the row).
@@ -169,7 +248,7 @@
   --open-w: calc(100cqh * var(--open-ar));
   --strip: 72px;
   --slant: 15deg;
-  --gap: 6px;
+  --gap: 6px; /* the splitters' width */
   --run: calc(100cqh * tan(var(--slant)));
   --ease: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   container-type: size;
@@ -179,15 +258,13 @@
   overflow: hidden;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
-  /* seen only through the --gap hairlines: the splitters in the gradient
-     of the Home hero's name (.gold-leaf) */
+  /* seen only in the anti-aliased pixels along the splitters, which are the
+     same gold */
   background: var(--gradient-panel);
 }
 .service-slices-track {
   display: flex;
   height: 100%;
-  /* the end slices' outer hairlines fall outside the frame */
-  margin-inline: calc(var(--gap) / -2);
 }
 .service-slice {
   /* physical left / right edge: start / end in LTR, swapped under RTL */
@@ -199,18 +276,49 @@
   margin-inline-end: calc(var(--e) * var(--run) * -1);
   overflow: hidden;
   clip-path: polygon(
-    calc(var(--l) * var(--run) + var(--gap) / 2) 0,
-    calc(100% - var(--gap) / 2) 0,
-    calc(100% - var(--r) * var(--run) - var(--gap) / 2) 100%,
-    calc(var(--gap) / 2) 100%
+    calc(var(--l) * var(--run)) 0,
+    100% 0,
+    calc(100% - var(--r) * var(--run)) 100%,
+    0 100%
   );
   transition: flex var(--ease), margin var(--ease), clip-path var(--ease);
 }
 [dir="rtl"] .service-slice { --l: var(--e); --r: var(--s); }
+/* The splitter: a --gap-wide parallelogram along the slice's START edge,
+   over its picture. Its outer side runs 1px past the slice's own edge, so
+   that side is cut by the slice's clip alone (one anti-aliasing, not two).
+   Its colour is the frame's gradient (the Home hero name's, .gold-leaf)
+   sampled at about the slice's place in the frame (--i of --n). */
+.service-slice + .service-slice::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: var(--gradient-panel);
+  background-size: calc(var(--n) * 100%) 100%;
+  background-position: calc(var(--i) / max(var(--n) - 1, 1) * 100%) 0;
+  clip-path: polygon(
+    calc(var(--l) * var(--run) - 1px) 0,
+    calc(var(--l) * var(--run) + var(--gap)) 0,
+    var(--gap) 100%,
+    -1px 100%
+  );
+  transition: clip-path var(--ease);
+}
+[dir="rtl"] .service-slice + .service-slice::after {
+  clip-path: polygon(
+    calc(100% - var(--gap)) 0,
+    calc(100% + 1px) 0,
+    calc(100% - var(--r) * var(--run) + 1px) 100%,
+    calc(100% - var(--r) * var(--run) - var(--gap)) 100%
+  );
+}
 .service-slice[data-open="true"] { flex: 0 0 var(--open-w); }
 /* one picture: the whole frame (sized to it, above), no slices */
 .service-slice:only-child { flex: 1 1 auto; }
-.service-slice-img.img-slot {
+.service-slice-img.img-slot,
+.service-slice-film {
   position: absolute;
   inset-block: 0;
   left: 50%;
@@ -219,6 +327,7 @@
   border-radius: 0;
   transform: translateX(-50%);
 }
+.service-slice-film { object-fit: cover; background: var(--color-black); }
 a.service-slice { cursor: pointer; }
 a.service-slice:focus-visible { outline: none; }
 .service-slices-frame:has(a.service-slice:focus-visible) {
@@ -245,7 +354,6 @@ a.service-slice:focus-visible { outline: none; }
     --stage-step: 75svh;
     position: relative;
     height: calc(var(--stage-h) + (var(--stage-count) - 0.5) * var(--stage-step));
-    border-top: 0;
   }
   .service-stage {
     position: sticky;
@@ -255,44 +363,158 @@ a.service-slice:focus-visible { outline: none; }
   }
   .service-stage .stage-dots { display: flex; z-index: 3; }
   /* BACKDROP, as on Home (PillarRows.css "backdrop stage"): the media fills
-     the whole stage behind every service, the shared .stage-wash (theme.css)
-     fades it into the page at the foot, and the copy sits on top. */
+     the whole stage behind every service, and each service's card sits on
+     top. No .stage-wash: the media runs to the foot, under the card. */
   .service-media {
     display: block;
     position: absolute;
     inset: 0;
     z-index: 0;
   }
-  .service-stage .stage-wash { display: block; }
-  /* Every service stacked in the stage, its text on the bottom edge as on
-     Home. The extra .service-list outranks useSectionReveal's
+  /* Every service stacked in the stage, its CARD on the bottom edge: a
+     frosted-glass sheet (OverlayCard's panel glass) the full width of the
+     stage, rounded on top, with a grabber bar at its foot — the title, the
+     lead, then the chips (Brands: the category's brands, rolling as a
+     marquee) beside a round arrow to the next service. The body stays a
+     desktop paragraph. Tapping the grabber folds every card down to its
+     title ([data-collapsed] on the stage) and back. The extra .service-list outranks useSectionReveal's
      .reveal / .reveal-in (theme.css), which these pick up as top-level
      sections. */
   .service-list .service-stage .service-row {
     position: absolute;
     inset: 0;
+    /* full-stage layers: taps above the card fall through to the backdrop
+       (a link on Brands) — only the card itself takes them */
+    pointer-events: none;
     display: flex;
     align-items: flex-end;
-    padding-block: 12px 20px;
-    border-bottom: 0;
+    padding: 0;
+    border-top: 0;
     z-index: 2;
     opacity: 1;
     visibility: var(--vis);
     transition: none;
   }
   .service-stage .service-row-inner {
-    padding-block: 0;
-    gap: var(--space-4);
+    position: relative;
+    width: 100%;
+    pointer-events: auto;
+    padding-block: 22px 26px;
+    gap: 6px;
+    border-radius: calc(var(--radius-md) * 1.5) calc(var(--radius-md) * 1.5) 0 0;
+    border-top: 1px solid color-mix(in srgb, var(--color-white) 60%, transparent);
+    background: color-mix(in srgb, var(--color-white) 72%, transparent);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    backdrop-filter: blur(14px) saturate(1.2);
+    box-shadow: var(--shadow-lg);
     opacity: var(--ot);
     transform: translateX(calc(var(--d) * 48px));
   }
-  .service-row-title { font-size: 26px; }
+  /* the grabber bar: a button with a tap area larger than the bar it draws */
+  .service-stage .service-row-grab {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    display: block;
+    width: 72px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    transform: translateX(-50%);
+  }
+  .service-stage .service-row-grab::before {
+    content: "";
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    width: 40px;
+    height: 4px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-ink) 22%, transparent);
+    transform: translateX(-50%);
+  }
+  .service-stage .service-row-grab:focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: -2px;
+    border-radius: 999px;
+  }
+  .service-row-title { font-size: 24px; }
+  .service-stage .service-row-text {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 10px;
+    max-height: 60vh;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+  }
+  /* folded: the title alone (the arrow goes with the text) */
+  .service-stage[data-collapsed] .service-row-text {
+    max-height: 0;
+    opacity: 0;
+  }
+  .service-stage[data-collapsed] .service-row-inner { gap: 0; }
+  .service-stage .service-row-text > * { grid-column: 1 / -1; }
   .service-row-lead { font-size: var(--text-body); }
+  .service-stage .service-row-body { display: none; }
+  /* the chips as a marquee, the Brands page's LogoMarquee in small: the
+     track holds EXTRA_COPIES lists (ServicePage.jsx) and slides by half of
+     them, faded out at both ends */
+  .service-stage .service-row-extra {
+    grid-column: 1;
+    min-width: 0;
+    margin-top: 16px;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+  }
+  .service-stage .service-row-extra-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 14s linear infinite;
+  }
+  [dir="rtl"] .service-stage .service-row-extra-track { animation-direction: reverse; }
+  .service-stage .service-row-extra-copy { display: block; }
+  /* every copy the same width — its chips plus one chip gap — so the loop
+     has no seam */
+  .service-stage .service-row-extra ul {
+    flex-wrap: nowrap;
+    margin: 0;
+    padding-inline-end: 8px;
+  }
+  .service-stage .service-row-next {
+    grid-column: 2;
+    display: grid;
+    margin-top: 16px;
+  }
+}
+/* The phone card's grabber and the marquee's decorative copies (above). */
+.service-row-grab,
+.service-row-extra-copy { display: none; }
+/* The phone card's arrow to the next service (above): a round chip. */
+.service-row-next {
+  display: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--color-accent-200);
+  border-radius: 50%;
+  background: var(--color-white);
+  color: var(--color-accent-700);
+  font-size: var(--text-body);
+  cursor: pointer;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .service-media-item,
-  .service-slice { transition: none; }
+  .service-slice,
+  .service-slice::after { transition: none; }
   .typed-caret { animation: none; }
   .service-stage .service-row-inner { transform: none !important; }
+  .service-stage .service-row-text { transition: none; }
+  .service-stage .service-row-extra-track { animation: none; }
+  .service-stage .service-row-extra-copy { display: none; }
+  .service-stage .service-row-extra { overflow-x: auto; mask-image: none; }
 }

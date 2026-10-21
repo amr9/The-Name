@@ -102,7 +102,8 @@ export default function Navbar() {
   return (
     <nav className="nav navbar" ref={barRef}>
       <NavLink to="/" end className="nav-brand">
-        <Logo />
+        {/* The full "The Name" lockup on phones too, not the N alone. */}
+        <Logo compact={false} />
       </NavLink>
 
       <button

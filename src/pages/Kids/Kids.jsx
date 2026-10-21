@@ -12,7 +12,9 @@ import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { activationShots, eventServices, kidsOffers } from './data.js';
 import Doodles from './Doodles.jsx';
 import './Kids.css';
-import { shopLink } from '../../data/site.js';
+import { contactLink, shopLink } from '../../data/site.js';
+import { Link } from 'react-router-dom';
+import Arrow from '../../components/Arrow.jsx';
 import ServicePage, { servicePhotos, servicesFrom } from '../../components/ServicePage/ServicePage.jsx';
 
 /**
@@ -21,7 +23,8 @@ import ServicePage, { servicePhotos, servicesFrom } from '../../components/Servi
  * service in `eventServices` (./data.js), titled by the Events chips on
  * Home, beside a picture SET per service (media.servicePhotos.events, plus
  * -2…-4: ServicePage slices) — it replaced the Events film
- * (media.serviceVideos.events). Copy is i18n `eventsPage`.
+ * (media.serviceVideos.events). Under the services, EventMoments. Copy is
+ * i18n `eventsPage`.
  */
 export default function Kids() {
   const { t } = useLanguage();
@@ -34,7 +37,44 @@ export default function Kids() {
       hero={e}
       services={services}
       media={servicePhotos(services, media.servicePhotos.events)}
-    />
+    >
+      <EventMoments />
+    </ServicePage>
+  );
+}
+
+// "The moments we've created": a gallery of past events — for now the
+// Little Creators activation's photos (activationShots, captions
+// kids.activation.shots, the cards of the parked page's gallery) — then a
+// call to the enquiry form at the foot of /about.
+function EventMoments() {
+  const { t } = useLanguage();
+  const m = t.eventsPage.moments;
+  const k = t.kids.activation;
+
+  return (
+    <section className="container events-moments">
+      <h2 className="events-moments-title">{m.title}</h2>
+      <p className="page-hero-lede">{m.lede}</p>
+      <div className="events-moments-gallery">
+        <Carousel prevLabel={k.prevShots} nextLabel={k.nextShots}>
+          {activationShots.map((shot) => (
+            <figure key={shot.id} className="carousel-card kids-activation-shot">
+              <ImagePlaceholder
+                src={media.kids.activation.shots[shot.id]}
+                label={k.shots[shot.id]}
+                ratio="4 / 3"
+                className="kids-activation-shot-image"
+              />
+              <figcaption className="kids-activation-shot-caption">{k.shots[shot.id]}</figcaption>
+            </figure>
+          ))}
+        </Carousel>
+      </div>
+      <Link to={contactLink} className="btn btn-primary events-moments-cta">
+        {m.cta} <Arrow />
+      </Link>
+    </section>
   );
 }
 

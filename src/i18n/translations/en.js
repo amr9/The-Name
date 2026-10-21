@@ -13,6 +13,13 @@ export default {
     // components/FilmLightbox: the button over a film, and the viewer's ×.
     watchFilm: (title) => `Watch ${title} full screen`,
     closeFilm: 'Close',
+    // components/ServicePage: the phone card's arrow to the next service.
+    nextSection: (title) => `Next: ${title}`,
+    // …and the grabber bar at its foot, folding the card down to its title.
+    collapseCard: 'Hide details',
+    expandCard: 'Show details',
+    // …and the dots over its swipeable pictures.
+    pictureOf: (n, total) => `Picture ${n} of ${total}`,
   },
 
   // Search-result and link-preview copy, one entry per page (keys = navLinks
@@ -62,7 +69,7 @@ export default {
   contact: {
     kicker: 'Contact',
     title: 'Tell us what you need.',
-    body: 'Bookings for eight or more, catering quotes, private nights, press and trade enquiries. Send it here and the operations desk picks it up.',
+    body: 'Corporate gifts and custom pieces, brand partnerships, campaigns and media, events and activations, catering and private bookings, press and trade. Tell us what you have in mind and the right team will get back to you.',
     emailHeading: 'Email',
     phoneHeading: 'Phone & WhatsApp',
     privacyHeading: 'Privacy & personal data',
@@ -413,7 +420,7 @@ export default {
     kicker: "F&B & Concept Store",
     titleLead: "Concepts that bring us",
     titleMark: "together.",
-    lede: "Our F&B and Concept Store brings The Name into a physical, social space where food, retail, creativity and community come together: a destination for discovery and connection.",
+    lede: "Good food, interesting finds, and places worth spending time in. From a coffee shared over conversation to beautifully catered gatherings, curated retail spaces and unexpected collaborations, we create experiences that bring people together and make everyday moments a little more memorable.",
     // The picture beside the services, for screen readers.
     mediaLabel: "The Name's concept store and café",
     services: {
@@ -451,7 +458,20 @@ export default {
     kicker: "Events & Experiences",
     titleLead: "Experiences that",
     titleMark: "last.",
-    lede: "We turn brand ideas into experiences people can see, feel and remember, taking every project from concept and creative direction through to production and execution.",
+    lede: "Some events bring people together. Others give them something to talk about long after they're over.",
+    // Under the lede (ServicePage hero).
+    body: [
+      "From corporate gatherings and exhibitions to product launches, brand activations and one-of-a-kind experiences, we bring the ideas, people and details together to make every moment count.",
+      "Because a great event isn't just about what happens. It's about how people feel, what they remember, and the connections they take with them.",
+    ],
+    // Under the services: a gallery of past events (Kids.jsx EventMoments),
+    // its pictures captioned by kids.activation.shots, then the CTA to the
+    // enquiry form.
+    moments: {
+      title: "The moments we've created.",
+      lede: "Every event has its own story. Here are some of ours.",
+      cta: "Let's create something memorable",
+    },
     filmLabel: "Highlights from events and activations by The Name",
     services: {
       events: {
@@ -491,8 +511,14 @@ export default {
     titleLead: "Ideas that",
     titleMark: "matter.",
     lede: "Your 360° media and marketing partner, from strategy to impact.",
-    // The film beside the services (desktop), for screen readers.
-    filmLabel: "The Name Agency at work: campaigns, branding and out-of-home media",
+    // Under the lede (ServicePage hero): the paragraphs, then the closing line.
+    body: [
+      "From media planning and buying to creative concepts and brand communication, we bring together digital strategy and content creation, impactful events and activations, purpose-driven CSR initiatives, and strategic marketing consultancy and partnerships.",
+      "We connect strategy, creativity, and execution to transform ideas into meaningful brand experiences, build stronger connections, and deliver measurable impact.",
+    ],
+    motto: "One vision. Multiple disciplines. Endless possibilities.",
+    // The film preview under the hero, for screen readers.
+    filmLabel: "Brand communication by The Name Agency: the Haramain High Speed Railway gift film",
     // One section per service (pages/Agency/data.js). The titles are the
     // Agency row's chips on Home; the copy is from The Name Agency's
     // presentation.

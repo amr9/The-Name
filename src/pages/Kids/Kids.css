@@ -229,3 +229,21 @@
   .kids-offer-grid,
   .kids-note-points { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* — the Events page's "moments we've created" (EventMoments in Kids.jsx):
+   under the services, the title in the service rows' uppercase, the lede,
+   the gallery (the parked page's activation cards) and the CTA. — */
+.events-moments {
+  padding-top: clamp(var(--space-8), 6vw, calc(var(--space-8) * 2.5));
+  /* its hairline on top, like every section on the page */
+  border-top: 1px solid var(--color-divider);
+}
+.events-moments-title {
+  margin: 0;
+  font-size: clamp(28px, 3.6vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+.events-moments-gallery { margin-top: clamp(var(--space-6), 3vw, var(--space-8)); }
+.events-moments-cta { margin-top: clamp(var(--space-6), 3vw, var(--space-8)); }

@@ -2,7 +2,8 @@
 .logo-marquee {
   padding-block: clamp(36px, 4.5vw, 64px);
   background: var(--color-bg);
-  border-block: 1px solid var(--color-divider);
+  /* top only: sections are separated by a hairline on their top */
+  border-top: 1px solid var(--color-divider);
   overflow: hidden;
 }
 /* Scoped so it outranks `.container`'s `margin: 0 auto`, which theme.css
@@ -22,6 +23,7 @@
 .logo-marquee-track {
   display: flex;
   width: max-content;
+  /* `marquee` keyframes: theme.css (shared with ServicePage's chips) */
   animation: marquee var(--marquee-duration) linear infinite;
 }
 /* RTL reads the other way, so the strip travels the other way too; so does
@@ -90,9 +92,4 @@
   font-family: var(--font-heading);
   font-weight: var(--font-heading-weight);
   font-size: clamp(20px, 2vw, 28px);
-}
-
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
 }

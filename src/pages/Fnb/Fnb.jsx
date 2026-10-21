@@ -8,8 +8,8 @@ import { fnbServices } from './data.js';
  * (components/ServicePage): the hero, then one section per service in
  * `fnbServices` (./data.js), titled by the F&B chips on Home. The media is
  * a picture SET per service (media.servicePhotos.fnb, plus -2…-4: the
- * ServicePage slices) — the dashed placeholder until each file exists. Copy is
- * i18n `fnbPage`.
+ * ServicePage slices) — the dashed placeholder until each file exists. Under
+ * the hero's lede, the same chips as pills. Copy is i18n `fnbPage`.
  */
 export default function Fnb() {
   const { t } = useLanguage();
@@ -19,7 +19,7 @@ export default function Fnb() {
   return (
     <ServicePage
       className="fnb-page"
-      hero={f}
+      hero={{ ...f, tags: t.home.pillars.fnb.tags }}
       services={services}
       media={servicePhotos(services, media.servicePhotos.fnb)}
     />

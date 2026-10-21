@@ -274,7 +274,7 @@ h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
 .page-hero + .pillars { margin-top: clamp(var(--space-6), 4vw, calc(var(--space-8) * 1.5)); }
 
 /* The closing call to action at the foot of a page (components/FinalCta.jsx)
-   — Home. Centred heading, one line, one button, under a rule. */
+   — Home and the "What we do" pages (ServicePage). Centred heading, one line, one button, under a rule. */
 .final-cta {
   text-align: center;
   padding-block: clamp(64px, 8vw, 128px);
@@ -683,6 +683,14 @@ button { font: inherit; }
   bottom: 0;
   height: calc(var(--text-band, 316px) + 20px + clamp(30px, 18vh, 180px));
   pointer-events: none;
+}
+
+/* A seamless rolling strip: the track holds its content twice back to back,
+   so -50% lands exactly on the start of the second copy. Used by
+   LogoMarquee and the phone card's chips in ServicePage. */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 /* — responsive: tablet / mobile (shared layout breakpoints) — */

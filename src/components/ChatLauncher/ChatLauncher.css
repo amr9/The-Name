@@ -28,6 +28,16 @@
   transition: transform 0.15s ease;
 }
 .chat-launcher-fab:hover { transform: translateY(-2px); }
+/* Tucked away (closed only) while a "What we do" page's phone stage fills
+   the screen — its card's arrow sits in this corner. ServicePage sets the
+   attribute. */
+.chat-launcher-fab { transition: transform 0.15s ease, opacity 0.2s ease, visibility 0.2s; }
+html[data-stage-pinned] .chat-launcher-fab[aria-expanded='false'],
+html[data-stage-pinned] .chat-launcher-nudge {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+}
 .chat-launcher-fab[aria-expanded='true'] {
   padding: 0;
   border-color: var(--color-accent);

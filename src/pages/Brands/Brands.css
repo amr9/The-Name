@@ -275,11 +275,9 @@
 }
 
 /* The partner-logo strip under the hero (ServicePage `intro`): the same gap
-   above it as the hero leaves, and the services' top hairline is its own. */
+   above it as the hero leaves, and the services start right under it (the
+   first row's top hairline is the line between them). */
 .brands-page .page-hero + .logo-marquee {
   margin-top: clamp(var(--space-8), 6vw, calc(var(--space-8) * 2.5));
 }
-.brands-page .page-hero + .logo-marquee + .service-list {
-  margin-top: 0;
-  border-top: 0;
-}
+.brands-page .page-hero + .logo-marquee + .service-list { margin-top: 0; }

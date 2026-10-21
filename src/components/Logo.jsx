@@ -11,8 +11,9 @@ import './Logo.css';
 // for the brand's name mid-sentence, where an N alone would not read. `size`
 // 'inline' is that same case — it scales with the surrounding type instead of
 // a fixed pixel height (unused at the moment: the Home hero and the About
-// tagline, which used it, are now live type). The footer passes
-// compact={false} so phones see the full name there too, not the N alone.
+// tagline, which used it, are now live type). The footer
+// and the navbar pass compact={false} so phones see the full name there
+// too, not the N alone.
 export default function Logo({ size = 'md', on = 'light', compact = true }) {
   const ink = on === 'dark' ? media.brand.logos.yellow : media.brand.logos.dark;
 

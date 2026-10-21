@@ -112,7 +112,8 @@ function BrandCatalogues() {
  * titled by the Brands chips on Home, each listing its brands as chips — a
  * brand with a catalogue is a chip linking to it (new tab). The brands have
  * no films, so the media is the category's catalogue covers: its own cover
- * on the phone stage, up to four as desktop slices (categoryCovers). Under
+ * on the phone stage (a link to its catalogue), up to four as desktop
+ * slices (categoryCovers). Under
  * the hero and again under the categories (rolling the other way), the
  * partner logos roll by (LogoMarquee, `marqueeBrands`), each opening its
  * brand's catalogue.
@@ -162,11 +163,13 @@ export default function Brands() {
       className="brands-page"
       hero={b}
       services={services}
-      media={brandCategories.map((c, i) => ({
-        src: media.brandCatalogues[c.image],
-        label: tags[i],
-        gallery: categoryCovers(c, b.catalogues.open),
-      }))}
+      media={brandCategories.map((c, i) => {
+        const gallery = categoryCovers(c, b.catalogues.open);
+        // The phone backdrop is the category's own cover (gallery[0]), so it
+        // links to that catalogue too.
+        const { href, linkLabel } = gallery[0];
+        return { src: media.brandCatalogues[c.image], label: tags[i], href, linkLabel, gallery };
+      })}
       intro={<LogoMarquee items={logoStrip} logos={media.brands} />}
     >
       <LogoMarquee items={logoStrip} logos={media.brands} reverse />

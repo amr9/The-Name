@@ -8,7 +8,9 @@ import { agencyServices } from './data.js';
  * the hero, then one section per service in `agencyServices` (./data.js),
  * titled by the Agency chips on Home. The media is a picture SET per service
  * (media.servicePhotos.agency, plus -2…-4: ServicePage slices) — it
- * replaced the Outdoor Media film (media.agencyOutdoor). Copy is i18n
+ * replaced the Outdoor Media film (media.agencyOutdoor). Under the hero, the
+ * Brand Communication film as the page's preview (media.agencyPreview,
+ * ServicePage `film`, label agency.filmLabel). Copy is i18n
  * `agency`, adapted from The Name Agency's Pitch presentation.
  */
 export default function Agency() {
@@ -22,6 +24,7 @@ export default function Agency() {
       hero={a}
       services={services}
       media={servicePhotos(services, media.servicePhotos.agency)}
+      film={{ ...media.agencyPreview, label: a.filmLabel }}
     />
   );
 }
