@@ -621,7 +621,7 @@ src/
                         `services` [{ id, title, lead, body, extra? }], `media`
                         [{ src, poster?, video?, label, gallery? }],
                         `className`, `film` ({ src, poster, label }: a landscape film shown whole, centred under the hero at 16:9, max 960px, `.service-film`, with FilmLightbox's expand badge to watch it full-screen, at every width — Agency: media.agencyPreview, the Haramain Brand Communication film), `intro` (rendered between the hero and the
-                        services — Brands: its logo strip), then EVERY ServicePage ends on Home's closing call to action — `FinalCta` with the same `home.finalCta` copy ("Let's create something worth remembering.", "Start a conversation") to `contactLink` (/about#contact); Sections on these pages are separated by a hairline on their TOP only, never the bottom: each `.service-row`, LogoMarquee (border-top only, site-wide), `.events-moments` and `.final-cta`. `children` (rendered under the services,
+                        services — Brands: its logo strip), then EVERY ServicePage ends on Home's closing call to action — `FinalCta` with the same `home.finalCta` copy ("Let's create something worth remembering.", "Start a conversation") to `contactLink` (/about#contact), with the page's products either side (`ctaProducts` = media.finalCtaProducts.<page>, see FinalCta); Sections on these pages are separated by a hairline on their TOP only, never the bottom: each `.service-row`, LogoMarquee (border-top only, site-wide), `.events-moments` and `.final-cta`. `children` (rendered under the services,
                         inside the page — Brands: its reversed logo strip; Brands' parked
                         catalogue grid was passed this way). `servicePhotos(services, photos)` builds `media` as ONE picture per service from a `media.servicePhotos[pillar]` map, each labelled by its service title, with its `gallery`: that photo plus `<photo>-2.jpg` … `-4.jpg` beside it (`photoSet`, SLICES = 4). A map entry that is an OBJECT instead of a path string is a SUPPLIED service shown alone (gallery of one): a picture `{ src }` or a film `serviceFilm(name)` (data/media.js: videos/<name>.mp4 + -poster.jpg, `video: true`), which plays as an AutoplayVideo both in the desktop slice (`.service-slice-film`) and on the phone stage (Corporate Gifts, Agency, Events, F&B — Brands maps its catalogue covers itself: `categoryCovers`, the category's cover then its brands' covers, max 4). `servicesFrom(list, tags, copy)` builds
                         `services`: the i-th service is titled by the i-th Home
@@ -698,11 +698,22 @@ src/
       Arrow.jsx       — the "→" after a call to action (Home, PillarRows rows,
                         Brands), mirrored under RTL by `.cta-arrow` in
                         theme.css.
-      FinalCta.jsx    — the closing call to action at the foot of Home:
-                        centred heading, one line, one button
-                        (`content` = the page's i18n { heading, body, cta },
-                        `to` = where the button goes). No CSS file: its rules
-                        are `.final-cta*` in theme.css (moved from Home.css).
+      FinalCta.jsx    — the closing call to action at the foot of Home and
+                        every "What we do" page: centred heading, one line,
+                        one button (`content` = the page's i18n { heading,
+                        body, cta }, `to` = where the button goes). Optional
+                        `products` (media.finalCtaProducts.<page>, cut-out
+                        product WebPs) makes it the SHOWCASE (.final-cta-
+                        showcase): the --gradient-panel band (the hero name's
+                        gold leaf), the words on a frosted-glass card (the
+                        phone stage card's glass) with a .btn-dark button,
+                        and the products floating either side — first half
+                        at the start, rest at the end, three slots per side
+                        (--top/--edge/--size/--rot, inline insets so RTL
+                        mirrors), a slow float (off for reduced motion), and
+                        on phones above/below the card. Decorative:
+                        aria-hidden, alt="". No CSS file: its rules are
+                        `.final-cta*` in theme.css (moved from Home.css).
       AutoplayVideo.jsx/.css — a film that behaves like a GIF: always
                         muted, always looping, and the visitor CANNOT take it
                         over — no controls, no picture-in-picture or casting,
@@ -1390,6 +1401,12 @@ public/media/
     catalogues/   — the Brands page's catalogue covers (data/media.js
                     `brandCatalogues`), the 18 "Main Catalogue" covers of
                     vertex.ae/catalogues as 600px WebP from its Wix CDN.
+  final-cta/<page>/ — the products floating around each page's closing call
+                    to action (data/media.js `finalCtaProducts`): home,
+                    gifts, brands, agency, events, fnb. Cut out of
+                    store-products/ photos onto transparency (background
+                    flood-filled from the edges, soft drop shadows removed),
+                    ≤480px WebP with alpha. Re-cut rather than edit by hand.
   store-products/ — one photo per online-store product, <store id>.webp.
                     WRITTEN BY scripts/import-store-products.mjs and
                     import-store-images.mjs; never edit by hand.

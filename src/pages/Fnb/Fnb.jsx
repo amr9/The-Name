@@ -22,6 +22,7 @@ export default function Fnb() {
       hero={{ ...f, tags: t.home.pillars.fnb.tags }}
       services={services}
       media={servicePhotos(services, media.servicePhotos.fnb)}
+      ctaProducts={media.finalCtaProducts.fnb}
     />
   );
 }

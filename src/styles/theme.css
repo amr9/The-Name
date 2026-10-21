@@ -295,6 +295,78 @@ h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
   margin: 18px auto 28px;
 }
 
+/* With `products` (FinalCta.jsx): the "showcase" — the gold-leaf panel
+   gradient (the hero name's), the words on a frosted-glass card (the phone
+   stage card's glass, ServicePage.css), and cut-out products floating at
+   either side of it. Each side places its pictures in three slots
+   (--top / --edge from that side's outer edge / --size / --rot); inline
+   insets, so RTL mirrors it. Products overlapping the card blur behind its
+   glass. On phones they ring the card above and below instead. */
+.final-cta-showcase {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(72px, 9vw, 140px);
+  background: var(--gradient-panel);
+}
+.final-cta-showcase .final-cta-card {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin-inline: auto;
+  padding: clamp(28px, 4vw, 48px) clamp(20px, 4vw, 56px);
+  border-radius: calc(var(--radius-md) * 1.5);
+  border: 1px solid color-mix(in srgb, var(--color-white) 60%, transparent);
+  background: color-mix(in srgb, var(--color-white) 55%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
+  box-shadow: var(--shadow-lg);
+}
+.final-cta-showcase .final-cta-body { margin-bottom: 24px; }
+.final-cta-products {
+  position: absolute;
+  inset-block: 0;
+  width: 50%;
+  pointer-events: none;
+}
+.final-cta-products-start { inset-inline-start: 0; }
+.final-cta-products-end { inset-inline-end: 0; }
+.final-cta-product {
+  position: absolute;
+  top: var(--top);
+  width: var(--size);
+  height: var(--size);
+  object-fit: contain;
+  filter: drop-shadow(0 18px 22px color-mix(in srgb, #000000 20%, transparent));
+  transform: rotate(var(--rot));
+  animation: final-cta-float 6s ease-in-out var(--delay, 0s) infinite alternate;
+}
+.final-cta-products-start .final-cta-product { inset-inline-start: var(--edge); }
+.final-cta-products-end .final-cta-product { inset-inline-end: var(--edge); }
+/* the second slot tucks partly under the card, blurred by its glass */
+.final-cta-products-start .final-cta-product:nth-child(1) { --top: 4%;  --edge: 6%;  --size: clamp(120px, 16vw, 280px); --rot: -8deg; }
+.final-cta-products-start .final-cta-product:nth-child(2) { --top: 30%; --edge: 56%; --size: clamp(100px, 13vw, 230px); --rot: 6deg;  --delay: -2s; }
+.final-cta-products-start .final-cta-product:nth-child(3) { --top: 56%; --edge: 12%; --size: clamp(110px, 15vw, 260px); --rot: -3deg; --delay: -4s; }
+.final-cta-products-end .final-cta-product:nth-child(1)   { --top: 6%;  --edge: 10%; --size: clamp(120px, 16vw, 280px); --rot: 7deg;  --delay: -1s; }
+.final-cta-products-end .final-cta-product:nth-child(2)   { --top: 46%; --edge: 56%; --size: clamp(100px, 13vw, 230px); --rot: -6deg; --delay: -3s; }
+.final-cta-products-end .final-cta-product:nth-child(3)   { --top: 58%; --edge: 5%;  --size: clamp(110px, 15vw, 260px); --rot: 4deg;  --delay: -5s; }
+@keyframes final-cta-float {
+  to { transform: translateY(-12px) rotate(calc(var(--rot) + 2deg)); }
+}
+@media (max-width: 760px) {
+  .final-cta-showcase { padding-block: 150px; }
+  .final-cta-product { --size: 104px; }
+  .final-cta-products-start .final-cta-product:nth-child(1),
+  .final-cta-products-end .final-cta-product:nth-child(1) { --top: 22px; }
+  .final-cta-products-start .final-cta-product:nth-child(2),
+  .final-cta-products-end .final-cta-product:nth-child(2) { --top: calc(100% - 128px); --edge: 12%; }
+  .final-cta-products-start .final-cta-product:nth-child(3),
+  .final-cta-products-end .final-cta-product:nth-child(3) { --top: 42%; --edge: -8%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .final-cta-product { animation: none; }
+}
+
 /* The "→" after a call to action (components/Arrow.jsx) — points the
    reading direction, so it is mirrored under RTL. */
 .cta-arrow { display: inline-block; }

@@ -150,7 +150,7 @@ export default function Home() {
       <PillarRows rows={rows} />
 
       {/* final CTA — opens the enquiry form at the foot of /about */}
-      <FinalCta content={h.finalCta} to={contactLink} />
+      <FinalCta content={h.finalCta} to={contactLink} products={media.finalCtaProducts.home} />
     </div>
   );
 }

@@ -59,7 +59,8 @@ import './ServicePage.css';
  *
  * Every page ends on Home's closing call to action (FinalCta, the same
  * home.finalCta copy: "Let's create something worth remembering.") opening
- * the enquiry form at the foot of /about.
+ * the enquiry form at the foot of /about. `ctaProducts` (the page's
+ * media.finalCtaProducts set) float either side of it.
  */
 
 // The phone card's `extra` (Brands: the category's brand chips) rolls as a
@@ -289,7 +290,7 @@ function ServiceSlices({ items, label }) {
   );
 }
 
-export default function ServicePage({ className = '', hero, services, media, film, intro, children }) {
+export default function ServicePage({ className = '', hero, services, media, film, intro, ctaProducts, children }) {
   const { t } = useLanguage();
   const stage = useScrollStage(services.length, {
     query: STAGE_QUERY,
@@ -478,7 +479,7 @@ export default function ServicePage({ className = '', hero, services, media, fil
         </div>
       </div>
       {children}
-      <FinalCta content={t.home.finalCta} to={contactLink} />
+      <FinalCta content={t.home.finalCta} to={contactLink} products={ctaProducts} />
     </div>
   );
 }

@@ -26,6 +26,7 @@ export default function Business() {
       hero={g}
       services={services}
       media={servicePhotos(services, media.servicePhotos.corporateGifts)}
+      ctaProducts={media.finalCtaProducts.corporateGifts}
     />
   );
 }

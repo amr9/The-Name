@@ -37,6 +37,7 @@ export default function Kids() {
       hero={e}
       services={services}
       media={servicePhotos(services, media.servicePhotos.events)}
+      ctaProducts={media.finalCtaProducts.events}
     >
       <EventMoments />
     </ServicePage>
