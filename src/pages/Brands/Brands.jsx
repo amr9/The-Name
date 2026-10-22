@@ -68,11 +68,9 @@ const categoryCovers = (c, open) => [
   return { src: media.brandCatalogues[id], label: name, href: url, linkLabel: open(name) };
 });
 
-// PARKED for UI testing — not rendered; the catalogues now live in the
-// category sections (the brand chips link to them, the covers are the
-// media). To bring it back, pass <BrandCatalogues /> to ServicePage below.
-// The catalogue covers (./data.js `brandCatalogues`): each cover opens its
-// catalogue on the viewer vertex.ae/catalogues links it to, in a new tab.
+// Every catalogue cover (./data.js `brandCatalogues`), as a grid under the
+// categories (ServicePage `children`): each cover opens its catalogue on the
+// viewer vertex.ae/catalogues links it to, in a new tab.
 function BrandCatalogues() {
   const { t } = useLanguage();
   const c = t.brandsPage.catalogues;
@@ -113,8 +111,8 @@ function BrandCatalogues() {
  * plain names, NOT links (a catalogue opens from its cover or logo). The brands have
  * no films, so the media is the category's catalogue covers: its own cover
  * on the phone stage (a link to its catalogue), up to four as desktop
- * slices (categoryCovers). Under
- * the hero and again under the categories (rolling the other way), the
+ * slices (categoryCovers). Under the categories, every catalogue as a
+ * cover card (BrandCatalogues). Under the hero, the
  * partner logos roll by (LogoMarquee, `marqueeBrands`), each opening its
  * brand's catalogue.
  * Copy is i18n `brandsPage`.
@@ -127,12 +125,12 @@ export default function Brands() {
   const services = servicesFrom(brandCategories, tags, b.categories).map((s, i) => ({
     ...s,
     // the category's brands as chips: plain names, never links — the
-    // catalogues open from the covers and the logo strips
+    // catalogues open from the covers and the logo strip
     tags: brandCategories[i].brands.map((id) => brandsById[id].name),
     tagsLabel: b.categoryBrands,
   }));
 
-  // The logo strips: each logo opens its brand's catalogue (new tab), or
+  // The logo strip: each logo opens its brand's catalogue (new tab), or
   // its own site if it has none yet.
   const logoStrip = marqueeBrands.map((id) => {
     const brand = brandsById[id];
@@ -154,7 +152,7 @@ export default function Brands() {
       })}
       intro={<LogoMarquee items={logoStrip} logos={media.brands} />}
     >
-      <LogoMarquee items={logoStrip} logos={media.brands} reverse />
+      <BrandCatalogues />
     </ServicePage>
   );
 }

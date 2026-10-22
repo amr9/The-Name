@@ -1110,7 +1110,7 @@ export default {
     // behind, the way into its 3D walkthrough (data/site.js virtualStoreUrl).
     virtualStore: {
       heading: 'Visit our store, from anywhere.',
-      body: 'Walk through The Name in 3D and explore the space and the pieces as if you were there.',
+      body: 'Take a 3D tour of our store and see our collections up close, or shop your favourite pieces directly online.',
       cta: 'Virtual Store',
       shopCta: 'Shop the Brands',
     },

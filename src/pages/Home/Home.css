@@ -219,7 +219,7 @@
   min-height: clamp(320px, 38vw, 520px);
   margin-top: clamp(48px, 6vw, 96px);
   background:
-    linear-gradient(color-mix(in srgb, var(--color-black) 55%, transparent), color-mix(in srgb, var(--color-black) 55%, transparent)),
+    linear-gradient(color-mix(in srgb, var(--color-black) 90%, transparent), color-mix(in srgb, var(--color-black) 80%, transparent)),
     var(--virtual-store-bg, none) center / cover no-repeat,
     var(--gradient-footer);
   color: var(--color-white);
