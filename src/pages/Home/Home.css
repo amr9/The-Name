@@ -49,15 +49,11 @@
   .home-hero .home-hero-video-phone { display: block; }
 }
 
-/* The type block runs to the hero's bottom edge and carries the white wash
-   itself, IN FRONT of the picture (z-index; the media is layer 0). The wash
-   fades in over --hero-ramp just above the title and is near-solid behind
-   the text, so the words sit on top of the picture and nothing in it shows
-   through them (the stand-in photo's own big white "THE NAME" lettering
-   crossed the title and read as if the text were behind the image). It ends
-   in the page background, so the picture fades into the page below with no
-   edge. Above the ramp the picture is untouched. Its own gradient, not the
-   shared .wash-to-bg — that one stays thin for most of its height. */
+/* The type block runs to the hero's bottom edge, IN FRONT of the picture
+   (z-index; the media is layer 0). NO white wash: the picture stays as it
+   is, and the type turns white over a soft DARK shade that rises from the
+   hero's foot (--hero-ramp above the title, deepest behind the text) — the
+   way the words stay readable on any photo without washing it out. */
 .home-hero-content {
   --hero-ramp: clamp(30px, 18vh, 180px);
   position: absolute;
@@ -65,23 +61,31 @@
   left: 0;
   right: 0;
   bottom: 0;
-  /* The wash starts right above the title (the text is anchored to the
+  /* The shade starts right above the title (the text is anchored to the
      bottom, so this only sets where the gradient begins). */
   padding-top: var(--hero-ramp);
   padding-bottom: clamp(40px, 6vh, 80px);
   background: linear-gradient(to bottom,
       transparent 0,
-      color-mix(in srgb, var(--color-bg) 40%, transparent) calc(var(--hero-ramp) * 0.45),
-      color-mix(in srgb, var(--color-bg) 88%, transparent) calc(var(--hero-ramp) * 0.75),
-      var(--color-bg) var(--hero-ramp),
-      var(--color-bg) 100%);
+      color-mix(in srgb, var(--color-black) 30%, transparent) var(--hero-ramp),
+      color-mix(in srgb, var(--color-black) 60%, transparent) 100%);
+  color: var(--color-white);
+  text-shadow: 0 1px 12px color-mix(in srgb, var(--color-black) 35%, transparent);
   pointer-events: none;
 }
+/* ...but not on the gold name: its text is transparent (the gradient is
+   clipped to it, .gold-leaf), so a shadow would show through and dull it. */
+.home-hero-content .gold-leaf { text-shadow: none; }
+
 
 
 /* Type is the shared .display-title (theme.css) — but at 4vw here, not its
    6vw (the About tagline keeps 6vw), and the width cap. */
-.home-hero-title {
+/* .home-hero qualifies it: theme.css's .display-title is equally specific
+   and lands later in the bundle, so a single class loses the tie. */
+.home-hero .home-hero-title {
+  /* white on the hero's dark shade (.display-title is charcoal elsewhere) */
+  color: var(--color-white);
   font-size: clamp(36px, 4vw, 88px);
   max-width: 14ch;
 }
@@ -168,7 +172,7 @@
    hero and the video stays visible above it. */
 @media (max-width: 700px),
 (max-height: 820px) {
-  .home-hero-title {
+  .home-hero .home-hero-title {
     font-size: clamp(32px, 4vw, 56px);
   }
 

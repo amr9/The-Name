@@ -83,9 +83,15 @@ export const media = {
   // On phones (≤700px) the hero plays the Agency film instead (agencyFilm).
   heroPhone: agencyFilm,
   // The Home hero's PICTURE, which replaced the two films above (both kept,
-  // PARKED, for when a film comes back). The file is still to come — until
-  // it lands at public/media/photos/home/hero.jpg, ImagePlaceholder shows
-  // its dashed slot. Fills the hero at every width (object-fit: cover).
+  // PARKED, for when a film comes back). Fills the hero at every width
+  // (object-fit: cover). A STAND-IN until a real photo replaces
+  // public/media/photos/home/hero.jpg: the "THE NAME" storefront sign —
+  // its "YOUR SOCIAL HUB" line painted out (the plain sign panel 130px
+  // below cloned over it through a slanted, feathered ffmpeg mask) — a
+  // 1920x1080 frame (0:35.97, the sharpest of the shot by
+  // ffmpeg blurdetect, + a light unsharp) from the ORIGINAL showreel, "R
+  // Investment Video Loop (2m04 seamless).mp4" (5.5 Mbps) — not from
+  // videos/hero.mp4, our 1600x900 1.1 Mbps cut, which is far softer.
   heroImage: `${BASE}/photos/home/hero.jpg`,
   // The full-width picture behind Home's virtual-store band (under the
   // Brands row). A STAND-IN until a real wide shot of the store (~1920×800)
