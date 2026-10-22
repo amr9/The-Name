@@ -25,7 +25,6 @@ export default function Agency() {
       services={services}
       media={servicePhotos(services, media.servicePhotos.agency)}
       film={{ ...media.agencyPreview, label: a.filmLabel }}
-      ctaProducts={media.finalCtaProducts.agency}
     />
   );
 }

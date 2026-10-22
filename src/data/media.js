@@ -50,10 +50,6 @@ const activationShots = {
   onTheStand: `${BASE}/photos/events/activation-on-the-stand.jpg`,
 };
 
-// One page's products for the closing call to action (finalCtaProducts below):
-// public/media/final-cta/<folder>/<name>.webp.
-const finalCtaSet = (folder, names) => names.map((n) => `${BASE}/final-cta/${folder}/${n}.webp`);
-
 // A film for one "What we do" service (servicePhotos below), from
 // public/media/videos/<name>.mp4 and its <name>-poster.jpg. Compressed like
 // serviceVideos (CRF 28, no audio, +faststart); the poster is a frame from
@@ -85,20 +81,6 @@ export const media = {
   // Haramain High Speed Railway gift film, its Brand Communication work (from
   // "the agency"; 1920x1080 scaled to 1280x720, CRF 30). Landscape, 16:9.
   agencyPreview: serviceFilm('agency-haramain'),
-
-  // The products floating either side of the closing call to action
-  // (components/FinalCta `products`) on Home and each "What we do" page —
-  // a different set per page. Cut out of the store-products photos onto
-  // transparency (≤480px, WebP with alpha). Decorative: no alt text. The
-  // first half sits at the start of the words, the rest at the end.
-  finalCtaProducts: {
-    home: finalCtaSet('home', ['lexon-twin-mino', 'lund-desktop-fan', 'lund-lunch-box', 'lexon-nomaday-power-bank', 'pantone-to-go-cup']),
-    corporateGifts: finalCtaSet('gifts', ['gingko-flip-clock', 'castelli-notebook', 'gingko-octagon-lamp', 'gingko-tumbler-clock', 'lund-skittle-bottle', 'lexon-city-energy']),
-    brands: finalCtaSet('brands', ['gingko-speaker', 'lund-shark-bottle', 'lexon-mino-speaker', 'korin-backpack', 'lexon-mino-t-speaker', 'lexon-tykho-radio']),
-    agency: finalCtaSet('agency', ['pantone-notebook', 'pantone-pencil-cup', 'pantone-card-holder', 'pantone-notebook-blue', 'pantone-eraser']),
-    events: finalCtaSet('events', ['mob-dancing-clock', 'mob-micro-groovy', 'mob-cutie-clock', 'mob-stellar-astronaut', 'mob-karaoke-speaker', 'mob-astro-speaker']),
-    fnb: finalCtaSet('fnb', ['lund-stacking-mug', 'lund-travel-mug', 'lund-travel-mug-black']),
-  },
 
   // The "What we do" pages (components/ServicePage) — one picture per
   // service, keyed by pillar, then by the service ids in each page's data.js

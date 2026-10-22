@@ -171,7 +171,6 @@ export default function Brands() {
         return { src: media.brandCatalogues[c.image], label: tags[i], href, linkLabel, gallery };
       })}
       intro={<LogoMarquee items={logoStrip} logos={media.brands} />}
-      ctaProducts={media.finalCtaProducts.brands}
     >
       <LogoMarquee items={logoStrip} logos={media.brands} reverse />
     </ServicePage>

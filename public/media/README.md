@@ -11,7 +11,6 @@ Odoo product export) live in `/source-files/` at the repo root.
 | `the-name/` | The Name's own identity: logos (dark / yellow, main / secondary), the mark (also the favicon), the footer pattern, the "From The Name to your name" artwork. |
 | `partner-brands/logos/` | Logos of the brands we carry (Brands page cards, Home logo strip). One file per brand id in `src/data/brands.js`. |
 | `partner-brands/products/` | Two product photos per featured brand on the Brands page (4:5 WebP, taken from each brand's catalogue). |
-| `final-cta/<page>/` | Cut-out products (WebP with transparency) floating around each page's closing call to action — `finalCtaProducts` in `src/data/media.js`. Cut out of `store-products/` photos. |
 | `store-products/` | One photo per online-store product (`<store id>.webp`). Written by `scripts/import-store-products.mjs` and `scripts/import-store-images.mjs` — do not edit by hand. |
 | `videos/` | Every film and its poster frame (Home hero, the "What we do" rows, Events activation, About). |
 | `photos/<page>/` | Page photography, one folder per page or section: `home`, `events`, `about`, `corporate-gifts`, `cafe`, `gift-sets`, `methods` (personalisation methods). |
