@@ -2,8 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import AutoplayVideo from '../AutoplayVideo.jsx';
 import FinalCta from '../FinalCta.jsx';
-import FilmLightbox from '../FilmLightbox/FilmLightbox.jsx';
+// PARKED with the film's expand badge (ServicePage below).
+// import FilmLightbox from '../FilmLightbox/FilmLightbox.jsx';
 import ImagePlaceholder from '../ImagePlaceholder.jsx';
+import RotatingName from '../RotatingName/RotatingName.jsx';
 import MediaGallery, { GalleryLightbox, galleryItem } from '../MediaGallery/MediaGallery.jsx';
 import PillarRows, { STAGE_QUERY, TagScrollBar } from '../PillarRows/PillarRows.jsx';
 import useScrollStage from '../../hooks/useScrollStage.js';
@@ -51,7 +53,10 @@ import './ServicePage.css';
  * tab; Brands: the category's catalogue). A gallery item is a src or
  * { src, label?, href?, linkLabel? } (a link).
  *
- * `hero`: { kicker, titleLead, titleMark, lede, tags?, body?, motto? } —
+ * `hero`: { kicker, titleLead, titleMark, lede, tags?, body?, motto? } — or,
+ * with `names` (and `title`, the full line for screen readers) instead of
+ * `titleMark`, the title's last line rotates through `names` like the Home
+ * hero (components/RotatingName; Agency: "We talk …") —
  * under the lede, `tags` as pills (F&B: its services, i.e. its Home chips),
  * `body` paragraphs (Agency, Events), and `motto`, a closing line (Agency).
  * `services`: [{ id, title, lead, body, tags?, tagsLabel?, actions? }] — see
@@ -66,8 +71,10 @@ import './ServicePage.css';
  * (Agency: its Brand Communication film).
  * `intro`: optional, rendered between the hero and the services (Brands: the
  * partner-logo strip).
+ * `services` may be left out (Brands has none): the page is then the hero,
+ * `intro`, `children` and the closing call to action.
  * `children`: optional, rendered under the services inside the page (Brands:
- * the partner-logo strip again, rolling the other way).
+ * its catalogue cards).
  *
  * Every page ends on Home's closing call to action (FinalCta, the same
  * home.finalCta copy: "Let's explore what we can create together."), its
@@ -281,6 +288,15 @@ function ServiceTags({ tags, label }) {
   );
 }
 
+// A media entry's group in its PHONE order: `phoneLead` (an index into its
+// `gallery`) moves that picture to the front — the stage's first, main
+// picture and the viewer's first slide (Agency Brand Communication: its
+// portrait "bpe" picture). Desktop keeps the gallery's own order.
+const phoneGallery = (m) => {
+  const g = m.gallery || [m];
+  return m.phoneLead == null ? g : [g[m.phoneLead], ...g.filter((_, i) => i !== m.phoneLead)];
+};
+
 // The services section: the full-width rows with their ServiceSlices on
 // desktop, the pinned card stage on phones (see the comment at the top).
 // Shared with Home's "What we do", which passes `titleAs="h3"` (its rows
@@ -307,7 +323,7 @@ export function ServiceList({ services, media, titleAs: Title = 'h2' }) {
   const openViewer = (m, el) => {
     const track = el.querySelector('.service-media-track');
     const start = track ? Math.round(Math.abs(track.scrollLeft) / track.clientWidth) : 0;
-    setViewer({ items: (m.gallery || [m]).map(galleryItem), start, label: m.label });
+    setViewer({ items: phoneGallery(m).map(galleryItem), start, label: m.label });
   };
 
   // While the phone stage fills the screen, the floating chat button would
@@ -386,7 +402,8 @@ export function ServiceList({ services, media, titleAs: Title = 'h2' }) {
                 })}
               >
                 {strip ? (
-                  <MediaStrip items={m.gallery} label={m.label} />
+                  // at most `max` in the strip; a tap opens the whole group
+                  <MediaStrip items={m.max ? phoneGallery(m).slice(0, m.max) : phoneGallery(m)} label={m.label} />
                 ) : m.video ? (
                   <AutoplayVideo
                     className="service-media-fill"
@@ -482,7 +499,7 @@ export function ServiceRows({ services, media, titleAs = 'h2', start = 0 }) {
       bare: true,
       fill: true,
       ring: false,
-      media: () => <MediaGallery items={m.gallery || [m]} label={m.label} />,
+      media: () => <MediaGallery items={m.gallery || [m]} label={m.label} max={m.max} />,
     };
   });
 
@@ -508,8 +525,16 @@ export default function ServicePage({ className = '', hero, services, media, fil
         <h1 className="page-title page-hero-title service-title">
           {/* The full line for screen readers and crawlers; the typed one is
               hidden from them. */}
-          <span className="sr-only">{hero.titleLead} {hero.titleMark}</span>
-          <TypedTitle lead={hero.titleLead} mark={hero.titleMark} />
+          <span className="sr-only">{hero.names ? hero.title : `${hero.titleLead} ${hero.titleMark}`}</span>
+          {/* `names` (Agency): the Home hero's rotating line instead of the
+              typed one — titleLead stays, each name drops in below it. */}
+          {hero.names ? (
+            <span aria-hidden="true">
+              {hero.titleLead} <RotatingName names={hero.names} />
+            </span>
+          ) : (
+            <TypedTitle lead={hero.titleLead} mark={hero.titleMark} />
+          )}
         </h1>
         <p className="page-hero-lede">{hero.lede}</p>
         {hero.tags && (
@@ -521,16 +546,30 @@ export default function ServicePage({ className = '', hero, services, media, fil
         {hero.motto && <p className="service-hero-motto">{hero.motto}</p>}
       </header>
       {film && (
-        <figure className="container service-film">
+        <figure className="service-film">
+          {/* ONE film, whole in the middle, on a plain colour in the film's
+              own tones with a warm glow around it (ServicePage.css). */}
           <div className="service-film-frame">
+            {/* PARKED — the AMBIENT backdrop: the film again, blurred and
+                scaled to fill the frame, so the sides take its own colours
+                and movement. To bring it back, uncomment this and its
+                .service-film-ambient rules in ServicePage.css.
+            <div className="service-film-ambient" aria-hidden="true">
+              <AutoplayVideo className="service-film-ambient-video" src={film.src} poster={film.poster} />
+            </div>
+            */}
             <AutoplayVideo className="service-film-video" src={film.src} poster={film.poster} label={film.label} />
+            {/* PARKED — the expand badge (bottom end corner) that opened the
+                film full-screen. To bring it back, uncomment this and the
+                FilmLightbox import above.
             <FilmLightbox src={film.src} poster={film.poster} label={film.label} />
+            */}
           </div>
         </figure>
       )}
       {intro}
 
-      <ServiceRows services={services} media={media} />
+      {services?.length > 0 && <ServiceRows services={services} media={media} />}
       {children}
       <FinalCta content={t.home.finalCta} href={waMessageLink(hero.waMessage)} />
     </div>

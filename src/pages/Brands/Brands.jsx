@@ -6,9 +6,9 @@ import PillarRows, { ROW_RATIO } from '../../components/PillarRows/PillarRows.js
 import { brandLink, brands, brandsById } from '../../data/brands.js';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import { PENDING_SLOTS, brandCatalogues, brandCategories, featuredBrands, marqueeBrands } from './data.js';
+import { PENDING_SLOTS, brandCatalogues, featuredBrands, marqueeBrands } from './data.js';
 import './Brands.css';
-import ServicePage, { servicesFrom } from '../../components/ServicePage/ServicePage.jsx';
+import ServicePage from '../../components/ServicePage/ServicePage.jsx';
 
 const featuredIds = new Set(featuredBrands.map((f) => f.brandId));
 
@@ -56,20 +56,20 @@ brandCatalogues.forEach((c) => {
   if (c.brandId && !catalogueByBrand[c.brandId]) catalogueByBrand[c.brandId] = c;
 });
 
-// A category's slices on desktop (ServicePage): its own cover first, then
-// the catalogue covers of its other brands, at most four — each a link to
-// its catalogue (new tab). `open` is brandsPage.catalogues.open.
-const catalogueById = Object.fromEntries(brandCatalogues.map((c) => [c.id, c]));
-const categoryCovers = (c, open) => [
-  ...new Set([c.image, ...c.brands.map((id) => catalogueByBrand[id]?.id).filter(Boolean)]),
-].slice(0, 4).map((id) => {
-  const { brandId, url } = catalogueById[id];
-  const name = brandsById[brandId].name;
-  return { src: media.brandCatalogues[id], label: name, href: url, linkLabel: open(name) };
+// The catalogues in `brandCatalogues` order, but with each brand's together:
+// a brand's later catalogues move up beside its first (Hugo Boss's four sit
+// side by side). Catalogues without a brand keep their place.
+const cataloguesByBrand = [];
+brandCatalogues.forEach((c) => {
+  const group = c.brandId && cataloguesByBrand.find((g) => g[0].brandId === c.brandId);
+  if (group) group.push(c);
+  else cataloguesByBrand.push([c]);
 });
+const groupedCatalogues = cataloguesByBrand.flat();
 
-// Every catalogue cover (./data.js `brandCatalogues`), as a grid under the
-// categories (ServicePage `children`): each cover opens its catalogue on the
+// The page's main section: every catalogue as a card — its cover, large,
+// then the brand name and the catalogue's line — at most four to a row, a
+// shorter last row centred (Brands.css). Each opens its catalogue on the
 // viewer vertex.ae/catalogues links it to, in a new tab.
 function BrandCatalogues() {
   const { t } = useLanguage();
@@ -80,7 +80,7 @@ function BrandCatalogues() {
       <h2 id="brand-catalogues-title" className="brand-catalogues-title">{c.title}</h2>
       <p className="brand-catalogues-lede">{c.lede}</p>
       <ul className="brand-catalogues-grid">
-        {brandCatalogues.map(({ id, brandId, url }) => {
+        {groupedCatalogues.map(({ id, brandId, url }) => {
           const line = c.items[id];
           const name = brandId ? brandsById[brandId].name : line;
           return (
@@ -106,29 +106,16 @@ function BrandCatalogues() {
 
 /**
  * The Brands page — the shared "What we do" layout (components/ServicePage):
- * the hero, then one section per category in `brandCategories` (./data.js),
- * titled by the Brands chips on Home, each listing its brands as chips —
- * plain names, NOT links (a catalogue opens from its cover or logo). The brands have
- * no films, so the media is the category's catalogue covers: its own cover
- * on the phone stage (a link to its catalogue), up to four as desktop
- * slices (categoryCovers). Under the categories, every catalogue as a
- * cover card (BrandCatalogues). Under the hero, the
- * partner logos roll by (LogoMarquee, `marqueeBrands`), each opening its
- * brand's catalogue.
+ * the hero, its category names (the Brands chips on Home) as pills under the
+ * lede; the partner logos in two still rows (LogoMarquee `still`,
+ * `marqueeBrands`), each opening its brand's catalogue; then the catalogue
+ * cards (BrandCatalogues). No category sections any more (ServicePage
+ * without `services`; `brandCategories` in ./data.js is parked).
  * Copy is i18n `brandsPage`.
  */
 export default function Brands() {
   const { t } = useLanguage();
   const b = t.brandsPage;
-  const tags = t.home.pillars.brands.tags;
-
-  const services = servicesFrom(brandCategories, tags, b.categories).map((s, i) => ({
-    ...s,
-    // the category's brands as chips: plain names, never links — the
-    // catalogues open from the covers and the logo strip
-    tags: brandCategories[i].brands.map((id) => brandsById[id].name),
-    tagsLabel: b.categoryBrands,
-  }));
 
   // The logo strip: each logo opens its brand's catalogue (new tab), or
   // its own site if it has none yet.
@@ -141,16 +128,8 @@ export default function Brands() {
   return (
     <ServicePage
       className="brands-page"
-      hero={b}
-      services={services}
-      media={brandCategories.map((c, i) => {
-        const gallery = categoryCovers(c, b.catalogues.open);
-        // The phone backdrop is the category's own cover (gallery[0]), so it
-        // links to that catalogue too.
-        const { href, linkLabel } = gallery[0];
-        return { src: media.brandCatalogues[c.image], label: tags[i], href, linkLabel, gallery };
-      })}
-      intro={<LogoMarquee items={logoStrip} logos={media.brands} />}
+      hero={{ ...b, tags: t.home.pillars.brands.tags }}
+      intro={<LogoMarquee items={logoStrip} logos={media.brands} still />}
     >
       <BrandCatalogues />
     </ServicePage>

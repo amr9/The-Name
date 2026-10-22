@@ -102,6 +102,12 @@ export const media = {
   // its dark gradient (a CSS background draws nothing for a missing file).
   virtualStore: `${BASE}/photos/home/virtual-store.jpg`,
 
+  // The Agency page's full-width picture separator before the Highlighted
+  // Services (components/ImageBand, the faded band of Home's virtual store):
+  // the SOBHA stadium model in its display case, on black, as sent (a
+  // 1280-wide WhatsApp JPEG). (Was the AMWAJ highway billboard.)
+  agencyBand: photo('agency/band-sobha'),
+
   // The Agency page's film (outdoorFilm). UNUSED for now — the page shows
   // one picture per service instead (servicePhotos below).
   agencyOutdoor: outdoorFilm,
@@ -139,11 +145,19 @@ export const media = {
     // showreel's OOH frame (videos/hero.mp4 at 0:52, caption cropped off) and
     // event footage from the Desktop "Events & experiences" folder.
     agency: {
-      positioning: group(serviceFilm('marketing-strategy')),
+      // Positioning & Exposure: the strategy film, then the old Exposure
+      // section's stadium film and CommerCity frame.
+      positioning: group(serviceFilm('marketing-strategy'), serviceFilm('agency-stadium'), photo('agency/ooh-commercity')),
       // Its Haramain film is the page's preview under the hero (agencyPreview).
-      communication: group(serviceFilm('brand-communication')),
-      awareness: group(serviceFilm('agency-design-week')),
-      exposure: group(serviceFilm('agency-stadium'), photo('agency/ooh-commercity')),
+      // Brand Communication: the nine pictures from the Desktop
+      // "communication" folder; `max` 4 show beside the section, all nine
+      // in the pop-up viewer. (Was the Brand Communication film.)
+      communication: {
+        ...group(...['communication', ...[2, 3, 4, 5, 6, 7, 8, 9].map((n) => `communication-${n}`)].map((n) => photo(`agency/${n}`))),
+        max: 4,
+        // on phones the portrait communication-7 ("bpe") is the main picture
+        phoneLead: 6,
+      },
       csr: group(serviceFilm('agency-csr'), serviceFilm('agency-csr-campaigns')),
       ooh: group(serviceFilm('agency-outdoor'), photo('agency/ooh-commercity')),
     },

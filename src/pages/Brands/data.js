@@ -44,8 +44,9 @@ export const featuredBrands = [
   // { brandId: 'mob' },
 ];
 
-// The catalogue covers under the categories, in the order of the "Main
-// Catalogue" section on vertex.ae/catalogues. Each cover opens `url`, the
+// The catalogue cards, the page's main section, in the order of the "Main
+// Catalogue" section on vertex.ae/catalogues — except that Brands.jsx moves
+// each brand's later catalogues up beside its first. Each cover opens `url`, the
 // catalogue that same cover opens there (FlippingBook / Fliplink viewers), in
 // a new tab.
 //   id      — keys its cover (media.brandCatalogues[id]) and its line (i18n
@@ -74,6 +75,10 @@ export const brandCatalogues = [
   { id: 'korin', brandId: 'korin', url: 'https://online.flippingbook.com/view/557274778/' },
 ];
 
+// PARKED — not rendered: the page has no category sections any more (the
+// category NAMES are the hero's pills, i18n home.pillars.brands.tags, and
+// the catalogue cards are the main section). Kept, with its copy (i18n
+// brandsPage.categories), to bring them back as ServicePage `services`.
 // The page's CATEGORY sections (components/ServicePage), in order. Each
 // title is the matching Brands chip on Home (i18n home.pillars.brands.tags,
 // SAME ORDER); the copy is i18n brandsPage.categories[id].

@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Arrow from '../../components/Arrow.jsx';
+import ImageBand from '../../components/ImageBand/ImageBand.jsx';
+import RotatingName from '../../components/RotatingName/RotatingName.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
 import FinalCta from '../../components/FinalCta.jsx';
 import { ServiceRows, servicePhotos } from '../../components/ServicePage/ServicePage.jsx';
@@ -18,43 +19,9 @@ import './Home.css';
 // i18n are kept (the how-it-works copy is still read by the chatbot, About
 // and Shop); see git history (d6f9561) for the old JSX and Home.css rules.
 
-// How long each name in the hero title stays before the next drops in —
-// longer on names[0], the slogan's own "a name." / "اسم.".
-const NAME_HOLD_MS = 1500;
+// How long names[0] in the hero title — the slogan's own "a name." /
+// "اسم." — stays before the next drops in (the rest: RotatingName's own).
 const SLOGAN_HOLD_MS = 5000;
-
-// The hero title's last line: each of `names` (per language, from i18n
-// home.hero.names) drops in from above while the one before falls away.
-// The first render is names[0] — on the server and in the browser alike, so
-// hydration matches — and the cycle only starts after mount. Reduced-motion
-// visitors keep names[0]. Keys are the running count, so the outgoing word
-// keeps its element (and switches to the leave animation) while the incoming
-// one mounts fresh (and plays the enter one).
-function RotatingName({ names }) {
-  const [count, setCount] = useState(0);
-
-  // A language switch starts the list over.
-  useEffect(() => setCount(0), [names]);
-
-  // One timeout per name rather than an interval, since names[0] holds longer.
-  useEffect(() => {
-    if (names.length < 2) return undefined;
-    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return undefined;
-    const hold = count % names.length === 0 ? SLOGAN_HOLD_MS : NAME_HOLD_MS;
-    const id = setTimeout(() => setCount((n) => n + 1), hold);
-    return () => clearTimeout(id);
-  }, [count, names]);
-
-  const at = (n) => names[n % names.length];
-  return (
-    <span className="home-hero-name">
-      {count > 0 && (
-        <span key={count - 1} className="home-hero-name-word gold-leaf is-leaving">{at(count - 1)}</span>
-      )}
-      <span key={count} className={`home-hero-name-word gold-leaf${count > 0 ? ' is-entering' : ''}`}>{at(count)}</span>
-    </span>
-  );
-}
 
 export default function Home() {
   const { t } = useLanguage();
@@ -117,7 +84,7 @@ export default function Home() {
                 version below rotates the name, so it is hidden from them. */}
             <span className="sr-only">{h.hero.title}</span>
             <span aria-hidden="true">
-              {h.hero.titleLead} <RotatingName names={h.hero.names} />
+              {h.hero.titleLead} <RotatingName names={h.hero.names} firstHoldMs={SLOGAN_HOLD_MS} />
             </span>
           </h1>
           <p className="home-hero-body">{h.hero.body}</p>
@@ -143,7 +110,7 @@ export default function Home() {
           store's picture behind it (media.virtualStore), and two white
           buttons on its dark wash: the Matterport 3D walkthrough (new tab)
           and the brands' online store (same tab, like every Shop link) */}
-      <section className="home-virtual-store" style={{ '--virtual-store-bg': `url("${media.virtualStore}")` }}>
+      <ImageBand className="home-virtual-store" src={media.virtualStore}>
         <div className="container home-virtual-store-inner">
           <h2 className="home-virtual-store-heading">{h.virtualStore.heading}</h2>
           <p className="home-virtual-store-body">{h.virtualStore.body}</p>
@@ -156,7 +123,7 @@ export default function Home() {
             </a>
           </div>
         </div>
-      </section>
+      </ImageBand>
 
       <ServiceRows services={services.slice(BAND_AFTER)} media={rowMedia.slice(BAND_AFTER)} titleAs="h3" start={BAND_AFTER} />
 

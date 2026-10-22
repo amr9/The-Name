@@ -58,6 +58,39 @@
 .logo-marquee-item {
   flex: none;
 }
+
+/* A `still` strip: every logo once, wrapping into rows of at most
+   --logo-cols (set in LogoMarquee.jsx for two rows), and every row CENTRED —
+   a shorter last row sits in the middle, and each logo added pushes its
+   row out from the centre, like the footer's social icons. Scoped so it
+   outranks `.container`'s margin, which theme.css defines after this file. */
+.logo-marquee .logo-marquee-grid {
+  --logo-gap: clamp(20px, 3vw, 40px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(28px, 3.5vw, 48px) var(--logo-gap);
+  margin: 0 auto;
+  list-style: none;
+}
+/* each cell is one --logo-cols'th of the row, so a full row holds exactly
+   that many */
+.logo-marquee-grid .logo-marquee-item {
+  display: flex;
+  justify-content: center;
+  flex: 0 0 calc((100% - (var(--logo-cols, 6) - 1) * var(--logo-gap)) / var(--logo-cols, 6));
+}
+.logo-marquee-grid .logo-marquee-link {
+  width: calc(min(100%, clamp(110px, 11vw, 160px)) * var(--logo-scale, 1));
+  max-width: 100%;
+}
+@media (max-width: 900px) {
+  .logo-marquee .logo-marquee-grid { --logo-cols: 4 !important; }
+}
+@media (max-width: 560px) {
+  .logo-marquee .logo-marquee-grid { --logo-cols: 3 !important; }
+}
 .logo-marquee-link {
   display: block;
   /* --logo-scale is set per item (data/brands.js `logoScale`) to even out

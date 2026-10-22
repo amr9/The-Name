@@ -180,9 +180,10 @@
   font-size: clamp(20px, 2vw, 28px);
 }
 
-/* — the catalogue covers under the categories (BrandCatalogues) — each a
-   white bordered card like every card on the site: the cover inset at a
-   concentric radius, then the brand name and the catalogue's line. */
+/* — the catalogue cards, the page's main section (BrandCatalogues) — each a
+   white card with NO border: the cover, large, inset
+   at a concentric radius, then the brand name and the catalogue's line,
+   centred under it. */
 .brand-catalogues {
   padding-top: calc(var(--space-8) * 1.5);
 }
@@ -196,28 +197,38 @@
   margin: var(--space-3) 0 0;
   color: color-mix(in srgb, var(--color-text) 75%, transparent);
 }
+/* At most --cat-cols cards to a row (4; 3 on tablets, 2 on phones), each
+   one --cat-cols'th of it, wrapping, and every row CENTRED — a shorter last
+   row sits in the middle. */
 .brand-catalogues-grid {
+  --cat-cols: 4;
+  --cat-gap: var(--space-6);
   list-style: none;
   margin: var(--space-8) 0 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: var(--space-6);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--cat-gap);
 }
-@media (max-width: 480px) {
-  .brand-catalogues-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-4);
-  }
+.brand-catalogues-grid > li {
+  flex: 0 0 calc((100% - (var(--cat-cols) - 1) * var(--cat-gap)) / var(--cat-cols));
+}
+@media (max-width: 960px) {
+  .brand-catalogues-grid { --cat-cols: 3; }
+}
+@media (max-width: 640px) {
+  .brand-catalogues-grid { --cat-cols: 2; --cat-gap: var(--space-4); }
 }
 .brand-catalogue {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   height: 100%;
   padding: var(--space-3);
   border-radius: var(--radius-md);
   background: var(--color-bg);
-  border: 1px solid var(--color-divider);
   color: var(--color-text);
   text-decoration: none;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -228,6 +239,7 @@
   box-shadow: var(--shadow-lg);
 }
 .brand-catalogue-cover {
+  width: 100%;
   border-radius: calc(var(--radius-md) - var(--space-3));
   overflow: hidden;
 }

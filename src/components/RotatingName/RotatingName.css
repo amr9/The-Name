@@ -1,0 +1,62 @@
+/* The rotating word (RotatingName.jsx). Always its OWN line, so a long word
+   never re-wraps the title and nudges what is below. The clip-path cuts top
+   and bottom only — the word drops in from behind the line's top edge and
+   falls out through its bottom — while the negative side insets leave
+   italic overhang and wide words undrawn-on. */
+.rotating-name {
+  position: relative;
+  display: block;
+  white-space: nowrap;
+  padding-block: 0.06em;
+  margin-block: -0.06em;
+  clip-path: inset(0 -1em);
+}
+
+/* Each word is .gold-leaf (theme.css) — on the word, not the line, so the
+   gradient spans each word however long it is and travels with it as it
+   drops in and falls out. */
+
+/* The outgoing word sits over the incoming one rather than beside it. */
+.rotating-name-word.is-leaving {
+  position: absolute;
+  inset-inline-start: 0;
+  animation: rotating-name-leave 0.2s ease-in forwards;
+}
+
+.rotating-name-word.is-entering {
+  animation: rotating-name-drop 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.25) both;
+}
+
+@keyframes rotating-name-drop {
+  from {
+    transform: translateY(-105%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes rotating-name-leave {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(70%);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rotating-name-word.is-leaving {
+    display: none;
+  }
+
+  .rotating-name-word.is-entering {
+    animation: none;
+  }
+}

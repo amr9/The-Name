@@ -30,12 +30,17 @@ export const galleryItem = (item) => (typeof item === 'string' ? { src: item } :
  * GalleryLightbox below at that picture: the WHOLE group, one after another,
  * in a carousel. An item with `href` is a link instead (new tab; Brands: its
  * catalogue).
+ *
+ * `max` (optional): at most that many are shown in the box (fewer still if
+ * they do not fit); the rest are only in the viewer (Agency: Brand
+ * Communication shows 4 of its 9).
  */
-export default function MediaGallery({ items, label }) {
+export default function MediaGallery({ items, label, max }) {
   const { t } = useLanguage();
   const boxRef = useRef(null);
   const [open, setOpen] = useState(null);
   const list = items.map(galleryItem);
+  const shown = max ? list.slice(0, max) : list;
 
   // Which cells made it onto the first line: the rest are clipped away.
   useIsoLayoutEffect(() => {
@@ -58,7 +63,7 @@ export default function MediaGallery({ items, label }) {
   return (
     <>
       <div className="media-gallery" ref={boxRef}>
-        {list.map((it, i) => {
+        {shown.map((it, i) => {
           const name = it.label || label;
           const content = it.video ? (
             <AutoplayVideo className="media-gallery-media" src={it.src} poster={it.poster} label={name} />

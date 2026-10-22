@@ -519,37 +519,60 @@ export default {
     // The WhatsApp message "Start a conversation" opens with (ServicePage).
     waMessage: "Hello The Name, I'm interested in your agency services and would like to start a conversation.",
     kicker: "The Agency",
-    // The title in two parts: `titleMark` carries the yellow highlighter.
-    titleLead: "Ideas that",
-    titleMark: "matter.",
-    lede: "Your 360° media and marketing partner, from strategy to impact.",
-    // Under the lede (ServicePage hero): the paragraphs, then the closing line.
-    body: [
-      "From media planning and buying to creative concepts and brand communication, we bring together digital strategy and content creation, impactful events and activations, purpose-driven CSR initiatives, and strategic marketing consultancy and partnerships.",
-      "We connect strategy, creativity, and execution to transform ideas into meaningful brand experiences, build stronger connections, and deliver measurable impact.",
-    ],
-    motto: "One vision. Multiple disciplines. Endless possibilities.",
-    // The film preview under the hero, for screen readers.
+    // The title as the hero DRAWS it: `titleLead` stays, then each of
+    // `names` drops in beside it in turn, like the Home hero (the first is
+    // what renders on the server). `title` is the full line screen readers
+    // and crawlers get.
+    title: "We talk partnership, innovation, engagement, results, impact, visibility and integrated solutions.",
+    titleLead: "We talk",
+    names: ["partnership.", "innovation.", "engagement.", "results.", "impact.", "visibility.", "integrated solutions."],
+    lede: "From strategic brand communication planning and creative CSR campaigns to sustainability initiatives and out of home media, we build strong brand positioning, awareness, and presence across every touchpoint.",
+    // The film preview under the hero, for screen readers (the film is
+    // PARKED, Agency.jsx).
     filmLabel: "Brand communication by The Name Agency: the Haramain High Speed Railway gift film",
+    // The "Highlighted Services" section under the rows (pages/Agency/
+    // data.js agencyHighlights), from thenameagency.me.
+    highlights: {
+      title: "Highlighted services",
+      lede: "One-stop destination for 360° marketing and communication needs.",
+      groups: {
+        media: {
+          title: "Media Planning & Buying",
+          items: ["Out-of-Home (OOH) Media", "Digital Media Strategy (Meta Ads, Google Ads, YouTube, etc.)", "Programmatic Media Buying"],
+        },
+        creative: {
+          title: "Creative Concepts & Visuals",
+          items: ["Brand Identity", "Innovative Creative Designs", "High-Quality 3D Modeling", "Campaign Development"],
+        },
+        digital: {
+          title: "Digital Strategy & Content Creation",
+          items: ["Content Creation", "Performance Marketing Campaigns", "Podcast Development", "Digital Storytelling"],
+        },
+        events: {
+          title: "Events & Activations",
+          items: ["Corporate Events & Networking Summits", "CSR Campaigns & Sustainability Initiatives", "Experiential Activations"],
+        },
+        branding: {
+          title: "Branding & Communication",
+          items: ["Key Messaging Development", "Brand Positioning & Strategy", "Corporate Gifting & Premium Custom Designs"],
+        },
+        consulting: {
+          title: "Marketing Consulting & Partnership",
+          items: ["Full 360° Marketing Plans", "Strategy Development & Execution", "Collaborations with Global Platforms & Events"],
+        },
+      },
+    },
     // One section per service (pages/Agency/data.js). The titles are the
     // Agency row's chips on Home; the copy is from The Name Agency's
     // presentation.
     services: {
       positioning: {
-        lead: "Find your place in a changing market.",
-        body: "Insight-led strategies that grow your brand.",
+        lead: "Find your place in a changing market, and be seen in it.",
+        body: "Insight-led strategies that grow your brand, and events in Dubai's creative hubs: Dubai Design District and Dubai CommerCity.",
       },
       communication: {
         lead: "Bringing brands to life, creatively.",
         body: "Stories that build loyalty and stay on-brand.",
-      },
-      awareness: {
-        lead: "Digital that delivers real results.",
-        body: "SEO, social and paid campaigns that get you seen.",
-      },
-      exposure: {
-        lead: "Experiences in Dubai's creative hubs.",
-        body: "Events in Dubai Design District and Dubai CommerCity.",
       },
       csr: {
         lead: "Make a meaningful difference.",
@@ -1051,7 +1074,7 @@ export default {
       // server and what reduced-motion visitors keep; `title` above is the
       // full line screen readers and crawlers get.
       titleLead: 'More than just',
-      names: ['a name.', 'Corporate Gifts.', 'brands.', 'ideas.', 'events.', 'experiences.', 'catering.'],
+      names: ['a name.', 'Corporate Gifts.', 'brands.', 'ideas.', 'events.', 'experiences.', 'catering.', 'visibility.', 'solutions.', 'engagement.'],
       body: 'A 360° ecosystem bringing creativity, brands, products and experiences together to help you communicate, connect and explore possibilities.',
       cta: 'Explore what we do',
       mediaLabel: 'Showreel: The Name across gifts, brands, agency, events and F&B',
@@ -1083,9 +1106,9 @@ export default {
       },
       agency: {
         title: 'The Agency',
-        lead: 'From strategic brand communication planning and creative CSR campaigns to sustainability initiatives and OOH media, we build strong brand positioning, awareness, and presence across every touchpoint.',
+        lead: 'From strategic brand communication planning and creative CSR campaigns to sustainability initiatives and out of home media, we build strong brand positioning, awareness, and presence across every touchpoint.',
         body: '',
-        tags: ['Brand Positioning', 'Brand Communication', 'Brand Awareness', 'Brand Exposure', 'CSR & Sustainability Campaigns', 'OOH Media'],
+        tags: ['Brand Positioning & Exposure', 'Brand Communication', 'CSR & Sustainability Campaigns', 'Out of Home Media'],
         ctas: { explore: 'Explore the Agency' },
         placeholder: 'Brand communication campaign',
       },

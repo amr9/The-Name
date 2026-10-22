@@ -2,13 +2,30 @@
    hero's kicker / title / lede are the shared .rows-page / .page-hero rules
    in theme.css; only what is particular to this layout lives here. */
 
-/* Bigger than the other page heroes: on these pages the title is the
-   picture. Top margin still comes from `.card-kicker + .page-title`. */
+/* EXACTLY the Home hero's title on every one of these pages — its size,
+   upright (not .page-title's italic), line height, tracking and 14ch cap
+   (Home.css .home-hero-title + theme.css .display-title); keep the two in
+   step. Top margin still comes from `.card-kicker + .page-title`. */
 .service-page .service-title {
-  font-size: clamp(44px, 7vw, 104px);
-  line-height: 0.98;
-  letter-spacing: -0.03em;
+  max-width: 14ch;
+  font-size: clamp(36px, 4vw, 88px);
+  font-style: normal;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
+}
+@media (max-width: 700px), (max-height: 820px) {
+  .service-page .service-title { font-size: clamp(32px, 4vw, 56px); }
+}
+/* The TYPED titles (every page but the Agency) are ONE row — "BRANDS THAT
+   INSPIRE." — so no 14ch cap; they wrap only where the screen is too narrow.
+   The Agency's rotating title keeps the cap and its two lines. */
+.service-page .service-title:has(.typed-title) { max-width: none; }
+/* The rotating last line (hero `names`, Agency) is Home's, two lines like
+   Home's — but a word never wraps, and "INTEGRATED SOLUTIONS." is wider than
+   a phone at the title's size, so on phones the line is capped to fit. */
+@media (max-width: 700px) {
+  .service-page .service-title .rotating-name { font-size: min(1em, 6.4vw); }
 }
 /* TypedTitle: the typed line laid over an invisible copy of the full one,
    which keeps the title its full size throughout. */
@@ -60,26 +77,71 @@
    and centred, in the Home rows' frame, with FilmLightbox's expand badge
    (tap: full-screen) — at every width. Same gap above as the services. */
 .service-film {
-  margin-top: clamp(var(--space-8), 6vw, calc(var(--space-8) * 2.5));
-  margin-bottom: 0;
+  container-type: inline-size;
+  margin: clamp(var(--space-8), 6vw, calc(var(--space-8) * 2.5)) 0 0;
 }
 .service-film-frame {
   position: relative;
-  max-width: 960px;
-  margin-inline: auto;
-  aspect-ratio: 16 / 9;
+  /* The window's full width, edge to edge (.service-film is NOT a
+     .container, so no gutter, and no rounded corners or shadow), but no
+     taller than at its old 960px cap (16:9 → 540px). The film FILLS it,
+     edge to edge — never stretched: object-fit: cover crops its top and
+     bottom on screens wider than 960px. */
+  /* the height from the WIDTH (cqw: .service-film is a size container) —
+     an aspect-ratio with a max-height would narrow the frame instead */
+  width: 100%;
+  height: min(540px, 56.25cqw);
   overflow: hidden;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-md);
-  background: var(--color-black);
+  background: color-mix(in srgb, var(--color-accent-800) 22%, var(--color-ink-900));
 }
-.service-film .film-expand { display: block; }
+/* PARKED with the expand badge (ServicePage.jsx):
+.service-film .film-expand { display: block; z-index: 2; } */
 .service-film-video {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+/* PARKED — the GLOW layout: the film whole and centred at 86% of the
+   frame's height (16:9, capped at 86% of its width), rounded, with a soft
+   gold glow, on the frame's plain colour (its background above). To bring
+   it back, replace the width/height above with these:
+  margin: auto;
+  height: 86%;
+  max-width: 86%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  box-shadow:
+    0 0 32px 4px color-mix(in srgb, var(--color-accent) 30%, transparent),
+    0 0 120px 24px color-mix(in srgb, var(--color-accent-600) 16%, transparent);
+*/
+
+/* PARKED — the AMBIENT backdrop (ServicePage.jsx): the film again behind it,
+   scaled past the frame's edges and heavily blurred, so the sides carry the
+   film's own colours and motion, and the film's left and right edges fade
+   into them. To bring it back, uncomment these with its JSX — and drop the
+   glow, the radius and the 86% size above (the film filled the frame's
+   height then).
+.service-film-ambient {
+  position: absolute;
+  inset: -60px;
+}
+.service-film-ambient-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(40px) saturate(1.15) brightness(0.85);
+}
+@media (min-width: 1000px) {
+  .service-film-video {
+    mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  }
+}
+*/
 
 /* — the services (ServiceRows): rendered twice, one per width — Home's
    zig-zag PillarRows on desktop/tablet, the card stage (ServiceList, below)
