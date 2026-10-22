@@ -27,12 +27,14 @@ import ServicePage, { servicePhotos, servicesFrom } from '../../components/Servi
 export default function Kids() {
   const { t } = useLanguage();
   const e = t.eventsPage;
-  const services = servicesFrom(eventServices, t.home.pillars.events.tags, e.services);
+  const pillar = t.home.pillars.events;
+  const services = servicesFrom(eventServices, pillar.tags, e.services);
 
   return (
     <ServicePage
       className="events-page"
-      hero={e}
+      // Home's Events paragraph as the lede, its chips as pills under it
+      hero={{ ...e, lede: pillar.lead, tags: pillar.tags }}
       services={services}
       media={servicePhotos(services, media.servicePhotos.events)}
     >

@@ -145,21 +145,48 @@ export const media = {
     // showreel's OOH frame (videos/hero.mp4 at 0:52, caption cropped off) and
     // event footage from the Desktop "Events & experiences" folder.
     agency: {
-      // Positioning & Exposure: the strategy film, then the old Exposure
-      // section's stadium film and CommerCity frame.
-      positioning: group(serviceFilm('marketing-strategy'), serviceFilm('agency-stadium'), photo('agency/ooh-commercity')),
-      // Its Haramain film is the page's preview under the hero (agencyPreview).
-      // Brand Communication: the nine pictures from the Desktop
-      // "communication" folder; `max` 4 show beside the section, all nine
-      // in the pop-up viewer. (Was the Brand Communication film.)
-      communication: {
-        ...group(...['communication', ...[2, 3, 4, 5, 6, 7, 8, 9].map((n) => `communication-${n}`)].map((n) => photo(`agency/${n}`))),
-        max: 4,
-        // on phones the portrait communication-7 ("bpe") is the main picture
-        phoneLead: 6,
+      // Positioning & Exposure: the pictures from the Desktop "brand
+      // exposure" folder (be<n> → exposure-<n>, "rotana be" → exposure-rotana;
+      // be5 left out) and the Desktop's "be forbes" (exposure-forbes); `max` 5
+      // show beside the section (be1, forbes, rotana, be4, be7), all twelve
+      // in the pop-up viewer. (Was the strategy and stadium films and the
+      // CommerCity frame.)
+      positioning: {
+        ...group(...[1, 'forbes', 'rotana', 4, 7, 3, 6, 8, 9, 10, 11, 2].map((n) => photo(`agency/exposure-${n}`))),
+        max: 5,
       },
-      csr: group(serviceFilm('agency-csr'), serviceFilm('agency-csr-campaigns')),
-      ooh: group(serviceFilm('agency-outdoor'), photo('agency/ooh-commercity')),
+      // Its Haramain film is the page's preview under the hero (agencyPreview).
+      // Brand Communication: the agency-csr film, the nine pictures from the
+      // Desktop "communication" folder and its bc88 film (third);
+      // `max` 6 show beside the section (agency-csr, communication-4, bc88,
+      // communication-7, -9 and communication), all eleven in the pop-up
+      // viewer, communication-8 last. (Was the Brand Communication film.)
+      communication: {
+        ...group(
+          serviceFilm('agency-csr'),
+          photo('agency/communication-4'),
+          serviceFilm('agency-communication-bc88'),
+          ...[7, 9, '', 2, 3, 5, 6, 8].map((n) => photo(`agency/communication${n && `-${n}`}`)),
+        ),
+        max: 6,
+        // on phones the portrait communication-7 ("bpe") is the main picture
+        phoneLead: 3,
+      },
+      // CSR: the agency-csr-campaigns film first, then the Desktop's csr8.jpg
+      // (csr) and "csr box.jpg" (csr-2), then csr1 … csr4.jpeg from the
+      // Desktop "csr" folder (csr-3 … -6). (Its agency-csr film moved to
+      // Brand Communication.)
+      csr: group(serviceFilm('agency-csr-campaigns'), ...['csr', 'csr-2', 'csr-3', 'csr-4', 'csr-5', 'csr-6'].map((n) => photo(`agency/${n}`))),
+      // Out of Home Media: the Desktop "ooh" folder — ooh1, ooh2 (photos
+      // ooh-1, -2), the Desktop's "ooh millionaire" (ooh-millionaire) and the
+      // ooh4, 7 films (agency-ooh-<n>). (Was the agency-outdoor film and
+      // the CommerCity frame.)
+      // Order: the ooh4 film first, then ooh-2, ooh-millionaire, ooh-1, ooh7.
+      ooh: group(
+        serviceFilm('agency-ooh-4'),
+        ...['ooh-2', 'ooh-millionaire', 'ooh-1'].map((n) => photo(`agency/${n}`)),
+        serviceFilm('agency-ooh-7'),
+      ),
     },
     events: {
       // Every Events film and photograph we have: the Events reel, then the
@@ -176,15 +203,17 @@ export const media = {
       experiences: serviceFilm('events-experiences'),
     },
     // STAND-INS until F&B's own pictures arrive: stills from the showreel
-    // (videos/hero.mp4 — catering 0:44 / 0:45.5, the concept store 0:41 with
-    // its "CONCEPT STORE" caption painted out, the seminar audience 0:39),
+    // (videos/hero.mp4 — catering 0:44 / 0:45.5, the seminar audience 0:39),
     // its F&B films, store products and Desktop event footage.
     fnb: {
       fnb: group(serviceFilm('fnb-service'), serviceFilm('fnb-dining')),
       catering: group(photo('fnb/catering'), photo('fnb/catering-2')),
-      conceptStore: group(photo('fnb/concept-store'), serviceFilm('fnb'), serviceFilm('gifts-curated')),
+      // Concept Store: the fnb film, then the Desktop's "concept store no
+      // logo1", "… no logo2" (concept-shop-2, -3) and "concept store"
+      // (concept-shop-1). (Was the showreel's concept-store still and the
+      // gifts-curated film.)
+      conceptStore: group(serviceFilm('fnb'), ...[2, 3, 1].map((n) => photo(`fnb/concept-shop-${n}`))),
       retail: group(...['lexon-bubble-lamp', 'gingko-octagon-lamp-one', 'lexon-city-energy-pro', 'gingko-flip-click-clock'].map((id) => `${BASE}/store-products/${id}.webp`)),
-      popUps: group(serviceFilm('fnb-commercity-event')),
       collaborations: group(serviceFilm('fnb-award')),
       community: group(photo('fnb/community'), serviceFilm('fnb-crowd')),
     },

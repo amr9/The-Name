@@ -18,12 +18,14 @@ import ServicePage, { servicePhotos, servicesFrom } from '../../components/Servi
 export default function Business() {
   const { t } = useLanguage();
   const g = t.giftsPage;
-  const services = servicesFrom(giftServices, t.home.pillars.corporateGifts.tags, g.services);
+  const pillar = t.home.pillars.corporateGifts;
+  const services = servicesFrom(giftServices, pillar.tags, g.services);
 
   return (
     <ServicePage
       className="gifts-page"
-      hero={g}
+      // Home's Corporate Gifts paragraph as the lede, its chips as pills under it
+      hero={{ ...g, lede: pillar.lead, tags: pillar.tags }}
       services={services}
       media={servicePhotos(services, media.servicePhotos.corporateGifts)}
     />

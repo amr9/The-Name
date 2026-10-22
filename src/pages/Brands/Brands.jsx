@@ -128,7 +128,8 @@ export default function Brands() {
   return (
     <ServicePage
       className="brands-page"
-      hero={{ ...b, tags: t.home.pillars.brands.tags }}
+      // Home's Brands paragraph as the lede, its chips as pills under it
+      hero={{ ...b, lede: t.home.pillars.brands.lead, tags: t.home.pillars.brands.tags }}
       intro={<LogoMarquee items={logoStrip} logos={media.brands} still />}
     >
       <BrandCatalogues />

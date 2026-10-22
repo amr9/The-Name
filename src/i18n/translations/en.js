@@ -389,7 +389,7 @@ export default {
     kicker: "Corporate Gifts",
     titleLead: "Gifts that",
     titleMark: "connect.",
-    lede: "We create gifting solutions that go beyond putting a logo on a product: curated collections, premium branded merchandise and fully customised creative concepts, each designed to tell a story and reflect your brand identity.",
+    // lede: the hero shows Home's corporateGifts pillar paragraph (home.pillars.*.lead)
     filmLabel: "Inside the Vertex showroom and workshop, where our corporate gifts come together",
     services: {
       curated: {
@@ -429,7 +429,7 @@ export default {
     kicker: "F&B & Concept Store",
     titleLead: "Concepts that bring us",
     titleMark: "together.",
-    lede: "Good food, interesting finds, and places worth spending time in. From a coffee shared over conversation to beautifully catered gatherings, curated retail spaces and unexpected collaborations, we create experiences that bring people together and make everyday moments a little more memorable.",
+    // lede: the hero shows Home's fnb pillar paragraph (home.pillars.*.lead)
     // The picture beside the services, for screen readers.
     mediaLabel: "The Name's concept store and café",
     services: {
@@ -449,10 +449,6 @@ export default {
         lead: "Products chosen to be kept.",
         body: "Design-led objects from the brands we work with, in store and ready to personalise with a name, initials or a message.",
       },
-      popUps: {
-        lead: "Something new, season after season.",
-        body: "Temporary stores, tastings and showcases that keep the space changing and give visitors a reason to come back.",
-      },
       collaborations: {
         lead: "Shared ideas with brands and creatives.",
         body: "Partnerships with designers, makers, chefs and brands that bring their work into the space through limited menus, products and installations.",
@@ -469,12 +465,7 @@ export default {
     kicker: "Events & Experiences",
     titleLead: "Experiences that",
     titleMark: "last.",
-    lede: "Some events bring people together. Others give them something to talk about long after they're over.",
-    // Under the lede (ServicePage hero).
-    body: [
-      "From corporate gatherings and exhibitions to product launches, brand activations and one-of-a-kind experiences, we bring the ideas, people and details together to make every moment count.",
-      "Because a great event isn't just about what happens. It's about how people feel, what they remember, and the connections they take with them.",
-    ],
+    // lede: the hero shows Home's events pillar paragraph (home.pillars.*.lead)
     // Under the services: a gallery of past events (Kids.jsx EventMoments),
     // its pictures captioned by kids.activation.shots, then the CTA to the
     // enquiry form.
@@ -526,7 +517,7 @@ export default {
     title: "We talk partnership, innovation, engagement, results, impact, visibility and integrated solutions.",
     titleLead: "We talk",
     names: ["partnership.", "innovation.", "engagement.", "results.", "impact.", "visibility.", "integrated solutions."],
-    lede: "From strategic brand communication planning and creative CSR campaigns to sustainability initiatives and out of home media, we build strong brand positioning, awareness, and presence across every touchpoint.",
+    // lede: the hero shows Home's agency pillar paragraph (home.pillars.*.lead)
     // The film preview under the hero, for screen readers (the film is
     // PARKED, Agency.jsx).
     filmLabel: "Brand communication by The Name Agency: the Haramain High Speed Railway gift film",
@@ -1090,16 +1081,14 @@ export default {
     pillars: {
       corporateGifts: {
         title: 'Corporate Gifts',
-        lead: 'We create gifting solutions that go beyond putting a logo on a product.',
-        body: 'From carefully curated collections and premium branded merchandise to fully customised creative concepts, every gift is designed to tell a story, communicate a message and reflect your brand identity.',
+        lead: 'We create gifting solutions that go beyond putting a logo on a product. From carefully curated collections and premium branded merchandise to fully customised creative concepts, every gift is designed to tell a story, communicate a message and reflect your brand identity.',
         tags: ['Curated Gifting', 'Creative Concepts', 'Branded Merchandise', 'Customisation', 'Packaging', 'Production'],
         ctas: { explore: 'Explore Corporate Gifts' },
         placeholder: 'Curated corporate gift collection',
       },
       brands: {
         title: 'The Brands',
-        lead: 'A curated portfolio of premium international lifestyle and office brands, brought to the GCC for both individuals and businesses.',
-        body: 'From design-led essentials to high-end collections, we connect our brands with the right people, businesses and spaces.',
+        lead: 'A curated portfolio of premium international lifestyle and office brands, brought to the GCC for both individuals and businesses. From design-led essentials to high-end collections, we connect our brands with the right people, businesses and spaces.',
         tags: ['Lifestyle', 'Office', 'Design', 'Corporate', 'Premium Brands'],
         ctas: { explore: 'Explore the Brands' },
         placeholder: 'Premium lifestyle and office brands',
@@ -1107,24 +1096,21 @@ export default {
       agency: {
         title: 'The Agency',
         lead: 'From strategic brand communication planning and creative CSR campaigns to sustainability initiatives and out of home media, we build strong brand positioning, awareness, and presence across every touchpoint.',
-        body: '',
         tags: ['Brand Positioning & Exposure', 'Brand Communication', 'CSR & Sustainability Campaigns', 'Out of Home Media'],
         ctas: { explore: 'Explore the Agency' },
         placeholder: 'Brand communication campaign',
       },
       events: {
         title: 'Events & Experiences',
-        lead: 'We turn brand ideas into experiences people can see, feel and remember.',
-        body: 'From intimate gatherings and corporate events to launches, activations and large-scale experiences, we take every project from concept and creative direction through to production and execution, ensuring every detail reflects the brand behind it.',
+        lead: 'We turn brand ideas into experiences people can see, feel and remember. From intimate gatherings and corporate events to launches, activations and large-scale experiences, we take every project from concept and creative direction through to production and execution, ensuring every detail reflects the brand behind it.',
         tags: ['Events', 'Activations', 'Launches', 'Creative Concepts', 'Event Branding', 'Production', 'Experiences'],
         ctas: { explore: 'Explore Events & Experiences' },
         placeholder: 'A brand event or activation',
       },
       fnb: {
         title: 'F&B & Concept Store',
-        lead: 'Our F&B and Concept Store brings The Name into a physical, social space where food, retail, creativity and community come together.',
-        body: 'More than a restaurant or a store, it is a destination for discovery and connection, from dining and catering to curated products, pop-ups, collaborations and experiences that bring people together.',
-        tags: ['F&B', 'Catering', 'Concept Store', 'Retail', 'Pop-Ups', 'Collaborations', 'Community Experiences'],
+        lead: 'Our F&B and Concept Store brings The Name into a physical, social space where food, retail, creativity and community come together. More than a restaurant or a store, it is a destination for discovery and connection, from dining and catering to curated products, pop-ups, collaborations and experiences that bring people together.',
+        tags: ['F&B', 'Catering', 'Concept Store', 'Retail', 'Collaborations', 'Pop-Ups & Community Experiences'],
         ctas: { explore: 'Explore F&B & Concept Store' },
         placeholder: 'The concept store and café',
       },

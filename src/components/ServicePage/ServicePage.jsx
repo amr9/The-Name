@@ -57,8 +57,8 @@ import './ServicePage.css';
  * with `names` (and `title`, the full line for screen readers) instead of
  * `titleMark`, the title's last line rotates through `names` like the Home
  * hero (components/RotatingName; Agency: "We talk …") —
- * under the lede, `tags` as pills (F&B: its services, i.e. its Home chips),
- * `body` paragraphs (Agency, Events), and `motto`, a closing line (Agency).
+ * under the lede, `body` paragraphs (Events: Home's paragraph), then `tags` as pills
+ * (every page: its Home chips), and `motto`, a closing line (Agency).
  * `services`: [{ id, title, lead, body, tags?, tagsLabel?, actions? }] — see
  * servicesFrom below; `tags` are chips (Brands: the category's brands,
  * `tagsLabel` naming the list), `actions` (Home only) buttons under the text.
@@ -537,12 +537,12 @@ export default function ServicePage({ className = '', hero, services, media, fil
           )}
         </h1>
         <p className="page-hero-lede">{hero.lede}</p>
+        {hero.body?.map((para) => <p key={para} className="service-hero-body">{para}</p>)}
         {hero.tags && (
           <ul className="pillar-tags service-hero-tags">
             {hero.tags.map((tag) => <li key={tag}>{tag}</li>)}
           </ul>
         )}
-        {hero.body?.map((para) => <p key={para} className="service-hero-body">{para}</p>)}
         {hero.motto && <p className="service-hero-motto">{hero.motto}</p>}
       </header>
       {film && (

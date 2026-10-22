@@ -14,12 +14,14 @@ import { fnbServices } from './data.js';
 export default function Fnb() {
   const { t } = useLanguage();
   const f = t.fnbPage;
-  const services = servicesFrom(fnbServices, t.home.pillars.fnb.tags, f.services);
+  const pillar = t.home.pillars.fnb;
+  const services = servicesFrom(fnbServices, pillar.tags, f.services);
 
   return (
     <ServicePage
       className="fnb-page"
-      hero={{ ...f, tags: t.home.pillars.fnb.tags }}
+      // Home's F&B paragraph as the lede, its chips as pills under it
+      hero={{ ...f, lede: pillar.lead, tags: pillar.tags }}
       services={services}
       media={servicePhotos(services, media.servicePhotos.fnb)}
     />

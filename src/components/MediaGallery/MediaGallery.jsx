@@ -33,7 +33,7 @@ export const galleryItem = (item) => (typeof item === 'string' ? { src: item } :
  *
  * `max` (optional): at most that many are shown in the box (fewer still if
  * they do not fit); the rest are only in the viewer (Agency: Brand
- * Communication shows 4 of its 9).
+ * Communication shows 6 of its 11).
  */
 export default function MediaGallery({ items, label, max }) {
   const { t } = useLanguage();

@@ -56,8 +56,8 @@
   margin-inline-end: -0.1em;
 }
 .service-page .page-hero-lede { margin-top: calc(var(--space-8) * 1); }
-/* The hero's optional extras under the lede: pills (`hero.tags`, the
-   shared .pillar-tags), paragraphs (`hero.body`), then a closing line
+/* The hero's optional extras under the lede: paragraphs (`hero.body`), pills
+   (`hero.tags`, the shared .pillar-tags), then a closing line
    (`hero.motto`). */
 .service-hero .service-hero-tags { margin-top: var(--space-6); }
 .service-hero-body {

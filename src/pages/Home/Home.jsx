@@ -50,8 +50,8 @@ export default function Home() {
     return {
       id: p.id,
       title: info.title,
+      // one paragraph (the pillar's whole text), the same as its page's lede
       lead: info.lead,
-      body: info.body,
       tags: info.tags,
       actions: actionsOf(p),
     };

@@ -77,12 +77,14 @@ function HighlightedServices() {
 export default function Agency() {
   const { t } = useLanguage();
   const a = t.agency;
-  const services = servicesFrom(agencyServices, t.home.pillars.agency.tags, a.services);
+  const pillar = t.home.pillars.agency;
+  const services = servicesFrom(agencyServices, pillar.tags, a.services);
 
   return (
     <ServicePage
       className="agency-page"
-      hero={a}
+      // Home's Agency paragraph as the lede, its chips as pills under it
+      hero={{ ...a, lede: pillar.lead, tags: pillar.tags }}
       services={services}
       media={servicePhotos(services, media.servicePhotos.agency)}
       // The Haramain film band under the hero: one landscape film, whole and

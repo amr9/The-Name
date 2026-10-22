@@ -6,7 +6,6 @@ export const fnbServices = [
   { id: 'catering' },
   { id: 'conceptStore' },
   { id: 'retail' },
-  { id: 'popUps' },
   { id: 'collaborations' },
   { id: 'community' },
 ];
