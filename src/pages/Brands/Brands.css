@@ -257,23 +257,6 @@
   color: color-mix(in srgb, var(--color-text) 70%, transparent);
 }
 
-/* A category's brand chip that opens the brand's catalogue (Brands.jsx
-   `catalogueByBrand`): the link fills the chip, so the padding moves onto
-   it, and it fills in with the accent on hover. */
-.service-brands li:has(> a) { padding: 0; }
-.service-brands a {
-  display: block;
-  padding: 6px 13px;
-  border-radius: inherit;
-  color: inherit;
-  text-decoration: none;
-  transition: background-color 0.2s ease;
-}
-.service-brands a:hover,
-.service-brands a:focus-visible {
-  background: var(--color-accent-100);
-}
-
 /* The partner-logo strip under the hero (ServicePage `intro`): the same gap
    above it as the hero leaves, and the services start right under it (the
    first row's top hairline is the line between them). */

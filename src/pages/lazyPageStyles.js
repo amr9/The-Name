@@ -18,6 +18,8 @@ import '../components/Carousel.css';
 import '../components/VideoPlaceholder/VideoPlaceholder.css';
 import './Kids/Kids.css';
 // components/ServicePage: Events, Brands, Corporate Gifts and Agency all use it
+// (Home's ServiceList already pulls it in eagerly; kept here so the order
+// stays explicit)
 import '../components/ServicePage/ServicePage.css';
 import '../components/ProductCard/ProductCard.css';
 import './Shop/Shop.css';

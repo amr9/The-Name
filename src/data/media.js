@@ -73,6 +73,11 @@ export const media = {
   },
   // On phones (≤700px) the hero plays the Agency film instead (agencyFilm).
   heroPhone: agencyFilm,
+  // The Home hero's PICTURE, which replaced the two films above (both kept,
+  // PARKED, for when a film comes back). The file is still to come — until
+  // it lands at public/media/photos/home/hero.jpg, ImagePlaceholder shows
+  // its dashed slot. Fills the hero at every width (object-fit: cover).
+  heroImage: `${BASE}/photos/home/hero.jpg`,
 
   // The Agency page's film (outdoorFilm). UNUSED for now — the page shows
   // one picture per service instead (servicePhotos below).

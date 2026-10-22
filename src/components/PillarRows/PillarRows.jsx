@@ -51,10 +51,28 @@ export const STAGE_QUERY = '(max-width: 760px)';
 // chips all fit (or on wider screens, where they wrap) the bar is hidden.
 function TagRow({ tags }) {
   const listRef = useRef(null);
+
+  return (
+    <>
+      <ul className="pillar-tags" ref={listRef}>
+        {tags.map((tag) => (
+          <li key={tag}>{tag}</li>
+        ))}
+      </ul>
+      <TagScrollBar scrollerRef={listRef} watch={tags} />
+    </>
+  );
+}
+
+// The slim bar under a sideways-scrolling chip row (`scrollerRef`: the
+// element that scrolls; `watch`: re-measure when it changes, e.g. the chips
+// after a language switch) — shared with ServicePage's phone cards. Shown only
+// where the host's CSS displays .pillar-tags-bar (the phone stages).
+export function TagScrollBar({ scrollerRef, watch }) {
   const barRef = useRef(null);
 
   useEffect(() => {
-    const list = listRef.current;
+    const list = scrollerRef.current;
     const bar = barRef.current;
     const update = () => {
       const { scrollWidth, clientWidth, scrollLeft } = list;
@@ -72,18 +90,9 @@ function TagRow({ tags }) {
       list.removeEventListener('scroll', update);
       window.removeEventListener('resize', update);
     };
-  }, [tags]);
+  }, [scrollerRef, watch]);
 
-  return (
-    <>
-      <ul className="pillar-tags" ref={listRef}>
-        {tags.map((tag) => (
-          <li key={tag}>{tag}</li>
-        ))}
-      </ul>
-      <div className="pillar-tags-bar" ref={barRef} aria-hidden="true" />
-    </>
-  );
+  return <div className="pillar-tags-bar" ref={barRef} aria-hidden="true" />;
 }
 
 export default function PillarRows({ rows, titleAs: Title = 'h3' }) {

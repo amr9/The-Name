@@ -109,7 +109,6 @@
   margin: 0;
   font-size: var(--text-lg);
   line-height: 1.55;
-  font-weight: 600;
 }
 .service-row-body {
   margin: var(--space-4) 0 0;
@@ -145,8 +144,7 @@ a.service-media-item { display: block; }
    here it fills the frame, which supplies the rounding. */
 .service-media-item .service-media-slot { height: 100%; border-radius: 0; }
 /* MediaStrip: a gallery as a strip of full-frame slides, swiped by hand
-   (scroll-snap, one slide per swipe), its dots — the shared .stage-dot —
-   in a pill at the top centre. */
+   (scroll-snap, one slide per swipe), with no dots. */
 .service-media-track {
   display: flex;
   height: 100%;
@@ -162,17 +160,6 @@ a.service-media-item { display: block; }
   height: 100%;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-}
-.service-media-dots {
-  position: absolute;
-  top: 22px;
-  left: 50%;
-  display: flex;
-  gap: 2px;
-  padding: 4px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--color-black) 35%, transparent);
-  transform: translateX(-50%);
 }
 
 /* — desktop/tablet — each row: the title over its text on the reading side,
@@ -375,7 +362,7 @@ a.service-slice:focus-visible { outline: none; }
      frosted-glass sheet (OverlayCard's panel glass) the full width of the
      stage, rounded on top, with a grabber bar at its foot — the title, the
      lead, then the chips (Brands: the category's brands, rolling as a
-     marquee) beside a round arrow to the next service. The body stays a
+     marquee across the card's full width). The body stays a
      desktop paragraph. Tapping the grabber folds every card down to its
      title ([data-collapsed] on the stage) and back. The extra .service-list outranks useSectionReveal's
      .reveal / .reveal-in (theme.css), which these pick up as top-level
@@ -443,69 +430,49 @@ a.service-slice:focus-visible { outline: none; }
   .service-row-title { font-size: 24px; }
   .service-stage .service-row-text {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    column-gap: 10px;
+    grid-template-columns: minmax(0, 1fr);
     max-height: 60vh;
-    overflow: hidden;
+    /* clipped top-to-bottom only (the fold), so the chip marquee can run
+       out sideways to the card's edges */
+    overflow-x: visible;
+    overflow-y: clip;
     transition: max-height 0.4s ease, opacity 0.3s ease;
   }
-  /* folded: the title alone (the arrow goes with the text) */
+  /* folded: the title alone */
   .service-stage[data-collapsed] .service-row-text {
     max-height: 0;
     opacity: 0;
   }
   .service-stage[data-collapsed] .service-row-inner { gap: 0; }
-  .service-stage .service-row-text > * { grid-column: 1 / -1; }
   .service-row-lead { font-size: var(--text-body); }
   .service-stage .service-row-body { display: none; }
-  /* the chips as a marquee, the Brands page's LogoMarquee in small: the
-     track holds EXTRA_COPIES lists (ServicePage.jsx) and slides by half of
-     them, faded out at both ends */
+  /* the chips as ONE line the visitor swipes sideways by hand (no motion
+     of its own, the native scrollbar hidden — the slim .pillar-tags-bar
+     under it, PillarRows' TagScrollBar, shows how far instead). The
+     scroller runs the card's FULL width (out through the .container gutter,
+     then padded back in), so the first chip lines up with the text and the
+     rest slide out under the card's own edge — no fade mask: a fade at the
+     gutter left a half-faded chip standing there as a line on the glass. */
   .service-stage .service-row-extra {
-    grid-column: 1;
     min-width: 0;
-    margin-top: 16px;
-    overflow: hidden;
-    mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+    margin: 16px calc(-1 * clamp(20px, 5vw, 72px)) 0;
+    padding-inline: clamp(20px, 5vw, 72px);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
   }
-  .service-stage .service-row-extra-track {
-    display: flex;
-    width: max-content;
-    animation: marquee 14s linear infinite;
-  }
-  [dir="rtl"] .service-stage .service-row-extra-track { animation-direction: reverse; }
-  .service-stage .service-row-extra-copy { display: block; }
-  /* every copy the same width — its chips plus one chip gap — so the loop
-     has no seam */
+  .service-stage .service-row-extra::-webkit-scrollbar { display: none; }
   .service-stage .service-row-extra ul {
     flex-wrap: nowrap;
+    width: max-content;
     margin: 0;
-    padding-inline-end: 8px;
   }
-  .service-stage .service-row-next {
-    grid-column: 2;
-    display: grid;
-    margin-top: 16px;
-  }
+  .service-stage .pillar-tags-bar { display: block; margin-top: 10px; }
+  /* Home's buttons (`actions`), under the chips */
+  .service-stage .service-row-actions { margin-top: 16px; }
 }
-/* The phone card's grabber and the marquee's decorative copies (above). */
-.service-row-grab,
-.service-row-extra-copy { display: none; }
-/* The phone card's arrow to the next service (above): a round chip. */
-.service-row-next {
-  display: none;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  border: 1px solid var(--color-accent-200);
-  border-radius: 50%;
-  background: var(--color-white);
-  color: var(--color-accent-700);
-  font-size: var(--text-body);
-  cursor: pointer;
-}
+/* The phone card's grabber (above). */
+.service-row-grab { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .service-media-item,
@@ -514,7 +481,4 @@ a.service-slice:focus-visible { outline: none; }
   .typed-caret { animation: none; }
   .service-stage .service-row-inner { transform: none !important; }
   .service-stage .service-row-text { transition: none; }
-  .service-stage .service-row-extra-track { animation: none; }
-  .service-stage .service-row-extra-copy { display: none; }
-  .service-stage .service-row-extra { overflow-x: auto; mask-image: none; }
 }

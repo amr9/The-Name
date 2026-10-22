@@ -68,7 +68,7 @@
      without touching any of them. */
   --font-body: "Montserrat", system-ui, sans-serif;
   --font-heading: var(--font-body);
-  --font-heading-weight: 700;
+  --font-heading-weight: 600;
 
   /* Body type scale. Every non-heading run of copy picks one of these —
      never a raw px value — so the whole site's reading size is tuned here.
@@ -308,7 +308,7 @@ figure { margin: 0; }
 button { font: inherit; }
 :focus { outline: none; }
 :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
-::selection { background: color-mix(in srgb, var(--color-accent) 30%, transparent); }
+::selection { background: color-mix(in srgb, var(--color-accent) 10%, transparent); }
 
 .washed { filter: saturate(0.6) contrast(0.85) brightness(1.1) opacity(0.94); }
 

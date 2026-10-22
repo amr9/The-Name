@@ -1,7 +1,7 @@
 // Structural pillar-row data only — display copy lives in
 // src/i18n/translations/*.js under home.pillars[id], keyed by `id`.
 // The five "What we do" pillars, in the order the brief lists them. Rows
-// zig-zag by index (Home.jsx), so reordering here needs nothing else.
+// follow this order (Home.jsx), so reordering here needs nothing else.
 // `links` are the row's buttons; `key` picks the label from
 // home.pillars[id].ctas.
 import { routes, shopLink } from '../../data/site.js';

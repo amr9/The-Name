@@ -39,7 +39,6 @@
 .pillar-lead {
   font-size: var(--text-lg);
   line-height: 28px;
-  font-weight: 600;
   max-width: 56ch;
   margin: 16px 0 0;
 }
@@ -49,28 +48,38 @@
   max-width: 56ch;
   margin: 12px 0 0;
 }
-/* The pillar's specialities as small outline chips — thin accent border,
-   a wash of cream, uppercase. They wrap here; on the phone stage (below)
-   they become one line that swipes sideways instead. */
+/* The pillar's specialities as a run of uppercase words — no box around
+   each, just black type, with a small diamond in --color-accent-700 between
+   one and the next (before every item but the first). They wrap here; on
+   the phone stages they become one line that swipes sideways instead. */
 .pillar-tags {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 8px 12px;
   padding: 0;
   margin: 20px 0 0;
-  color: var(--color-accent-700);
+  color: var(--color-black);
 }
 .pillar-tags li {
-  padding: 6px 13px;
-  border: 1px solid var(--color-accent-200);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--color-accent-100) 45%, transparent);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 2px 0;
   font-size: 12px;
-  line-height: 1.2;
+  font-weight: 300;
+  line-height: 1;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   white-space: nowrap;
+}
+.pillar-tags li + li::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  background: var(--color-accent-700);
+  transform: rotate(45deg);
 }
 /* No tracking in Arabic: letter-spacing pulls its joined letters apart. */
 [dir="rtl"] .pillar-tags li { letter-spacing: 0; }
@@ -135,8 +144,34 @@
    Wider screens ignore all of this: the track and stage are plain blocks
    and the rows stack as before. Keep the breakpoint in step with
    STAGE_QUERY in PillarRows.jsx. */
-.pillars-counter,
-.pillar-tags-bar { display: none; }
+.pillars-counter { display: none; }
+
+/* A chip row's scroll bar (TagScrollBar in PillarRows.jsx): a hairline
+   track with a gold thumb as wide as the visible share of the row
+   (--thumb-size), placed by how far it is swiped (--thumb-pos). From the
+   reading start, so it runs right-to-left under RTL. Hidden when every chip
+   fits. Only the phone stages show it — here (.pillars-stage, below) and
+   ServicePage's cards (ServicePage.css). */
+.pillar-tags-bar {
+  display: none;
+  position: relative;
+  height: 3px;
+  margin-top: 8px;
+  border-radius: 999px;
+  background: var(--color-accent-100);
+  overflow: hidden;
+}
+.pillar-tags-bar[data-fits] { visibility: hidden; }
+.pillar-tags-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: calc(var(--thumb-pos, 0) * (100% - var(--thumb-size, 1) * 100%));
+  width: calc(var(--thumb-size, 1) * 100%);
+  border-radius: inherit;
+  background: var(--color-accent);
+}
 
 @media (max-width: 760px) {
   .pillars {
@@ -270,7 +305,7 @@
      out to hint at more (the leading one under RTL). */
   .pillars-stage .pillar-tags {
     flex-wrap: nowrap;
-    gap: 6px;
+    gap: 12px;
     margin: 12px calc(-1 * clamp(20px, 5vw, 72px)) 0;
     padding-inline: clamp(20px, 5vw, 72px);
     overflow-x: auto;
@@ -285,34 +320,11 @@
   }
   .pillars-stage .pillar-tags::-webkit-scrollbar { display: none; }
 
-  /* The chip row's scroll bar (TagRow in PillarRows.jsx): a hairline track with a
-     gold thumb as wide as the visible share of the row (--thumb-size) and
-     placed by how far it is swiped (--thumb-pos). From the reading start,
-     so it runs right-to-left under RTL. Hidden when every chip fits. */
-  .pillars-stage .pillar-tags-bar {
-    display: block;
-    position: relative;
-    height: 3px;
-    margin-top: 8px;
-    border-radius: 999px;
-    background: var(--color-accent-100);
-    overflow: hidden;
-  }
-  .pillars-stage .pillar-tags-bar[data-fits] { visibility: hidden; }
-  .pillars-stage .pillar-tags-bar::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    inset-inline-start: calc(var(--thumb-pos, 0) * (100% - var(--thumb-size, 1) * 100%));
-    width: calc(var(--thumb-size, 1) * 100%);
-    border-radius: inherit;
-    background: var(--color-accent);
-  }
+  /* the chip row's scroll bar (its look is above, outside this block) */
+  .pillars-stage .pillar-tags-bar { display: block; }
   /* The chips themselves are the shared ones above, a step smaller. */
   .pillars-stage .pillar-tags li {
     flex: none;
-    padding: 5px 11px;
     font-size: 11px;
   }
   /* The floating chat button sits over the stage's bottom RIGHT corner in

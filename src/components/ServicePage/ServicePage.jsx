@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import Arrow from '../Arrow.jsx';
 import AutoplayVideo from '../AutoplayVideo.jsx';
 import FinalCta from '../FinalCta.jsx';
 import FilmLightbox from '../FilmLightbox/FilmLightbox.jsx';
 import ImagePlaceholder from '../ImagePlaceholder.jsx';
-import { STAGE_QUERY } from '../PillarRows/PillarRows.jsx';
+import { STAGE_QUERY, TagScrollBar } from '../PillarRows/PillarRows.jsx';
 import useScrollStage from '../../hooks/useScrollStage.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { contactLink } from '../../data/site.js';
@@ -22,14 +21,14 @@ import './ServicePage.css';
  * SERVICES: one section per entry in `services`, their titles the pillar's
  * chips on Home (i18n home.pillars[id].tags — the pages pass them in, so a
  * service is named in one place). Each is the uppercase title beside its
- * bold lead, grey body and optional `extra` (Brands: the category's brands).
+ * lead, grey body and optional `extra` (Brands: the category's brands).
  * No per-row enquiry link: the floating chat button already does that.
  *  - Desktop/tablet: full-width rows between hairlines, each with its own
  *    pictures on the reading-end side as ServiceSlices (below).
  *  - Phones (PillarRows' STAGE_QUERY): the same pinned scroll stage as Home's
  *    "What we do" (hooks/useScrollStage), the media as its full-bleed
  *    BACKDROP, each service a frosted-glass CARD on its foot (title, lead,
- *    `extra` rolling as a marquee, a round arrow to the next service), the
+ *    `extra` as one line swiped sideways by hand, the card's full width), the
  *    shared .stage-dots. The grabber bar at the card's foot folds every
  *    card down to its title (and back), which also lets the floating chat
  *    button return.
@@ -48,7 +47,11 @@ import './ServicePage.css';
  * `hero`: { kicker, titleLead, titleMark, lede, tags?, body?, motto? } —
  * under the lede, `tags` as pills (F&B: its services, i.e. its Home chips),
  * `body` paragraphs (Agency, Events), and `motto`, a closing line (Agency).
- * `services`: [{ id, title, lead, body, extra? }] — see servicesFrom below
+ * `services`: [{ id, title, lead, body, extra?, actions? }] — see servicesFrom
+ * below; `actions` (Home only) are buttons under the text.
+ *
+ * The services section on its own is `ServiceList` (exported) — Home's
+ * "What we do" uses it under its own intro, so its rows are these pages'.
  * `film`: optional { src, poster, label } — a landscape film shown whole,
  * centred under the hero at 16:9, tap to watch it full-screen (FilmLightbox)
  * (Agency: its Brand Communication film).
@@ -62,12 +65,6 @@ import './ServicePage.css';
  * the enquiry form at the foot of /about.
  */
 
-// The phone card's `extra` (Brands: the category's brand chips) rolls as a
-// marquee: it is rendered this many times back to back — the first is the
-// real one, the rest decorative copies (hidden on desktop) — so even a
-// two-brand category fills the card before the loop repeats. Keep it even:
-// the `marquee` keyframes (theme.css) slide by half the track.
-const EXTRA_COPIES = 4;
 
 // The hero title typed out like a keyboard, a caret blinking at its end: it
 // holds the full line for TYPE_HOLD_MS, erases it and types it again.
@@ -152,59 +149,29 @@ export const servicePhotos = (services, photos) =>
 const galleryItem = (item) => (typeof item === 'string' ? { src: item } : item);
 
 // Phones: a service's gallery as the stage backdrop, one picture per screen,
-// swiped either way (scroll-snap) — never moving on its own — with the
-// stage's dots (.stage-dot) on top to show and pick the picture. A slice
-// with `href` is a link, as on desktop.
+// swiped either way (scroll-snap) — never moving on its own, and with no
+// dots of its own. A slice with `href` is a link, as on desktop.
 function MediaStrip({ items, label }) {
-  const { t } = useLanguage();
-  const trackRef = useRef(null);
-  const [at, setAt] = useState(0);
-
-  // scrollLeft runs negative under RTL, hence the abs and the sign.
-  const onScroll = (e) => {
-    const el = e.currentTarget;
-    setAt(Math.round(Math.abs(el.scrollLeft) / el.clientWidth));
-  };
-  const goTo = (i) => {
-    const el = trackRef.current;
-    const sign = getComputedStyle(el).direction === 'rtl' ? -1 : 1;
-    el.scrollTo({ left: sign * i * el.clientWidth, behavior: 'smooth' });
-  };
-
   return (
-    <>
-      <div className="service-media-track" ref={trackRef} onScroll={onScroll}>
-        {items.map((item) => {
-          const { src, href, linkLabel, label: own, poster, video } = galleryItem(item);
-          const Slide = href ? 'a' : 'div';
-          return (
-            <Slide
-              key={src}
-              className="service-media-slide"
-              {...(href && { href, target: '_blank', rel: 'noopener noreferrer', 'aria-label': linkLabel })}
-            >
-              {video ? (
-                <AutoplayVideo className="service-media-fill" src={src} poster={poster} label={own || label} />
-              ) : (
-                <ImagePlaceholder className="service-media-slot" src={src} label={own || label} ratio="auto" />
-              )}
-            </Slide>
-          );
-        })}
-      </div>
-      <div className="service-media-dots">
-        {items.map((item, i) => (
-          <button
-            key={galleryItem(item).src}
-            type="button"
-            className={`stage-dot${i === at ? ' is-active' : ''}`}
-            aria-label={t.common.pictureOf(i + 1, items.length)}
-            aria-current={i === at ? 'true' : undefined}
-            onClick={() => goTo(i)}
-          />
-        ))}
-      </div>
-    </>
+    <div className="service-media-track">
+      {items.map((item) => {
+        const { src, href, linkLabel, label: own, poster, video } = galleryItem(item);
+        const Slide = href ? 'a' : 'div';
+        return (
+          <Slide
+            key={src}
+            className="service-media-slide"
+            {...(href && { href, target: '_blank', rel: 'noopener noreferrer', 'aria-label': linkLabel })}
+          >
+            {video ? (
+              <AutoplayVideo className="service-media-fill" src={src} poster={poster} label={own || label} />
+            ) : (
+              <ImagePlaceholder className="service-media-slot" src={src} label={own || label} ratio="auto" />
+            )}
+          </Slide>
+        );
+      })}
+    </div>
   );
 }
 
@@ -289,7 +256,26 @@ function ServiceSlices({ items, label }) {
   );
 }
 
-export default function ServicePage({ className = '', hero, services, media, film, intro, children }) {
+// A service's `extra` (its chips). On the phone card: one line swiped
+// sideways by hand, with PillarRows' slim scroll bar under it showing how far
+// (TagScrollBar; `watch` re-measures it — the title changes with the
+// language). On desktop they wrap and the bar is hidden.
+function ServiceExtra({ extra, watch }) {
+  const scrollerRef = useRef(null);
+  return (
+    <>
+      <div className="service-row-extra" ref={scrollerRef}>{extra}</div>
+      <TagScrollBar scrollerRef={scrollerRef} watch={watch} />
+    </>
+  );
+}
+
+// The services section: the full-width rows with their ServiceSlices on
+// desktop, the pinned card stage on phones (see the comment at the top).
+// Shared with Home's "What we do", which passes `titleAs="h3"` (its rows
+// sit under the section's h2) and gives each service `extra` (its chips)
+// and `actions` (its buttons, under the text).
+export function ServiceList({ services, media, titleAs: Title = 'h2' }) {
   const { t } = useLanguage();
   const stage = useScrollStage(services.length, {
     query: STAGE_QUERY,
@@ -301,10 +287,10 @@ export default function ServicePage({ className = '', hero, services, media, fil
   const [collapsed, setCollapsed] = useState(false);
 
   // While the phone stage fills the screen, the floating chat button would
-  // sit on the card's arrow: <html data-stage-pinned> tells ChatLauncher.css
-  // to tuck it away until the stage scrolls off — or the card is folded,
-  // which takes the arrow away.
+  // sit on the card: <html data-stage-pinned> tells ChatLauncher.css to
+  // tuck it away until the stage scrolls off — or the card is folded.
   const { isStage, stageRef } = stage;
+
   const [pinned, setPinned] = useState(false);
   useEffect(() => {
     const el = stageRef.current;
@@ -329,6 +315,108 @@ export default function ServicePage({ className = '', hero, services, media, fil
   // One media entry per service: its slices on desktop (its `gallery`, or
   // just its picture).
   const perService = media.length === services.length;
+
+  return (
+    <div
+      className="service-list"
+      ref={stage.trackRef}
+      style={{ '--stage-count': services.length }}
+    >
+      <div className="service-stage" ref={stage.stageRef} data-collapsed={collapsed || undefined}>
+        <div className="stage-dots">
+          {services.map((s, i) => (
+            <button
+              key={s.id}
+              type="button"
+              className={`stage-dot${i === stage.active ? ' is-active' : ''}`}
+              aria-label={s.title}
+              aria-current={i === stage.active ? 'true' : undefined}
+              onClick={() => stage.goTo(i)}
+            />
+          ))}
+        </div>
+        {/* The stage's backdrop on phones only (ServicePage.css); desktop
+            shows each row's ServiceSlices instead. Every entry is stacked
+            here and the shown one fades in. */}
+        <figure className="service-media">
+          {media.map((m, i) => {
+            // more than one picture: the swipeable strip, its slides the links
+            const strip = m.gallery?.length > 1;
+            const Item = m.href && !strip ? 'a' : 'div';
+            return (
+              <Item
+                key={m.src}
+                className="service-media-item"
+                data-shown={i === shown}
+                // only the shown entry takes taps and focus
+                inert={i === shown ? undefined : ''}
+                {...(Item === 'a' && { href: m.href, target: '_blank', rel: 'noopener noreferrer', 'aria-label': m.linkLabel })}
+              >
+                {strip ? (
+                  <MediaStrip items={m.gallery} label={m.label} />
+                ) : m.video ? (
+                  <AutoplayVideo
+                    className="service-media-fill"
+                    src={m.src}
+                    poster={m.poster}
+                    label={m.label}
+                    active={media.length < 2 ? undefined : i === shown}
+                  />
+                ) : (
+                  // ImagePlaceholder: the dashed slot until the file exists
+                  // (F&B's picture is not in yet).
+                  <ImagePlaceholder className="service-media-slot" src={m.src} label={m.label} ratio="auto" />
+                )}
+              </Item>
+            );
+          })}
+        </figure>
+        {services.map((s, i) => {
+          return (
+            <section
+              key={s.id}
+              id={s.id}
+              className="service-row"
+              aria-labelledby={`service-${s.id}`}
+              // The phone stage's starting state (service 01 shown), for the
+              // pre-rendered HTML; useScrollStage takes over from here. Read
+              // only by the stage CSS.
+              style={{ '--d': Math.sign(i), '--ot': i ? 0 : 1, '--vis': i ? 'hidden' : 'visible' }}
+              // A service hidden on the stage must not take keyboard focus.
+              inert={stage.isStage && i !== stage.active ? '' : undefined}
+            >
+              <div className="container service-row-inner">
+                <Title id={`service-${s.id}`} className="service-row-title">{s.title}</Title>
+                <div className="service-row-text" inert={stage.isStage && collapsed ? '' : undefined}>
+                  <p className="service-row-lead">{s.lead}</p>
+                  {s.body && <p className="service-row-body">{s.body}</p>}
+                  {s.extra && <ServiceExtra extra={s.extra} watch={s.title} />}
+                  {/* Home: the pillar's buttons (its page, Brands' Shop) */}
+                  {s.actions && <div className="pillar-ctas service-row-actions">{s.actions}</div>}
+                </div>
+                {/* Phones only (ServicePage.css): the grabber bar, folding
+                    the cards down to their titles and back. */}
+                <button
+                  type="button"
+                  className="service-row-grab"
+                  aria-expanded={!collapsed}
+                  aria-label={collapsed ? t.common.expandCard : t.common.collapseCard}
+                  onClick={() => setCollapsed((c) => !c)}
+                />
+                {perService && (
+                  <ServiceSlices items={media[i].gallery || [media[i].src]} label={media[i].label} />
+                )}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+export default function ServicePage({ className = '', hero, services, media, film, intro, children }) {
+  const { t } = useLanguage();
 
   return (
     <div className={`rows-page service-page ${className}`}>
@@ -359,124 +447,7 @@ export default function ServicePage({ className = '', hero, services, media, fil
       )}
       {intro}
 
-      <div
-        className="service-list"
-        ref={stage.trackRef}
-        style={{ '--stage-count': services.length }}
-      >
-        <div className="service-stage" ref={stage.stageRef} data-collapsed={collapsed || undefined}>
-          <div className="stage-dots">
-            {services.map((s, i) => (
-              <button
-                key={s.id}
-                type="button"
-                className={`stage-dot${i === stage.active ? ' is-active' : ''}`}
-                aria-label={s.title}
-                aria-current={i === stage.active ? 'true' : undefined}
-                onClick={() => stage.goTo(i)}
-              />
-            ))}
-          </div>
-          {/* The stage's backdrop on phones only (ServicePage.css); desktop
-              shows each row's ServiceSlices instead. Every entry is stacked
-              here and the shown one fades in. */}
-          <figure className="service-media">
-            {media.map((m, i) => {
-              // more than one picture: the swipeable strip, its slides the links
-              const strip = m.gallery?.length > 1;
-              const Item = m.href && !strip ? 'a' : 'div';
-              return (
-                <Item
-                  key={m.src}
-                  className="service-media-item"
-                  data-shown={i === shown}
-                  // only the shown entry takes taps and focus
-                  inert={i === shown ? undefined : ''}
-                  {...(Item === 'a' && { href: m.href, target: '_blank', rel: 'noopener noreferrer', 'aria-label': m.linkLabel })}
-                >
-                  {strip ? (
-                    <MediaStrip items={m.gallery} label={m.label} />
-                  ) : m.video ? (
-                    <AutoplayVideo
-                      className="service-media-fill"
-                      src={m.src}
-                      poster={m.poster}
-                      label={m.label}
-                      active={media.length < 2 ? undefined : i === shown}
-                    />
-                  ) : (
-                    // ImagePlaceholder: the dashed slot until the file exists
-                    // (F&B's picture is not in yet).
-                    <ImagePlaceholder className="service-media-slot" src={m.src} label={m.label} ratio="auto" />
-                  )}
-                </Item>
-              );
-            })}
-          </figure>
-          {services.map((s, i) => {
-            return (
-              <section
-                key={s.id}
-                id={s.id}
-                className="service-row"
-                aria-labelledby={`service-${s.id}`}
-                // The phone stage's starting state (service 01 shown), for the
-                // pre-rendered HTML; useScrollStage takes over from here. Read
-                // only by the stage CSS.
-                style={{ '--d': Math.sign(i), '--ot': i ? 0 : 1, '--vis': i ? 'hidden' : 'visible' }}
-                // A service hidden on the stage must not take keyboard focus.
-                inert={stage.isStage && i !== stage.active ? '' : undefined}
-              >
-                <div className="container service-row-inner">
-                  <h2 id={`service-${s.id}`} className="service-row-title">{s.title}</h2>
-                  <div className="service-row-text" inert={stage.isStage && collapsed ? '' : undefined}>
-                    <p className="service-row-lead">{s.lead}</p>
-                    {s.body && <p className="service-row-body">{s.body}</p>}
-                    {s.extra && (
-                      // The phone card's marquee (EXTRA_COPIES above); on
-                      // desktop only the first copy shows.
-                      <div className="service-row-extra">
-                        <div className="service-row-extra-track">
-                          {s.extra}
-                          {Array.from({ length: EXTRA_COPIES - 1 }, (_, n) => (
-                            <div key={n} className="service-row-extra-copy" aria-hidden="true" inert="">
-                              {s.extra}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    {/* Phones only (ServicePage.css): the card's round arrow,
-                        gliding the stage on to the next service. */}
-                    {i < services.length - 1 && (
-                      <button
-                        type="button"
-                        className="service-row-next"
-                        aria-label={t.common.nextSection(services[i + 1].title)}
-                        onClick={() => stage.goTo(i + 1)}
-                      >
-                        <Arrow />
-                      </button>
-                    )}
-                  </div>
-                  {/* Phones only (ServicePage.css): the grabber bar, folding
-                      the cards down to their titles and back. */}
-                  <button
-                    type="button"
-                    className="service-row-grab"
-                    aria-expanded={!collapsed}
-                    aria-label={collapsed ? t.common.expandCard : t.common.collapseCard}
-                    onClick={() => setCollapsed((c) => !c)}
-                  />
-                  {perService && (
-                    <ServiceSlices items={media[i].gallery || [media[i].src]} label={media[i].label} />
-                  )}
-                </div>
-              </section>
-            );
-          })}
-        </div>
-      </div>
+      <ServiceList services={services} media={media} />
       {children}
       <FinalCta content={t.home.finalCta} to={contactLink} />
     </div>

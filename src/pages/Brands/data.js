@@ -79,26 +79,28 @@ export const brandCatalogues = [
 // SAME ORDER); the copy is i18n brandsPage.categories[id].
 //   brands — data/brands.js ids, listed as chips in the section. Every brand
 //            sits in exactly one category.
-//            A brand with a catalogue in brandCatalogues above (its FIRST
-//            one, by brandId) is a chip that opens that catalogue.
+//            The chips are plain names, never links. Brands
+//            WITHOUT a catalogue are COMMENTED OUT (kept in place) — put
+//            one back once its catalogue is in brandCatalogues.
 //   image  — a brandCatalogues id: the ONE catalogue cover standing for the
 //            category, pinned beside the sections on desktop and behind the
 //            copy on phones (the brands have no films).
 export const brandCategories = [
-  { id: 'lifestyle', image: 'cacharel2026', brands: ['cacharel', 'festina', 'iceWatch', 'kreafunk'] },
-  { id: 'office', image: 'senator2026', brands: ['pantone', 'prodir', 'senator', 'pitaka', 'mob'] },
-  { id: 'design', image: 'lexon', brands: ['lexon', 'lundLondon', 'korin', 'gingko'] },
+  { id: 'lifestyle', image: 'cacharel2026', brands: ['cacharel', 'festina' /* , 'iceWatch', 'kreafunk' */] },
+  { id: 'office', image: 'senator2026', brands: [/* 'pantone', 'prodir', */ 'senator' /* , 'pitaka', 'mob' */] },
+  { id: 'design', image: 'lexon', brands: ['lexon', 'lundLondon', 'korin' /* , 'gingko' */] },
   { id: 'corporate', image: 'sols2026', brands: ['makito', 'sols'] },
-  { id: 'premium', image: 'cerruti2026', brands: ['hugoBoss', 'cerruti1881', 'christianLacroix', 'ungaro', 'ninaRicci'] },
+  { id: 'premium', image: 'cerruti2026', brands: ['hugoBoss', 'cerruti1881', 'christianLacroix', 'ungaro' /* , 'ninaRicci' */] },
 ];
 
 // The rolling logo strips under the hero and under the categories
 // (components/LogoMarquee), in this order — data/brands.js ids. Each shows
 // its logo (media.brands) and opens its brand's catalogue (its first in
-// brandCatalogues), or its own site if it has none; one without a logo file
-// shows its name.
+// brandCatalogues); one without a logo file shows its name. Brands WITHOUT
+// a catalogue are COMMENTED OUT (kept in place) — put one back once its
+// catalogue is in brandCatalogues.
 export const marqueeBrands = [
-  'hugoBoss', 'cerruti1881', 'festina', 'cacharel', 'iceWatch', 'christianLacroix',
-  'ungaro', 'lexon', 'senator', 'makito', 'pantone', 'kreafunk', 'sols',
-  'lundLondon', 'mob', 'gingko',
+  'hugoBoss', 'cerruti1881', 'festina', 'cacharel', /* 'iceWatch', */ 'christianLacroix',
+  'ungaro', 'lexon', 'senator', 'makito', /* 'pantone', 'kreafunk', */ 'sols',
+  'lundLondon', /* 'mob', 'gingko', */
 ];

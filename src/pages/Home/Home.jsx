@@ -4,11 +4,11 @@ import Arrow from '../../components/Arrow.jsx';
 import AutoplayVideo from '../../components/AutoplayVideo.jsx';
 import FinalCta from '../../components/FinalCta.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
-import FilmLightbox from '../../components/FilmLightbox/FilmLightbox.jsx';
 import PillarRows, { ROW_RATIO } from '../../components/PillarRows/PillarRows.jsx';
+import { ServiceList, servicePhotos } from '../../components/ServicePage/ServicePage.jsx';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import { contactLink, shopLink } from '../../data/site.js';
+import { contactLink, whatWeDoLink } from '../../data/site.js';
 import { pillars } from './data.js';
 import './Home.css';
 
@@ -62,9 +62,28 @@ export default function Home() {
   const { t } = useLanguage();
   const h = t.home;
 
-  // The five pillars as PillarRows rows. Media: the row's film if
-  // media.serviceVideos has one (paused while hidden on the phone stage),
-  // otherwise its photo — a dashed, washed placeholder until it exists.
+  // A pillar's buttons. A link with `href` leaves the site (the Brands row's
+  // Shop → the Odoo store), so it is a plain <a>; the rest are in-app router
+  // Links.
+  const actionsOf = (p) => {
+    const info = h.pillars[p.id];
+    return p.links.map((l, j) => {
+      const cls = j === 0 ? 'btn btn-primary' : 'btn btn-secondary';
+      const label = <>{info.ctas[l.key]} <Arrow /></>;
+      return l.href
+        ? <a key={l.key} href={l.href} className={cls}>{label}</a>
+        : <Link key={l.key} to={l.to} className={cls}>{label}</Link>;
+    });
+  };
+
+  // The five pillars, rendered TWICE and one shown per width by CSS (as the
+  // hero's two films are): desktop/tablet the zig-zag PillarRows, phones the
+  // "What we do" pages' card stage (ServiceList). The hidden one is
+  // display: none, so its films never load and it is out of the a11y tree.
+
+  // Desktop/tablet: PillarRows rows. Media: the row's film if
+  // media.serviceVideos has one, otherwise its photo — a dashed, washed
+  // placeholder until it exists.
   const rows = pillars.map((p) => {
     const info = h.pillars[p.id];
     const video = media.serviceVideos[p.id];
@@ -76,39 +95,50 @@ export default function Home() {
       lead: info.lead,
       body: info.body,
       tags: info.tags,
-      // A link with `href` leaves the site (the Brands row's Shop → the Odoo
-      // store), so it is a plain <a>; the rest are in-app router Links.
-      actions: p.links.map((l, j) => {
-        const cls = j === 0 ? 'btn btn-primary' : 'btn btn-secondary';
-        const label = <>{info.ctas[l.key]} <Arrow /></>;
-        return l.href
-          ? <a key={l.key} href={l.href} className={cls}>{label}</a>
-          : <Link key={l.key} to={l.to} className={cls}>{label}</Link>;
-      }),
+      actions: actionsOf(p),
       mediaClass: video ? undefined : 'washed',
       media: ({ active }) =>
         video ? (
-          <>
-            <AutoplayVideo className="pillar-video" {...video} ratio={ROW_RATIO} label={info.title} active={active} />
-            {/* tap to watch full-screen — shown on the phone stage only */}
-            <FilmLightbox {...video} label={info.title} />
-          </>
+          <AutoplayVideo className="pillar-video" {...video} ratio={ROW_RATIO} label={info.title} active={active} />
         ) : (
           <ImagePlaceholder src={media.services[p.id]} label={info.placeholder} ratio={ROW_RATIO} />
         ),
     };
   });
 
+  // Phones: ServiceList services — title, lead, the chips (`extra`) and the
+  // buttons, over the same film or photo.
+  const services = pillars.map((p) => {
+    const info = h.pillars[p.id];
+    return {
+      id: p.id,
+      title: info.title,
+      lead: info.lead,
+      body: info.body,
+      extra: (
+        <ul className="pillar-tags">
+          {info.tags.map((tag) => <li key={tag}>{tag}</li>)}
+        </ul>
+      ),
+      actions: actionsOf(p),
+    };
+  });
+  const photos = Object.fromEntries(pillars.map(({ id }) => {
+    const video = media.serviceVideos[id];
+    return [id, video ? { ...video, video: true } : { src: media.services[id] }];
+  }));
+
   return (
     <div className="home">
-      {/* 01 — hero: the looping film, full width (components/AutoplayVideo) */}
+      {/* 01 — hero: one picture, full width (media.heroImage; the dashed
+          slot until the file lands). The two films it replaced are PARKED:
+          the showreel and, on phones, the portrait Agency film — one shown
+          per width by CSS (.home-hero-video-wide / -phone, still in Home.css):
+          <AutoplayVideo className="home-hero-video home-hero-video-wide" {...media.hero} label={h.hero.mediaLabel} />
+          <AutoplayVideo className="home-hero-video home-hero-video-phone" {...media.heroPhone} label={h.hero.mediaLabel} /> */}
       <section className="home-hero">
         <div className="home-hero-media">
-          {/* Two films, one shown per width by CSS: the showreel, and on
-              phones the portrait Agency film. The hidden one never plays
-              or loads — AutoplayVideo only starts a film that is in view. */}
-          <AutoplayVideo className="home-hero-video home-hero-video-wide" {...media.hero} label={h.hero.mediaLabel} />
-          <AutoplayVideo className="home-hero-video home-hero-video-phone" {...media.heroPhone} label={h.hero.mediaLabel} />
+          <ImagePlaceholder className="home-hero-image" src={media.heroImage} label={h.hero.mediaLabel} ratio="auto" loading="eager" />
         </div>
         <div className="container home-hero-content wash-to-bg">
           <h1 className="display-title home-hero-title">
@@ -121,11 +151,10 @@ export default function Home() {
           </h1>
           <p className="home-hero-body">{h.hero.body}</p>
           <div className="home-hero-actions">
-            {/* Labelled "Explore what we do" but opens the SHOP page — as
-                asked; the What-we-do section is linked from the footer. */}
-            <a href={shopLink} className="btn btn-primary">
-              {h.hero.cta} <Arrow />
-            </a>
+            {/* "Explore what we do": down to the What-we-do section below */}
+            <Link to={whatWeDoLink} className="btn btn-primary">
+              {h.hero.cta}
+            </Link>
             {/* The Matterport walkthrough — an external 3D tour, so a plain
                 anchor rather than a router Link, opened in a new tab. */}
             <a
@@ -147,7 +176,12 @@ export default function Home() {
         <p className="home-services-body">{h.whatWeDo.body}</p>
       </section>
 
-      <PillarRows rows={rows} />
+      <div className="home-pillars-wide">
+        <PillarRows rows={rows} />
+      </div>
+      <div className="home-pillars-phone">
+        <ServiceList services={services} media={servicePhotos(services, photos)} titleAs="h3" />
+      </div>
 
       {/* final CTA — opens the enquiry form at the foot of /about */}
       <FinalCta content={h.finalCta} to={contactLink} />

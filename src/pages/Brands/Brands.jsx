@@ -109,8 +109,8 @@ function BrandCatalogues() {
 /**
  * The Brands page — the shared "What we do" layout (components/ServicePage):
  * the hero, then one section per category in `brandCategories` (./data.js),
- * titled by the Brands chips on Home, each listing its brands as chips — a
- * brand with a catalogue is a chip linking to it (new tab). The brands have
+ * titled by the Brands chips on Home, each listing its brands as chips —
+ * plain names, NOT links (a catalogue opens from its cover or logo). The brands have
  * no films, so the media is the category's catalogue covers: its own cover
  * on the phone stage (a link to its catalogue), up to four as desktop
  * slices (categoryCovers). Under
@@ -128,24 +128,9 @@ export default function Brands() {
     ...s,
     extra: (
       <ul className="pillar-tags service-brands" aria-label={b.categoryBrands}>
-        {brandCategories[i].brands.map((id) => {
-          const { name } = brandsById[id];
-          const catalogue = catalogueByBrand[id];
-          return (
-            <li key={id}>
-              {catalogue ? (
-                <a
-                  href={catalogue.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={b.catalogues.open(name)}
-                >
-                  {name}
-                </a>
-              ) : name}
-            </li>
-          );
-        })}
+        {/* plain names, never links — the catalogues open from the covers
+            and the logo strips */}
+        {brandCategories[i].brands.map((id) => <li key={id}>{brandsById[id].name}</li>)}
       </ul>
     ),
   }));

@@ -10,10 +10,8 @@ export default {
     backToTop: 'العودة إلى الأعلى',
     watchFilm: (title) => `شاهد ${title} بملء الشاشة`,
     closeFilm: 'إغلاق',
-    nextSection: (title) => `التالي: ${title}`,
     collapseCard: 'إخفاء التفاصيل',
     expandCard: 'إظهار التفاصيل',
-    pictureOf: (n, total) => `الصورة ${n} من ${total}`,
   },
 
   // عناوين وأوصاف نتائج البحث ومعاينات الروابط — see the note on `seo` in en.js.

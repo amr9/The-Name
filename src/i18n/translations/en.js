@@ -13,13 +13,10 @@ export default {
     // components/FilmLightbox: the button over a film, and the viewer's ×.
     watchFilm: (title) => `Watch ${title} full screen`,
     closeFilm: 'Close',
-    // components/ServicePage: the phone card's arrow to the next service.
-    nextSection: (title) => `Next: ${title}`,
-    // …and the grabber bar at its foot, folding the card down to its title.
+    // components/ServicePage: the grabber bar at the phone card's foot,
+    // folding the card down to its title.
     collapseCard: 'Hide details',
     expandCard: 'Show details',
-    // …and the dots over its swipeable pictures.
-    pictureOf: (n, total) => `Picture ${n} of ${total}`,
   },
 
   // Search-result and link-preview copy, one entry per page (keys = navLinks
