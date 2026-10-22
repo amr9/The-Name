@@ -246,4 +246,3 @@
   text-transform: uppercase;
 }
 .events-moments-gallery { margin-top: clamp(var(--space-6), 3vw, var(--space-8)); }
-.events-moments-cta { margin-top: clamp(var(--space-6), 3vw, var(--space-8)); }

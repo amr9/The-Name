@@ -5,7 +5,7 @@ export default {
          policyTabs: { terms: 'Terms & Conditions', delivery: 'Delivery & Returns', privacy: 'Privacy Policy' } },
 
   // `chatOnWhatsapp` is the label on ContactForm's WhatsApp button — today
-  // that form appears only at the foot of /about.
+  // that form appears only at the foot of /our-story.
   common: {
     whatsapp: 'WhatsApp',
     chatOnWhatsapp: 'Chat with us',
@@ -13,6 +13,11 @@ export default {
     // components/FilmLightbox: the button over a film, and the viewer's ×.
     watchFilm: (title) => `Watch ${title} full screen`,
     closeFilm: 'Close',
+    // components/MediaGallery: a picture in a group (opens the viewer at it),
+    // and the viewer's previous / next buttons.
+    viewPictures: (title, n, total) => `View ${title} pictures, ${n} of ${total}`,
+    prevPicture: 'Previous picture',
+    nextPicture: 'Next picture',
     // components/ServicePage: the grabber bar at the phone card's foot,
     // folding the card down to its title.
     collapseCard: 'Hide details',
@@ -34,20 +39,22 @@ export default {
       description: 'Shop design-led objects from brands like Lexon, Pantone and Kreafunk, then make them yours with a name, initials or a message. Delivered across the UAE.',
     },
     brands: {
-      title: 'Our Brands: Lexon, Pantone, Kreafunk & More | The Name',
-      description: 'The design brands we curate, personalise and gift: Lexon, Lund London, Pantone, Korin, Kreafunk and Gingko, chosen for pieces worth keeping.',
+      // Name only brands the page shows (pages/Brands/data.js: those with a
+      // catalogue) — a search result must not promise one that is not there.
+      title: 'Our Brands: Hugo Boss, Lexon, Cerruti 1881 & More | The Name',
+      description: 'The brands we curate, personalise and gift: Hugo Boss, Cerruti 1881, Christian Lacroix, Cacharel, Festina, Lexon, Lund London, Senator and more.',
     },
     business: {
       title: 'Corporate Gifts in Dubai: Branded & Personalised | The Name',
-      description: 'Thoughtful, branded corporate gifts in Dubai: employee kits, client gifts, events, VIP gifting and large orders, designed and personalised by The Name.',
+      description: 'Curated gifting, creative concepts, branded merchandise, customisation, packaging and production: corporate gifts in Dubai, made personal by The Name.',
     },
     agency: {
       title: 'Agency: Brand Communication & Marketing | The Name',
       description: 'Campaigns, activations and branded pieces, planned, designed and produced by The Name Agency in Dubai for the brands we work with.',
     },
     events: {
-      title: 'Events & Kids Activations in Dubai | The Name',
-      description: 'Personalised gifts, back-to-school pieces, birthdays and hands-on creative activations for children: their name, their drawings, their story.',
+      title: 'Events & Experiences in Dubai: Activations & Launches | The Name',
+      description: 'Events, brand activations, product launches, creative concepts, branding and production in Dubai: experiences people talk about long after they end.',
     },
     fnb: {
       title: 'F&B & Concept Store in Dubai: Café & Catering | The Name',
@@ -72,7 +79,6 @@ export default {
     privacyHeading: 'Privacy & personal data',
     locationHeading: 'Find us',
     directions: 'Get directions',
-    licenceLabel: 'Licensed by',
     optional: 'optional',
     send: 'Send message',
     sending: 'Sending…',
@@ -83,7 +89,7 @@ export default {
     sentTitle: 'Almost there. Check your inbox.',
     sentBody: 'We have emailed you a link to confirm your address. Your message reaches us as soon as you click it. Nothing there? Check your spam folder, or reach us on WhatsApp.',
     sendAnother: 'Send another message',
-    // Where the confirmation link lands (/about?enquiry=…#contact).
+    // Where the confirmation link lands (/our-story?enquiry=…#contact).
     confirmed: {
       title: 'Thank you, your message is with us.',
       body: 'Your email address is confirmed and your message is on its way to our team. We reply within one working day; for anything urgent, WhatsApp is faster.',
@@ -112,6 +118,8 @@ export default {
   // The Brands page (pages/Brands/). The brand names themselves are proper
   // nouns and live in data/brands.js, not here.
   brandsPage: {
+    // The WhatsApp message "Start a conversation" opens with (ServicePage).
+    waMessage: "Hello The Name, I'm interested in your partner brands and would like to start a conversation.",
     // The page's hero and its category sections (components/ServicePage).
     // Category titles are the Brands chips on Home (home.pillars.brands
     // .tags), in the order of pages/Brands/data.js `brandCategories`.
@@ -376,6 +384,8 @@ export default {
   // the Corporate Gifts chips on Home (home.pillars.corporateGifts.tags), in
   // the order of pages/Business/data.js `giftServices`.
   giftsPage: {
+    // The WhatsApp message "Start a conversation" opens with (ServicePage).
+    waMessage: "Hello The Name, I'm interested in corporate gifts and would like to start a conversation.",
     kicker: "Corporate Gifts",
     titleLead: "Gifts that",
     titleMark: "connect.",
@@ -414,6 +424,8 @@ export default {
   // The F&B & Concept Store page (pages/Fnb/). The service titles are the F&B
   // chips on Home (home.pillars.fnb.tags).
   fnbPage: {
+    // The WhatsApp message "Start a conversation" opens with (ServicePage).
+    waMessage: "Hello The Name, I'm interested in your F&B and concept store services and would like to start a conversation.",
     kicker: "F&B & Concept Store",
     titleLead: "Concepts that bring us",
     titleMark: "together.",
@@ -452,6 +464,8 @@ export default {
     },
   },
   eventsPage: {
+    // The WhatsApp message "Start a conversation" opens with (ServicePage).
+    waMessage: "Hello The Name, I'm interested in your events and experiences and would like to start a conversation.",
     kicker: "Events & Experiences",
     titleLead: "Experiences that",
     titleMark: "last.",
@@ -467,7 +481,6 @@ export default {
     moments: {
       title: "The moments we've created.",
       lede: "Every event has its own story. Here are some of ours.",
-      cta: "Let's create something memorable",
     },
     filmLabel: "Highlights from events and activations by The Name",
     services: {
@@ -503,6 +516,8 @@ export default {
   },
   // The Agency page (pages/Agency/).
   agency: {
+    // The WhatsApp message "Start a conversation" opens with (ServicePage).
+    waMessage: "Hello The Name, I'm interested in your agency services and would like to start a conversation.",
     kicker: "The Agency",
     // The title in two parts: `titleMark` carries the yellow highlighter.
     titleLead: "Ideas that",
@@ -579,7 +594,7 @@ export default {
   footer: {
     rights: 'All rights reserved.',
     exploreHeading: 'Explore', whatWeDoHeading: 'What We Do', connectHeading: 'Connect',
-    contact: 'Contact', location: 'Dubai, UAE',
+    location: 'Dubai, UAE',
   },
 
   // ───────────────────────────────────────────────────────────────────────────
@@ -596,7 +611,7 @@ export default {
   // The "Contact Us" clause that closed each of the three source documents is
   // NOT repeated per doc, and no longer appears on this page at all: the
   // entity, the two addresses and the location now live in the enquiry block
-  // at the foot of /about (components/ContactForm/), under `contact` above.
+  // at the foot of /our-story (components/ContactForm/), under `contact` above.
   //
   // TRANSLATED INTO ARABIC (ar.js). Because these are binding consumer terms
   // and the two versions can be read against each other, ENGLISH IS THE
@@ -1039,7 +1054,6 @@ export default {
       names: ['a name.', 'Corporate Gifts.', 'brands.', 'ideas.', 'events.', 'experiences.', 'catering.'],
       body: 'A 360° ecosystem bringing creativity, brands, products and experiences together to help you communicate, connect and explore possibilities.',
       cta: 'Explore what we do',
-      ctaTour: 'Virtual Store',
       mediaLabel: 'Showreel: The Name across gifts, brands, agency, events and F&B',
     },
     whatWeDo: {
@@ -1064,7 +1078,7 @@ export default {
         lead: 'A curated portfolio of premium international lifestyle and office brands, brought to the GCC for both individuals and businesses.',
         body: 'From design-led essentials to high-end collections, we connect our brands with the right people, businesses and spaces.',
         tags: ['Lifestyle', 'Office', 'Design', 'Corporate', 'Premium Brands'],
-        ctas: { explore: 'Explore the Brands', shop: 'Shop the Brands' },
+        ctas: { explore: 'Explore the Brands' },
         placeholder: 'Premium lifestyle and office brands',
       },
       agency: {
@@ -1092,9 +1106,17 @@ export default {
         placeholder: 'The concept store and café',
       },
     },
+    // The band before the closing call to action: the store's picture
+    // behind, the way into its 3D walkthrough (data/site.js virtualStoreUrl).
+    virtualStore: {
+      heading: 'Visit our store, from anywhere.',
+      body: 'Walk through The Name in 3D and explore the space and the pieces as if you were there.',
+      cta: 'Virtual Store',
+      shopCta: 'Shop the Brands',
+    },
     finalCta: {
-      heading: 'Let’s create something worth remembering.',
-      body: 'Whether you have a brief, an idea or simply a starting point, let’s explore what we can create together.',
+      heading: 'Let’s explore what we can create together.',
+      body: 'Whether you have a brief, an idea or simply a starting point, we are here to make it happen.',
       cta: 'Start a conversation',
     },
     // NOT shown on Home any more (the "how it works" panel is PARKED), but

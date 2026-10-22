@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import useModalDialog from '../../hooks/useModalDialog.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import './FilmLightbox.css';
 
@@ -20,11 +21,10 @@ import './FilmLightbox.css';
  * active one). Portalled for the same reason — a dialog inside a row would
  * inherit the row's `inert` and `visibility` when the stage moves on.
  *
- * While it is open: the page cannot scroll behind it (and is put back where
- * it was on close, even if the phone was turned meanwhile), every other film on
- * the page holds still (and plays on again after), and the browser's back
- * gesture closes it rather than leaving the page (one history entry, pushed
- * on open). Closes with the × button, Escape, back, or a tap outside the film.
+ * While it is open (hooks/useModalDialog): the page cannot scroll behind it,
+ * every other film on the page holds still, and the browser's back gesture
+ * closes it rather than leaving the page. Closes with the × button, Escape,
+ * back, or a tap outside the film.
  * Focus returns to the button.
  *
  * It picks up where the film on the page is: the viewer starts at the inline
@@ -76,61 +76,25 @@ export default function FilmLightbox({ src, poster, label }) {
   );
 }
 
-const HISTORY_KEY = 'filmLightbox';
-
 function Viewer({ src, poster, label, inline, closeLabel, onClosed }) {
   const dialogRef = useRef(null);
   const videoRef = useRef(null);
-  const onClosedRef = useRef(onClosed);
-  onClosedRef.current = onClosed;
+  // The modal itself — scroll lock, the other films held, the back gesture:
+  // hooks/useModalDialog, shared with GalleryLightbox.
+  const close = useModalDialog(dialogRef, onClosed);
 
   useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog.open) dialog.showModal();
-
-    // The page holds still behind the viewer. A visitor may well turn the
-    // phone to watch, which reflows the page under it (past 760px the phone
-    // stage becomes plain rows), so the scroll position is put back on close
-    // whenever the width is the one it was opened at.
-    const root = document.documentElement;
-    const overflow = root.style.overflow;
-    root.style.overflow = 'hidden';
-    const at = { y: window.scrollY, width: window.innerWidth };
-
     const video = videoRef.current;
-    const held = [...document.querySelectorAll('video')].filter((v) => v !== video && !v.paused);
-    held.forEach((v) => v.pause());
     // Same frame as the inline film. Set before the file has loaded, the
     // time is kept as the start position and applied once it has.
     if (inline?.currentTime) video.currentTime = inline.currentTime;
     // play() rejects if the browser refuses (data saver) — the poster stays.
     video.play().catch(() => {});
-
-    // Keeps the router's own state (key, idx), so React Router sees the
-    // same location; only the back gesture notices the extra entry.
-    if (!window.history.state?.[HISTORY_KEY]) {
-      window.history.pushState({ ...window.history.state, [HISTORY_KEY]: true }, '');
-    }
-    const onPop = () => onClosedRef.current();
-    window.addEventListener('popstate', onPop);
-
+    // ...and back: the inline film resumes from the viewer's frame.
     return () => {
-      window.removeEventListener('popstate', onPop);
-      root.style.overflow = overflow;
-      if (window.innerWidth === at.width) window.scrollTo({ top: at.y, behavior: 'instant' });
-      // ...and back: the inline film resumes from the viewer's frame.
       if (inline && video.readyState > 0) inline.currentTime = video.currentTime;
-      held.forEach((v) => v.play().catch(() => {}));
-      if (dialog.open) dialog.close();
     };
   }, []);
-
-  // Every way out goes through history, so the entry pushed on open is
-  // always taken back off (popstate then closes the viewer).
-  const close = () => {
-    if (window.history.state?.[HISTORY_KEY]) window.history.back();
-    else onClosedRef.current();
-  };
 
   return (
     <dialog

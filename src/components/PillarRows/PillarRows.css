@@ -37,19 +37,19 @@
   margin-left: -0.028em;
 }
 .pillar-lead {
-  font-size: var(--text-lg);
+  font-size: 18px; /* the same size as .pillar-body */
   line-height: 28px;
   max-width: 56ch;
   margin: 16px 0 0;
 }
 .pillar-body {
-  font-size: var(--text-body);
+  font-size: 18px;
   line-height: 28px;
   max-width: 56ch;
   margin: 12px 0 0;
 }
 /* The pillar's specialities as a run of uppercase words — no box around
-   each, just black type, with a small diamond in --color-accent-700 between
+   each, just black type, with a small round dot in --color-accent-700 between
    one and the next (before every item but the first). They wrap here; on
    the phone stages they become one line that swipes sideways instead. */
 .pillar-tags {
@@ -67,7 +67,7 @@
   gap: 12px;
   padding: 2px 0;
   font-size: 12px;
-  font-weight: 300;
+  font-weight: 500;
   line-height: 1;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -78,8 +78,8 @@
   flex: none;
   width: 6px;
   height: 6px;
+  border-radius: 50%;
   background: var(--color-accent-700);
-  transform: rotate(45deg);
 }
 /* No tracking in Arabic: letter-spacing pulls its joined letters apart. */
 [dir="rtl"] .pillar-tags li { letter-spacing: 0; }
@@ -103,6 +103,9 @@
 /* A row whose media is wider than one picture (the Brands page's two
    product cards): the same frame, given more room. */
 .pillar-figure-wide { width: min(100%, 640px); }
+/* ...or its whole column, up to the text (the "What we do" pages' MediaGallery,
+   which fills whatever room it gets with more of its pictures). */
+.pillar-figure-fill { width: 100%; justify-self: stretch; }
 /* Always BEHIND the figure's media, whatever that media is (photo, film, or
    anything later) — an absolute element otherwise paints over unpositioned
    siblings, which put the ring on top of the service videos. */

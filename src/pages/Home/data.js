@@ -4,18 +4,11 @@
 // follow this order (Home.jsx), so reordering here needs nothing else.
 // `links` are the row's buttons; `key` picks the label from
 // home.pillars[id].ctas.
-import { routes, shopLink } from '../../data/site.js';
+import { routes } from '../../data/site.js';
 
 export const pillars = [
   { id: 'corporateGifts', num: '01', links: [{ key: 'explore', to: routes.business }] },
-  {
-    id: 'brands',
-    num: '02',
-    links: [
-      { key: 'explore', to: routes.brands },
-      { key: 'shop', href: shopLink },
-    ],
-  },
+  { id: 'brands', num: '02', links: [{ key: 'explore', to: routes.brands }] },
   { id: 'agency', num: '03', links: [{ key: 'explore', to: routes.agency }] },
   { id: 'events', num: '04', links: [{ key: 'explore', to: routes.events }] },
   { id: 'fnb', num: '05', links: [{ key: 'explore', to: routes.fnb }] },

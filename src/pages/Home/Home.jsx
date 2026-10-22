@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Arrow from '../../components/Arrow.jsx';
-import AutoplayVideo from '../../components/AutoplayVideo.jsx';
-import FinalCta from '../../components/FinalCta.jsx';
 import ImagePlaceholder from '../../components/ImagePlaceholder.jsx';
-import PillarRows, { ROW_RATIO } from '../../components/PillarRows/PillarRows.jsx';
-import { ServiceList, servicePhotos } from '../../components/ServicePage/ServicePage.jsx';
+import FinalCta from '../../components/FinalCta.jsx';
+import { ServiceRows, servicePhotos } from '../../components/ServicePage/ServicePage.jsx';
 import { media } from '../../data/media.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import { contactLink, whatWeDoLink } from '../../data/site.js';
+import { contactLink, shopLink, virtualStoreUrl, whatWeDoLink } from '../../data/site.js';
 import { pillars } from './data.js';
 import './Home.css';
 
@@ -62,52 +60,24 @@ export default function Home() {
   const { t } = useLanguage();
   const h = t.home;
 
-  // A pillar's buttons. A link with `href` leaves the site (the Brands row's
-  // Shop → the Odoo store), so it is a plain <a>; the rest are in-app router
-  // Links.
+  // A pillar's buttons. A link with `href` would leave the site, so it is a
+  // plain <a> (none does now — the Brands row's Shop button was removed);
+  // the rest are in-app router Links.
   const actionsOf = (p) => {
     const info = h.pillars[p.id];
-    return p.links.map((l, j) => {
-      const cls = j === 0 ? 'btn btn-primary' : 'btn btn-secondary';
+    return p.links.map((l) => {
       const label = <>{info.ctas[l.key]} <Arrow /></>;
       return l.href
-        ? <a key={l.key} href={l.href} className={cls}>{label}</a>
-        : <Link key={l.key} to={l.to} className={cls}>{label}</Link>;
+        ? <a key={l.key} href={l.href} className="btn btn-primary">{label}</a>
+        : <Link key={l.key} to={l.to} className="btn btn-primary">{label}</Link>;
     });
   };
 
-  // The five pillars, rendered TWICE and one shown per width by CSS (as the
-  // hero's two films are): desktop/tablet the zig-zag PillarRows, phones the
-  // "What we do" pages' card stage (ServiceList). The hidden one is
-  // display: none, so its films never load and it is out of the a11y tree.
-
-  // Desktop/tablet: PillarRows rows. Media: the row's film if
-  // media.serviceVideos has one, otherwise its photo — a dashed, washed
-  // placeholder until it exists.
-  const rows = pillars.map((p) => {
-    const info = h.pillars[p.id];
-    const video = media.serviceVideos[p.id];
-    return {
-      key: p.id,
-      num: p.num,
-      title: info.title,
-      label: info.title,
-      lead: info.lead,
-      body: info.body,
-      tags: info.tags,
-      actions: actionsOf(p),
-      mediaClass: video ? undefined : 'washed',
-      media: ({ active }) =>
-        video ? (
-          <AutoplayVideo className="pillar-video" {...video} ratio={ROW_RATIO} label={info.title} active={active} />
-        ) : (
-          <ImagePlaceholder src={media.services[p.id]} label={info.placeholder} ratio={ROW_RATIO} />
-        ),
-    };
-  });
-
-  // Phones: ServiceList services — title, lead, the chips (`extra`) and the
-  // buttons, over the same film or photo.
+  // The five pillars as ServiceRows services (components/ServicePage): the
+  // zig-zag PillarRows on desktop/tablet, the card stage on phones — the
+  // same as every "What we do" page. Title, lead, body, chips and buttons;
+  // media: the row's film if media.serviceVideos has one, otherwise its
+  // photo (a dashed placeholder until it exists).
   const services = pillars.map((p) => {
     const info = h.pillars[p.id];
     return {
@@ -115,11 +85,7 @@ export default function Home() {
       title: info.title,
       lead: info.lead,
       body: info.body,
-      extra: (
-        <ul className="pillar-tags">
-          {info.tags.map((tag) => <li key={tag}>{tag}</li>)}
-        </ul>
-      ),
+      tags: info.tags,
       actions: actionsOf(p),
     };
   });
@@ -127,6 +93,11 @@ export default function Home() {
     const video = media.serviceVideos[id];
     return [id, video ? { ...video, video: true } : { src: media.services[id] }];
   }));
+  const rowMedia = servicePhotos(services, photos);
+  // The rows break after Brands for the virtual-store band: Corporate Gifts
+  // and Brands above it, Agency, Events and F&B below (numbered on: start).
+  // Keep the first part an EVEN number of rows, so the zig-zag carries on.
+  const BAND_AFTER = 2;
 
   return (
     <div className="home">
@@ -140,7 +111,7 @@ export default function Home() {
         <div className="home-hero-media">
           <ImagePlaceholder className="home-hero-image" src={media.heroImage} label={h.hero.mediaLabel} ratio="auto" loading="eager" />
         </div>
-        <div className="container home-hero-content wash-to-bg">
+        <div className="container home-hero-content">
           <h1 className="display-title home-hero-title">
             {/* The full line for screen readers and crawlers; the drawn
                 version below rotates the name, so it is hidden from them. */}
@@ -155,16 +126,6 @@ export default function Home() {
             <Link to={whatWeDoLink} className="btn btn-primary">
               {h.hero.cta}
             </Link>
-            {/* The Matterport walkthrough — an external 3D tour, so a plain
-                anchor rather than a router Link, opened in a new tab. */}
-            <a
-              href="https://my.matterport.com/show/?m=5rCPtmHS5iK"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-secondary home-hero-secondary"
-            >
-              {h.hero.ctaTour}
-            </a>
           </div>
         </div>
       </section>
@@ -176,12 +137,28 @@ export default function Home() {
         <p className="home-services-body">{h.whatWeDo.body}</p>
       </section>
 
-      <div className="home-pillars-wide">
-        <PillarRows rows={rows} />
-      </div>
-      <div className="home-pillars-phone">
-        <ServiceList services={services} media={servicePhotos(services, photos)} titleAs="h3" />
-      </div>
+      <ServiceRows services={services.slice(0, BAND_AFTER)} media={rowMedia.slice(0, BAND_AFTER)} titleAs="h3" />
+
+      {/* the virtual store — under the Brands row: a full-width band, the
+          store's picture behind it (media.virtualStore), and two white
+          buttons on its dark wash: the Matterport 3D walkthrough (new tab)
+          and the brands' online store (same tab, like every Shop link) */}
+      <section className="home-virtual-store" style={{ '--virtual-store-bg': `url("${media.virtualStore}")` }}>
+        <div className="container home-virtual-store-inner">
+          <h2 className="home-virtual-store-heading">{h.virtualStore.heading}</h2>
+          <p className="home-virtual-store-body">{h.virtualStore.body}</p>
+          <div className="home-virtual-store-actions">
+            <a href={virtualStoreUrl} target="_blank" rel="noopener noreferrer" className="btn btn-light">
+              {h.virtualStore.cta}
+            </a>
+            <a href={shopLink} className="btn btn-light">
+              {h.virtualStore.shopCta}
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <ServiceRows services={services.slice(BAND_AFTER)} media={rowMedia.slice(BAND_AFTER)} titleAs="h3" start={BAND_AFTER} />
 
       {/* final CTA — opens the enquiry form at the foot of /about */}
       <FinalCta content={h.finalCta} to={contactLink} />

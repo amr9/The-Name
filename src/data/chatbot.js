@@ -11,7 +11,7 @@ import { routes, shopLink } from './site.js';
 
 export const chatTopics = [
   { id: 'products', href: shopLink },
-  { id: 'personalise', to: '/about' },
+  { id: 'personalise', to: routes.about },
   { id: 'leadTimes', appendMethods: true },
   { id: 'business', to: routes.business },
   // The cafe page is parked (see App.jsx) — restore this topic alongside it.

@@ -10,7 +10,7 @@ open**. Each item says exactly where it goes.
   (`scripts/prerender.mjs`). Google and AI crawlers (ChatGPT, Claude,
   Perplexity…) now read the full text of every page instead of an empty
   shell. Visitors get the same app — it hydrates in place.
-- **Arabic has its own addresses** — `/ar`, `/ar/store`, `/ar/brands`, … —
+- **Arabic has its own addresses** — `/ar`, `/ar/store`, `/ar/the-brands`, … —
   so the Arabic site can be indexed. The language is now in the URL
   (`src/i18n/locale.js`), not a browser setting.
 - **Unique title and description per page**, in English and Arabic
@@ -21,7 +21,10 @@ open**. Each item says exactly where it goes.
 - **`robots.txt`** — all crawlers allowed, AI crawlers named explicitly.
 - **Real 404s** — unknown addresses return status 404 and `noindex`.
 - **Permanent (301) redirects** for the old addresses `/shop`, `/business`,
-  `/kids`, `/customize` (and their `/ar` versions), in `nginx.conf`.
+  `/kids`, `/customize`, and — since the pages were renamed after their navbar
+  labels — `/brands`, `/agency`, `/events`, `/fnb`, `/about` (and their `/ar`
+  versions), in `nginx.conf`. After deploying, check e.g. `/about` → 301 to
+  `/our-story`. In Google Search Console, resubmit `/sitemap.xml`.
 - **Lighter videos** — the two Home films went from 30.2 MB to 15.7 MB
   with no visible quality loss.
 
@@ -42,18 +45,19 @@ A 1200×630px image (logo + a product photo works well), saved under
 WhatsApp, LinkedIn, X. Needs `siteUrl` too.
 
 ### 3. Replace placeholder content (crawlers now read every word)
-- **Home rows 03 and 04** still say "Service Three Title" / "Placeholder
-  text…" → `home.services.serviceThree` / `serviceFour` in `en.js` and
-  `ar.js`. (The videos are real; the text beside them is not.)
+- ✅ **Home rows** — real copy now (the five "What we do" pillars).
 - ✅ **Phone number** — the footer now shows the real number (`phone` in
   `src/data/site.js`, the one place every contact detail is written).
 - **Agency page** is a short placeholder (72 words) → `agency` in the
   translation files, plus real sections in `src/pages/Agency/`.
 - **Brands page** is thin (64 words) — a sentence per brand would help it
   rank for searches like "Lexon UAE".
-- **Missing photos** — the Home hero, rows 01/02, the Corporate Gifts cards
-  and others still show the dashed placeholder. The list of every expected
-  file is `src/data/media.js`.
+- **Photos** — every slot now has a picture or film. Many are STAND-INS
+  until the real ones come (marked in `src/data/media.js`): the Home hero
+  and virtual-store band are stills from the showreel, the Agency and F&B
+  rows use films, showreel stills and event footage. Replace them with real
+  photography when you have it. Still EMPTY: four About "takeover" photos
+  (Bentley, Sephora, Vogue, Colombian pavilion) — nothing we have shows them.
 
 ### 4. Review the page titles and descriptions
 Drafted from each page's own copy — check they say what you want, especially

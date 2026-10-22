@@ -12,9 +12,7 @@ import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { activationShots, eventServices, kidsOffers } from './data.js';
 import Doodles from './Doodles.jsx';
 import './Kids.css';
-import { contactLink, shopLink } from '../../data/site.js';
-import { Link } from 'react-router-dom';
-import Arrow from '../../components/Arrow.jsx';
+import { shopLink } from '../../data/site.js';
 import ServicePage, { servicePhotos, servicesFrom } from '../../components/ServicePage/ServicePage.jsx';
 
 /**
@@ -71,9 +69,6 @@ function EventMoments() {
           ))}
         </Carousel>
       </div>
-      <Link to={contactLink} className="btn btn-primary events-moments-cta">
-        {m.cta} <Arrow />
-      </Link>
     </section>
   );
 }
@@ -103,7 +98,7 @@ function ParkedKids() {
           <p className="kids-hero-lede">{k.lede}</p>
           <div className="kids-hero-actions">
             <a href={shopLink} className="btn btn-primary"><ShopIcon />{k.ctaShop}</a>
-            <WhatsAppButton className="btn btn-secondary">{k.ctaAsk}</WhatsAppButton>
+            <WhatsAppButton className="btn btn-primary">{k.ctaAsk}</WhatsAppButton>
           </div>
         </div>
         <div className="washed kids-hero-image">
@@ -211,7 +206,7 @@ function ParkedKids() {
         <p className="kids-section-lede">{k.cta.body}</p>
         <div className="kids-hero-actions">
           <a href={shopLink} className="btn btn-primary"><ShopIcon />{k.cta.shop}</a>
-          <WhatsAppButton className="btn btn-secondary">{k.cta.whatsapp}</WhatsAppButton>
+          <WhatsAppButton className="btn btn-primary">{k.cta.whatsapp}</WhatsAppButton>
         </div>
       </section>
     </div>

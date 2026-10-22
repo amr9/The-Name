@@ -140,7 +140,7 @@ export default function ContactForm() {
         <span className="card-kicker">{t.contact.kicker}</span>
         <h2 className="contact-sent-title">{done.title}</h2>
         <p className="contact-sent-body">{done.body}</p>
-        <button type="button" className="btn btn-secondary" onClick={reset}>
+        <button type="button" className="btn btn-primary" onClick={reset}>
           {t.contact.sendAnother}
         </button>
       </div>
@@ -197,13 +197,6 @@ export default function ContactForm() {
             </dd>
           </div>
         </dl>
-
-        {/* The registered entity, carried over from the policies page — the
-            trading name is "The Name", but the terms bind this company. */}
-        <p className="contact-entity">
-          <strong>{site.legalName}</strong>
-          <span>{t.contact.licenceLabel}: {site.licensedBy}</span>
-        </p>
       </div>
 
       <form className="contact-form" onSubmit={submit} noValidate>

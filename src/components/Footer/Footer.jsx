@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
 import Logo from '../Logo.jsx';
 import SocialLinks from './SocialLinks.jsx';
-import { contactLink, footerExplore, site, whatWeDoLinks } from '../../data/site.js';
+import { footerExplore, mapsLink, site, whatWeDoLinks } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import './Footer.css';
 
-// The socials shown as icons in the Connect column, in this order (WhatsApp
-// follows them). Each entry in data/site.js `socials` is either a live
+// The socials shown as icons under the logo in the brand block, in this
+// order (WhatsApp follows them). Each entry in data/site.js `socials` is either a live
 // profile (`url`) or a not-yet-published one (`to`, an in-app path that
 // lands on the 404).
-const CONNECT_SOCIALS = ['instagram', 'linkedin'];
+const FOOTER_SOCIALS = ['instagram', 'linkedin'];
 
 // One footer link. Every link in the footer — in-app or external — wears the
 // same `.footer-link` style; only the element differs.
@@ -34,7 +34,8 @@ function Column({ heading, children }) {
   );
 }
 
-// A full-width band: the brand block (the logo alone) on one side, then
+// A full-width band: the brand block (the logo, the social icons under it)
+// on one side, then
 // three columns — Explore, What We Do, Connect — and a copyright row under a
 // hairline with the location on the end side. Page names come from i18n
 // `nav`, so they match the navbar; the What We Do column IS the navbar's
@@ -53,6 +54,11 @@ export default function Footer() {
         <div className="footer-brand">
           {/* compact={false}: the full name on phones too, not the N alone */}
           <Logo size="lg" on="dark" compact={false} />
+          {/* The socials and WhatsApp as icons, in their own box centred
+              under the name — the footer's only social links */}
+          <div className="footer-socials">
+            <SocialLinks keys={FOOTER_SOCIALS} whatsapp />
+          </div>
         </div>
 
         <div className="footer-columns">
@@ -69,11 +75,9 @@ export default function Footer() {
           </Column>
 
           <Column heading={f.connectHeading}>
-            <FooterLink to={contactLink}>{f.contact}</FooterLink>
-            {/* The socials and WhatsApp as icons — the footer's only social links */}
-            <li>
-              <SocialLinks keys={CONNECT_SOCIALS} whatsapp className="footer-connect-icons" />
-            </li>
+            {/* "Find us" opens Google Maps with directions, in the same tab —
+                the same link (and words) as the contact section's Find us */}
+            <FooterLink href={mapsLink}>{t.contact.locationHeading}</FooterLink>
           </Column>
         </div>
       </div>

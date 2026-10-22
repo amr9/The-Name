@@ -44,7 +44,7 @@ export default function NotFound() {
 
       <div className="not-found-actions">
         <Link className="btn btn-primary" to="/">{n.home}</Link>
-        <WhatsAppButton className="btn btn-secondary">{t.common.chatOnWhatsapp}</WhatsAppButton>
+        <WhatsAppButton className="btn btn-primary">{t.common.chatOnWhatsapp}</WhatsAppButton>
       </div>
 
       <nav className="not-found-links" aria-labelledby="not-found-links-heading">

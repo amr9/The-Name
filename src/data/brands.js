@@ -1,3 +1,5 @@
+import { routes } from './site.js';
+
 // Partner brands we curate and personalise. Brand names are proper nouns —
 // the same in every language — so they live here, not in i18n. Read by the
 // Home logo strip and by data/catalogue.js (each piece's brand), so a brand
@@ -52,4 +54,4 @@ export const brandsById = Object.fromEntries(brands.map((b) => [b.id, b]));
 // socials in data/site.js). To send a brand somewhere real, give its entry
 // above a `link` — an in-app path ('/store') or a full URL — and that wins.
 // `url` (the brand's own site) is deliberately NOT used here.
-export const brandLink = (brand) => brand.link ?? `/brands/${brand.id}`;
+export const brandLink = (brand) => brand.link ?? `${routes.brands}/${brand.id}`;

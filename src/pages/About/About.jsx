@@ -217,7 +217,7 @@ export default function About() {
         <p className="about-section-lede">{a.cta.body}</p>
         <div className="about-cta-actions">
           <a href="#contact" className="btn btn-primary">{a.cta.contact}</a>
-          <WhatsAppButton className="btn btn-secondary">{a.cta.whatsapp}</WhatsAppButton>
+          <WhatsAppButton className="btn btn-primary">{a.cta.whatsapp}</WhatsAppButton>
         </div>
       </section>
 

@@ -4,7 +4,7 @@ import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { fnbServices } from './data.js';
 
 /**
- * The F&B & Concept Store page (/fnb) — the shared "What we do" layout
+ * The F&B & Concept Store page (/fnb-and-concept-store) — the shared "What we do" layout
  * (components/ServicePage): the hero, then one section per service in
  * `fnbServices` (./data.js), titled by the F&B chips on Home. The media is
  * a picture SET per service (media.servicePhotos.fnb, plus -2…-4: the

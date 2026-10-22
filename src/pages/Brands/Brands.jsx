@@ -126,13 +126,10 @@ export default function Brands() {
 
   const services = servicesFrom(brandCategories, tags, b.categories).map((s, i) => ({
     ...s,
-    extra: (
-      <ul className="pillar-tags service-brands" aria-label={b.categoryBrands}>
-        {/* plain names, never links — the catalogues open from the covers
-            and the logo strips */}
-        {brandCategories[i].brands.map((id) => <li key={id}>{brandsById[id].name}</li>)}
-      </ul>
-    ),
+    // the category's brands as chips: plain names, never links — the
+    // catalogues open from the covers and the logo strips
+    tags: brandCategories[i].brands.map((id) => brandsById[id].name),
+    tagsLabel: b.categoryBrands,
   }));
 
   // The logo strips: each logo opens its brand's catalogue (new tab), or

@@ -81,7 +81,19 @@
   object-fit: cover;
 }
 
-/* — the services: full-width rows, each the title beside its text. On
+/* — the services (ServiceRows): rendered twice, one per width — Home's
+   zig-zag PillarRows on desktop/tablet, the card stage (ServiceList, below)
+   on phones. Keep the breakpoint in step with PillarRows' STAGE_QUERY. */
+.service-rows-wide { margin-top: clamp(var(--space-6), 4vw, var(--space-8)); }
+.service-rows-phone { display: none; }
+@media (max-width: 760px) {
+  .service-rows-wide { display: none; }
+  .service-rows-phone { display: block; }
+}
+
+/* PARKED on desktop (ServiceRows hides ServiceList there; the rules stay
+   for the phone stage, which builds on them, and to bring the layout back):
+   the services as full-width rows, each the title beside its text. On
    phones they become a pinned stage (below). Every section on these pages
    is separated by a hairline on its TOP only (never the bottom): each row,
    the logo strips (LogoMarquee), Events' moments and the closing FinalCta. */
@@ -132,6 +144,9 @@
 .service-media-item[data-shown="true"] { opacity: 1; }
 /* a linked entry (`href`): only the shown one takes taps */
 a.service-media-item { display: block; }
+/* an entry that opens the picture viewer on a tap (ServiceList) */
+.service-media-item[data-opens] { cursor: zoom-in; }
+.service-media-item[data-opens]:focus-visible { outline: 2px solid var(--color-accent); outline-offset: -4px; }
 .service-media-item[data-shown="false"] { pointer-events: none; }
 .service-media-fill {
   display: block;

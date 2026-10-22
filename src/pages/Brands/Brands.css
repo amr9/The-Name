@@ -258,9 +258,10 @@
 }
 
 /* The partner-logo strip under the hero (ServicePage `intro`): the same gap
-   above it as the hero leaves, and the services start right under it (the
-   first row's top hairline is the line between them). */
+   above it as the hero leaves, and a hairline UNDER it as well as the one
+   every LogoMarquee has on top — the zig-zag rows below have no line of
+   their own to close it off. */
 .brands-page .page-hero + .logo-marquee {
   margin-top: clamp(var(--space-8), 6vw, calc(var(--space-8) * 2.5));
+  border-bottom: 1px solid var(--color-divider);
 }
-.brands-page .page-hero + .logo-marquee + .service-list { margin-top: 0; }

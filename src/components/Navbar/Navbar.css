@@ -18,9 +18,8 @@
    specific and lands later in the bundle, so a single class here loses. */
 .nav.navbar { gap: var(--space-3); }
 
-/* Every link is a pill-shaped box, whether or not it is lit — the padding has
-   to be on all of them, or the row would reflow each time the current page
-   changed. Only the background differs. */
+/* Every link has the same padding, whether or not it is lit — or the row
+   would reflow each time the current page changed. */
 /* Page names print in capitals; the i18n copy stays in normal case. */
 .navbar-link {
   font-size: var(--text-sm);
@@ -28,32 +27,30 @@
   letter-spacing: 0.04em;
   padding: 7px 12px;
   border-radius: var(--radius-md);
-  transition: background 0.18s ease, color 0.18s ease;
+  transition: color 0.18s ease;
+}
+/* The label reserves its bold width (LinkText in Navbar.jsx): an invisible
+   bold copy of it under the text, as tall as nothing, so a link is always
+   as wide as its bold self and the row never shifts. */
+.navbar-link-text { display: inline-grid; }
+.navbar-link-text::after {
+  content: attr(data-label);
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  font-weight: 700;
 }
 
-/* The current page, and the hover that previews it: the same light orange
-   gradient, one step apart in strength. --gradient-accent-soft is the shared
-   token (theme.css) rather than a one-off linear-gradient here, so the bar
-   stays on the brand's ramp. A gradient cannot be transitioned, so the fade
-   above carries the colour and the gradient itself simply appears; at 180ms
-   under a pointer that reads as one movement. */
-/* Qualified with .navbar on purpose. theme.css sets the nav's link colour as
-   `.nav a:hover, .nav a[aria-current='page']` — one type selector MORE
-   specific than a bare `.navbar-link[aria-current]`, so without this the
-   pill kept accent-700 and the rule looked like it had no effect. */
-.navbar .navbar-link:hover {
-  background: color-mix(in srgb, var(--color-accent-100) 70%, transparent);
-  color: var(--color-accent-800);
-}
+/* The current page: NO background — its label turns bold and
+   --color-accent-700. Hover previews it in the colour alone (no weight
+   change under a moving pointer). Qualified with .navbar on purpose: theme.css
+   sets the nav's link colour as `.nav a:hover, .nav a[aria-current='page']`,
+   one type selector MORE specific than a bare `.navbar-link[aria-current]`. */
+.navbar .navbar-link:hover { color: var(--color-accent-700); }
 .navbar .navbar-link[aria-current='page'] {
-  background: var(--gradient-accent-soft);
-  /* Darkest of the ramp, on its palest end — the pill has to clear contrast
-     at --text-sm, which the accent-700 the bare nav link uses would not. */
-  color: var(--color-accent-800);
+  color: var(--color-accent-700);
+  font-weight: 700;
 }
-/* Nothing extra is needed for the sparkling link: an element's own background
-   paints BELOW its ::before/::after, so the glint and the star field stay
-   visible over the lit pill. */
 
 /* Above the breakpoint the wrapper disappears from the layout, so the links
    and the language switcher are flex children of the bar itself — the row the
@@ -82,8 +79,8 @@
 .navbar-dropdown[data-open='true'] .navbar-chevron { transform: rotate(180deg); }
 /* Lit like a current page while one of ITS pages is the one open. */
 .navbar .navbar-dropdown-trigger[data-current='true'] {
-  background: var(--gradient-accent-soft);
-  color: var(--color-accent-800);
+  color: var(--color-accent-700);
+  font-weight: 700;
 }
 
 .navbar-sub {
@@ -231,12 +228,12 @@
     border-radius: calc(var(--radius-md) - 6px);
   }
 
-  /* The current page is marked by a dot before it, not the desktop row's lit
-     pill: the dot is the pill's yellow (the strong end of
+  /* The current page is marked by a dot before it, not the desktop row's bold
+     accent label (normal weight here): the dot is the brand's yellow (the strong end of
      --gradient-accent-soft), and the gap after it sets the link apart. */
   .navbar .navbar-menu .navbar-link[aria-current='page'] {
-    background: none;
     color: var(--color-accent-800);
+    font-weight: inherit;
   }
   .navbar .navbar-menu .navbar-link[aria-current='page']::before {
     content: '';
@@ -251,8 +248,8 @@
   /* The What-we-do trigger is NOT lit here: its list opens in place, and the
      page open inside it already carries the dot. */
   .navbar .navbar-menu .navbar-dropdown-trigger[data-current='true'] {
-    background: none;
     color: inherit;
+    font-weight: inherit;
   }
 
   /* The switcher sits below the pages, off the same divider that separates it

@@ -11,7 +11,7 @@ import useCarouselAutoplay from './hooks/useCarouselAutoplay.js';
 import useScrollToTop from './hooks/useScrollToTop.js';
 import useSectionReveal from './hooks/useSectionReveal.js';
 import useDocumentHead from './hooks/useDocumentHead.js';
-import { routes, site } from './data/site.js';
+import { movedPages, routes, site } from './data/site.js';
 // Home is the landing page, so it ships in the main bundle — splitting it
 // would only add a second round trip before the first paint. Every other page
 // is LAZY: its JavaScript is fetched the first time it is visited. Their CSS
@@ -32,6 +32,13 @@ const Kids = lazy(() => import('./pages/Kids/Kids.jsx'));
 // While Shop is parked, the old in-app paths (/store, /shop) and every button
 // still linking to routes.shop hand the visitor to the Odoo store instead of
 // the 404.
+// An old address (data/site.js movedPages): on to the page's new one,
+// keeping the query and the hash.
+function Moved({ to }) {
+  const { search, hash } = useLocation();
+  return <Navigate to={{ pathname: to, search, hash }} replace />;
+}
+
 function ToOdooShop() {
   useEffect(() => { window.location.replace(site.odooShopUrl); }, []);
   return null;
@@ -86,8 +93,9 @@ export default function App() {
                 navbar. They redirect rather than 404, so bookmarks and links
                 already shared keep working. */}
             <Route path="/shop" element={<ToOdooShop />} />
-            <Route path="/business" element={<Navigate to={routes.business} replace />} />
-            <Route path="/kids" element={<Navigate to={routes.events} replace />} />
+            {Object.entries(movedPages).map(([from, to]) => (
+              <Route key={from} path={from} element={<Moved to={to} />} />
+            ))}
             {/* Terms, delivery/returns and privacy, all on one page; the
                 footer's policy list links to the #anchors within it. PARKED. */}
             {/* <Route path="/policies" element={<Policies />} /> */}

@@ -3,14 +3,15 @@ import useScrollStage from '../../hooks/useScrollStage.js';
 import './PillarRows.css';
 
 /**
- * The zig-zag rows of Home's "What we do" and of the Brands page — one
- * component, so both pages share one look and one behaviour.
+ * The zig-zag rows of Home's "What we do" and every "What we do" page on
+ * desktop/tablet (via ServicePage's ServiceRows), and of the parked Brands
+ * page — one component, so they share one look and one behaviour.
  *
  * Desktop and tablet: one row per entry, text beside a 4:5 media frame with
  * a ring behind it, alternating sides. Phones (STAGE_QUERY): the rows become
  * ONE pinned stage that the scroll moves through (hooks/useScrollStage).
  *
- * `rows`: [{ key, num?, mark?, title, label, lead, body?, tags?, actions,
+ * `rows`: [{ key, num?, mark?, title, label, lead, body?, tags?, tagsLabel?, actions?,
  *   media, bare?, wide?, mediaClass? }]
  *   num        — the kicker number; defaults to the row's position, 01, 02…
  *   mark       — an optional node after the number's rule (Brands: the logo)
@@ -21,6 +22,9 @@ import './PillarRows.css';
  *   bare       — media is NOT wrapped in the rounded, shadowed frame (the
  *                Brands page's product cards bring their own)
  *   wide       — a wider media column (.pillar-figure-wide)
+ *   fill       — the media takes its WHOLE column, up to the text
+ *                (.pillar-figure-fill; the "What we do" pages' MediaGallery)
+ *   ring       — false: no decorative circle behind the media (default on)
  *   mediaClass — an extra class on the frame (Home: .washed on placeholders)
  * `titleAs`: the heading level — h3 under Home's section h2, h2 on Brands.
  * More than DOTS_MAX rows show a "04 / 19" counter instead of dots.
@@ -49,12 +53,12 @@ export const STAGE_QUERY = '(max-width: 760px)';
 // the gold thumb is as wide as the visible share of the row and travels with
 // the swipe. Written to CSS variables on scroll, no re-render. When the
 // chips all fit (or on wider screens, where they wrap) the bar is hidden.
-function TagRow({ tags }) {
+function TagRow({ tags, label }) {
   const listRef = useRef(null);
 
   return (
     <>
-      <ul className="pillar-tags" ref={listRef}>
+      <ul className="pillar-tags" ref={listRef} aria-label={label}>
         {tags.map((tag) => (
           <li key={tag}>{tag}</li>
         ))}
@@ -163,14 +167,14 @@ export default function PillarRows({ rows, titleAs: Title = 'h3' }) {
                   <Title className="pillar-title">{r.title}</Title>
                   <p className="pillar-lead">{r.lead}</p>
                   {r.body && <p className="pillar-body">{r.body}</p>}
-                  {r.tags?.length > 0 && <TagRow tags={r.tags} />}
-                  <div className="pillar-ctas">{r.actions}</div>
+                  {r.tags?.length > 0 && <TagRow tags={r.tags} label={r.tagsLabel} />}
+                  {r.actions && <div className="pillar-ctas">{r.actions}</div>}
                 </div>
                 <figure
-                  className={`row-img pillar-figure${r.wide ? ' pillar-figure-wide' : ''}`}
+                  className={`row-img pillar-figure${r.wide ? ' pillar-figure-wide' : ''}${r.fill ? ' pillar-figure-fill' : ''}`}
                   style={{ order: 3 - textOrder }}
                 >
-                  <div className="pillar-ring" />
+                  {r.ring !== false && <div className="pillar-ring" />}
                   {r.bare ? media : (
                     <div className={`pillar-image-wrap${r.mediaClass ? ` ${r.mediaClass}` : ''}`}>{media}</div>
                   )}

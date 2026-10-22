@@ -34,16 +34,24 @@ function Chevron() {
 // the page at its TOP even when the link has a #hash.
 const FROM_NAVBAR = { fromNavbar: true };
 
+// A link's label. The current page's turns bold (Navbar.css), so the label
+// always reserves its BOLD width (an invisible bold copy, data-label) — the
+// row never shifts when the current page changes.
+function LinkText({ children }) {
+  return <span className="navbar-link-text" data-label={children}>{children}</span>;
+}
+
 function PageLink({ link, label }) {
+  const text = <LinkText>{label}</LinkText>;
   if (link.url) {
-    return <a href={link.url} className="navbar-link">{label}</a>;
+    return <a href={link.url} className="navbar-link">{text}</a>;
   }
   if (link.to.includes('#')) {
-    return <Link to={link.to} state={FROM_NAVBAR} className="navbar-link">{label}</Link>;
+    return <Link to={link.to} state={FROM_NAVBAR} className="navbar-link">{text}</Link>;
   }
   return (
     <NavLink to={link.to} state={FROM_NAVBAR} end={link.to === '/'} className="navbar-link">
-      {label}
+      {text}
     </NavLink>
   );
 }
@@ -141,7 +149,7 @@ export default function Navbar() {
                 aria-controls={listId}
                 onClick={() => setSubOpen(isOpen ? null : item.key)}
               >
-                {t.nav[item.key]}
+                <LinkText>{t.nav[item.key]}</LinkText>
                 <Chevron />
               </button>
               <ul id={listId} className="navbar-sub">

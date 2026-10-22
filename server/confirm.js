@@ -21,11 +21,12 @@ export const hashToken = (token) => crypto.createHash('sha256').update(token).di
 
 export const confirmLink = (token) => `${config.publicUrl}/api/contact/confirm/${token}`;
 
-// Where the click lands: the contact section on About, in the visitor's
+// Where the click lands: the contact section on Our Story (src/data/site.js
+// routes.about — keep in step), in the visitor's
 // language, with the outcome for ContactForm to show.
 export function landingUrl(lang, outcome) {
   const prefix = lang === 'AR' ? '/ar' : '';
-  return `${config.publicUrl}${prefix}/about?enquiry=${outcome}#contact`;
+  return `${config.publicUrl}${prefix}/our-story?enquiry=${outcome}#contact`;
 }
 
 /**

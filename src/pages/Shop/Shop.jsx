@@ -97,7 +97,7 @@ export default function Shop() {
                 All Products carousel — the store's All Products page, not its
                 shop front — so the two identical buttons cannot disagree. */}
             <a className="btn btn-primary" href={categoryUrl('all')}><ShopIcon />{t.shop.openShop}</a>
-            <WhatsAppButton className="btn btn-secondary">{t.shop.askPersonal}</WhatsAppButton>
+            <WhatsAppButton className="btn btn-primary">{t.shop.askPersonal}</WhatsAppButton>
           </div>
         </div>
       </section>
@@ -165,7 +165,7 @@ export default function Shop() {
                   </div>
                 </div>
                 <div className="shop-list-action-col">
-                  <a className="btn btn-secondary shop-view-btn" href={productUrl(p)}>{t.shop.viewProduct}</a>
+                  <a className="btn btn-primary shop-view-btn" href={productUrl(p)}>{t.shop.viewProduct}</a>
                 </div>
               </div>
             ))}
@@ -238,7 +238,7 @@ export default function Shop() {
             <span className="shop-more-count">{t.shop.showing(page.length, shown.length)}</span>
             <button
               type="button"
-              className="btn btn-secondary"
+              className="btn btn-primary"
               onClick={() => setVisible((v) => v + PAGE_SIZE)}
             >
               {t.shop.loadMore(Math.min(PAGE_SIZE, remaining))}

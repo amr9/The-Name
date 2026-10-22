@@ -84,19 +84,6 @@
 [dir="rtl"] .contact-map-cue::after { content: ' ←'; }
 .contact-map-link:hover .contact-map-cue { color: var(--color-accent-800); }
 
-/* The registered entity, in the small print under the contact details — it
-   is there to be findable, not read. (A "Chat with us" WhatsApp button sat
-   between the two until it was removed; the chat bubble still offers it.) */
-.contact-entity {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin: var(--space-4) 0 0;
-  font-size: var(--text-xs);
-  line-height: 1.5;
-  color: color-mix(in srgb, var(--color-text) 62%, transparent);
-}
-
 /* — right column: the form — */
 .contact-form {
   display: grid;

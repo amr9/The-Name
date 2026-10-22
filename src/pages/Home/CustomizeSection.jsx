@@ -27,7 +27,7 @@ export default function CustomizeSection() {
           {/* To the store's OWN customizable-products page, not its shop
               front. */}
           <a className="btn btn-primary" href={site.customizableUrl}><ShopIcon />{c.ctaShop}</a>
-          <WhatsAppButton className="btn btn-secondary">{t.common.chatOnWhatsapp}</WhatsAppButton>
+          <WhatsAppButton className="btn btn-primary">{t.common.chatOnWhatsapp}</WhatsAppButton>
         </div>
       </div>
     </section>

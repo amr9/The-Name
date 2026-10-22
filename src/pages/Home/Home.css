@@ -20,6 +20,7 @@
 
 .home-hero-media {
   position: absolute;
+  z-index: 0;
   inset: 0;
 }
 
@@ -49,24 +50,39 @@
 }
 
 /* The type block runs to the hero's bottom edge and carries the white wash
-   itself, so the wash starts exactly at the top of the title (at any width or
-   language) and ends in the page background — the film fades into the page
-   below with no edge. Above the title the film is untouched. */
+   itself, IN FRONT of the picture (z-index; the media is layer 0). The wash
+   fades in over --hero-ramp just above the title and is near-solid behind
+   the text, so the words sit on top of the picture and nothing in it shows
+   through them (the stand-in photo's own big white "THE NAME" lettering
+   crossed the title and read as if the text were behind the image). It ends
+   in the page background, so the picture fades into the page below with no
+   edge. Above the ramp the picture is untouched. Its own gradient, not the
+   shared .wash-to-bg — that one stays thin for most of its height. */
 .home-hero-content {
+  --hero-ramp: clamp(30px, 18vh, 180px);
   position: absolute;
+  z-index: 1;
   left: 0;
   right: 0;
   bottom: 0;
   /* The wash starts right above the title (the text is anchored to the
      bottom, so this only sets where the gradient begins). */
-  padding-top: clamp(30px, 18vh, 180px);
+  padding-top: var(--hero-ramp);
   padding-bottom: clamp(40px, 6vh, 80px);
-  /* The white wash is the shared .wash-to-bg (theme.css). */
+  background: linear-gradient(to bottom,
+      transparent 0,
+      color-mix(in srgb, var(--color-bg) 40%, transparent) calc(var(--hero-ramp) * 0.45),
+      color-mix(in srgb, var(--color-bg) 88%, transparent) calc(var(--hero-ramp) * 0.75),
+      var(--color-bg) var(--hero-ramp),
+      var(--color-bg) 100%);
   pointer-events: none;
 }
 
-/* Type is the shared .display-title (theme.css); only the width cap here. */
+
+/* Type is the shared .display-title (theme.css) — but at 4vw here, not its
+   6vw (the About tagline keeps 6vw), and the width cap. */
 .home-hero-title {
+  font-size: clamp(36px, 4vw, 88px);
   max-width: 14ch;
 }
 
@@ -148,17 +164,12 @@
   pointer-events: auto;
 }
 
-.home-hero-secondary {
-  background: color-mix(in srgb, #fff 82%, transparent);
-  backdrop-filter: blur(6px);
-}
-
 /* Short or small screens: tighter, so the block keeps to the bottom of the
    hero and the video stays visible above it. */
 @media (max-width: 700px),
 (max-height: 820px) {
   .home-hero-title {
-    font-size: clamp(32px, 5vw, 56px);
+    font-size: clamp(32px, 4vw, 56px);
   }
 
   .home-hero-body {
@@ -193,14 +204,51 @@
   margin: 18px 0 0;
 }
 
-/* — what we do: the rows — rendered twice (Home.jsx), one per width:
-   PillarRows on desktop/tablet, the "What we do" pages' card stage
-   (ServiceList) on phones. Keep the breakpoint in step with PillarRows'
-   STAGE_QUERY. */
-.home-pillars-phone { display: none; }
-@media (max-width: 760px) {
-  .home-pillars-wide { display: none; }
-  .home-pillars-phone { display: block; }
+/* — the virtual store — a full-width band (no .container on the section:
+   the picture runs edge to edge; the copy inside is held in one). The
+   picture (--virtual-store-bg, set in Home.jsx) covers the band under a
+   dark wash that keeps the white type readable; with no picture yet the
+   band is the footer's dark gradient. */
+.home-virtual-store {
+  display: grid;
+  align-items: center;
+  min-height: clamp(320px, 38vw, 520px);
+  margin-top: clamp(48px, 6vw, 96px);
+  background:
+    linear-gradient(color-mix(in srgb, var(--color-black) 55%, transparent), color-mix(in srgb, var(--color-black) 55%, transparent)),
+    var(--virtual-store-bg, none) center / cover no-repeat,
+    var(--gradient-footer);
+  color: var(--color-white);
+}
+.home-virtual-store-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-block: clamp(48px, 6vw, 88px);
+  text-align: center;
+}
+.home-virtual-store-heading {
+  margin: 0;
+  max-width: 22ch;
+  font-size: clamp(28px, 3.4vw, 44px);
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+/* its two buttons, white (.btn-light) on the dark wash, side by side —
+   wrapping onto two centred rows where they do not fit */
+.home-virtual-store-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+.home-virtual-store-body {
+  margin: 16px 0 28px;
+  max-width: 52ch;
+  font-size: 18px;
+  line-height: 28px;
+  color: color-mix(in srgb, var(--color-white) 85%, transparent);
 }
 
 /* — final CTA — components/FinalCta.jsx; its rules are .final-cta in theme.css. */

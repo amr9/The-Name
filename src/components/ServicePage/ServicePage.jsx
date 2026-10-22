@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import AutoplayVideo from '../AutoplayVideo.jsx';
 import FinalCta from '../FinalCta.jsx';
 import FilmLightbox from '../FilmLightbox/FilmLightbox.jsx';
 import ImagePlaceholder from '../ImagePlaceholder.jsx';
-import { STAGE_QUERY, TagScrollBar } from '../PillarRows/PillarRows.jsx';
+import MediaGallery, { GalleryLightbox, galleryItem } from '../MediaGallery/MediaGallery.jsx';
+import PillarRows, { STAGE_QUERY, TagScrollBar } from '../PillarRows/PillarRows.jsx';
 import useScrollStage from '../../hooks/useScrollStage.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import { contactLink } from '../../data/site.js';
+import { waMessageLink } from '../../data/site.js';
 import './ServicePage.css';
 
 /**
@@ -21,14 +23,18 @@ import './ServicePage.css';
  * SERVICES: one section per entry in `services`, their titles the pillar's
  * chips on Home (i18n home.pillars[id].tags — the pages pass them in, so a
  * service is named in one place). Each is the uppercase title beside its
- * lead, grey body and optional `extra` (Brands: the category's brands).
+ * lead, grey body and optional `tags` (Brands: the category's brands).
  * No per-row enquiry link: the floating chat button already does that.
- *  - Desktop/tablet: full-width rows between hairlines, each with its own
- *    pictures on the reading-end side as ServiceSlices (below).
+ *  - Desktop/tablet: Home's zig-zag PillarRows (ServiceRows), alternating
+ *    sides, each row's media its whole group of pictures in a MediaGallery
+ *    (side by side, as many as fit; pop up on hover; click: a carousel of
+ *    them all), filling the column up to the text, no ring. (The full-width
+ *    rows with ServiceSlices that were here are PARKED: still in ServiceList,
+ *    hidden on desktop.)
  *  - Phones (PillarRows' STAGE_QUERY): the same pinned scroll stage as Home's
  *    "What we do" (hooks/useScrollStage), the media as its full-bleed
  *    BACKDROP, each service a frosted-glass CARD on its foot (title, lead,
- *    `extra` as one line swiped sideways by hand, the card's full width), the
+ *    `tags` as one line swiped sideways by hand, the card's full width), the
  *    shared .stage-dots. The grabber bar at the card's foot folds every
  *    card down to its title (and back), which also lets the floating chat
  *    button return.
@@ -36,7 +42,8 @@ import './ServicePage.css';
  * MEDIA: `media` is a list. ONE entry is shared by every service (a film,
  * playing on while the copy changes — phones only, no desktop slices); one
  * entry PER service follows the active stage row on phones, cross-fading,
- * and its `gallery` (or just its picture) is that row's slices on desktop.
+ * and its `gallery` (or just its picture) is that row's MediaGallery on
+ * desktop.
  * On phones a gallery of more than one is a strip the visitor swipes through
  * (MediaStrip), never moving on its own.
  * An entry is { src, poster? (a film), video?: true, label, href?,
@@ -47,11 +54,13 @@ import './ServicePage.css';
  * `hero`: { kicker, titleLead, titleMark, lede, tags?, body?, motto? } —
  * under the lede, `tags` as pills (F&B: its services, i.e. its Home chips),
  * `body` paragraphs (Agency, Events), and `motto`, a closing line (Agency).
- * `services`: [{ id, title, lead, body, extra?, actions? }] — see servicesFrom
- * below; `actions` (Home only) are buttons under the text.
+ * `services`: [{ id, title, lead, body, tags?, tagsLabel?, actions? }] — see
+ * servicesFrom below; `tags` are chips (Brands: the category's brands,
+ * `tagsLabel` naming the list), `actions` (Home only) buttons under the text.
  *
- * The services section on its own is `ServiceList` (exported) — Home's
- * "What we do" uses it under its own intro, so its rows are these pages'.
+ * The services section is `ServiceRows` (exported, below) — Home's "What we
+ * do" uses it too, so Home and these pages share ONE structure: desktop/tablet
+ * Home's zig-zag PillarRows, phones the card stage (ServiceList).
  * `film`: optional { src, poster, label } — a landscape film shown whole,
  * centred under the hero at 16:9, tap to watch it full-screen (FilmLightbox)
  * (Agency: its Brand Communication film).
@@ -61,8 +70,9 @@ import './ServicePage.css';
  * the partner-logo strip again, rolling the other way).
  *
  * Every page ends on Home's closing call to action (FinalCta, the same
- * home.finalCta copy: "Let's create something worth remembering.") opening
- * the enquiry form at the foot of /about.
+ * home.finalCta copy: "Let's explore what we can create together."), its
+ * "Start a conversation" opening WhatsApp with the page's own message typed
+ * in — `hero.waMessage` (each page's i18n block).
  */
 
 
@@ -144,9 +154,6 @@ export const servicePhotos = (services, photos) =>
     if (typeof p === 'string') return { src: p, label: s.title, gallery: photoSet(p) };
     return { ...p, label: s.title, gallery: p.gallery || [p] };
   });
-
-// A gallery item: a src, or { src, label?, href?, linkLabel?, poster?, video? }.
-const galleryItem = (item) => (typeof item === 'string' ? { src: item } : item);
 
 // Phones: a service's gallery as the stage backdrop, one picture per screen,
 // swiped either way (scroll-snap) — never moving on its own, and with no
@@ -256,16 +263,20 @@ function ServiceSlices({ items, label }) {
   );
 }
 
-// A service's `extra` (its chips). On the phone card: one line swiped
-// sideways by hand, with PillarRows' slim scroll bar under it showing how far
-// (TagScrollBar; `watch` re-measures it — the title changes with the
-// language). On desktop they wrap and the bar is hidden.
-function ServiceExtra({ extra, watch }) {
+// A service's `tags` (its chips; `label` names the list). On the phone
+// card: one line swiped sideways by hand, with PillarRows' slim scroll bar
+// under it showing how far (TagScrollBar). On desktop they wrap and the bar
+// is hidden.
+function ServiceTags({ tags, label }) {
   const scrollerRef = useRef(null);
   return (
     <>
-      <div className="service-row-extra" ref={scrollerRef}>{extra}</div>
-      <TagScrollBar scrollerRef={scrollerRef} watch={watch} />
+      <div className="service-row-extra" ref={scrollerRef}>
+        <ul className="pillar-tags" aria-label={label}>
+          {tags.map((tag) => <li key={tag}>{tag}</li>)}
+        </ul>
+      </div>
+      <TagScrollBar scrollerRef={scrollerRef} watch={tags} />
     </>
   );
 }
@@ -273,8 +284,9 @@ function ServiceExtra({ extra, watch }) {
 // The services section: the full-width rows with their ServiceSlices on
 // desktop, the pinned card stage on phones (see the comment at the top).
 // Shared with Home's "What we do", which passes `titleAs="h3"` (its rows
-// sit under the section's h2) and gives each service `extra` (its chips)
-// and `actions` (its buttons, under the text).
+// sit under the section's h2) and gives each service `actions` (its
+// buttons, under the text). Rendered by ServiceRows, which shows it on
+// PHONES only: its desktop rows and ServiceSlices are hidden (kept, parked).
 export function ServiceList({ services, media, titleAs: Title = 'h2' }) {
   const { t } = useLanguage();
   const stage = useScrollStage(services.length, {
@@ -285,6 +297,18 @@ export function ServiceList({ services, media, titleAs: Title = 'h2' }) {
   // The phone cards, folded down to their titles by the grabber bar — one
   // state for every card, so the next service arrives folded too.
   const [collapsed, setCollapsed] = useState(false);
+
+  // A tap on the backdrop opens MediaGallery's viewer on that service's
+  // whole group (its `gallery`, or just its picture or film), at the
+  // picture in view — the same viewer as the desktop rows. Not on a linked
+  // entry (Brands: the tap opens its catalogue instead).
+  const [viewer, setViewer] = useState(null);
+  const opensViewer = (m) => !m.href && !(m.gallery || []).some((it) => galleryItem(it).href);
+  const openViewer = (m, el) => {
+    const track = el.querySelector('.service-media-track');
+    const start = track ? Math.round(Math.abs(track.scrollLeft) / track.clientWidth) : 0;
+    setViewer({ items: (m.gallery || [m]).map(galleryItem), start, label: m.label });
+  };
 
   // While the phone stage fills the screen, the floating chat button would
   // sit on the card: <html data-stage-pinned> tells ChatLauncher.css to
@@ -351,6 +375,15 @@ export function ServiceList({ services, media, titleAs: Title = 'h2' }) {
                 // only the shown entry takes taps and focus
                 inert={i === shown ? undefined : ''}
                 {...(Item === 'a' && { href: m.href, target: '_blank', rel: 'noopener noreferrer', 'aria-label': m.linkLabel })}
+                {...(opensViewer(m) && {
+                  role: 'button',
+                  tabIndex: 0,
+                  'aria-haspopup': 'dialog',
+                  'aria-label': t.common.viewPictures(m.label, 1, (m.gallery || [m]).length),
+                  'data-opens': '',
+                  onClick: (e) => openViewer(m, e.currentTarget),
+                  onKeyDown: (e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), openViewer(m, e.currentTarget)),
+                })}
               >
                 {strip ? (
                   <MediaStrip items={m.gallery} label={m.label} />
@@ -390,7 +423,7 @@ export function ServiceList({ services, media, titleAs: Title = 'h2' }) {
                 <div className="service-row-text" inert={stage.isStage && collapsed ? '' : undefined}>
                   <p className="service-row-lead">{s.lead}</p>
                   {s.body && <p className="service-row-body">{s.body}</p>}
-                  {s.extra && <ServiceExtra extra={s.extra} watch={s.title} />}
+                  {s.tags?.length > 0 && <ServiceTags tags={s.tags} label={s.tagsLabel} />}
                   {/* Home: the pillar's buttons (its page, Brands' Shop) */}
                   {s.actions && <div className="pillar-ctas service-row-actions">{s.actions}</div>}
                 </div>
@@ -411,7 +444,57 @@ export function ServiceList({ services, media, titleAs: Title = 'h2' }) {
           );
         })}
       </div>
+      {viewer && createPortal(
+        <GalleryLightbox items={viewer.items} start={viewer.start} label={viewer.label} onClosed={() => setViewer(null)} />,
+        document.body,
+      )}
     </div>
+  );
+}
+
+// The services as Home's and every "What we do" page's ONE structure,
+// rendered twice and one shown per width by CSS (.service-rows-wide /
+// -phone, ServicePage.css; the hidden one is display: none, so its films
+// never load and it is out of the a11y tree): desktop/tablet the zig-zag
+// PillarRows — number, title, lead, body, chips, buttons, and as media the
+// row's whole group (its `gallery`, or just its picture or film) in a
+// MediaGallery filling the media column up to the text, no ring (pops up on
+// hover, a click opens the viewer) — and phones the card stage
+// (ServiceList).
+//
+// `start`: how many rows came before this list on the page (Home splits its
+// five into two around the virtual-store band), so the numbers carry on —
+// 03, 04, 05 — and the zig-zag keeps alternating (PillarRows starts every
+// list text-first, so the first part must hold an EVEN number of rows).
+export function ServiceRows({ services, media, titleAs = 'h2', start = 0 }) {
+  const rows = services.map((s, i) => {
+    const m = media[i] ?? media[0];
+    return {
+      key: s.id,
+      num: String(start + i + 1).padStart(2, '0'),
+      title: s.title,
+      label: s.title,
+      lead: s.lead,
+      body: s.body,
+      tags: s.tags,
+      tagsLabel: s.tagsLabel,
+      actions: s.actions,
+      bare: true,
+      fill: true,
+      ring: false,
+      media: () => <MediaGallery items={m.gallery || [m]} label={m.label} />,
+    };
+  });
+
+  return (
+    <>
+      <div className="service-rows-wide">
+        <PillarRows rows={rows} titleAs={titleAs} />
+      </div>
+      <div className="service-rows-phone">
+        <ServiceList services={services} media={media} titleAs={titleAs} />
+      </div>
+    </>
   );
 }
 
@@ -447,9 +530,9 @@ export default function ServicePage({ className = '', hero, services, media, fil
       )}
       {intro}
 
-      <ServiceList services={services} media={media} />
+      <ServiceRows services={services} media={media} />
       {children}
-      <FinalCta content={t.home.finalCta} to={contactLink} />
+      <FinalCta content={t.home.finalCta} href={waMessageLink(hero.waMessage)} />
     </div>
   );
 }

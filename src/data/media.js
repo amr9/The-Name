@@ -60,6 +60,15 @@ const serviceFilm = (name) => ({
   video: true,
 });
 
+// A service's GROUP of pictures and films (its MediaGallery on desktop, its
+// swiped strip on phones): each item a photo path under public/media/photos/
+// or a serviceFilm(). The first is the one standing for the service.
+const photo = (path) => `${BASE}/photos/${path}.jpg`;
+const group = (...items) => {
+  const first = typeof items[0] === 'string' ? { src: items[0] } : items[0];
+  return { ...first, gallery: items };
+};
+
 export const media = {
   // Full-bleed hero film on the Home page — the R Investments showreel, its
   // first 1:55 (3450 frames; the logo end card after that was cut, so the
@@ -78,6 +87,14 @@ export const media = {
   // it lands at public/media/photos/home/hero.jpg, ImagePlaceholder shows
   // its dashed slot. Fills the hero at every width (object-fit: cover).
   heroImage: `${BASE}/photos/home/hero.jpg`,
+  // The full-width picture behind Home's virtual-store band (under the
+  // Brands row). A STAND-IN until a real wide shot of the store (~1920×800)
+  // replaces public/media/photos/home/virtual-store.jpg: the concept store's
+  // shelves from the showreel (videos/hero.mp4 at 0:40.8), only the TOP
+  // 1600×400 of the frame — the part above its burned-in "CONCEPT STORE"
+  // caption, so nothing had to be painted out. With no file the band shows
+  // its dark gradient (a CSS background draws nothing for a missing file).
+  virtualStore: `${BASE}/photos/home/virtual-store.jpg`,
 
   // The Agency page's film (outdoorFilm). UNUSED for now — the page shows
   // one picture per service instead (servicePhotos below).
@@ -101,22 +118,28 @@ export const media = {
   // { src, gallery: [src, …] } (slices on desktop, swiped on phones). (Brands
   // uses its catalogue covers instead.)
   servicePhotos: {
+    // From the Desktop folders the photos came in (Curated Gifting, Creative
+    // concepts, Branded merchandise, customization, packaging, production,
+    // CSR & events) — every picture and film of each, not just the first.
     corporateGifts: {
-      curated: serviceFilm('gifts-curated'),
-      concepts: { src: `${BASE}/photos/corporate-gifts/concepts.jpg` },
-      merchandise: { src: `${BASE}/photos/corporate-gifts/merchandise.jpg` },
-      customisation: { src: `${BASE}/photos/corporate-gifts/customisation.jpg` },
-      packaging: { src: `${BASE}/photos/corporate-gifts/packaging.jpg` },
-      production: serviceFilm('gifts-production'),
+      curated: group(serviceFilm('gifts-curated'), serviceFilm('gifts-lamp')),
+      concepts: group(...['concepts', 'concepts-2', 'concepts-3', 'concepts-4', 'concepts-5'].map((n) => photo(`corporate-gifts/${n}`))),
+      merchandise: group(...['merchandise', 'merchandise-2', 'merchandise-3', 'merchandise-4'].map((n) => photo(`corporate-gifts/${n}`))),
+      customisation: group(...['customisation', 'customisation-2', 'customisation-3', 'customisation-4', 'customisation-5', 'customisation-6'].map((n) => photo(`corporate-gifts/${n}`))),
+      packaging: group(photo('corporate-gifts/packaging')),
+      production: group(serviceFilm('gifts-production'), photo('corporate-gifts/production-print'), serviceFilm('gifts-tshirts')),
     },
+    // STAND-INS until the Agency's own pictures arrive: its films, the
+    // showreel's OOH frame (videos/hero.mp4 at 0:52, caption cropped off) and
+    // event footage from the Desktop "Events & experiences" folder.
     agency: {
-      positioning: `${BASE}/photos/agency/positioning.jpg`,
-      // Its film is now the page's preview under the hero (agencyPreview).
-      communication: `${BASE}/photos/agency/communication.jpg`,
-      awareness: `${BASE}/photos/agency/awareness.jpg`,
-      exposure: `${BASE}/photos/agency/exposure.jpg`,
-      csr: serviceFilm('agency-csr'),
-      ooh: `${BASE}/photos/agency/ooh.jpg`,
+      positioning: group(serviceFilm('marketing-strategy')),
+      // Its Haramain film is the page's preview under the hero (agencyPreview).
+      communication: group(serviceFilm('brand-communication')),
+      awareness: group(serviceFilm('agency-design-week')),
+      exposure: group(serviceFilm('agency-stadium'), photo('agency/ooh-commercity')),
+      csr: group(serviceFilm('agency-csr'), serviceFilm('agency-csr-campaigns')),
+      ooh: group(serviceFilm('agency-outdoor'), photo('agency/ooh-commercity')),
     },
     events: {
       // Every Events film and photograph we have: the Events reel, then the
@@ -132,14 +155,18 @@ export const media = {
       production: { src: activationShots.showingProducts },
       experiences: serviceFilm('events-experiences'),
     },
+    // STAND-INS until F&B's own pictures arrive: stills from the showreel
+    // (videos/hero.mp4 — catering 0:44 / 0:45.5, the concept store 0:41 with
+    // its "CONCEPT STORE" caption painted out, the seminar audience 0:39),
+    // its F&B films, store products and Desktop event footage.
     fnb: {
-      fnb: serviceFilm('fnb-service'),
-      catering: `${BASE}/photos/fnb/catering.jpg`,
-      conceptStore: `${BASE}/photos/fnb/concept-store.jpg`,
-      retail: `${BASE}/photos/fnb/retail.jpg`,
-      popUps: `${BASE}/photos/fnb/pop-ups.jpg`,
-      collaborations: `${BASE}/photos/fnb/collaborations.jpg`,
-      community: `${BASE}/photos/fnb/community.jpg`,
+      fnb: group(serviceFilm('fnb-service'), serviceFilm('fnb-dining')),
+      catering: group(photo('fnb/catering'), photo('fnb/catering-2')),
+      conceptStore: group(photo('fnb/concept-store'), serviceFilm('fnb'), serviceFilm('gifts-curated')),
+      retail: group(...['lexon-bubble-lamp', 'gingko-octagon-lamp-one', 'lexon-city-energy-pro', 'gingko-flip-click-clock'].map((id) => `${BASE}/store-products/${id}.webp`)),
+      popUps: group(serviceFilm('fnb-commercity-event')),
+      collaborations: group(serviceFilm('fnb-award')),
+      community: group(photo('fnb/community'), serviceFilm('fnb-crowd')),
     },
   },
 

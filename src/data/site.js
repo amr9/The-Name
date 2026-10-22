@@ -90,6 +90,9 @@ export const telLink = /x/i.test(site.phone) ? null : `tel:${site.phone.replace(
 // Every WhatsApp trigger on the site links here (WhatsAppButton, the chat
 // launcher's WhatsApp option) — the same number as `site.phone`.
 export const waLink = `https://wa.me/${site.phone.replace(/[^0-9]/g, '')}`;
+// …the same chat with `text` already typed in the visitor's message box
+// (the "What we do" pages' "Start a conversation", ServicePage).
+export const waMessageLink = (text) => `${waLink}?text=${encodeURIComponent(text)}`;
 
 // Social profiles — Instagram and LinkedIn are shown as icons in the footer's
 // Connect column (Footer.jsx picks them by key); all of them feed the business data's
@@ -121,21 +124,39 @@ export const socials = [
 // The Name is the home page, so it stays at the root. Everything that links
 // to a page — routes, nav, footer, buttons, the chatbot — reads these, so
 // renaming a page's URL is a one-line change here (plus a redirect from the
-// old path in App.jsx, so existing links keep working).
+// old path: `movedPages` below for the app, and a 301 in nginx.conf).
+// Each page's path is its NAVBAR LABEL (i18n `nav`) as a slug — "The
+// Brands" → /the-brands, "Our Story" → /our-story — so the address reads
+// as the menu does.
 export const routes = {
   home: '/',
   shop: '/store',
-  brands: '/brands',
+  brands: '/the-brands',
   business: '/corporate-gifts',
-  agency: '/agency',
-  // The Kids page under its new name, Events (/kids redirects here). Its
-  // files are still pages/Kids/ and its copy is still i18n `kids`.
-  events: '/events',
+  agency: '/the-agency',
+  // The Kids page under its new name, Events & Experiences (/kids and
+  // /events redirect here). Its files are still pages/Kids/ and its copy is
+  // still i18n `kids`.
+  events: '/events-and-experiences',
   // F&B & Concept Store. (The older café page, /cafe, stays parked.)
-  fnb: '/fnb',
-  about: '/about',
+  fnb: '/fnb-and-concept-store',
+  about: '/our-story',
   // Parked pages — not routed at the moment (see App.jsx).
   cafe: '/cafe',
+};
+
+// Old addresses → where the page lives now. App.jsx redirects each one
+// (keeping its ?query and #hash, so an old /about#contact link still lands
+// on the form); nginx.conf answers the same paths with a 301 first, for
+// search engines. Keep the two in step.
+export const movedPages = {
+  '/business': routes.business,
+  '/kids': routes.events,
+  '/brands': routes.brands,
+  '/agency': routes.agency,
+  '/events': routes.events,
+  '/fnb': routes.fnb,
+  '/about': routes.about,
 };
 
 // Every routed page, flat. Read by the 404 page's signpost and by
@@ -162,6 +183,10 @@ export const navLinks = [
 // so the buttons are plain <a href={shopLink}> rather than router Links (in
 // data lists: an `href` entry instead of a `to`).
 export const shopLink = site.odooShopUrl;
+
+// The virtual store: the Matterport 3D walkthrough of the physical store
+// (Home's virtual-store band). External, so a plain <a>, in a new tab.
+export const virtualStoreUrl = 'https://my.matterport.com/show/?m=5rCPtmHS5iK';
 
 // The enquiry form, at the foot of /about. Every "contact" link reads this.
 export const contactLink = `${routes.about}#contact`;

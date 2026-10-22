@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { addressLine, site } from '../../data/site.js';
+import { addressLine, contactLink, site } from '../../data/site.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { policyDocs } from './data.js';
 import './Policies.css';
@@ -106,7 +106,7 @@ export default function Policies() {
           entity and the two addresses — do not drop it. */}
       <p className="policies-contact-note">
         {p.contactNote}{' '}
-        <Link to="/about#contact">{p.contactNoteLink}</Link>
+        <Link to={contactLink}>{p.contactNoteLink}</Link>
       </p>
     </div>
   );

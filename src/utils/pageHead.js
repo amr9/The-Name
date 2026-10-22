@@ -45,7 +45,8 @@ function businessJsonLd(description) {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: site.name,
-    legalName: site.legalName,
+    // No legalName: the company name is no longer shown on the site (it was
+    // taken out of the contact section), so the data does not carry it.
     description,
     email: site.infoEmail,
     telephone: site.phone,

@@ -45,7 +45,7 @@ export default function Cafe() {
         <div className="menu-controls">
           <ViewToggle view={view} onChange={setView} listLabel={t.cafe.viewList} cardsLabel={t.cafe.viewCards} />
           <span className="menu-updated">{t.cafe.updated}</span>
-          <WhatsAppButton className="btn btn-secondary">{t.cafe.askAllergens}</WhatsAppButton>
+          <WhatsAppButton className="btn btn-primary">{t.cafe.askAllergens}</WhatsAppButton>
           <a href={shopLink} className="btn btn-ghost">{t.cafe.shopLink}</a>
         </div>
 
